@@ -41,7 +41,7 @@
 .list-item__hover {
   border: 1px solid #414141;
   border-radius: 50%;
-  background: var(--yellow-2);
+  background: var(--main-green);
   opacity: 0;
 }
 

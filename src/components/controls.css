@@ -17,6 +17,25 @@
   height: 32.782px;
 }
 
+.back-btn--dark-hover {
+  position: relative;
+}
+
+.back-btn__chev--light {
+  position: absolute;
+  opacity: 0;
+}
+
+@media (hover: hover) {
+  .back-btn--dark-hover:hover {
+    background: #4b4b4b;
+  }
+
+  .back-btn--dark-hover:hover .back-btn__chev--light {
+    opacity: 1;
+  }
+}
+
 /* ---------- Tags ---------- */
 .tag {
   display: flex;
@@ -93,12 +112,12 @@
 }
 
 .add-item:active {
-  background: #ffe9bd;
+  background: #d4e6b8;
 }
 
 @media (hover: hover) {
   .add-item:hover {
-    background: #ffe9bd;
+    background: #d4e6b8;
   }
 }
 

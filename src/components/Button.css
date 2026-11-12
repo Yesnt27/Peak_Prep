@@ -22,6 +22,15 @@
   background-color: var(--yellow-2);
 }
 
+/* Figma "Button" (1372:2913): same green, but hover turns lighter, not darker. */
+.btn--primary {
+  background-color: var(--main-green);
+}
+
+.btn--primary:active {
+  background-color: #80ac3c;
+}
+
 .btn--green:active {
   background-color: #006b45;
 }
@@ -37,5 +46,9 @@
 
   .btn--yellow:hover {
     background-color: #bd6014;
+  }
+
+  .btn--primary:hover {
+    background-color: #80ac3c;
   }
 }

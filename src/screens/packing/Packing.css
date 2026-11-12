@@ -1,0 +1,261 @@
+/* Figma "Packing - All Items / To Pack / Packed / Edit" */
+.pk {
+  background: #f5f5f5;
+}
+
+.pk-page {
+  position: relative;
+  color: var(--body-copy-gray);
+}
+
+.pk-back {
+  position: absolute;
+  top: 48px;
+  left: 23px;
+}
+
+/* The corner buttons are Figma exports that include their drop shadow. */
+.pk-corner {
+  position: absolute;
+  top: 48.3px;
+  width: 44.703px;
+  height: 44.703px;
+  border-radius: 50%;
+}
+
+.pk-corner img {
+  position: absolute;
+  top: -47px;
+  left: -55px;
+  max-width: none;
+  pointer-events: none;
+}
+
+.pk-corner--edit {
+  left: 333.3px;
+}
+
+.pk-corner--done {
+  left: 23px;
+}
+
+.pk-content {
+  position: absolute;
+  top: 125px;
+  left: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 355px;
+}
+
+/* ---------- Title ---------- */
+.pk-title {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pk-title__row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.pk-title__row--edit {
+  gap: 16px;
+}
+
+.pk-title__row h1 {
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+}
+
+.pk-title__pencil {
+  width: 17.5px;
+  height: 17.5px;
+  margin: -0.75px;
+}
+
+.pk-title__sub {
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.pk-help {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  color: #000;
+  font: 500 12px/normal var(--font-inter);
+}
+
+.pk-help img {
+  position: absolute;
+  inset: 0;
+}
+
+.pk-help span {
+  position: relative;
+}
+
+@media (hover: hover) {
+  .pk-help:hover {
+    background: var(--yellow-2);
+  }
+
+  .pk-help:hover img {
+    opacity: 0;
+  }
+}
+
+/* ---------- Bag stats ---------- */
+.pk-stats {
+  display: flex;
+  gap: 10px;
+  width: 353px;
+  height: 123px;
+}
+
+.pk-stat {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px 16px 14px;
+  border-radius: 12px;
+  background: var(--light-green);
+  white-space: nowrap;
+}
+
+.pk-stat__title {
+  font: 600 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pk-stat__value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.pk-stat__num {
+  font: 400 30px/normal var(--font-poppins);
+}
+
+.pk-stat__unit {
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pk-stat__note {
+  font: 400 12px/1.35 var(--font-poppins);
+  letter-spacing: -0.24px;
+}
+
+.pk-stat__bar {
+  display: flex;
+  height: 5px;
+  padding-right: 21px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.pk-stat__fill {
+  flex: 1 0 0;
+  border-radius: 10px;
+  background: var(--main-green);
+}
+
+/* ---------- Tabs ---------- */
+.pk-tabs.seg-tabs {
+  width: 353px;
+}
+
+/* ---------- Groups ---------- */
+.pk-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pk-group__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 335px;
+  height: 24px;
+}
+
+.pk-group__name {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font: 600 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+.pk-group__name img {
+  width: 24px;
+  height: 24px;
+}
+
+.pk-group__count {
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+/* ---------- Edit ---------- */
+.pk-max {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pk-max__label {
+  font: 600 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pk-max__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pk-stepper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 50px;
+  padding: 0 19.958px;
+  border-radius: 11.975px;
+  background: #fff;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.pk-stepper img {
+  width: 19.809px;
+  height: 19.809px;
+}
+
+.pk-unit.seg-tabs {
+  width: 208px;
+  height: 50px;
+}
+
+.pk-save.btn {
+  position: absolute;
+  bottom: 26px;
+  left: 23px;
+}

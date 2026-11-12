@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import backChevron from '../assets/icons/back-chevron.svg'
+import backChevronLight from '../assets/first-aid/back-chevron-light.svg'
 import addItemIcon from '../assets/icons/add-item.svg'
 import dropdownArrow from '../assets/icons/dropdown-arrow.png'
 import checkDefault from '../assets/icons/check-default.svg'
@@ -7,11 +8,20 @@ import checkHover from '../assets/icons/check-hover.svg'
 import checkSelected from '../assets/icons/check-selected.svg'
 import './controls.css'
 
-/** Round back button (Figma "Back button"). */
-export function BackButton({ className = '', label = 'Back', ...rest }) {
+/**
+ * Round back button (Figma "Back button"). `darkHover` is the first-aid
+ * variant (1646:12147): on hover it turns dark grey with a light chevron.
+ */
+export function BackButton({ className = '', label = 'Back', darkHover = false, ...rest }) {
   return (
-    <button type="button" className={`back-btn ${className}`} aria-label={label} {...rest}>
-      <img src={backChevron} alt="" />
+    <button
+      type="button"
+      className={`back-btn ${darkHover ? 'back-btn--dark-hover' : ''} ${className}`}
+      aria-label={label}
+      {...rest}
+    >
+      <img className="back-btn__chev" src={backChevron} alt="" />
+      {darkHover && <img className="back-btn__chev back-btn__chev--light" src={backChevronLight} alt="" />}
     </button>
   )
 }
@@ -58,7 +68,7 @@ export function ToggleTag({ icon, children }) {
   )
 }
 
-/** Figma "add item": white row with a green plus, turns pale yellow on hover. */
+/** Figma "add item": white row with a green plus, turns pale green (#d4e6b8) on hover. */
 export function AddItem({ children, className = '', ...rest }) {
   return (
     <button type="button" className={`add-item ${className}`} {...rest}>

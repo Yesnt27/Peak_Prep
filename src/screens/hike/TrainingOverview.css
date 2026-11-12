@@ -1,0 +1,343 @@
+/* Figma "Training overview (hi-fi)" 1780:3125 */
+.to {
+  background: #f5f5f5;
+}
+
+.to .hk-chip {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.to-content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 20px 20px 188px;
+  color: var(--body-copy-gray);
+}
+
+.to-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.to-btn.btn {
+  width: 100%;
+  height: 53px;
+  border-radius: 49.9px;
+}
+
+.to-btn--round.btn {
+  border-radius: 56px;
+}
+
+/* ---------- Prep status ---------- */
+.to-prep {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--light-green);
+}
+
+.to-ring {
+  position: relative;
+  flex: none;
+  width: 76px;
+  height: 76px;
+}
+
+.to-ring img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.to-ring__value,
+.to-ring__label {
+  position: absolute;
+  left: 0;
+  width: 76px;
+  text-align: center;
+}
+
+.to-ring__value {
+  top: 20px;
+  font: 600 20px/1.139 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+.to-ring__label {
+  top: 44px;
+  opacity: 0.75;
+  font: 400 11px/1.44 var(--font-poppins);
+}
+
+.to-prep__rows {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  font-size: 13px;
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+.to-prep__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.to-prep__label {
+  opacity: 0.7;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.to-prep__value {
+  font-weight: 500;
+  line-height: 1.139;
+}
+
+/* ---------- Calendar ---------- */
+.to-cal__nav {
+  display: flex;
+  gap: 6px;
+}
+
+.to-cal__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.to-cal__arrow img {
+  width: 16px;
+  height: 16px;
+}
+
+.to-week {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 8px;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.to-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 42px;
+  padding: 8px 0;
+  border-radius: 22px;
+  white-space: nowrap;
+}
+
+.to-day--today {
+  background: var(--main-green);
+  color: #fff;
+}
+
+.to-day__weekday {
+  opacity: 0.6;
+  font: 400 12px/1.35 var(--font-poppins);
+  letter-spacing: -0.24px;
+}
+
+.to-day--today .to-day__weekday {
+  opacity: 1;
+}
+
+.to-day__date {
+  font: 500 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.to-day__dot {
+  width: 5px;
+  height: 5px;
+}
+
+.to-daily {
+  font: 600 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+/* Figma: the first row is 356px wide, the other two fill the 362px column. */
+.to-section .list-item {
+  width: 100%;
+}
+
+.to-section .to-daily + .list-item {
+  width: 356px;
+}
+
+/* ---------- Bag check ---------- */
+.to-bag {
+  display: flex;
+  gap: 10px;
+  width: 353px;
+  height: 123px;
+}
+
+.to-bag-stat {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px 16px 14px;
+  border-radius: 12px;
+  background: var(--light-green);
+  white-space: nowrap;
+}
+
+.to-bag-stat__title {
+  font: 600 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.to-bag-stat__value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.to-bag-stat__num {
+  font: 400 30px/normal var(--font-poppins);
+}
+
+.to-bag-stat__unit {
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.to-bag-stat__note {
+  font: 400 12px/1.35 var(--font-poppins);
+  letter-spacing: -0.24px;
+}
+
+.to-bag-stat__bar {
+  display: flex;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.to-bag-stat__fill {
+  flex: 1 0 0;
+  height: 5px;
+  border-radius: 10px;
+  background: var(--main-green);
+}
+
+/* ---------- Hiking safety ---------- */
+.to-safety {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.to-safety .hk-section__header {
+  align-items: flex-end;
+}
+
+.to-safety__card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--yellow-3);
+}
+
+.to-steps {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.to-step {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.to-step img {
+  width: 14px;
+  height: 14px;
+}
+
+.to-step--done {
+  background: var(--yellow-2);
+}
+
+.to-step--current {
+  border: 2px solid var(--yellow-2);
+  font-weight: 500;
+  line-height: 1.139;
+}
+
+/* Figma: the "4" text sits at 50% opacity on a solid white circle. */
+.to-step--todo {
+  color: rgba(65, 65, 65, 0.5);
+  font-weight: 400;
+  line-height: 1.44;
+}
+
+.to-step__line {
+  flex: 1 0 0;
+  height: 3px;
+  border-radius: 2px;
+  background: #fff;
+}
+
+.to-step__line--done {
+  background: var(--yellow-2);
+}
+
+.to-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.to-next__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.to-next__label {
+  opacity: 0.7;
+  font: 400 12px/1.35 var(--font-poppins);
+  letter-spacing: -0.24px;
+}
+
+.to-next__title {
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}

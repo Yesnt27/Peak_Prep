@@ -45,6 +45,9 @@ Identifiers taken from those links:
 
 - **Do not invent design decisions.** If something is missing, ambiguous or unreadable in Figma, flag it and ask.
 - Flag any issue that needs clarification, including the Figma MCP not working.
+- **Use only the names and data in Figma.** Never make up placeholder names, text or numbers; copy what the Figma frames show.
+- **Reference page:** "Stage 4: Prototype" (`1646:2450`) is the single, most up-to-date source. Every interaction is wired through components there. Where frames share a name, the one the prototype connections actually reach is the screen to build.
+- **Ignore the "USER TESTING" section** (`1786:5225`) on that page. It is the team's notes for later refinement, not a build instruction.
 
 ## Implementation notes (implementation)
 
@@ -73,6 +76,25 @@ Prototype page: "Stage 4 prototype" (`1646:2450`). Some prototype links point at
 | `/welcome` | sign up/login `1767:8411` | Sign In → Home (Saved); Create Account → onboarding. |
 | `/onboarding/welcome` … `/safety` | `1646:6565`, `6617`, `6660`, `6690`, `6711` | Sheets: workout `1646:11728`, injury `11749`, health conditions `11769`. |
 | `/home/saved`, `/explore`, `/training` | `1892:3398`, `1892:3571`, `1892:4108` | Tab highlight switches on click; content follows 300ms later (prototype delay). |
+
+**Still to build.** Read from the prototype connections on 2026-11-12. Nav bar: Home → `/home/saved`, Create → new training 19, Profile → Profile. Routes are proposed and get fixed as each screen is built.
+
+| Proposed route | Figma frame | Prototype links out |
+| --- | --- | --- |
+| `/hike` | Hike Details (hifi) `1780:3160` | back → Home Saved; green button → First aid module `12155` |
+| `/training` | Training overview (hi-fi) `1780:3125` | green button → Packing All Items; button → First aid module `12184`; button → Hiker Log Congrats |
+| `/packing/all`, `/to-pack`, `/packed` | `1646:11433`, `11597`, `11656` | 3-choice tab nav switches between them; back → Training overview; button → Packing Edit |
+| `/packing/edit` | Packing - Edit `1646:11507` | back → Packed; button → All Items |
+| `/first-aid/…` | First aid module `1646:12155`, `12184`, `12254` | 12184: back → Training overview, cards slide in → `12254`, `12394`, `12465`; 12254 → 12155; 12155 → 12184 (back), Right or wrong `12263` (slide out ←) |
+| `/first-aid/quiz/…` | Right or wrong `1646:12263`, `12394`, `12465` | 12263: back → 12184, button → 12155; 12394/12465: back → 12184 |
+| `/log/…` | Hiker Log: Congrats `11007` → Details `11107` → Difficulty `11133` → Emergency Prep. `11189` → Physical Prep. `11151` → General Notes `11168` → Review Details `11053` | each back button returns to the previous step |
+| `/new-training/…` | new training 19 `5644` → 20 `5688` → 21 `5714` → 23 `5788` → 8 `5732` → 22 `5749` | 19 back → Home Saved; 23 opens health conditions sheet `2175:7829`; 22 → Training overview |
+| `/profile` | Profile `1646:13300` | cards → Completed Hikes `1767:8813`, Health info `13208`, Friendlist `13323`, `Frame 1410103912` `13422` |
+| `/profile/health` | Health info `13208` | → Profile; → `Frame 1410103913` `13446` |
+| `/profile/friends` | Friendlist `13323` | back → Profile; "add friends" → Add `2136:3603`; search bar → Add `2234:4055` |
+| `/profile/completed` | Completed Hikes `1767:8813` + fav completed hike `1673:3790` | favourite toggle (Component 5) swaps between them |
+
+Same-named frames that no live screen links to, and that are **not** built: Packing - All Items `2181:3983`, Onboarding - Hiking Exp. `2142:3855`, Home - Saved2 `2240:6301`, new training 24/25 `2240:6324`/`6349` (presentation-slide flow), Right or wrong `1646:12330`, op 1/2/3, and the hi-fi drafts inside "Hi-fi: Home + Training overview".
 
 ### Checking work locally
 

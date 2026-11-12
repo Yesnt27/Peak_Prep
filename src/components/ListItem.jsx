@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import checkDefault from '../assets/icons/check-default.svg'
-import checkSelected from '../assets/icons/check-selected.svg'
+import checkSelected from '../assets/icons/list-item-checked.svg'
 import './ListItem.css'
 
 /**
  * Figma "packing-list-item": a checkable row with a small value on the right.
- * Default → hover (circle fills yellow) → click (checkmark) → click (back to default).
+ * Default → hover (circle fills green) → click (checkmark) → click (back to default).
  */
 export default function ListItem({ label, meta, defaultChecked = false }) {
   const [checked, setChecked] = useState(defaultChecked)

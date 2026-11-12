@@ -1,0 +1,1276 @@
+/* Figma "First aid module" (12184, 12254, 12155) and "Right or wrong" (12263, 12394, 12465) */
+.fa {
+  background: #f5f5f5;
+}
+
+.fa-page {
+  position: relative;
+  color: var(--body-copy-gray);
+}
+
+.fa-page--clip {
+  overflow: hidden;
+}
+
+.fa-back {
+  position: absolute;
+  top: 48px;
+  left: 23px;
+}
+
+.fa-back--module {
+  top: 52px;
+}
+
+.fa-section-title {
+  color: #000;
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fa-module__title {
+  color: #474747;
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+}
+
+/* Info "i" badge */
+.fa-info {
+  position: relative;
+  flex: none;
+}
+
+.fa-info img {
+  display: block;
+}
+
+.fa-info span {
+  position: absolute;
+  color: var(--body-copy-gray);
+  white-space: nowrap;
+}
+
+.fa-info--19 {
+  width: 19px;
+  height: 19px;
+}
+
+.fa-info--19 span {
+  top: 1px;
+  left: 8px;
+  font: 500 10.857px/normal var(--font-poppins);
+}
+
+.fa-info--27 {
+  width: 27px;
+  height: 27px;
+}
+
+.fa-info--27 span {
+  top: 4.63px;
+  left: 11.57px;
+  font: 600 15.429px/1.139 var(--font-poppins);
+  letter-spacing: -0.31px;
+}
+
+/* ---------- 12184 lesson list ---------- */
+.fa-progress {
+  position: absolute;
+  top: 130px;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 355px;
+}
+
+.fa-progress p {
+  color: #868686;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-progress__bar {
+  height: 6px;
+  border-radius: 5px;
+  background: #d9d9d9;
+}
+
+.fa-progress__fill {
+  width: 180px;
+  height: 6px;
+  border-radius: 5px;
+  background: var(--main-green);
+}
+
+.fa-module {
+  position: absolute;
+  top: 199px;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  width: 355px;
+}
+
+.fa-module__sub {
+  margin-top: 29px;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fa-lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 356px;
+  height: 293px;
+  margin-top: 6px;
+}
+
+.fa-lesson {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  justify-content: space-around;
+  width: 355px;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: #ededed;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.fa-lesson--next {
+  background: var(--yellow-1);
+  text-align: center;
+}
+
+.fa-lesson__name {
+  font-weight: 600;
+  line-height: 1.139;
+}
+
+.fa-further__title,
+.fa-etiquette__title {
+  position: absolute;
+  left: 24px;
+  color: #000;
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fa-further__title {
+  top: 678px;
+}
+
+.fa-further__sub {
+  position: absolute;
+  top: 707px;
+  left: 23px;
+  width: 346px;
+  color: #000;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+/* Go Further cards (Figma "cards": hover turns the card dark yellow, 150ms) */
+.fa-cards {
+  position: absolute;
+  top: 752px;
+  left: 23px;
+  display: flex;
+  justify-content: space-between;
+  width: 364px;
+}
+
+.fa-card {
+  position: relative;
+  flex: none;
+  width: 175px;
+  height: 239px;
+  overflow: hidden;
+  border-radius: 30px;
+  background: var(--yellow-3);
+  text-align: left;
+  transition: background-color 150ms var(--ease-out);
+}
+
+.fa-card > * {
+  position: absolute;
+}
+
+.fa-card__icon {
+  display: flex;
+  width: 55px;
+  height: 55px;
+  padding: 16px 15px 15px 16px;
+  border-radius: 27.5px;
+  background: var(--yellow-2);
+  transition: background-color 150ms var(--ease-out);
+}
+
+.fa-card__icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.fa-card__icon--legal {
+  top: 18px;
+  left: 16px;
+}
+
+.fa-card__icon--cert {
+  top: 17px;
+  left: 21px;
+}
+
+.fa-card__text {
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 139px;
+  color: var(--body-copy-gray);
+}
+
+.fa-card__text--legal {
+  top: 87px;
+  height: 89px;
+}
+
+.fa-card__text--cert {
+  top: 85px;
+  gap: 9px;
+  height: 72px;
+}
+
+.fa-card__title {
+  flex: 1 0 0;
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fa-card__body {
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-card__time {
+  top: 196px;
+  left: 16px;
+  color: #000;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+.fa-card__chev {
+  width: 30.75px;
+  height: 39.707px;
+}
+
+.fa-card__chev--legal {
+  top: 26px;
+  left: 132px;
+}
+
+.fa-card__chev--cert {
+  top: 25px;
+  left: 134px;
+}
+
+.fa-card__pill {
+  top: 178px;
+  left: 11px;
+  width: 154px;
+  height: 40px;
+  padding-right: 60px;
+  border-radius: 30px;
+  background: #fff;
+}
+
+.fa-card__pill-fill {
+  display: block;
+  width: 94px;
+  height: 40px;
+  border-radius: 30px;
+  background: var(--yellow-2);
+  transition: background-color 150ms var(--ease-out);
+}
+
+.fa-card__suggested {
+  top: 190px;
+  left: 23px;
+  display: flex;
+  gap: 23px;
+  color: #000;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+@media (hover: hover) {
+  .fa-card:hover {
+    background: var(--yellow-2);
+  }
+
+  .fa-card:hover .fa-card__icon,
+  .fa-card:hover .fa-card__pill-fill {
+    background: var(--yellow-3);
+  }
+}
+
+/* Trail etiquette carousel */
+.fa-etiquette__title {
+  top: 1031px;
+}
+
+.fa-etiquette {
+  position: absolute;
+  top: 1070px;
+  left: 0;
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  padding: 0 15px 0 23px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.fa-etiquette::-webkit-scrollbar {
+  display: none;
+}
+
+.fa-etiquette__card {
+  position: relative;
+  flex: none;
+  width: 216px;
+  height: 207px;
+  overflow: hidden;
+  border-radius: 30px;
+  background: var(--yellow-3);
+}
+
+.fa-etiquette__inner {
+  position: absolute;
+  top: 18px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 175px;
+}
+
+.fa-etiquette__icon {
+  display: flex;
+  width: 55px;
+  height: 55px;
+  padding: 15px 11px 11px 15px;
+  border-radius: 27.5px;
+  background: var(--yellow-2);
+}
+
+.fa-etiquette__icon img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Figma: the arrow sits in a 33.4px box, rotated 145deg. */
+.fa-etiquette__icon--rotate {
+  align-items: center;
+  justify-content: center;
+  padding: 11px;
+}
+
+.fa-etiquette__icon--rotate img {
+  transform: rotate(-145deg);
+}
+
+.fa-etiquette__text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 89px;
+}
+
+.fa-etiquette__text--first {
+  gap: 36px;
+}
+
+.fa-etiquette__name {
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fa-etiquette__text--first .fa-etiquette__name {
+  flex: 1 0 0;
+}
+
+.fa-etiquette__body {
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-etiquette__body--wide {
+  width: 186px;
+}
+
+/* ---------- 12254 Heat Exposure ---------- */
+.fa-heat {
+  position: absolute;
+  top: 125px;
+  left: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 356px;
+}
+
+.fa-heat__photo {
+  position: relative;
+  height: 266px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.fa-heat__photo img {
+  position: absolute;
+  top: 0;
+  left: -77px;
+  width: 472px;
+  max-width: none;
+  height: 266px;
+  object-fit: cover;
+}
+
+/* Figma mask group 2140:3256: the text masks a gradient (84% black, fading out at the bottom). */
+.fa-heat__text {
+  position: absolute;
+  top: 482px;
+  left: 23px;
+  width: 356px;
+  height: 297px;
+  color: rgba(0, 0, 0, 0.84);
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 220.6px, transparent 297px);
+  mask-image: linear-gradient(to bottom, #000 220.6px, transparent 297px);
+}
+
+.fa-heat__start.btn {
+  position: absolute;
+  top: 766px;
+  left: 23px;
+}
+
+/* ---------- Practice header + scenario bar (12155, 12263) ---------- */
+.fa-practice {
+  position: absolute;
+  top: 126px;
+  left: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 356px;
+}
+
+.fa-practice__head {
+  display: flex;
+  flex-direction: column;
+}
+
+.fa-practice__kicker {
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fa-practice__title {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  line-height: 1.139;
+  white-space: nowrap;
+}
+
+.fa-practice__title h1 {
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+}
+
+.fa-practice__title p {
+  font: 400 24px/1.139 var(--font-poppins);
+  letter-spacing: -0.48px;
+}
+
+.fa-scenario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.fa-scenario__count {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.fa-scenario__tag {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 30px;
+  border-radius: 12px;
+  background: #ffecc7;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.fa-fire {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  background: #414141;
+  -webkit-mask-size: 20px 20px;
+  mask-size: 20px 20px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.fa-white {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  padding: 30px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.fa-white--center {
+  align-items: center;
+}
+
+/* ---------- 12155 Practice question ---------- */
+.fa-question__top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fa-question__img {
+  position: relative;
+  width: 108px;
+  height: 127px;
+  overflow: hidden;
+  /* Figma: flipped vertically + rotated 180deg = mirrored horizontally. */
+  transform: scaleX(-1);
+}
+
+.fa-question__img img {
+  position: absolute;
+  top: -33.86%;
+  left: -48.15%;
+  width: 197.22%;
+  max-width: none;
+  height: 167.72%;
+}
+
+.fa-question__text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 150px;
+}
+
+.fa-question__title {
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fa-question__body {
+  font: 400 12px/1.35 var(--font-poppins);
+  letter-spacing: -0.24px;
+}
+
+.fa-answer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 130px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: #ffecc7;
+}
+
+.fa-answer__blank {
+  color: #595959;
+  font: 500 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-answer__q {
+  position: relative;
+  width: 33px;
+  height: 33px;
+}
+
+.fa-answer__q span {
+  position: absolute;
+  top: 3px;
+  left: 13px;
+  color: #fff;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+/* Figma "Frame 1410103808": yellow-2, hover yellow-1 (instant). */
+.fa-skip {
+  position: absolute;
+  top: 783px;
+  left: 244px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 134px;
+  height: 50px;
+  border-radius: 49.895px;
+  background: var(--yellow-2);
+  color: #414141;
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+@media (hover: hover) {
+  .fa-skip:hover {
+    background: var(--yellow-1);
+  }
+}
+
+/* ---------- 12263 Correct! ---------- */
+.fa-white__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.fa-white__copy {
+  width: 100%;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-temp {
+  position: relative;
+  flex: none;
+  width: 206px;
+  height: 109px;
+}
+
+.fa-temp > * {
+  position: absolute;
+}
+
+.fa-temp__right {
+  top: 27px;
+  left: 124px;
+}
+
+.fa-temp__waves {
+  top: 52.5px;
+  left: 150.5px;
+}
+
+.fa-temp__arrow {
+  top: 59.64px;
+  left: 82px;
+}
+
+.fa-temp__left {
+  top: 27px;
+  left: 0;
+}
+
+.fa-temp__label {
+  top: 0;
+  left: 13px;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.fa-temp__thermo {
+  top: 47.73px;
+  left: 21.27px;
+  width: 49.6px;
+  height: 46.933px;
+  background: #414141;
+  -webkit-mask-size: 48px 48px;
+  mask-size: 48px 48px;
+  -webkit-mask-position: -4.267px -3.733px;
+  mask-position: -4.267px -3.733px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.fa-plus {
+  position: relative;
+  width: 35px;
+  height: 35px;
+}
+
+.fa-plus__icon {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.fa-shock {
+  display: flex;
+  align-items: flex-start;
+  gap: 27px;
+}
+
+.fa-eye {
+  position: relative;
+  flex: none;
+  width: 121.014px;
+  height: 120.534px;
+}
+
+.fa-eye > * {
+  position: absolute;
+  max-width: none;
+}
+
+.fa-eye__bottom {
+  top: 57.56px;
+  left: 15.25px;
+}
+
+.fa-eye__top {
+  top: -2.46px;
+  left: -2.46px;
+  transform: rotate(180deg);
+}
+
+.fa-eye__shape {
+  top: 43.29px;
+  left: 26.57px;
+}
+
+.fa-eye__iris {
+  top: 48.21px;
+  left: 49.2px;
+}
+
+.fa-eye__pupil {
+  top: 52.15px;
+  left: 53.13px;
+}
+
+.fa-eye__glint {
+  top: 51.17px;
+  left: 49.2px;
+}
+
+.fa-eye__label {
+  top: 24px;
+  left: 34px;
+  font: 400 11px/1.44 var(--font-poppins);
+  white-space: nowrap;
+}
+
+.fa-shock__text {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 117px;
+}
+
+.fa-shock__title {
+  font: 500 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-shock__list p {
+  font: 400 11px/1.44 var(--font-poppins);
+}
+
+.fa-shock__cap {
+  font: 500 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+/* Fixed bottom bar (Figma group 2124:5149) */
+.fa-bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 195px;
+  pointer-events: none;
+}
+
+.fa-bar__blur {
+  position: absolute;
+  right: 0;
+  bottom: -7px;
+  left: 0;
+  height: 202px;
+  background: rgba(255, 255, 255, 0.01);
+  -webkit-backdrop-filter: blur(12.15px);
+  backdrop-filter: blur(12.15px);
+}
+
+.fa-bar__pill {
+  position: absolute;
+  bottom: 33px;
+  left: 23px;
+  width: 356px;
+  height: 79px;
+  border-radius: 50px;
+  background: #f5f5f5;
+}
+
+.fa-bar .btn {
+  position: absolute;
+  bottom: 40px;
+  height: 64px;
+  pointer-events: auto;
+}
+
+.fa-bar__retry.btn {
+  left: 32px;
+  width: 124px;
+}
+
+.fa-bar__mins.btn {
+  left: 167px;
+  width: 204px;
+}
+
+/* ---------- 12394 Legal side ---------- */
+.fa-legal {
+  position: absolute;
+  top: 126px;
+  left: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 356px;
+}
+
+.fa-legal__head {
+  display: flex;
+  flex-direction: column;
+  height: 61px;
+}
+
+.fa-legal__head .fa-module__title {
+  color: var(--body-copy-gray);
+}
+
+.fa-legal__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fa-note {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-left: 4px;
+  width: 352px;
+  border-radius: 12px;
+  background: var(--yellow-3);
+}
+
+.fa-note p {
+  color: #000;
+  font: 400 11px/1.44 var(--font-poppins);
+}
+
+.fa-note--legal {
+  height: 83px;
+  padding-left: 14px;
+}
+
+.fa-note--legal p {
+  width: 213px;
+}
+
+.fa-note--cert {
+  height: 69px;
+  margin-bottom: 1px;
+  padding-left: 16px;
+}
+
+.fa-note--cert p {
+  width: 266px;
+}
+
+.fa-act {
+  position: relative;
+  width: 352px;
+  height: 231px;
+  margin-left: 4px;
+  border-radius: 12px;
+  background: var(--yellow-3);
+  color: #000;
+}
+
+.fa-act__title {
+  position: absolute;
+  top: 26px;
+  left: 19px;
+  width: 216px;
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fa-act__body {
+  position: absolute;
+  top: 95px;
+  left: 19px;
+  display: flex;
+  flex-direction: column;
+  gap: 29px;
+  width: 309px;
+}
+
+.fa-act__text {
+  width: 298px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-act__text strong {
+  font-weight: 600;
+  line-height: 1.139;
+}
+
+.fa-act__source {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fa-act__source p {
+  flex: 1 0 0;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fa-steps__list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.fa-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14.969px 11px 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: var(--yellow-1);
+}
+
+.fa-step__num {
+  position: relative;
+  flex: none;
+  width: 40px;
+  height: 40px;
+}
+
+.fa-step__num span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fa-step__text {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fa-step__title {
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.fa-step__sub {
+  width: 201px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-step__chev {
+  flex: none;
+  width: 30.75px;
+  height: 39.707px;
+}
+
+.fa-certify.btn {
+  position: absolute;
+  bottom: 40px;
+  left: 23px;
+}
+
+/* ---------- 12465 Get certified ---------- */
+.fa-location {
+  position: absolute;
+  top: 39px;
+  left: 222px;
+  width: 156px;
+  height: 60px;
+}
+
+.fa-location__bg {
+  position: absolute;
+  top: 11px;
+  left: 0;
+  width: 152px;
+  height: 38px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.fa-location__pin {
+  position: absolute;
+  top: 17px;
+  left: 10px;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.fa-location__pin img {
+  position: absolute;
+  top: -8.5px;
+  left: -6.25px;
+  max-width: none;
+}
+
+.fa-location p {
+  position: absolute;
+  top: 20px;
+  left: 31px;
+  width: 115px;
+  color: #000;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.fa-cert {
+  position: absolute;
+  top: 126px;
+  left: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 356px;
+}
+
+.fa-cert .fa-module__title {
+  color: var(--body-copy-gray);
+}
+
+.fa-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fa-levels__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Figma "Course level selector": click selects (green), click again clears. */
+.fa-level {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  width: 114px;
+  height: 94px;
+  padding: 15px 12px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #e8f2d1;
+  text-align: left;
+}
+
+.fa-level--mid {
+  padding-left: 7px;
+}
+
+.fa-level__name {
+  color: #414141;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.fa-level__who {
+  width: 88px;
+  color: #999;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-level--selected {
+  background: var(--main-green);
+}
+
+.fa-level--selected .fa-level__name,
+.fa-level--selected .fa-level__who {
+  color: #fff;
+}
+
+.fa-categories__title {
+  position: absolute;
+  top: 432px;
+  left: 23px;
+  line-height: 1.68;
+  white-space: nowrap;
+}
+
+.fa-categories.tag-group {
+  position: absolute;
+  top: 474px;
+  left: 23px;
+  width: 356px;
+}
+
+.fa-courses__title {
+  position: absolute;
+  top: 583px;
+  left: 27px;
+  width: 356px;
+}
+
+.fa-courses {
+  position: absolute;
+  top: 615px;
+  left: 27px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 356px;
+}
+
+/* Figma "Frame 1410103761": hovering a course tints it pale yellow (instant). */
+.fa-course {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 114px;
+  padding: 14.969px 12px;
+  border-radius: 11.975px;
+  background: #fff;
+}
+
+@media (hover: hover) {
+  .fa-course:hover {
+    background: var(--yellow-3);
+  }
+}
+
+.fa-course__logo {
+  position: relative;
+  flex: none;
+  width: 87px;
+  height: 87px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.fa-course__logo img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+}
+
+.fa-course__logo--red-cross img {
+  top: -28px;
+  left: -84px;
+  width: 256px;
+  height: 144px;
+}
+
+.fa-course__logo--lifesaving img {
+  top: 0;
+  left: -6px;
+  width: 106px;
+  height: 89px;
+}
+
+.fa-course__logo--st-johns img {
+  top: -18px;
+  left: -24px;
+  width: 135px;
+  height: 135px;
+}
+
+.fa-course__text {
+  display: flex;
+  flex-direction: column;
+  width: 161px;
+  margin-right: 33px;
+}
+
+.fa-course__name {
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.fa-course__line {
+  margin-top: 5.2px;
+  color: #000;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: pre;
+}
+
+.fa-course__next {
+  margin-top: 14px;
+}
+
+.fa-course__chev {
+  flex: none;
+  width: 30.75px;
+  height: 39.707px;
+}
