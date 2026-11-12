@@ -1,0 +1,522 @@
+/* Figma "Health info" 1646:13208 and "Edit Health Stats" 1646:13446 */
+.hi {
+  background: #f5f5f5;
+  color: #414141;
+}
+
+.hi-content {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  width: 356px;
+  margin: 57px 23px 0;
+}
+
+.hi-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hi-top img {
+  width: 50.425px;
+  height: 50.425px;
+}
+
+.hi-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 140px;
+}
+
+.hi-title {
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+}
+
+.hi-subtitle {
+  font: 600 20px/1.139 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+.hi-tags {
+  display: flex;
+  gap: 15px;
+}
+
+/* Figma "health tag": hover light grey (300ms). */
+.hi-tag {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 15px;
+  border-radius: 100px;
+  background: #fff;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+  transition: background-color 300ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .hi-tag:hover {
+    background: #e7e7e7;
+  }
+}
+
+.hi-card {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.hi-muted,
+.hi-muted-light {
+  color: #555;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.hi-muted-light {
+  color: #c4c4c4;
+}
+
+/* Daily calories */
+.hi-cal {
+  gap: 18px;
+  color: #000;
+}
+
+.hi-cal__title {
+  font: 500 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.hi-cal__value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 400 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+}
+
+.hi-cal__unit {
+  font-size: 16px;
+  line-height: 1.68;
+  letter-spacing: -0.32px;
+}
+
+.hi-cal__bar {
+  position: relative;
+  height: 28px;
+}
+
+.hi-cal__track,
+.hi-cal__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 11.5px;
+  border-radius: 11.706px;
+}
+
+.hi-cal__track {
+  width: 296px;
+  background: #e8f2d1;
+}
+
+.hi-cal__fill {
+  width: 98.093px;
+  background: #80ac3c;
+}
+
+.hi-cal__min,
+.hi-cal__max {
+  position: absolute;
+  top: 16.5px;
+  color: #6b6b6b;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.hi-cal__min {
+  left: 0;
+}
+
+.hi-cal__max {
+  right: 0;
+}
+
+.hi-rings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hi-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 59.57px;
+}
+
+.hi-ring__graphic {
+  position: relative;
+  width: 59.57px;
+  height: 59.6px;
+}
+
+.hi-ring__graphic > * {
+  position: absolute;
+}
+
+.hi-ring__track {
+  top: 0;
+  left: 0.43px;
+}
+
+.hi-ring--carbs .hi-ring__track {
+  top: 0.3px;
+}
+
+/* Figma flips each arc (rotate 180 + flip vertical = mirror horizontally). */
+.hi-ring__arc {
+  top: 0;
+  left: 0;
+  transform: scaleX(-1);
+}
+
+.hi-ring--protein .hi-ring__arc {
+  left: 0;
+  transform: translateX(-1.13px) scaleX(-1);
+}
+
+.hi-ring--fat .hi-ring__arc {
+  top: 0.14px;
+}
+
+.hi-ring__pct {
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.hi-ring--carbs .hi-ring__pct {
+  top: 16.77px;
+  left: 14px;
+}
+
+.hi-ring--protein .hi-ring__pct {
+  top: 17.55px;
+  left: 13.43px;
+}
+
+.hi-ring--fat .hi-ring__pct {
+  top: 16.55px;
+  left: 15.85px;
+}
+
+.hi-ring__label {
+  color: #232323;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+/* Steps */
+.hi-steps {
+  gap: 12px;
+}
+
+.hi-steps__head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hi-steps__total {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  font: 400 24px/1.139 var(--font-poppins);
+  letter-spacing: -0.48px;
+}
+
+.hi-steps__chart {
+  position: relative;
+  height: 130.357px;
+}
+
+.hi-steps__line {
+  position: absolute;
+  left: 0;
+}
+
+.hi-steps__bars {
+  position: absolute;
+  top: 0;
+  left: 101px;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 92px;
+}
+
+.hi-steps__bars span {
+  width: 17px;
+  border-radius: 33.332px 33.332px 0 0;
+  background: #ffd88b;
+}
+
+.hi-steps__bars .hi-steps__bar--peak {
+  border: 1.089px solid #ffb126;
+}
+
+.hi-steps__y,
+.hi-steps__x {
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+.hi-steps__y {
+  position: absolute;
+  left: 254px;
+}
+
+.hi-steps__x {
+  position: absolute;
+  top: 113px;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 235px;
+}
+
+.hi-steps__x-last {
+  line-height: 1.139;
+}
+
+/* Monthly activity */
+.hi-month {
+  gap: 12px;
+}
+
+.hi-month__head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.hi-month__title {
+  font: 400 24px/1.139 var(--font-poppins);
+  letter-spacing: -0.48px;
+}
+
+.hi-month__chart {
+  position: relative;
+  height: 122px;
+}
+
+.hi-month__legend {
+  position: absolute;
+  top: 3.12px;
+  left: 249.5px;
+}
+
+.hi-month__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hi-month__x {
+  position: absolute;
+  top: 105px;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 296px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+/* 2 x 2 tiles (Figma "watah") */
+.hi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  height: 223px;
+}
+
+.hi-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.hi-tile__text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 110px;
+}
+
+.hi-tile__label {
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  color: #b9b9b9;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.hi-tile__icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  background: #b9b9b9;
+  -webkit-mask-size: 20px 20px;
+  mask-size: 20px 20px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.hi-tile__value {
+  height: 24px;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: pre;
+}
+
+.hi-tile__bold {
+  font-weight: 600;
+}
+
+/* Figma "Component 8": a pale track with a green-to-orange bar and a dot. */
+.hi-meter {
+  position: relative;
+  flex: none;
+  width: 15px;
+  height: 59px;
+  border-radius: 20px;
+  background: rgb(242, 249, 247);
+}
+
+.hi-meter__bar {
+  position: absolute;
+  top: 8px;
+  left: 5px;
+  width: 5px;
+  height: 43px;
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #d3f1b1 25.5%, #ffb126 100%);
+}
+
+.hi-meter__dot {
+  position: absolute;
+  left: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.hi-meter--low .hi-meter__dot {
+  top: 30px;
+  background: #dfdf89;
+}
+
+.hi-meter--high .hi-meter__dot {
+  top: 12px;
+  background: #d3f1b1;
+}
+
+/* ---------- Edit Health Stats ---------- */
+.eh {
+  background: var(--app-grey);
+  color: #414141;
+}
+
+.eh-content {
+  display: flex;
+  flex-direction: column;
+  width: 361.703px;
+  margin: 45px 0 0 21px;
+}
+
+.eh-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eh-done img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.eh-title {
+  margin-top: 42px;
+  color: #474747;
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+}
+
+.eh-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 37px;
+}
+
+.eh-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 57px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: #fff;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.eh-row__value {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eh-row__value b {
+  font: 600 15px/1.3 var(--font-poppins);
+  letter-spacing: -0.3px;
+}
+
+.eh-row__value--select {
+  justify-content: space-between;
+  width: 72px;
+}
+
+.eh-pencil {
+  width: 13px;
+  height: 15px;
+  object-fit: cover;
+}
+
+/* Figma: a 5 x 10 chevron rotated -90deg (points down). */
+.eh-chevron {
+  width: 6.667px;
+  height: 11.667px;
+  margin: 0 1.67px;
+  transform: rotate(-90deg);
+}

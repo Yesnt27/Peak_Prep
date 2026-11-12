@@ -1,0 +1,211 @@
+/* Figma "new training 19 / 20 / 21 / 23 / 8 / 22" + invite sheet 2175:7829 */
+.nt-body {
+  gap: 35px;
+}
+
+.nt-title {
+  color: #474747;
+}
+
+/* Step 19 */
+.nt-target {
+  display: flex;
+  flex-direction: column;
+  gap: 16.888px;
+}
+
+.nt-search img {
+  width: 16px;
+  height: 26px;
+}
+
+.nt-target .hike-card {
+  width: 355px;
+}
+
+.nt-link {
+  color: #414141;
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+/* Step 20 */
+.nt-year {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  align-self: flex-start;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: #fff;
+  font: 600 20px/1.139 var(--font-poppins);
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+
+.nt-year__arrow {
+  position: relative;
+  width: 29px;
+  height: 29px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--yellow-2);
+}
+
+.nt-year__arrow img {
+  position: absolute;
+  top: 6px;
+  left: 5.08px;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.nt-year__arrow--next {
+  transform: rotate(180deg);
+}
+
+.nt-year__arrow--next img {
+  left: 4.92px;
+}
+
+.nt-months {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 356px;
+}
+
+.nt-month {
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: #fff;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+  transition: background-color 300ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .nt-month--hover:hover {
+    background: #e7e7e7;
+  }
+}
+
+.nt-exact {
+  width: 356px;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: #ededed;
+  color: #cfcfcf;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+/* Step 22 */
+.nt-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 355px;
+}
+
+.nt-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 355.883px;
+  padding: 14.969px 20px;
+  border-radius: 11.975px;
+  background: #fff;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+/* Invite Friends sheet */
+.nt-invite-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  width: 100%;
+  margin-top: -22px;
+  color: #414141;
+  font: 400 13px/normal var(--font-sf);
+}
+
+.nt-invite-link img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.nt-friends {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.nt-friend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 71px;
+}
+
+.nt-friend__who {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nt-friend__photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nt-friend__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 111px;
+}
+
+.nt-friend__name {
+  width: 142px;
+  color: var(--body-copy-gray);
+  font: 700 16px/normal var(--font-sf);
+}
+
+.nt-friend__handle {
+  color: #aeaeae;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+.nt-friend__add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 63px;
+  height: 28px;
+  border-radius: 20px;
+  background: #e8f2d1;
+  color: #414141;
+  font: 400 13px/normal var(--font-sf);
+  transition: background-color 300ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .nt-friend__add:hover {
+    background: #e7e7e7;
+  }
+}

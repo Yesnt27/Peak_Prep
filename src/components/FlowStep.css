@@ -1,0 +1,208 @@
+/* Shared step layout: "Completed Hike" (Hiker Log) and "New Training" flows. *//* Figma "Hiker Log - …" (1646:11007 … 11053) */
+.fs {
+  background: var(--app-grey);
+  color: #414141;
+}
+
+.fs-back {
+  position: absolute;
+  top: 48px;
+  left: 23px;
+}
+
+/* Pinned 356 x 68 button at y=765 of the 874 frame. */
+.fs-cta.btn {
+  position: absolute;
+  bottom: 41px;
+  left: 23px;
+}
+
+.fs-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  width: 356px;
+  margin: 125px 0 0 22.92px;
+  padding-bottom: 160px;
+}
+
+.fs-content > * {
+  width: 100%;
+}
+
+.fs-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.fs-progress p {
+  color: #868686;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fs-progress__track {
+  height: 6px;
+  border-radius: 5px;
+  background: #d9d9d9;
+}
+
+.fs-progress__fill {
+  height: 6px;
+  border-radius: 5px;
+  background: var(--main-green);
+}
+
+.fs-body {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.fs-body--center {
+  align-items: center;
+}
+
+.fs-body--congrats {
+  gap: 35px;
+}
+
+.fs-title {
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+}
+
+.fs-title--wrap {
+  width: 356px;
+  white-space: normal;
+}
+
+.fs-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fs-sub {
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fs-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 355px;
+}
+
+.fs-label {
+  font: 600 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fs-input,
+.fs-search {
+  display: flex;
+  align-items: center;
+  width: 355px;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: #ededed;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.fs-search {
+  align-items: flex-start;
+  gap: 11.975px;
+}
+
+.fs-search img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.fs-tags.tag-group {
+  width: 356px;
+}
+
+/* ---------- Option rows ---------- */
+.fs-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 356px;
+}
+
+.fs-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11.975px;
+  width: 100%;
+  height: 67.25px;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: #fff;
+  color: #414141;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  text-align: center;
+  white-space: nowrap;
+  transition: background-color 300ms var(--ease-out);
+}
+
+.fs-option--selected {
+  background: #d4e6b8;
+  font-weight: 600;
+  transition: none;
+}
+
+@media (hover: hover) {
+  .fs-option:not(.fs-option--selected):hover {
+    background: #e7e7e7;
+  }
+}
+
+.fs-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.fs-icon {
+  position: relative;
+}
+
+/* Masked "small icons": the PNG is the mask, filled #414141; insets/positions come from Figma per icon. */
+.fs-icon__mask {
+  position: absolute;
+  inset: 0;
+  background: #414141;
+  -webkit-mask-size: 24px 24px;
+  mask-size: 24px 24px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.fs-title--review {
+  color: #474747;
+}
+
+.fs-icon img {
+  max-width: 24px;
+  max-height: 24px;
+  object-fit: contain;
+}
+
+.fs-body--center > .fs-intro {
+  align-self: stretch;
+}

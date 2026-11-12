@@ -1,0 +1,226 @@
+.hl-content--review {
+  padding-bottom: 0;
+}
+
+/* ---------- Trail card ---------- */
+.hl-congrats__trail {
+  display: flex;
+  flex-direction: column;
+  gap: 16.888px;
+}
+
+.hl-card {
+  position: relative;
+  flex: none;
+  width: 355px;
+  height: 305px;
+}
+
+.hl-card > * {
+  position: absolute;
+}
+
+.hl-card__photo {
+  top: 0;
+  left: 0;
+  width: 355px;
+  height: 266.25px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.hl-card__shade {
+  top: 145.17px;
+  left: 0;
+  width: 355px;
+  height: 52px;
+  background: linear-gradient(to top, #414141, rgba(65, 65, 65, 0));
+}
+
+.hl-card__base {
+  top: 197px;
+  left: 0;
+}
+
+.hl-card__name {
+  top: 213px;
+  left: 18.1px;
+  width: 196.105px;
+  font: 400 20px/1.139 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+.hl-card--review .hl-card__name {
+  color: #000;
+}
+
+.hl-card__loc,
+.hl-card__stats {
+  left: 18.08px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.hl-card__loc {
+  top: 240.17px;
+  width: 179px;
+}
+
+.hl-card--review .hl-card__loc {
+  top: 240px;
+}
+
+.hl-card__stats {
+  top: 268.18px;
+  width: 266.501px;
+}
+
+.hl-card__dots {
+  top: 178.17px;
+  left: calc(50% + 1.58px);
+  display: flex;
+  gap: 4px;
+  transform: translateX(-50%);
+}
+
+.hl-card__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.hl-card__dot--current {
+  background: #ffd88b;
+}
+
+.hl-card__selected {
+  top: 15.18px;
+  left: 241.84px;
+  width: 96.544px;
+  height: 26px;
+  border-radius: 20px;
+  background: #f5f5f5;
+}
+
+.hl-card__selected img {
+  position: absolute;
+  top: 7px;
+  left: 8.98px;
+}
+
+.hl-card__selected span {
+  position: absolute;
+  top: 4.99px;
+  left: 29.24px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.hl-card__bars span {
+  position: absolute;
+  top: 181.99px;
+  height: 5.014px;
+  border-radius: 13px;
+  background: #949494;
+}
+
+.hl-card__bars .hl-card__bar--current {
+  background: #5b5b5b;
+}
+
+/* Figma "Completed Button": the label box is 68.28px wide, so "Completed" wraps as in Figma. */
+.hl-card__completed {
+  top: 15px;
+  left: 232.08px;
+  width: 106px;
+  height: 26px;
+  border-radius: 20px;
+  background: #5b5b5b;
+}
+
+.hl-card__completed img {
+  position: absolute;
+  top: 12.28px;
+  left: 18px;
+}
+
+.hl-card__completed span {
+  position: absolute;
+  top: 10px;
+  left: 37.72px;
+  width: 68.28px;
+  color: #fff;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+/* ---------- General notes ---------- */
+.hl-notes {
+  position: relative;
+  width: 355px;
+  height: 302px;
+  border-radius: 11.975px;
+  background: #ededed;
+}
+
+.hl-notes span {
+  position: absolute;
+  top: 24px;
+  left: 31px;
+  opacity: 0.45;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+/* ---------- Review ---------- */
+.hl-review-page {
+  position: relative;
+  display: flow-root;
+  min-height: 1516px;
+}
+
+.hl-content--review {
+  width: 355px;
+}
+
+.hl-answer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11.975px;
+  width: 356px;
+  height: 67.25px;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: #ededed;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.hl-answer__icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.hl-answer-notes {
+  position: relative;
+  width: 355px;
+  height: 302px;
+}
+
+.hl-answer-notes p {
+  position: absolute;
+  top: 0.25px;
+  left: 0.08px;
+  width: 355px;
+  height: 295px;
+  padding: 24px 30px 0 32px;
+  border-radius: 11.975px;
+  background: #ededed;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}

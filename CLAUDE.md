@@ -77,22 +77,22 @@ Prototype page: "Stage 4 prototype" (`1646:2450`). Some prototype links point at
 | `/onboarding/welcome` … `/safety` | `1646:6565`, `6617`, `6660`, `6690`, `6711` | Sheets: workout `1646:11728`, injury `11749`, health conditions `11769`. |
 | `/home/saved`, `/explore`, `/training` | `1892:3398`, `1892:3571`, `1892:4108` | Tab highlight switches on click; content follows 300ms later (prototype delay). |
 
-**Still to build.** Read from the prototype connections on 2026-11-12. Nav bar: Home → `/home/saved`, Create → new training 19, Profile → Profile. Routes are proposed and get fixed as each screen is built.
+| `/hike` | Hike Details (hifi) `1780:3160` | back → `/home/saved`; "Start Preperation" → `/first-aid/practice` |
+| `/training` | Training overview (hi-fi) `1780:3125` | Packing List → `/packing/all`; Continue lesson → `/first-aid`; Hike Completed! → `/log/congrats` |
+| `/packing/all`, `/to-pack`, `/packed`, `/edit` | `1646:11433`, `11597`, `11656`, `11507` | tabs switch screens (smart); back → `/training`; pencil → edit; edit ✓ → packed, Save → all |
+| `/first-aid` | First aid module `1646:12184` | Heat Exposure row → `/first-aid/heat`, cards → `/legal`, `/certified` (slide in ←); back → `/training` |
+| `/first-aid/heat`, `/practice`, `/correct` | `1646:12254`, `12155`, Right or wrong `12263` | Start lesson → practice; Skip → correct (slide out ←); Retry → practice |
+| `/first-aid/legal`, `/certified` | Right or wrong `1646:12394`, `12465` | back → `/first-aid` |
+| `/log/congrats` … `/review` | Hiker Log `11007` → `11107` → `11133` → `11189` → `11151` → `11168` → `11053` | each back → previous step |
+| `/new-training` … `/schedule` | new training 19 `5644` → 20 → 21 → 23 → 8 → 22 | 23 opens Invite Friends sheet `2175:7829`; Done → `/training` (smart) |
 
-| Proposed route | Figma frame | Prototype links out |
-| --- | --- | --- |
-| `/hike` | Hike Details (hifi) `1780:3160` | back → Home Saved; green button → First aid module `12155` |
-| `/training` | Training overview (hi-fi) `1780:3125` | green button → Packing All Items; button → First aid module `12184`; button → Hiker Log Congrats |
-| `/packing/all`, `/to-pack`, `/packed` | `1646:11433`, `11597`, `11656` | 3-choice tab nav switches between them; back → Training overview; button → Packing Edit |
-| `/packing/edit` | Packing - Edit `1646:11507` | back → Packed; button → All Items |
-| `/first-aid/…` | First aid module `1646:12155`, `12184`, `12254` | 12184: back → Training overview, cards slide in → `12254`, `12394`, `12465`; 12254 → 12155; 12155 → 12184 (back), Right or wrong `12263` (slide out ←) |
-| `/first-aid/quiz/…` | Right or wrong `1646:12263`, `12394`, `12465` | 12263: back → 12184, button → 12155; 12394/12465: back → 12184 |
-| `/log/…` | Hiker Log: Congrats `11007` → Details `11107` → Difficulty `11133` → Emergency Prep. `11189` → Physical Prep. `11151` → General Notes `11168` → Review Details `11053` | each back button returns to the previous step |
-| `/new-training/…` | new training 19 `5644` → 20 `5688` → 21 `5714` → 23 `5788` → 8 `5732` → 22 `5749` | 19 back → Home Saved; 23 opens health conditions sheet `2175:7829`; 22 → Training overview |
-| `/profile` | Profile `1646:13300` | cards → Completed Hikes `1767:8813`, Health info `13208`, Friendlist `13323`, `Frame 1410103912` `13422` |
-| `/profile/health` | Health info `13208` | → Profile; → `Frame 1410103913` `13446` |
-| `/profile/friends` | Friendlist `13323` | back → Profile; "add friends" → Add `2136:3603`; search bar → Add `2234:4055` |
-| `/profile/completed` | Completed Hikes `1767:8813` + fav completed hike `1673:3790` | favourite toggle (Component 5) swaps between them |
+| `/profile` | Profile `1646:13300` | cards → completed / health / friends / privacy (smart) |
+| `/profile/health`, `/health/edit` | Health info `13208`, Edit Health Stats `13446` | round back → profile; pencil → edit; edit back/✓ → health |
+| `/profile/friends`, `/friends/add`, `/friends/search` | Friendlist `13323`, Add `2136:3603`, Add `2234:4055` | "add friends" → add; search bar → search; both back → friends |
+| `/profile/completed`, `/completed/favourited` | Completed Hikes `1767:8813`, fav completed hike `1673:3790` | Recent/Favourited pill swaps, screen follows 100ms later |
+| `/profile/privacy` | `Frame 1410103912` `13422` | round back → profile |
+
+All prototype-reachable screens are built.
 
 Same-named frames that no live screen links to, and that are **not** built: Packing - All Items `2181:3983`, Onboarding - Hiking Exp. `2142:3855`, Home - Saved2 `2240:6301`, new training 24/25 `2240:6324`/`6349` (presentation-slide flow), Right or wrong `1646:12330`, op 1/2/3, and the hi-fi drafts inside "Hi-fi: Home + Training overview".
 
@@ -105,6 +105,8 @@ Headless Chrome is used for screenshots and click-throughs (scripts live in the 
 - 2026-11-12 — Brief written. Project scaffolded (Vite + React + Pages workflow).
 - 2026-11-12 — Figma connected through the claude.ai Figma connector. Navigation graph read from the prototype.
 - 2026-11-12 — Built and checked against Figma: app shell, splash animation, sign-in, onboarding (5 steps + 3 bottom sheets), Home (3 tabs), nav bar.
+- 2026-11-12 — (Mac session) Built and checked: Profile (9 screens). Every route renders without errors (headless sweep). `first-aid` split into `Module` / `Practice` / `Resources` + `parts.jsx`.
+- 2026-11-12 — (Mac session) Built and checked: Hike details, Training overview, Packing (4), First aid (6), Hiker Log (7), New training (6 + invite sheet). Shared pieces: `components/FlowStep.jsx` (step shell, option rows), `data/hikes.js`. Updated to current Figma: list-row tick/hover now green, Add Item hover `#d4e6b8`.
 
 ## Open questions
 
@@ -115,6 +117,56 @@ Things the Figma file does not answer. Nothing has been invented for these; each
 3. **Unreachable screens:** nothing in the prototype links to Training Schedule (`2068:5154`) and, through it, the three Training detail screens (`2068:5528`, `2084:6318`, `2084:6351`).
 4. **Static form fields:** text fields (Name, Age, emergency contact…), search bars, the workout count stepper and the "remove" (×) icons have no interaction in the prototype, so they are static here too. Should any become real inputs for testing?
 5. **Selections don't carry over:** picking workouts/injuries in a bottom sheet does not change the list underneath (same as the prototype).
+6. **More links with no destination in the prototype** (left as hover-only or static): back buttons on Training overview, Heat Exposure and Hiker Log Congrats; "View Training Schedule", "Get First-aid certified", "20 mins", Review Details "Done"; New training Goal rows and day tags (hover only); in the month grid only "July" has a hover; the Hike details heart shows the same icon in both states.
+7. **Copy that looks like typos / mismatches (kept exactly as in Figma):** "Start Preperation", "Brunsick Mountain Safety", "protecs", "AYS" (Completed hikes stat), "6ft3”t"; Health info says Male / 168lbs but Edit Health Stats says Female / 186lbs; Hiker Log shows "The Black Tusk" / "Garibaldi Provincial Park, B" over a Brunswick photo; "Trail challenges · 3 flagged" lists 4; Packing title "Black Tusk Winter Hike Packing List" while the training is Brunswick; several invite handles are "@john_bo2"; Friend search lists Christopher Nolan / Miley Cyrus / Bob Dylan.
+8. **Figma layout quirks copied as-is:** Get certified frame is 923px and clips the third course card; Review Details "Completed" chip label is wider than its pill; on "Correct!" the blur strip behind the bottom buttons scrolls in Figma — here it is pinned with them.
+9. **Shared components updated to current Figma:** list-row tick + hover are now green (were yellow) and "Add Item" hover is `#d4e6b8` (was yellow). This also changes Home → Training and onboarding.
+
+## Working rules for this frontend prototype (token-efficient, quality-first)
+
+Goal: build a high-quality frontend prototype while keeping token use low. Spend tokens on design decisions and working code, not on re-reading files, rewriting whole files, or narrating.
+
+### 1. Plan before touching code
+- Before writing anything, give me a short plan of no more than 10 lines: screens/components, file structure, and styling approach. Wait for my OK on anything large.
+- Ask me at most 2–3 clarifying questions up front. Don't drip questions out mid-build.
+
+### 2. Set up a design foundation once, then reuse it
+- Define design tokens (colors, type scale, spacing, radius, shadows) in ONE file, e.g. `tokens.css` or the Tailwind config, at the start.
+- Build small reusable primitives first (Button, Card, Input, Stack/Layout). Compose screens from them; don't restyle each screen from scratch.
+- Reference tokens/primitives by name instead of repeating raw values.
+
+### 3. Read surgically
+- Don't re-read files you've already read this session unless they've changed.
+- Use grep or targeted line ranges instead of opening whole large files.
+- Don't scan node_modules, build output, lockfiles, or assets.
+- Don't explore the repo "just in case". Only read what the current step needs.
+
+### 4. Edit, don't rewrite
+- Use targeted edits (diffs) on existing files. Never regenerate a whole file to change a few lines.
+- Keep components focused. Split any file over ~200 lines so later edits stay small.
+- Don't add speculative features, extra variants, or abstractions I didn't ask for.
+
+### 5. Keep it prototype-appropriate
+- Use mock data in a single `mockData` file. No real backend, auth, or state libraries unless I ask.
+- Skip tests, extensive error handling, and heavy accessibility audits for now. Do keep semantic HTML, focus states, and adequate contrast, since those are cheap and keep quality up.
+- Prefer the existing stack and already-installed packages over adding new dependencies.
+
+### 6. Verify cheaply
+- After each meaningful chunk, run the dev server/build once and fix errors. Don't loop on screenshots or re-renders.
+- If something fails twice, stop and tell me what's wrong instead of trying variations blindly.
+
+### 7. Communicate briefly
+- No narration between steps. When a step is done, reply in 1–3 lines: what changed (file names) and what's next.
+- Don't paste back code you just wrote into the file. I can see the diff.
+- If you notice a design or UX problem, flag it in one sentence. Don't silently skip it, and don't write an essay about it.
+
+### Order of work
+1. Plan → my OK
+2. Tokens + primitives
+3. Layout shell/navigation
+4. Screens, one at a time, from primitives
+5. Polish pass: spacing, hierarchy, states (hover/empty/loading)
+6. Short summary of what's built and any known gaps
 
 ## User-testing refinements
 

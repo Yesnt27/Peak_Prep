@@ -131,7 +131,8 @@
   display: flex;
   flex: 1 0 0;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 83px;
   width: 355px;
   padding: 14.969px 19.958px;
   border-radius: 11.975px;
@@ -139,6 +140,10 @@
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
   white-space: nowrap;
+}
+
+.fa-lesson--first {
+  gap: 119px;
 }
 
 .fa-lesson--next {
@@ -384,7 +389,7 @@
 }
 
 .fa-etiquette__icon--rotate img {
-  transform: rotate(-145deg);
+  transform: rotate(145deg);
 }
 
 .fa-etiquette__text {
