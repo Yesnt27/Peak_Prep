@@ -1,0 +1,42 @@
+.welcome {
+  background: var(--app-grey);
+}
+
+.welcome__content {
+  position: absolute;
+  left: 23px;
+  top: 50%;
+  width: 356px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  transform: translateY(-50%);
+}
+
+.welcome__title {
+  width: 221px;
+  color: var(--body-copy-gray);
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -0.6px;
+  text-align: center;
+}
+
+.welcome__title-lead {
+  font-family: var(--font-poppins);
+  font-weight: 700;
+  line-height: 1.139;
+}
+
+.welcome__title-brand {
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+.welcome__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}

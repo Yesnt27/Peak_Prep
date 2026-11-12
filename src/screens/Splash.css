@@ -1,0 +1,53 @@
+.splash {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--main-green);
+}
+
+/* The "Peak Prep" wordmark, used as an alpha mask over the moving artwork. */
+.splash__mark {
+  position: absolute;
+  left: 99.95px;
+  top: 367.464px;
+  width: 206.751px;
+  height: 137.557px;
+  -webkit-mask-image: url('../assets/splash/wordmark-mask.svg');
+  mask-image: url('../assets/splash/wordmark-mask.svg');
+  -webkit-mask-size: 206.751px 137.557px;
+  mask-size: 206.751px 137.557px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.splash__art {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2387px;
+  height: 352px;
+  will-change: transform;
+}
+
+.splash__white {
+  position: absolute;
+  left: 0;
+  top: -99px;
+  width: 2387px;
+  height: 367px;
+  background: #f5f5f5;
+}
+
+.splash__mountains {
+  position: absolute;
+  left: -402px;
+  top: 11px;
+  width: 1740px;
+  height: 325px;
+  max-width: none;
+}
+
+.splash__mountains--end {
+  top: -141px;
+  height: 477px;
+}

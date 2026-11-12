@@ -1,0 +1,41 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 356px;
+  height: 68px;
+  padding: 24.835px 9.979px;
+  border-radius: 49.895px;
+  color: var(--washed-white);
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+  text-align: center;
+  white-space: nowrap;
+  transition: background-color 300ms var(--ease-out);
+}
+
+.btn--green {
+  background-color: var(--main-green);
+}
+
+.btn--yellow {
+  background-color: var(--yellow-2);
+}
+
+.btn--green:active {
+  background-color: #006b45;
+}
+
+.btn--yellow:active {
+  background-color: #bd6014;
+}
+
+@media (hover: hover) {
+  .btn--green:hover {
+    background-color: #006b45;
+  }
+
+  .btn--yellow:hover {
+    background-color: #bd6014;
+  }
+}

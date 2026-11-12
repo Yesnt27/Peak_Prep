@@ -1,0 +1,159 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-poppins);
+  color: var(--body-copy-gray);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: inherit;
+}
+
+img,
+svg {
+  display: block;
+}
+
+/* ---------- Stage + device ----------
+   The design is a 402 x 874 phone frame. `zoom` scales the whole frame so it
+   is always laid out at 402 design px wide, whatever the real screen size. */
+.stage {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #111;
+}
+
+.device {
+  position: relative;
+  flex: none;
+  width: 402px;
+  height: 874px;
+  zoom: var(--scale, 1);
+  overflow: hidden;
+  background: var(--app-grey);
+}
+
+.stage--phone .device {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Route layers + prototype transitions ---------- */
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.layer--out {
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Smart animate / dissolve: the new screen fades in over the old one. */
+.layer--in.t-smart {
+  animation: layer-fade-in 300ms var(--ease-out) both;
+}
+
+.layer--in.t-smart-in {
+  animation: layer-fade-in 300ms var(--ease-in) both;
+}
+
+/* Slide in (left): the new screen slides over from the right. */
+.layer--in.t-slide-in-left {
+  animation: layer-slide-in-left 300ms var(--ease-out) both;
+}
+
+/* Slide out (left): the old screen slides away to the left. */
+.layer--out.t-slide-out-left {
+  z-index: 2;
+  animation: layer-slide-out-left 300ms var(--ease-out) both;
+}
+
+@keyframes layer-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes layer-slide-in-left {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes layer-slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ---------- Screen scaffold ---------- */
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--app-grey);
+}
+
+.screen__scroll {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.screen__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer--in,
+  .layer--out {
+    animation-duration: 1ms !important;
+  }
+}
