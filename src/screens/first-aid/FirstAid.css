@@ -1292,3 +1292,27 @@
     background: var(--yellow-2);
   }
 }
+
+/* Trail Etiquette: side-scrolling card row (swipe, or drag with a mouse). */
+.fa-etiquette {
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 23px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
+
+.fa-etiquette__card {
+  scroll-snap-align: start;
+  user-select: none;
+}
+
+.fa-etiquette__card img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.fa-etiquette--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+}

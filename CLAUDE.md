@@ -231,3 +231,21 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - **Training overview calendar:** any day can be selected. The green pill moves to the tapped day, and training-day dots stay.
 - **Heat Exposure:** the full text is shown and scrolls, with no fade.
 - **Profile blank on Pages:** the Pages build was failing on unresolved merge conflicts. These are now resolved in favour of the Mac build. Pages updates after the next push to `main`.
+- **Trail Etiquette 101 cards:** the row side-scrolls by swipe on touch or drag with a mouse, and snaps card by card.
+- **Home sort dropdown** (asked by Kenny, not in Figma):
+  - "Sort: …" opens a menu with Distance / Elevation / Time.
+  - Picking an option sorts the Saved and Explore cards lowest first.
+  - The cards stay in Figma order until something is picked.
+  - The Training tab is not sorted.
+
+### Round 3 — selections + Training Schedule (from Kenny, 2026-11-12)
+
+- **New training → Hike Date:**
+  - The year arrows change the year (no earlier than 2026).
+  - Months can be selected one at a time. They use the tag styles: hover `#e7e7e7`, selected `#d4e6b8`.
+- **New training → Goal:** the rows are selectable, like the Trip Type rows.
+- **New training → Your training schedule:** the day tags can be multi-selected.
+- **Training overview → "View Training Schedule"** now opens `/training/schedule`, Figma "Training Schedule" `2068:5154` (smart animate). Its back button returns to `/training`.
+  - Training overview and Training Schedule share `PrepStatus` and `WeekStrip`, exported from `TrainingOverview.jsx`.
+  - The row chevrons have no destination yet. The three Training detail screens (`2068:5528`, `2084:6318`, `2084:6351`) are still not built.
+- **Fix:** `ListItem` used `checkGreen` without importing it, and now imports it.

@@ -1,0 +1,42 @@
+/* Figma "Training Schedule" 2068:5154 */
+.ts-page {
+  position: relative;
+  min-height: 875px;
+  padding: 125px 23px 230px;
+  color: var(--body-copy-gray);
+}
+
+.ts-back {
+  position: absolute;
+  top: 48px;
+  left: 23px;
+}
+
+.ts-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 355px;
+}
+
+.ts-head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ts-title {
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+}
+
+.ts-sub {
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.ts-chevron {
+  width: 24px;
+  height: 24px;
+}

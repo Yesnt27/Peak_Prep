@@ -90,7 +90,7 @@
 }
 
 @media (hover: hover) {
-  .nt-month--hover:hover {
+  .nt-month:not(.nt-month--selected):hover {
     background: #e7e7e7;
   }
 }
@@ -207,5 +207,31 @@
 @media (hover: hover) {
   .nt-friend__add:hover {
     background: #e7e7e7;
+  }
+}
+
+/* Selectable months + year arrows (user testing round 3). */
+.nt-month {
+  color: inherit;
+}
+
+.nt-month--selected {
+  background: #d4e6b8;
+  font-weight: 600;
+}
+
+.nt-year__arrow {
+  flex: none;
+  transition: background-color 300ms var(--ease-out), opacity 300ms var(--ease-out);
+}
+
+.nt-year__arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .nt-year__arrow:not(:disabled):hover {
+    background: var(--yellow-1);
   }
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import checkDefault from '../assets/icons/check-default.svg'
 import checkSelected from '../assets/icons/list-item-checked.svg'
+import checkGreen from '../assets/icons/check-green.svg'
 import './ListItem.css'
 
 /**

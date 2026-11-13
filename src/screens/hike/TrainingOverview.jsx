@@ -46,10 +46,58 @@ function BagStat({ title, value, unit, note, remaining, fill }) {
 }
 
 /** Figma "Training overview (hi-fi)" 1780:3125. */
+/** Readiness ring + prep rows (Training overview and Training Schedule). */
+export function PrepStatus() {
+  return (
+    <div className="to-prep">
+      <div className="to-ring">
+        <img src={ringTrack} alt="" />
+        <img src={ringFill} alt="" />
+        <p className="to-ring__value">82%</p>
+        <p className="to-ring__label">ready</p>
+      </div>
+      <div className="to-prep__rows">
+        {[
+          ['Prep status', 'On optimal track'],
+          ['Training completed', '3 of 6 weeks'],
+          ['Elevation goal', '3,389 / 4,120 m'],
+        ].map(([label, value]) => (
+          <div className="to-prep__row" key={label}>
+            <p className="to-prep__label">{label}</p>
+            <p className="to-prep__value">{value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/** Week strip: the green pill starts on today (28) and moves to the tapped day. */
+export function WeekStrip() {
+  const [day, setDay] = useState('28')
+  return (
+    <div className="to-week">
+      {WEEK.map(([weekday, date, dot]) => (
+        <button
+          type="button"
+          className={date === day ? 'to-day to-day--today' : 'to-day'}
+          key={date}
+          aria-pressed={date === day}
+          onClick={() => setDay(date)}
+        >
+          <p className="to-day__weekday">{weekday}</p>
+          <p className="to-day__date">{date}</p>
+          <span className="to-day__dot">
+            {dot && <img src={date === day ? dotToday : dotDone} alt="" />}
+          </span>
+        </button>
+      ))}
+    </div>
+  )
+}
+
 export default function TrainingOverview() {
   const go = useGo()
-  // The green pill starts on today (28) and moves to whichever day is tapped.
-  const [day, setDay] = useState('28')
   const done = completedLessons()
   const upNext = LESSONS.find(([name]) => !done.includes(name))
   return (
@@ -73,26 +121,7 @@ export default function TrainingOverview() {
           ]}
         />
 
-        <div className="to-prep">
-          <div className="to-ring">
-            <img src={ringTrack} alt="" />
-            <img src={ringFill} alt="" />
-            <p className="to-ring__value">82%</p>
-            <p className="to-ring__label">ready</p>
-          </div>
-          <div className="to-prep__rows">
-            {[
-              ['Prep status', 'On optimal track'],
-              ['Training completed', '3 of 6 weeks'],
-              ['Elevation goal', '3,389 / 4,120 m'],
-            ].map(([label, value]) => (
-              <div className="to-prep__row" key={label}>
-                <p className="to-prep__label">{label}</p>
-                <p className="to-prep__value">{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <PrepStatus />
 
         <section className="to-section">
           <SectionHeader icon={calendarIcon} title="October 2026">
@@ -105,29 +134,14 @@ export default function TrainingOverview() {
               </span>
             </div>
           </SectionHeader>
-          <div className="to-week">
-            {WEEK.map(([weekday, date, dot]) => (
-              <button
-                type="button"
-                className={date === day ? 'to-day to-day--today' : 'to-day'}
-                key={date}
-                aria-pressed={date === day}
-                onClick={() => setDay(date)}
-              >
-                <p className="to-day__weekday">{weekday}</p>
-                <p className="to-day__date">{date}</p>
-                <span className="to-day__dot">
-                  {dot && <img src={date === day ? dotToday : dotDone} alt="" />}
-                </span>
-              </button>
-            ))}
-          </div>
+          <WeekStrip />
           <p className="to-daily">Daily training · 2 of 3 done</p>
           <ListItem label="Stair Climber · lv.6" meta="40 min" />
           <ListItem label="Weighted Walk · 15kg" meta="20 min" />
           <ListItem label="Endurance" meta="20 min" />
-          {/* Hover state only: the prototype gives this button no destination. */}
-          <Button className="to-btn">View Training Schedule</Button>
+          <Button className="to-btn" onClick={() => go('/training/schedule', 'smart')}>
+            View Training Schedule
+          </Button>
         </section>
 
         <section className="to-section">

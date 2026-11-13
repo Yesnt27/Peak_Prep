@@ -354,3 +354,7 @@
     background: #d4e6b8;
   }
 }
+
+.to-day.to-day--today {
+  color: #fff;
+}

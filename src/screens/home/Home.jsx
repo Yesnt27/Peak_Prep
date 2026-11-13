@@ -1,5 +1,5 @@
 import { TypeField } from '../../components/controls.jsx'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
@@ -21,24 +21,85 @@ const TABS = [
 ]
 
 
-function Saved({ go }) {
-  return (
-    <>
-      <HikeCard {...HIKES.panorama} saved friends />
-      <HikeCard {...HIKES.blackTusk} saved onClick={() => go('/hike')} />
-      <HikeCard {...HIKES.brunswick} saved friends />
-    </>
-  )
+// Sort options. Each reads the first number from a hike's stats
+// (distance KM, M ELEV, HOURS), shortest / lowest first.
+const SORTS = [
+  { id: 'distance', label: 'Distance', stat: 0 },
+  { id: 'elevation', label: 'Elevation', stat: 1 },
+  { id: 'time', label: 'Time', stat: 2 },
+]
+
+const statValue = (hike, i) => parseFloat(hike.stats[i][0].replace(/,/g, ''))
+
+// Cards keep the Figma order until a sort is picked from the menu.
+function sortCards(cards, sort) {
+  if (!sort) return cards
+  const { stat } = SORTS.find((s) => s.id === sort)
+  return [...cards].sort((a, b) => statValue(HIKES[a.hike], stat) - statValue(HIKES[b.hike], stat))
 }
 
-function Explore({ go }) {
+function CardList({ cards, sort }) {
+  return sortCards(cards, sort).map(({ hike, ...props }) => <HikeCard key={hike} {...HIKES[hike]} {...props} />)
+}
+
+function Saved({ go, sort }) {
+  const cards = [
+    { hike: 'panorama', saved: true, friends: true },
+    { hike: 'blackTusk', saved: true, onClick: () => go('/hike') },
+    { hike: 'brunswick', saved: true, friends: true },
+  ]
+  return <CardList cards={cards} sort={sort} />
+}
+
+function Explore({ go, sort }) {
+  const cards = [
+    { hike: 'blackTusk', onClick: () => go('/hike') },
+    { hike: 'brunswick', friends: true, onClick: () => go('/hike') },
+    { hike: 'wedgemount' },
+    { hike: 'panorama', friends: true },
+  ]
+  return <CardList cards={cards} sort={sort} />
+}
+
+function SortMenu({ sort, onChange }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+  const current = SORTS.find((s) => s.id === sort) ?? SORTS[0]
+
+  useEffect(() => {
+    if (!open) return undefined
+    const close = (e) => !ref.current?.contains(e.target) && setOpen(false)
+    document.addEventListener('pointerdown', close)
+    return () => document.removeEventListener('pointerdown', close)
+  }, [open])
+
   return (
-    <>
-      <HikeCard {...HIKES.blackTusk} onClick={() => go('/hike')} />
-      <HikeCard {...HIKES.brunswick} friends onClick={() => go('/hike')} />
-      <HikeCard {...HIKES.wedgemount} />
-      <HikeCard {...HIKES.panorama} friends />
-    </>
+    <div className="home__sort-wrap" ref={ref}>
+      <button type="button" className="home__sort" aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen(!open)}>
+        <span>Sort: {current.label}</span>
+        <img className={open ? 'home__sort-arrow home__sort-arrow--open' : 'home__sort-arrow'} src={chevDown} alt="" />
+      </button>
+      {open && (
+        <ul className="home__sort-menu" role="listbox">
+          {SORTS.map((s) => (
+            <li key={s.id}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={s.id === current.id}
+                className={s.id === current.id ? 'home__sort-option home__sort-option--selected' : 'home__sort-option'}
+                onClick={() => {
+                  onChange(s.id)
+                  setOpen(false)
+                }}
+              >
+                {s.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   )
 }
 
@@ -89,6 +150,7 @@ export default function Home() {
   // The tab highlight changes on click; the screen itself follows 300ms later,
   // matching the prototype's "after delay" navigation between the Home frames.
   const [selected, setSelected] = useState(active)
+  const [sort, setSort] = useState(null)
 
   useEffect(() => {
     if (selected === active) return undefined
@@ -116,12 +178,9 @@ export default function Home() {
             <img src={searchIcon} alt="" />
             <TypeField tone="faint" placeholder="Search hikes" enterKeyHint="search" />
           </div>
-          <div className="home__sort">
-            <span>Sort: Distance</span>
-            <img src={chevDown} alt="" />
-          </div>
+          <SortMenu sort={sort} onChange={setSort} />
         </div>
-        <Content go={go} />
+        <Content go={go} sort={sort} />
       </div>
     </Screen>
   )

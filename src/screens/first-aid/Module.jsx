@@ -24,6 +24,23 @@ const ETIQUETTE = [
   { icon: pawPrint, title: 'Leashes on pets', body: 'Keep animals on a leash at all times unless local regulations say otherwise.' },
 ]
 
+/** Lets a mouse drag the card row sideways (touch already swipes natively). */
+function dragScroll(e) {
+  if (e.pointerType !== 'mouse') return
+  const row = e.currentTarget
+  const startX = e.clientX
+  const startLeft = row.scrollLeft
+  row.classList.add('fa-etiquette--dragging')
+  const move = (ev) => { row.scrollLeft = startLeft - (ev.clientX - startX) }
+  const up = () => {
+    row.classList.remove('fa-etiquette--dragging')
+    window.removeEventListener('pointermove', move)
+    window.removeEventListener('pointerup', up)
+  }
+  window.addEventListener('pointermove', move)
+  window.addEventListener('pointerup', up)
+}
+
 export function FirstAidModule() {
   const go = useGo()
   const done = completedLessons()
@@ -103,7 +120,7 @@ export function FirstAidModule() {
         </div>
 
         <p className="fa-etiquette__title">Trail Etiquette 101</p>
-        <div className="fa-etiquette">
+        <div className="fa-etiquette" onPointerDown={dragScroll}>
           {ETIQUETTE.map((item, i) => (
             <div className="fa-etiquette__card" key={item.title}>
               <div className="fa-etiquette__inner">

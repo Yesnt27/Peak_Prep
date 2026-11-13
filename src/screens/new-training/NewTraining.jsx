@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/FlowStep.jsx'
 import HikeCard from '../../components/HikeCard.jsx'
 import BottomSheet from '../../components/BottomSheet.jsx'
-import { AddItem, Tag, TagGroup, ToggleSwitch, TypeField } from '../../components/controls.jsx'
+import { AddItem, TagGroup, ToggleSwitch, ToggleTag, TypeField } from '../../components/controls.jsx'
 import { HIKES } from '../../data/hikes.js'
 import searchIcon from '../../assets/icons/search.png'
 import yearArrow from '../../assets/new-training/year-arrow.png'
@@ -65,29 +65,41 @@ const MONTHS = [
 
 /* 1646:5688  new training 20 */
 export function HikeDate() {
+  const [year, setYear] = useState(2027)
+  const [month, setMonth] = useState(null)
   return (
     <Step step={2} fill={85} back="/new-training" next="/new-training/trip">
       <div className="fs-body nt-body">
         <Intro title="Hike Date" />
         <Field label="Year">
-          {/* The year arrows have no interaction in the prototype. */}
           <div className="nt-year">
-            <span className="nt-year__arrow">
+            <button
+              type="button"
+              className="nt-year__arrow"
+              aria-label="Previous year"
+              disabled={year <= 2026}
+              onClick={() => setYear(year - 1)}
+            >
               <img src={yearArrow} alt="" />
-            </span>
-            <span>2027</span>
-            <span className="nt-year__arrow nt-year__arrow--next">
+            </button>
+            <span aria-live="polite">{year}</span>
+            <button type="button" className="nt-year__arrow nt-year__arrow--next" aria-label="Next year" onClick={() => setYear(year + 1)}>
               <img src={yearArrow} alt="" />
-            </span>
+            </button>
           </div>
         </Field>
         <Field label="Month">
           <div className="nt-months">
             {MONTHS.map((m) => (
-              // Figma: only "July" has a hover state; no month is clickable.
-              <span key={m} className={m === 'July' ? 'nt-month nt-month--hover' : 'nt-month'}>
+              <button
+                type="button"
+                key={m}
+                className={m === month ? 'nt-month nt-month--selected' : 'nt-month'}
+                aria-pressed={m === month}
+                onClick={() => setMonth(m === month ? null : m)}
+              >
                 {m}
-              </span>
+              </button>
             ))}
           </div>
         </Field>
@@ -192,9 +204,7 @@ export function Goal() {
     <Step step={5} fill={298} back="/new-training/who" next="/new-training/schedule">
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Goal" />
-        {/* These rows only have a hover state in the prototype. */}
         <Options
-          selectable={false}
           options={[
             {
               label: 'Reach the top',
@@ -233,10 +243,10 @@ export function Schedule() {
           </div>
         </Field>
         <Field label="Training Availability">
-          {/* Day tags only have a hover state in the prototype. */}
+          {/* Several days can be picked. */}
           <div className="nt-days">
             {DAYS.map((d) => (
-              <Tag key={d}>{d}</Tag>
+              <ToggleTag key={d}>{d}</ToggleTag>
             ))}
           </div>
         </Field>
