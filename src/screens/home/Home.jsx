@@ -38,27 +38,30 @@ function sortCards(cards, sort) {
   return [...cards].sort((a, b) => statValue(HIKES[a.hike], stat) - statValue(HIKES[b.hike], stat))
 }
 
-function CardList({ cards, sort }) {
-  return sortCards(cards, sort).map(({ hike, ...props }) => <HikeCard key={hike} {...HIKES[hike]} {...props} />)
+// Demo: every card opens the Brunswick Mountain hike details (/hike).
+function CardList({ go, cards, sort }) {
+  return sortCards(cards, sort).map(({ hike, ...props }) => (
+    <HikeCard key={hike} {...HIKES[hike]} {...props} onClick={() => go('/hike')} />
+  ))
 }
 
 function Saved({ go, sort }) {
   const cards = [
     { hike: 'panorama', saved: true, friends: true },
-    { hike: 'blackTusk', saved: true, onClick: () => go('/hike') },
+    { hike: 'blackTusk', saved: true },
     { hike: 'brunswick', saved: true, friends: true },
   ]
-  return <CardList cards={cards} sort={sort} />
+  return <CardList go={go} cards={cards} sort={sort} />
 }
 
 function Explore({ go, sort }) {
   const cards = [
-    { hike: 'blackTusk', onClick: () => go('/hike') },
-    { hike: 'brunswick', friends: true, onClick: () => go('/hike') },
+    { hike: 'blackTusk' },
+    { hike: 'brunswick', friends: true },
     { hike: 'wedgemount' },
     { hike: 'panorama', friends: true },
   ]
-  return <CardList cards={cards} sort={sort} />
+  return <CardList go={go} cards={cards} sort={sort} />
 }
 
 function SortMenu({ sort, onChange }) {
@@ -135,6 +138,7 @@ function Training({ go }) {
         date="Jun 23–24"
         saved
         progress={{ text: '34% completed · 7 months to go', remaining: 212 }}
+        onClick={() => go('/training')}
       />
     </>
   )
