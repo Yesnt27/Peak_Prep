@@ -1,3 +1,4 @@
+import ProgressiveBlur from '../../components/ProgressiveBlur.jsx'
 import { useEffect } from 'react'
 import useGo from '../../app/useGo.js'
 import { completeLesson } from '../../app/progress.js'
@@ -74,8 +75,10 @@ export function Correct() {
       className="fa"
       fixed={
         <div className="fa-bar">
-          {/* Figma places this blur behind the bottom buttons; it is pinned with them here. */}
-          <div className="fa-bar__blur" />
+          {/* Same progressive blur as the nav bar: clear at the top, strongest behind the buttons. */}
+          <div className="fa-bar__blur">
+            <ProgressiveBlur />
+          </div>
           <div className="fa-bar__pill" />
           <Button className="fa-bar__retry" onClick={() => go('/first-aid/practice')}>
             Retry

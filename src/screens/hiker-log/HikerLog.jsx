@@ -2,7 +2,7 @@ import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/FlowStep.jsx'
 import Button from '../../components/Button.jsx'
-import { AddItem, BackButton, TagGroup } from '../../components/controls.jsx'
+import { AddItem, BackButton, TagGroup, TypeField } from '../../components/controls.jsx'
 import searchIcon from '../../assets/icons/search.png'
 import trailPhoto from '../../assets/hiker-log/trail-photo.png'
 import cardBase from '../../assets/hiker-log/card-base.svg'
@@ -74,7 +74,7 @@ export function Congrats() {
           <Field label="Search trails:">
             <div className="fs-search">
               <img src={searchIcon} alt="" />
-              <span>Black Tusk</span>
+              <TypeField defaultValue="Black Tusk" enterKeyHint="search" />
             </div>
           </Field>
           <TrailCard />
@@ -91,7 +91,9 @@ export function LogDetails() {
       <div className="fs-body">
         <h1 className="fs-title">Log details</h1>
         <Field label="Date of completed hike">
-          <div className="fs-input">MM/DD/YYYY</div>
+          <div className="fs-input">
+            <TypeField placeholder="MM/DD/YYYY" inputMode="numeric" />
+          </div>
         </Field>
         <Field label="Time to complete the hike">
           <TagGroup className="fs-tags" options={['1-4 hrs', '4-8 hrs', '8-12 hrs', '12+ hrs']} />
@@ -169,9 +171,8 @@ export function GeneralNotes() {
         <h1 className="fs-title">General notes</h1>
         <p className="fs-sub">Any final thoughts?</p>
       </div>
-      {/* Static, like the prototype (see open question 4). */}
       <div className="hl-notes">
-        <span>Notes...</span>
+        <TypeField multiline tone="notes" placeholder="Notes..." />
       </div>
     </Step>
   )

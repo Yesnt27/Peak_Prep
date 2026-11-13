@@ -1,3 +1,4 @@
+import { TypeField } from '../../components/controls.jsx'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useGo from '../../app/useGo.js'
@@ -113,7 +114,7 @@ export default function Home() {
         <div className="home__search-row">
           <div className="home__search">
             <img src={searchIcon} alt="" />
-            <span>Search hikes</span>
+            <TypeField tone="faint" placeholder="Search hikes" enterKeyHint="search" />
           </div>
           <div className="home__sort">
             <span>Sort: Distance</span>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import NavBar from '../../components/NavBar.jsx'
-import { BackButton } from '../../components/controls.jsx'
+import { BackButton, TypeField } from '../../components/controls.jsx'
 import searchIcon from '../../assets/profile/search.svg'
 import divider from '../../assets/profile/search-divider.svg'
 import keyboard from '../../assets/profile/keyboard.jpg'
@@ -104,7 +104,7 @@ function SearchResults({ title, people }) {
           <h1 className="fr-title">{title}</h1>
           <div className="fr-search fr-search--typed">
             <img src={searchIcon} alt="" />
-            <span>Joanna B|</span>
+            <TypeField defaultValue="Joanna B" enterKeyHint="search" />
           </div>
           <div className="fr-list">
             {people.map((p) => (

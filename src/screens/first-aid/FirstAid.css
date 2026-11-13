@@ -831,9 +831,6 @@
   bottom: -7px;
   left: 0;
   height: 202px;
-  background: rgba(255, 255, 255, 0.01);
-  -webkit-backdrop-filter: blur(12.15px);
-  backdrop-filter: blur(12.15px);
 }
 
 .fa-bar__pill {
@@ -1278,4 +1275,20 @@
   flex: none;
   width: 30.75px;
   height: 39.707px;
+}
+
+/* Hover states matching the rest of the app (300ms, touch-safe). */
+.fa-level,
+.fa-lesson--next {
+  transition: background-color 300ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .fa-level:not(.fa-level--selected):hover {
+    background: #d4e6b8;
+  }
+
+  .fa-lesson--next:hover {
+    background: var(--yellow-2);
+  }
 }

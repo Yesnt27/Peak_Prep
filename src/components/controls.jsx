@@ -9,24 +9,10 @@ import checkSelected from '../assets/icons/check-selected.svg'
 import './controls.css'
 
 /**
-<<<<<<< Updated upstream
  * Round back button (Figma "Back button"). `darkHover` is the first-aid
  * variant (1646:12147): on hover it turns dark grey with a light chevron.
  */
 export function BackButton({ className = '', label = 'Back', darkHover = false, ...rest }) {
-=======
- * Round back button (Figma "Back button"). `dark` is the component version
- * (1646:12147) whose hover state turns dark grey with a light chevron.
- */
-export function BackButton({ className = '', label = 'Back', dark = false, ...rest }) {
-  if (dark) {
-    return (
-      <button type="button" className={`back-btn back-btn--dark ${className}`} aria-label={label} {...rest}>
-        <span className="back-btn__chev" />
-      </button>
-    )
-  }
->>>>>>> Stashed changes
   return (
     <button
       type="button"
@@ -161,7 +147,11 @@ export function FieldCard({ rows, className = '' }) {
           <>
             <span className="field-card__label">{row.label}</span>
             <span className={expandable ? 'field-card__value field-card__value--dropdown' : 'field-card__value'}>
-              <span className="field-card__placeholder">input</span>
+              {expandable ? (
+                <span className="field-card__placeholder">input</span>
+              ) : (
+                <TypeField tone="light" className="field-card__input" placeholder="input" aria-label={row.label} />
+              )}
               {expandable ? (
                 <img
                   className={isOpen ? 'field-card__arrow field-card__arrow--open' : 'field-card__arrow'}
@@ -248,4 +238,15 @@ export function MaskIcon({ src, size = 24, color }) {
       }}
     />
   )
+}
+
+/**
+ * A real text box so the phone keyboard opens. Looks like the static Figma
+ * text it replaces: Figma's text becomes the placeholder, or the starting
+ * value when Figma shows the field already filled in.
+ */
+export function TypeField({ placeholder, defaultValue, multiline = false, tone, className = '', ...rest }) {
+  const Tag = multiline ? 'textarea' : 'input'
+  const cls = ['type-field', tone && `type-field--${tone}`, className].filter(Boolean).join(' ')
+  return <Tag className={cls} placeholder={placeholder} defaultValue={defaultValue} {...rest} />
 }

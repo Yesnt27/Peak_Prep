@@ -17,7 +17,6 @@
   height: 32.782px;
 }
 
-<<<<<<< Updated upstream
 .back-btn--dark-hover {
   position: relative;
 }
@@ -34,34 +33,6 @@
 
   .back-btn--dark-hover:hover .back-btn__chev--light {
     opacity: 1;
-=======
-/* The chevron asset is used as a mask so its colour can follow the hover state. */
-.back-btn__chev {
-  width: 32.782px;
-  height: 32.782px;
-  background: #414141;
-  -webkit-mask: url('../assets/firstaid/back-chevron.svg') center / 100% 100% no-repeat;
-  mask: url('../assets/firstaid/back-chevron.svg') center / 100% 100% no-repeat;
-}
-
-.back-btn--dark:active {
-  border-color: transparent;
-  background: #4b4b4b;
-}
-
-.back-btn--dark:active .back-btn__chev {
-  background: #f5f5f5;
-}
-
-@media (hover: hover) {
-  .back-btn--dark:hover {
-    border-color: transparent;
-    background: #4b4b4b;
-  }
-
-  .back-btn--dark:hover .back-btn__chev {
-    background: #f5f5f5;
->>>>>>> Stashed changes
   }
 }
 
@@ -406,4 +377,51 @@
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+}
+
+/* ---------- Real text inputs ---------- */
+.type-field {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.type-field::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+
+textarea.type-field {
+  resize: none;
+}
+
+/* Faded placeholder (search bars). */
+.type-field--faint::placeholder {
+  opacity: 0.55;
+}
+
+/* Light-grey placeholder (#cfcfcf), dark text once typed. */
+.type-field--light {
+  color: #414141;
+}
+
+.type-field--light::placeholder {
+  color: #cfcfcf;
+}
+
+.field-card__input.type-field {
+  flex: 0 1 auto;
+  width: 120px;
+  text-align: right;
 }

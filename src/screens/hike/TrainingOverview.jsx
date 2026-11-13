@@ -3,7 +3,7 @@ import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
 import NavBar from '../../components/NavBar.jsx'
 import ListItem from '../../components/ListItem.jsx'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { LESSONS, completedLessons } from '../../app/progress.js'
 import { Chip, HikeHero, KeyStats, SectionHeader } from './parts.jsx'
 import ringTrack from '../../assets/training/ring-track.svg'
@@ -48,6 +48,8 @@ function BagStat({ title, value, unit, note, remaining, fill }) {
 /** Figma "Training overview (hi-fi)" 1780:3125. */
 export default function TrainingOverview() {
   const go = useGo()
+  // The green pill starts on today (28) and moves to whichever day is tapped.
+  const [day, setDay] = useState('28')
   const done = completedLessons()
   const upNext = LESSONS.find(([name]) => !done.includes(name))
   return (
@@ -105,14 +107,19 @@ export default function TrainingOverview() {
           </SectionHeader>
           <div className="to-week">
             {WEEK.map(([weekday, date, dot]) => (
-              <div className={dot === 'today' ? 'to-day to-day--today' : 'to-day'} key={date}>
+              <button
+                type="button"
+                className={date === day ? 'to-day to-day--today' : 'to-day'}
+                key={date}
+                aria-pressed={date === day}
+                onClick={() => setDay(date)}
+              >
                 <p className="to-day__weekday">{weekday}</p>
                 <p className="to-day__date">{date}</p>
                 <span className="to-day__dot">
-                  {dot === 'done' && <img src={dotDone} alt="" />}
-                  {dot === 'today' && <img src={dotToday} alt="" />}
+                  {dot && <img src={date === day ? dotToday : dotDone} alt="" />}
                 </span>
-              </div>
+              </button>
             ))}
           </div>
           <p className="to-daily">Daily training · 2 of 3 done</p>

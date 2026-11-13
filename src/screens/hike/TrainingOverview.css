@@ -341,3 +341,16 @@
   font: 600 16px/1.139 var(--font-poppins);
   letter-spacing: -0.32px;
 }
+
+/* Tappable days (user testing round 2); same hover as the app's tags. */
+.to-day {
+  color: inherit;
+  font: inherit;
+  transition: background-color 300ms var(--ease-out), color 300ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .to-day:not(.to-day--today):hover {
+    background: #d4e6b8;
+  }
+}

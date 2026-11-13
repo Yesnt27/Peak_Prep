@@ -12,7 +12,7 @@ import {
   ToggleSwitch,
   ToggleTag,
   WorkoutCard,
-} from '../../components/controls.jsx'
+ TypeField } from '../../components/controls.jsx'
 import pencil from '../../assets/icons/pencil.png'
 import stepperMinus from '../../assets/icons/stepper-minus.svg'
 import stepperPlus from '../../assets/icons/stepper-plus.svg'
@@ -115,7 +115,9 @@ export function OnboardingWelcome() {
     >
       <div className="onb__fields">
         <Field label="Name:">
-          <div className="onb__input">John Smith</div>
+          <div className="onb__input">
+            <TypeField tone="light" placeholder="John Smith" autoComplete="name" />
+          </div>
         </Field>
         <Field label="Hiker profile:">
           <FieldCard
@@ -328,7 +330,7 @@ export function OnboardingSafety() {
         ].map(([label, value]) => (
           <div className="onb__contact" key={label}>
             <p className="onb__contact-label">{label}</p>
-            <p className="onb__contact-value">{value}</p>
+            <TypeField tone="light" className="onb__contact-value" placeholder={value} inputMode={label === 'PHONE NUMBER' ? 'tel' : undefined} />
           </div>
         ))}
         <AddItem>Add Emergency Contact</AddItem>

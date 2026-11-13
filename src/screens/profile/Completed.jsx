@@ -3,7 +3,7 @@ import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import NavBar from '../../components/NavBar.jsx'
 import SegmentedTabs from '../../components/SegmentedTabs.jsx'
-import { BackButton } from '../../components/controls.jsx'
+import { BackButton, TypeField } from '../../components/controls.jsx'
 import hudson from '../../assets/profile/hudson.jpg'
 import friendA from '../../assets/profile/friend-a.jpg'
 import friendB from '../../assets/profile/friend-b.jpg'
@@ -123,7 +123,7 @@ export default function CompletedHikes({ tab }) {
         <div className="ch-search-row">
           <div className="ch-search">
             <img src={searchIcon} alt="" />
-            <span>Search hikes</span>
+            <TypeField tone="faint" placeholder="Search hikes" enterKeyHint="search" />
           </div>
           <div className="ch-sort">
             <span>Sort: Difficulty</span>

@@ -1,3 +1,4 @@
+import { TypeField } from './controls.jsx'
 import { BackButton } from './controls.jsx'
 import Button from './Button.jsx'
 import searchIcon from '../assets/icons/search.png'
@@ -21,7 +22,7 @@ export default function BottomSheet({ open, title, onClose, belowSearch, childre
             <div className="sheet__search-group">
               <div className="sheet__search">
                 <img src={searchIcon} alt="" />
-                <span>Search</span>
+                <TypeField placeholder="Search" enterKeyHint="search" />
               </div>
               {belowSearch}
             </div>

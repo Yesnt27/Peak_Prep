@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/FlowStep.jsx'
 import HikeCard from '../../components/HikeCard.jsx'
 import BottomSheet from '../../components/BottomSheet.jsx'
-import { AddItem, Tag, TagGroup, ToggleSwitch } from '../../components/controls.jsx'
+import { AddItem, Tag, TagGroup, ToggleSwitch, TypeField } from '../../components/controls.jsx'
 import { HIKES } from '../../data/hikes.js'
 import searchIcon from '../../assets/icons/search.png'
 import yearArrow from '../../assets/new-training/year-arrow.png'
@@ -46,7 +46,7 @@ export function TargetHike() {
           <Field label="Search trails:">
             <div className="fs-search nt-search">
               <img src={searchIcon} alt="" />
-              <span>Black Tusk</span>
+              <TypeField defaultValue="Black Tusk" enterKeyHint="search" />
             </div>
           </Field>
           <HikeCard {...HIKES.blackTusk} />
@@ -92,7 +92,9 @@ export function HikeDate() {
           </div>
         </Field>
         <Field label="Exact date (optional)">
-          <div className="nt-exact">30</div>
+          <div className="nt-exact">
+            <TypeField tone="light" placeholder="30" inputMode="numeric" />
+          </div>
         </Field>
       </div>
     </Step>
@@ -226,7 +228,9 @@ export function Schedule() {
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Your training schedule" sub="We’ll build the plan around your life." />
         <Field label="Training start date">
-          <div className="fs-input">10/30/2027</div>
+          <div className="fs-input">
+            <TypeField defaultValue="10/30/2027" inputMode="numeric" />
+          </div>
         </Field>
         <Field label="Training Availability">
           {/* Day tags only have a hover state in the prototype. */}

@@ -164,13 +164,16 @@
   background: #ededed;
 }
 
-.hl-notes span {
-  position: absolute;
-  top: 24px;
-  left: 31px;
-  opacity: 0.45;
+.hl-notes .type-field {
+  display: block;
+  height: 100%;
+  padding: 24px 31px;
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
+}
+
+.hl-notes .type-field::placeholder {
+  opacity: 0.45;
 }
 
 /* ---------- Review ---------- */
