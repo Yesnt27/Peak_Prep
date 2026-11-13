@@ -3,14 +3,15 @@ import './SegmentedTabs.css'
 /**
  * Figma "3 Choice Tab Nav" family: a white bar with one green selected
  * segment. Hovering another segment tints it light green (300ms); clicking
- * selects it. `animated` slides the green segment (smart-animate tab bars);
- * without it the selection jumps instantly, as in the Home tab bar.
+ * selects it. `fade` cross-fades the segment colours over 300ms (the
+ * smart-animate tab bars, where Figma swaps fills rather than moving a pill);
+ * without it the selection changes instantly, as in the Home tab bar.
  */
-export default function SegmentedTabs({ tabs, value, onChange, animated = false, className = '' }) {
+export default function SegmentedTabs({ tabs, value, onChange, fade = false, className = '' }) {
   const index = Math.max(0, tabs.findIndex((tab) => tab.id === value))
   return (
     <div
-      className={`seg-tabs ${animated ? 'seg-tabs--animated' : ''} ${className}`}
+      className={`seg-tabs ${fade ? 'seg-tabs--fade' : ''} ${className}`}
       role="tablist"
       style={{ '--count': tabs.length, '--index': index }}
     >

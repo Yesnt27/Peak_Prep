@@ -68,14 +68,30 @@ Identifiers taken from those links:
 
 ### Route ↔ Figma frame map
 
-Prototype page: "Stage 4 prototype" (`1646:2450`). Some prototype links point at a frame nested inside the real screen frame (Training overview `1637:5340` inside `1780:3125`, Hike details `1637:5520` inside `1780:3160`, Completed hike `1646:13376` inside `1767:8813`); those are treated as links to the outer screen.
+Prototype page: "Stage 4 prototype" (`1646:2450`). Some prototype links point at a frame nested inside the real screen frame (Training overview `1637:5340` inside `1780:3125`, Hike details `1637:5520` inside `1780:3160`, Completed hike `1646:13376` inside `1767:8813`, Completed hike-fav `1646:13399` inside `1673:3790`); those are treated as links to the outer screen. Screen code lives in `src/screens/<area>/`.
 
-| Route | Figma frame | Notes |
+| Route | Figma frame(s) | Notes |
 | --- | --- | --- |
 | `/` | Open App `1738:7209` → `7216` → `7223` → `7230` → `7237` | Splash. Tap the wordmark to start (as prototyped), then auto-advances to `/welcome`. |
 | `/welcome` | sign up/login `1767:8411` | Sign In → Home (Saved); Create Account → onboarding. |
 | `/onboarding/welcome` … `/safety` | `1646:6565`, `6617`, `6660`, `6690`, `6711` | Sheets: workout `1646:11728`, injury `11749`, health conditions `11769`. |
 | `/home/saved`, `/explore`, `/training` | `1892:3398`, `1892:3571`, `1892:4108` | Tab highlight switches on click; content follows 300ms later (prototype delay). |
+| `/hike` | Hike Details `1780:3160` | Start Preperation → `/first-aid/practice`. |
+| `/training` | Training overview `1780:3125` | Packing List → packing; Continue lesson → `/first-aid`; Hike Completed! → hiker log. |
+| `/packing/all`, `/to-pack`, `/packed`, `/edit` | `1646:11433`, `11597`, `11656`, `11507` | Tab colour fades 300ms, then the screen changes (smart animate). |
+| `/first-aid` | First aid module `1646:12184` | The prototype's starting frame. Cards slide in from the right. |
+| `/first-aid/lesson` | `1646:12254` | Heat Exposure intro. |
+| `/first-aid/practice` | `1646:12155` | Skip slides out to the left → `/first-aid/correct`. |
+| `/first-aid/correct` | Right or wrong `1646:12263` | Retry → practice. |
+| `/first-aid/legal` | Right or wrong `1646:12394` | |
+| `/first-aid/certified` | Right or wrong `1646:12465` | Course level buttons toggle. |
+| `/log/congrats` … `/log/review` | `1646:11007`, `11107`, `11133`, `11189`, `11151`, `11168`, `11053` | Hiker log (6 steps + review). |
+| `/new-training` … `/schedule` | new training 19, 20, 21, 23, 8, 22 (`1646:5644`, `5688`, `5714`, `5788`, `5732`, `5749`) | Nav "+" opens it. Invite Friends sheet `2175:7829`. Done → Training overview. |
+| `/profile` | Profile `1646:13300` | |
+| `/profile/health`, `/health/edit` | Health info `1646:13208`, Edit Health Stats `1646:13446` | |
+| `/profile/friends`, `/friends/search`, `/friends/add` | Friendlist `1646:13323`, Add `2234:4055`, Add `2136:3603` | Search bar → search screen; "add friends" → add screen. |
+| `/profile/hikes`, `/hikes/favourites` | Completed Hikes `1767:8813`, fav completed hike `1673:3790` | Recent/Favourited toggle slides, then switches screen. |
+| `/profile/privacy` | Privacy `1646:13422` | |
 
 | `/hike` | Hike Details (hifi) `1780:3160` | back → `/home/saved`; "Start Preperation" → `/first-aid/practice` |
 | `/training` | Training overview (hi-fi) `1780:3125` | Packing List → `/packing/all`; Continue lesson → `/first-aid`; Hike Completed! → `/log/congrats` |
@@ -100,19 +116,34 @@ Same-named frames that no live screen links to, and that are **not** built: Pack
 
 Headless Chrome is used for screenshots and click-throughs (scripts live in the session scratchpad, not the repo). Chrome's minimum window width is 500px, so compare at 402px by loading routes inside 402px-wide iframes or a 402px puppeteer viewport.
 
+## Hosting on GitHub Pages (implementation)
+
+Only `.github/workflows/deploy.yml` may publish to Pages. It runs `npm ci` + `npm run build` and publishes `dist/`. Do **not** add GitHub's suggested "Static HTML" or "Jekyll" Pages workflows: they publish the raw source (`/src/main.jsx` is never built), which shows a blank page, and they race with `deploy.yml`. Both were removed on 2026-11-12 for this reason.
+
+1. Repo → Settings → Pages → Build and deployment → Source: **GitHub Actions** (one-time).
+2. Commit and push to `main`. The "Deploy to GitHub Pages" run appears under the Actions tab (about 1 minute).
+3. Open https://yesnt27.github.io/Peak_Prep/ — on a phone it fills the screen; on a computer it shows the phone frame centred.
+4. Deep links work, e.g. https://yesnt27.github.io/Peak_Prep/#/first-aid (the prototype's starting frame).
+
 ## Status
 
 - 2026-11-12 — Brief written. Project scaffolded (Vite + React + Pages workflow).
 - 2026-11-12 — Figma connected through the claude.ai Figma connector. Navigation graph read from the prototype.
+<<<<<<< Updated upstream
 - 2026-11-12 — Built and checked against Figma: app shell, splash animation, sign-in, onboarding (5 steps + 3 bottom sheets), Home (3 tabs), nav bar.
 - 2026-11-12 — (Mac session) Built and checked: Profile (9 screens). Every route renders without errors (headless sweep). `first-aid` split into `Module` / `Practice` / `Resources` + `parts.jsx`.
 - 2026-11-12 — (Mac session) Built and checked: Hike details, Training overview, Packing (4), First aid (6), Hiker Log (7), New training (6 + invite sheet). Shared pieces: `components/FlowStep.jsx` (step shell, option rows), `data/hikes.js`. Updated to current Figma: list-row tick/hover now green, Add Item hover `#d4e6b8`.
+=======
+- 2026-11-12 — Built and checked against Figma: every screen reachable through the prototype (splash, sign-in, onboarding, Home, Hike Details, Training overview, Packing, First Aid, Hiker Log, New Training, Profile area). Production build clicked through end to end.
+- 2026-11-12 — `everest.png` (9 MB) re-encoded to a 1200px JPEG (`everest.jpg`, 240 KB) so the Completed Hikes screen loads on phones; it is shown at 353px.
+>>>>>>> Stashed changes
 
 ## Open questions
 
 Things the Figma file does not answer. Nothing has been invented for these; each is left as the prototype has it.
 
 1. **Splash start:** the prototype starts the splash animation on a tap of the "Peak Prep" wordmark. On the web there is no hint to tap. Keep the tap, or auto-play on load?
+<<<<<<< Updated upstream
 2. **Unwired buttons:** on Training overview two green buttons have a hover state but no destination (`1750:8313`, `1637:5519`); on Hiker Log – Review Details the final button (`1646:11106`) has none either.
 3. **Unreachable screens:** nothing in the prototype links to Training Schedule (`2068:5154`) and, through it, the three Training detail screens (`2068:5528`, `2084:6318`, `2084:6351`).
 4. **Static form fields:** text fields (Name, Age, emergency contact…), search bars, the workout count stepper and the "remove" (×) icons have no interaction in the prototype, so they are static here too. Should any become real inputs for testing?
@@ -167,6 +198,15 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 4. Screens, one at a time, from primitives
 5. Polish pass: spacing, hierarchy, states (hover/empty/loading)
 6. Short summary of what's built and any known gaps
+=======
+2. **Buttons with no destination in Figma:** Training overview — back button, "View Training Schedule"; Hike Details — Fav (heart) button (both variants look the same); Heat Exposure lesson — back button; Legal side — "Get First-aid certified"; Answer screen — "20 mins"; Hiker Log Congrats — back button; Review — "Done".
+3. **Screens nothing links to:** Training Schedule (`2068:5154`) and its three Training detail screens; Right or wrong `1646:12330` and `1646:6403`; op 1/2/3 (`2165:5503`, `2165:3491`, `2168:5975`); new training 24/25 (`2240:6324`, `2240:6349`, added while building — replacement for 19?); duplicate Packing – All Items `2181:3983`, Onboarding – Hiking Exp. `2142:3855`, Home – Saved2 `2240:6301`. Not built.
+4. **Hover colour unreadable:** the rounded "Button" component (Continue lesson, Hike Completed!) lives outside this file, so its hover state can't be read; it has no hover here. Health tags' hover variant is also missing from the file.
+5. **Only July is interactive** in the Hike Date month picker (that is how the Figma component is wired).
+6. **Typos kept as designed:** "Brunsick Mountain Safety", "Start Preperation", "protecs", "Lowe Back Pain", "AYS" (days), "6ft3”t", "There was no emergencies".
+7. **Static form fields:** text fields, search bars, steppers and × icons have no interaction in the prototype, so they are static here too. Should any become real inputs for testing?
+8. **Selections don't carry over** between screens (e.g. picking workouts in a sheet doesn't change the list underneath) — same as the prototype.
+>>>>>>> Stashed changes
 
 ## User-testing refinements
 

@@ -9,10 +9,24 @@ import checkSelected from '../assets/icons/check-selected.svg'
 import './controls.css'
 
 /**
+<<<<<<< Updated upstream
  * Round back button (Figma "Back button"). `darkHover` is the first-aid
  * variant (1646:12147): on hover it turns dark grey with a light chevron.
  */
 export function BackButton({ className = '', label = 'Back', darkHover = false, ...rest }) {
+=======
+ * Round back button (Figma "Back button"). `dark` is the component version
+ * (1646:12147) whose hover state turns dark grey with a light chevron.
+ */
+export function BackButton({ className = '', label = 'Back', dark = false, ...rest }) {
+  if (dark) {
+    return (
+      <button type="button" className={`back-btn back-btn--dark ${className}`} aria-label={label} {...rest}>
+        <span className="back-btn__chev" />
+      </button>
+    )
+  }
+>>>>>>> Stashed changes
   return (
     <button
       type="button"
@@ -185,5 +199,53 @@ export function FieldCard({ rows, className = '' }) {
         )
       })}
     </div>
+  )
+}
+
+/**
+ * Figma "4 options" / "option states": stacked full-width cards, one can be
+ * selected (green, semibold); tapping it again clears it. Hover is light grey.
+ */
+export function OptionGroup({ options, multi = false }) {
+  // `multi`: each card toggles on its own (standalone "option states" instances).
+  const [picked, setPicked] = useState([])
+  const selected = multi ? null : picked[0] ?? null
+  const isOn = (label) => picked.includes(label)
+  const setSelected = (label) => setPicked(label === null ? [] : [label])
+  const toggle = (label) => setPicked(isOn(label) ? picked.filter((l) => l !== label) : [...picked, label])
+  return (
+    <div className="options">
+      {options.map((option) => {
+        const { label, icon } = typeof option === 'string' ? { label: option } : option
+        return (
+          <button
+            type="button"
+            key={label}
+            className={isOn(label) ? 'option option--selected' : 'option'}
+            aria-pressed={isOn(label)}
+            onClick={() => (multi ? toggle(label) : setSelected(selected === label ? null : label))}
+          >
+            {icon}
+            <span>{label}</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+/** A 24px icon drawn from a Figma image mask, filled with the body grey. */
+export function MaskIcon({ src, size = 24, color }) {
+  return (
+    <span
+      className="mask-icon"
+      style={{
+        width: size,
+        height: size,
+        WebkitMaskImage: `url(${src})`,
+        maskImage: `url(${src})`,
+        ...(color ? { background: color } : {}),
+      }}
+    />
   )
 }

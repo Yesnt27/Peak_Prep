@@ -61,6 +61,13 @@
   letter-spacing: -0.6px;
 }
 
+.sheet__search-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
 .sheet__search {
   display: flex;
   align-items: center;

@@ -18,8 +18,18 @@
   background: #629000;
 }
 
-.seg-tabs--animated .seg-tabs__pill {
-  transition: left 300ms var(--ease-out);
+.seg-tabs--fade .seg-tabs__pill {
+  display: none;
+}
+
+.seg-tabs--fade .seg-tabs__tab {
+  transition:
+    background-color 300ms var(--ease-out),
+    color 300ms var(--ease-out);
+}
+
+.seg-tabs--fade .seg-tabs__tab--selected {
+  background: #629000;
 }
 
 .seg-tabs__tab {
@@ -41,6 +51,9 @@
   color: #fff;
   font-weight: 600;
   line-height: 1.139;
+}
+
+.seg-tabs:not(.seg-tabs--fade) .seg-tabs__tab--selected {
   transition: none;
 }
 

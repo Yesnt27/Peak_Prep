@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /* Figma "Profile" 1646:13300 */
 .pr {
   background: #f5f5f5;
@@ -16,19 +17,103 @@
   position: absolute;
   top: 173.7px;
   left: 23px;
+=======
+.pf {
+  background: #f5f5f5;
+  color: var(--body-copy-gray);
+}
+
+.pf--app-grey {
+  background: var(--app-grey);
+}
+
+.pf-abs {
+  position: absolute;
+}
+
+.pf-title {
+  color: #414141;
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+}
+
+.pf-title--semibold {
+  font-weight: 600;
+}
+
+.pf-title--dark {
+  color: #474747;
+}
+
+.pf-subtitle {
+  color: var(--body-copy-gray);
+  font: 600 20px/1.139 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+.pf-search {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  min-width: 1px;
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: #fff;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+.pf-search img {
+  width: 18px;
+  height: 18px;
+}
+
+.pf-search span {
+  opacity: 0.55;
+}
+
+.pf-search .pf-search__value {
+  opacity: 1;
+  color: #414141;
+}
+
+.pf-round {
+  flex: none;
+  width: 50.425px;
+  height: 50.425px;
+}
+
+.pf-round img {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Profile ---------- */
+.pf-home {
+>>>>>>> Stashed changes
   display: flex;
   flex-direction: column;
   gap: 30px;
   width: 356px;
 }
 
+<<<<<<< Updated upstream
 .pr-user {
+=======
+.pf-user {
+>>>>>>> Stashed changes
   display: flex;
   align-items: center;
   gap: 18px;
   width: 346px;
 }
 
+<<<<<<< Updated upstream
 .pr-user__photo {
   width: 75px;
   height: 75px;
@@ -87,6 +172,43 @@
 .pr-card {
   display: flex;
   flex-direction: column;
+=======
+.pf-user__avatar {
+  width: 75px;
+  height: 75px;
+  filter: drop-shadow(0 2.629px 1.052px rgba(0, 0, 0, 0.25));
+}
+
+.pf-user__text {
+  display: flex;
+  flex-direction: column;
+  width: 156px;
+  white-space: nowrap;
+}
+
+.pf-user__name {
+  font: 510 25.073px/normal var(--font-sf);
+}
+
+.pf-user__exp {
+  font: 700 15.044px/normal var(--font-sf);
+}
+
+.pf-cards {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-between;
+  row-gap: 11px;
+  width: 100%;
+}
+
+/* Figma "profile card": white, light grey on hover (300ms). */
+.pf-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+>>>>>>> Stashed changes
   justify-content: flex-end;
   gap: 7px;
   width: 170px;
@@ -102,27 +224,755 @@
   transition: background-color 300ms var(--ease-out);
 }
 
+<<<<<<< Updated upstream
 .pr-card img {
+=======
+.pf-card img {
+>>>>>>> Stashed changes
   width: 40px;
   height: 40px;
   object-fit: contain;
 }
 
 @media (hover: hover) {
+<<<<<<< Updated upstream
   .pr-card--hover:hover {
+=======
+  .pf-card:hover {
+>>>>>>> Stashed changes
     background: #e7e7e7;
   }
 }
 
+<<<<<<< Updated upstream
 /* ---------- Privacy (Figma 1646:13422) ---------- */
 .pv-content {
   display: flex;
   flex-direction: column;
+=======
+/* ---------- Health info ---------- */
+.pf-health {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 23px;
+  width: 356px;
+  margin: 57px 23px 0;
+}
+
+.pf-health__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 356px;
+}
+
+.pf-health__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 140px;
+}
+
+.pf-tags {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.pf-tag {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 15px;
+  border-radius: 100px;
+  background: #fff;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.pf-panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 30px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.pf-panel--calories {
+  gap: 18px;
+}
+
+.pf-panel--steps {
+  justify-content: center;
+  gap: 12px;
+}
+
+.pf-panel__label {
+  width: 275px;
+  color: #000;
+  font: 500 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.pf-kcal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #000;
+  font: 400 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+}
+
+.pf-kcal__unit {
+  font-size: 16px;
+  line-height: 1.68;
+  letter-spacing: -0.32px;
+}
+
+.pf-cal-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 28px;
+}
+
+.pf-cal-bar__track {
+  position: relative;
+  width: 296px;
+  height: 11.5px;
+  border-radius: 11.706px;
+  background: var(--light-green);
+}
+
+.pf-cal-bar__fill {
+  width: 98.093px;
+  height: 11.5px;
+  border-radius: 11.706px;
+  background: #80ac3c;
+}
+
+.pf-cal-bar__labels {
+  display: flex;
+  justify-content: space-between;
+  color: #6b6b6b;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pf-rings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pf-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+.pf-ring__chart {
+  position: relative;
+  width: 59.574px;
+  height: 60px;
+}
+
+.pf-ring__track {
+  position: absolute;
+  left: 0.43px;
+  width: 59.142px;
+  height: 59.142px;
+}
+
+.pf-ring__pct {
+  position: absolute;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+/* Figma flips each arc horizontally (rotate 180° + flip Y). */
+.pf-ring__arc {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: scaleX(-1);
+}
+
+.pf-ring__arc img {
+  position: absolute;
+  max-width: none;
+}
+
+.pf-ring__label {
+  color: #232323;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  text-align: center;
+}
+
+.pf-steps-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-poppins);
+}
+
+.pf-steps-head__eyebrow {
+  color: #c4c4c4;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pf-steps-head__value {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  color: #414141;
+  font: 400 24px/1.139 var(--font-poppins);
+  letter-spacing: -0.48px;
+  white-space: nowrap;
+}
+
+.pf-steps-head__unit,
+.pf-steps-head__sub {
+  color: #555;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pf-steps-chart {
+  position: relative;
+  width: 100%;
+  height: 130.357px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pf-steps-chart__line {
+  position: absolute;
+  left: 0;
+  width: 234px;
+  height: 1px;
+}
+
+.pf-steps-chart__bars {
+  position: absolute;
+  left: 101px;
+  top: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  width: 73px;
+  height: 92px;
+}
+
+.pf-steps-chart__bars span {
+  flex: none;
+  width: 17px;
+  border-radius: 33.332px 33.332px 0 0;
+  background: var(--yellow-1);
+}
+
+.pf-steps-chart__bars .pf-steps-chart__bar--peak {
+  border: 1.089px solid var(--yellow-2);
+}
+
+.pf-steps-chart__y {
+  position: absolute;
+  left: 254px;
+  white-space: nowrap;
+}
+
+.pf-steps-chart__x {
+  position: absolute;
+  left: 0;
+  top: 113px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 235px;
+  white-space: nowrap;
+}
+
+.pf-steps-chart__x-last {
+  line-height: 1.139;
+}
+
+.pf-activity-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.pf-activity-head__title {
+  font: 400 24px/1.139 var(--font-poppins);
+  letter-spacing: -0.48px;
+}
+
+.pf-activity-head__sub {
+  color: #555;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pf-activity {
+  position: relative;
+  width: 100%;
+  height: 122px;
+}
+
+.pf-activity__mark {
+  position: absolute;
+  left: 249.5px;
+  top: 3.12px;
+  width: 36px;
+  height: 1px;
+}
+
+.pf-activity__chart {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 255.5px;
+  height: 92.5px;
+}
+
+.pf-activity__x {
+  position: absolute;
+  left: 0;
+  top: 105px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 296px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pf-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  height: 223px;
+}
+
+.pf-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.pf-tile__text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 110px;
+}
+
+.pf-tile__label {
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  color: #b9b9b9;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.pf-tile__value {
+  height: 24px;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.pf-tile__bold {
+  font-weight: 600;
+}
+
+.pf-tile__chev {
+  width: 15px;
+  height: 59px;
+}
+
+/* ---------- Edit health stats ---------- */
+.pf-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  width: 361.703px;
+  margin: 45px 0 0 21px;
+}
+
+.pf-edit__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-btn .pf-edit__done {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.pf-edit__body {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+}
+
+.pf-edit__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pf-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 57px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: #fff;
+  color: #414141;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.pf-stat-row strong {
+  font: 600 15px/1.3 var(--font-poppins);
+  letter-spacing: -0.3px;
+}
+
+.pf-stat-row__value {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pf-stat-row__value img {
+  width: 13px;
+  height: 15px;
+  object-fit: cover;
+}
+
+.pf-stat-row__gender {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 72px;
+}
+
+.pf-stat-row__chev {
+  position: relative;
+  width: 10px;
+  height: 5px;
+}
+
+.pf-stat-row__chev img {
+  position: absolute;
+  left: 1.67px;
+  top: -3.33px;
+  width: 6.667px;
+  height: 11.667px;
+  max-width: none;
+  transform: rotate(-90deg);
+}
+
+/* ---------- Friends ---------- */
+.pf-friends {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 25px;
+  width: 356px;
+  margin: 48px 23px 0;
+  padding-bottom: 200px;
+}
+
+.pf-friends__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  width: 100%;
+  height: 661px;
+}
+
+.pf-friends__col--search {
+  height: 423px;
+}
+
+.pf-friends__title {
+  flex: 1 0 0;
+  min-height: 1px;
+  width: 100%;
+}
+
+.pf-friends__title--fixed {
+  flex: none;
+  height: 51px;
+}
+
+.pf-friends__search {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  width: 100%;
+}
+
+.pf-search-btn {
+  display: flex;
+  width: 100%;
+}
+
+.pf-add-link {
+  width: 100%;
+  color: #414141;
+  font: 400 13px/normal var(--font-sf);
+  text-align: right;
+}
+
+.pf-people {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  width: 322px;
+}
+
+.pf-person {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.pf-person--spread {
+  justify-content: space-between;
+}
+
+.pf-person__who {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.pf-person__who img {
+  flex: none;
+  width: 62px;
+  height: 62px;
+}
+
+.pf-person__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 111px;
+  white-space: nowrap;
+}
+
+.pf-person__name {
+  color: var(--body-copy-gray);
+  font: 700 16px/normal var(--font-sf);
+}
+
+.pf-person__sub {
+  color: #414141;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+/* Figma "view tag": light green chip, grey on hover (300ms). */
+.pf-chip {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 10px 19px;
+  border-radius: 20px;
+  background: var(--light-green);
+  color: #414141;
+  font: 400 13px/normal var(--font-sf);
+  white-space: nowrap;
+  transition: background-color 300ms var(--ease-out);
+}
+
+.pf-chip--add {
+  width: 63px;
+  transition: none;
+}
+
+@media (hover: hover) {
+  .pf-chip:not(.pf-chip--add):hover {
+    background: #e7e7e7;
+  }
+}
+
+.pf-results-bg {
+  position: absolute;
+  left: 23px;
+  top: 221px;
+  width: 356px;
+  height: 668px;
+  background: #fff;
+}
+
+.pf-results-divider {
+  position: absolute;
+  left: 23px;
+  top: 238px;
+  width: 356.007px;
+  height: 1px;
+}
+
+/* iOS keyboard screenshot pinned to the bottom (Figma fixed layer). */
+.pf-keyboard {
+  position: absolute;
+  left: 10px;
+  top: 583px;
+  width: 383px;
+  height: 283px;
+  overflow: hidden;
+  border-radius: 26px 26px 45px 45px;
+}
+
+.pf-keyboard img {
+  position: absolute;
+  left: 0;
+  top: -192.32%;
+  width: 100%;
+  height: 292.33%;
+  max-width: none;
+}
+
+/* ---------- Completed hikes ---------- */
+.pf-hikes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  min-height: 874px;
+  padding: 60px 23px 180px;
+}
+
+.pf-hikes__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 352px;
+}
+
+.pf-hikes__header img {
+  width: 38px;
+  height: 38px;
+}
+
+.pf-toggle {
+  position: relative;
+  flex: none;
+  width: 353px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.pf-toggle__pill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 176px;
+  height: 44px;
+  border-radius: 12px;
+  background: #629000;
+  transition: left 300ms var(--ease-out);
+}
+
+.pf-toggle__pill--right {
+  left: 177px;
+}
+
+.pf-toggle__label {
+  position: absolute;
+  top: 8px;
+  color: #414141;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.pf-toggle__label--on {
+  color: #fff;
+  font-weight: 600;
+}
+
+.pf-hikes__search {
+  display: flex;
+  gap: 10px;
+  width: 352px;
+}
+
+.pf-hikes__search .pf-search {
+  flex: 1 0 0;
+}
+
+.pf-sort {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 4px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  background: #fff;
+  font: 500 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+.pf-sort img {
+  width: 14px;
+  height: 14px;
+}
+
+.pf-hikes__section {
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.pf-hikes__card {
+  width: 353px;
+}
+
+/* ---------- Privacy ---------- */
+.pf-privacy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+>>>>>>> Stashed changes
   gap: 24px;
   width: 356px;
   margin: 57px 23px 0;
 }
 
+<<<<<<< Updated upstream
 .pv-back img {
   width: 50.425px;
   height: 50.425px;
@@ -148,18 +998,43 @@
 }
 
 .pv-rows {
+=======
+.pf-privacy__body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.pf-privacy__head {
+  display: flex;
+  flex-direction: column;
+  gap: 14.117px;
+}
+
+.pf-privacy__rows {
+>>>>>>> Stashed changes
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+<<<<<<< Updated upstream
 /* Figma "priv": hover turns light grey (instant). */
 .pv-row {
+=======
+/* Figma "priv": white row, light grey on hover (instant). */
+.pf-priv {
+>>>>>>> Stashed changes
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 57.12px;
+<<<<<<< Updated upstream
   padding: 0 20.08px;
+=======
+  padding: 15.06px 20.08px;
+>>>>>>> Stashed changes
   border-radius: 12px;
   background: #fff;
   font: 400 16px/1.68 var(--font-poppins);
@@ -167,6 +1042,7 @@
   white-space: nowrap;
 }
 
+<<<<<<< Updated upstream
 .pv-row img {
   width: 6.667px;
   height: 11.667px;
@@ -179,3 +1055,26 @@
     background: #e7e7e7;
   }
 }
+=======
+@media (hover: hover) {
+  .pf-priv:hover {
+    background: #e7e7e7;
+  }
+}
+
+.pf-priv__chev {
+  position: relative;
+  width: 5px;
+  height: 10px;
+  transform: rotate(180deg);
+}
+
+.pf-priv__chev img {
+  position: absolute;
+  left: -0.83px;
+  top: -0.83px;
+  width: 6.667px;
+  height: 11.667px;
+  max-width: none;
+}
+>>>>>>> Stashed changes

@@ -1,7 +1,13 @@
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
+<<<<<<< Updated upstream
 import { Chip, HikeHero, KeyStats, SectionHeader } from './parts.jsx'
+=======
+import ProgressiveBlur from '../../components/ProgressiveBlur.jsx'
+import HikeHero, { Chip, KeyStats, SectionHead } from '../../components/HikeHero.jsx'
+import heartFilled from '../../assets/icons/heart-filled.svg'
+>>>>>>> Stashed changes
 import mtn20 from '../../assets/hike/mtn-20.svg'
 import mtn18 from '../../assets/hike/mtn-18.svg'
 import chartArea from '../../assets/hike/chart-area.svg'
@@ -23,6 +29,7 @@ import alertIcon from '../../assets/hike/alert.svg'
 import sunIcon from '../../assets/hike/sun.svg'
 import nosigIcon from '../../assets/hike/nosig.svg'
 import dropIcon from '../../assets/hike/drop.svg'
+<<<<<<< Updated upstream
 import heartFilled from '../../assets/hike/heart-filled.svg'
 import './HikeDetails.css'
 
@@ -63,6 +70,14 @@ function Bar({ label, value, remaining }) {
   return (
     <div className="hd-bar">
       <div className="hd-bar__head">
+=======
+import './HikeDetails.css'
+
+function Bar({ label, value, remaining }) {
+  return (
+    <div className="hd-bar">
+      <div className="hd-bar__row">
+>>>>>>> Stashed changes
         <p className="hd-bar__label">{label}</p>
         <p className="hd-bar__value">{value}</p>
       </div>
@@ -73,13 +88,65 @@ function Bar({ label, value, remaining }) {
   )
 }
 
+<<<<<<< Updated upstream
 /** Figma "Hike Details (hifi)" 1780:3160. */
+=======
+function IconCircle({ icon, size = 36, bg }) {
+  return (
+    <span className="hd-icon" style={{ width: size, height: size, borderRadius: size / 2, background: bg }}>
+      <img src={icon} alt="" style={{ width: size / 2, height: size / 2 }} />
+    </span>
+  )
+}
+
+function Flag({ icon, iconBg, title, chip, chipTone, text, className = '' }) {
+  return (
+    <div className={`hd-flag ${className}`}>
+      <IconCircle icon={icon} bg={iconBg} />
+      <div className="hd-flag__body">
+        <div className="hd-flag__top">
+          <p className="hd-flag__title">{title}</p>
+          <Chip tone={chipTone}>{chip}</Chip>
+        </div>
+        <p className="hd-flag__text">{text}</p>
+      </div>
+    </div>
+  )
+}
+
+function Tile({ icon, iconBg, eyebrow, title, text, className = '' }) {
+  return (
+    <div className={`hd-tile ${className}`}>
+      <IconCircle icon={icon} size={32} bg={iconBg} />
+      {eyebrow && <p className="hd-tile__eyebrow">{eyebrow}</p>}
+      <p className={eyebrow ? 'hd-tile__value' : 'hd-tile__title'}>{title}</p>
+      <p className={eyebrow ? 'hd-tile__note' : 'hd-tile__text'}>{text}</p>
+    </div>
+  )
+}
+
+function LinkRow({ icon, title, text }) {
+  return (
+    <div className="hd-link">
+      <IconCircle icon={icon} size={32} bg="var(--light-green)" />
+      <div className="hd-link__body">
+        <p className="hd-link__title">{title}</p>
+        <p className="hd-link__text">{text}</p>
+      </div>
+      <img className="hd-link__ext" src={extIcon} alt="" />
+    </div>
+  )
+}
+
+/** Figma "Hike Details (hifi)" (1780:3160). */
+>>>>>>> Stashed changes
 export default function HikeDetails() {
   const go = useGo()
   return (
     <Screen
       className="hd"
       fixed={
+<<<<<<< Updated upstream
         <div className="hd-footer">
           <div className="hd-footer__blur" />
           <div className="hd-footer__pill" />
@@ -88,11 +155,21 @@ export default function HikeDetails() {
           </Button>
           {/* Figma "Fav button": both variants show the filled heart, so a click changes nothing visible. */}
           <button type="button" className="hd-footer__fav" aria-label="Favourite">
+=======
+        <div className="hd-bar-bottom">
+          <ProgressiveBlur />
+          <div className="hd-bar-bottom__pill" />
+          <Button className="hd-bar-bottom__cta" onClick={() => go('/first-aid/practice')}>
+            Start Preperation
+          </Button>
+          <button type="button" className="hd-bar-bottom__fav" aria-label="Saved">
+>>>>>>> Stashed changes
             <img src={heartFilled} alt="" />
           </button>
         </div>
       }
     >
+<<<<<<< Updated upstream
       <HikeHero
         onBack={() => go('/home/saved')}
         chips={
@@ -238,6 +315,162 @@ export default function HikeDetails() {
           <p className="hd-ready__body">
             A training plan, packing list and safety lessons built for this hike, around your current fitness.
           </p>
+=======
+      <div className="hd-page">
+        <HikeHero
+          onBack={() => go('/home/saved')}
+          chips={
+            <>
+              <Chip tone="yellow">Hard</Chip>
+              <Chip>Scramble</Chip>
+              <Chip>★ 4.8 (498)</Chip>
+            </>
+          }
+        />
+
+        <div className="hd-content">
+          <KeyStats
+            stats={[
+              ['14.3', 'km', 'distance'],
+              ['1,539', 'm', 'elevation gain'],
+              ['7–9', 'hrs', 'est. time'],
+            ]}
+          />
+
+          <section className="hd-section">
+            <SectionHead icon={mtn20} title="About this hike" />
+            <p className="hd-para">
+              A steep out-and-back from Lions Bay to the highest peak on the Howe Sound Crest. Expect a long forested
+              grind, open ridgelines and a short Class 3 scramble to the summit, with views across Howe Sound.
+            </p>
+            <div className="hd-profile">
+              <div className="hd-profile__head">
+                <p className="hd-profile__title">Elevation profile</p>
+                <p className="hd-profile__summit">Summit 1,788 m</p>
+              </div>
+              <div className="hd-chart">
+                <img className="hd-chart__area" src={chartArea} alt="" />
+                <img className="hd-chart__line" src={chartLine} alt="" />
+                <img className="hd-chart__marker" src={chartMarker} alt="" />
+                <img className="hd-chart__summit" src={chartSummit} alt="" />
+              </div>
+              <div className="hd-profile__axis">
+                <span>0 km</span>
+                <span>Summit · 7.2 km</span>
+                <span>14.3 km</span>
+              </div>
+              <p className="hd-profile__note">- - -  No cell signal after KM 4.2</p>
+            </div>
+          </section>
+
+          <section className="hd-section">
+            <SectionHead icon={gauge20} title="Fit for you" right={<Chip tone="yellow">Stretch goal</Chip>} />
+            <div className="hd-ready">
+              <div className="hd-ready__row">
+                <IconCircle icon={gauge18} bg="#fff" />
+                <div className="hd-ready__body">
+                  <p className="hd-ready__title">Readiness gap</p>
+                  <p className="hd-ready__text">
+                    About 2.1× longer than your longest logged hike, with +813 m more elevation than your biggest climb
+                    day.
+                  </p>
+                </div>
+              </div>
+              <Bar label="DISTANCE" value="6.8 km logged / 14.3 km" remaining={154} />
+              <Bar label="ELEVATION" value="726 m logged / 1,539 m" remaining={157} />
+            </div>
+            <div className="hd-pair">
+              <Tile
+                className="hd-tile--yellow"
+                icon={clockIcon}
+                iconBg="var(--yellow-1)"
+                eyebrow="Your pace"
+                title="6.5–8 hrs"
+                text="Based on your logged hikes"
+              />
+              <Tile
+                className="hd-tile--yellow"
+                icon={sunriseIcon}
+                iconBg="var(--yellow-1)"
+                eyebrow="Start by"
+                title="07:15 AM"
+                text="Daylight margin for the descent"
+              />
+            </div>
+          </section>
+
+          <section className="hd-section">
+            <SectionHead icon={shield20} title="Hazards & logistics" />
+            <Flag
+              className="hd-flag--yellow"
+              icon={pawIcon}
+              iconBg="var(--yellow-2)"
+              title="Wildlife corridor"
+              chip="Bear spray"
+              chipTone="white"
+              text="Active grizzly and black bear habitat in the sub-alpine meadows. Keep bear spray within reach."
+            />
+            <div className="hd-pair">
+              <Tile
+                icon={ticketIcon}
+                iconBg="var(--teal-1)"
+                title="Pass required"
+                text="BC Parks day-use pass needed in peak summer season."
+              />
+              <Tile
+                icon={carIcon}
+                iconBg="var(--teal-1)"
+                title="Access & parking"
+                text="Lions Bay lot fills early. Arrive before 06:45 AM."
+              />
+            </div>
+            <LinkRow icon={shield16} title="BC Parks trail report" text="Updated today at 06:30 AM" />
+            <LinkRow icon={phoneIcon} title="Emergency services" text="Search and rescue · call 911" />
+          </section>
+
+          <section className="hd-section">
+            <SectionHead icon={alertIcon} title="Trail challenges" right={<p className="hd-flagged">3 flagged</p>} />
+            <Flag
+              icon={sunIcon}
+              iconBg="var(--yellow-3)"
+              title="Sun exposure"
+              chip="High UV"
+              chipTone="cream"
+              text="Open alpine ridgelines with strong UV reflection and no shade."
+            />
+            <Flag
+              icon={mtn18}
+              iconBg="var(--yellow-3)"
+              title="Scramble"
+              chip="Class 3"
+              chipTone="cream"
+              text="Class 3 knife-edge scramble near the summit. Helmet recommended."
+            />
+            <Flag
+              icon={nosigIcon}
+              iconBg="var(--yellow-3)"
+              title="Cell service limit"
+              chip="Cutoff KM 4.2"
+              chipTone="cream"
+              text="No signal after the lower switchbacks. Carry a satellite messenger."
+            />
+            <Flag
+              icon={dropIcon}
+              iconBg="var(--yellow-3)"
+              title="Limited water"
+              chip="Carry 3 L"
+              chipTone="cream"
+              text="No reliable water sources past the first creek crossing. Carry 3 L."
+            />
+          </section>
+
+          <div className="hd-ready-cta">
+            <p className="hd-ready-cta__title">Get trail-ready in 6 weeks</p>
+            <p className="hd-ready-cta__text">
+              A training plan, packing list and safety lessons built for this hike, around your current fitness.
+            </p>
+          </div>
+>>>>>>> Stashed changes
         </div>
       </div>
     </Screen>

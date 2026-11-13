@@ -23,6 +23,9 @@ export default function HikeCard({
   stats,
   progress,
   friends = false,
+  friendsText = 'Join Siena & 3 friends training',
+  avatars = [friend1, friend2, friend3],
+  plainDots = false,
   onClick,
 }) {
   const Root = onClick ? 'button' : 'div'
@@ -44,7 +47,7 @@ export default function HikeCard({
             <img src={saved ? heartFilled : heartOutline} alt="" />
           </span>
         </div>
-        <div className="hike-card__dots">
+        <div className={plainDots ? 'hike-card__dots hike-card__dots--plain' : 'hike-card__dots'}>
           <span className="hike-card__dot hike-card__dot--active" />
           <span className="hike-card__dot" />
           <span className="hike-card__dot" />
@@ -85,11 +88,11 @@ export default function HikeCard({
         {friends && (
           <div className="hike-card__friends">
             <div className="hike-card__avatars">
-              <img src={friend1} alt="" />
-              <img src={friend2} alt="" />
-              <img src={friend3} alt="" />
+              {avatars.map((src, i) => (
+                <img key={i} src={src} alt="" />
+              ))}
             </div>
-            <p className="hike-card__friends-text">Join Siena &amp; 3 friends training</p>
+            <p className="hike-card__friends-text">{friendsText}</p>
             <img className="hike-card__chev" src={chevRight} alt="" />
           </div>
         )}

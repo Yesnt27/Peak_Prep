@@ -5,6 +5,7 @@ import createIcon from '../assets/nav/create.svg'
 import createIconHover from '../assets/nav/create-hover.svg'
 import profileIcon from '../assets/nav/profile.svg'
 import profileIconHover from '../assets/nav/profile-hover.svg'
+import ProgressiveBlur from './ProgressiveBlur.jsx'
 import './NavBar.css'
 
 /**
@@ -16,10 +17,7 @@ export default function NavBar() {
   const go = useGo()
   return (
     <nav className="navbar" aria-label="Main">
-      <div className="navbar__blur navbar__blur--1" />
-      <div className="navbar__blur navbar__blur--2" />
-      <div className="navbar__blur navbar__blur--3" />
-      <div className="navbar__blur navbar__blur--4" />
+      <ProgressiveBlur />
       <div className="navbar__pill" />
       <button type="button" className="navbar__btn navbar__btn--home" aria-label="Home" onClick={() => go('/home/saved')}>
         <span className="navbar__home-bg" />

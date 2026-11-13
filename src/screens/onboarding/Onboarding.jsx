@@ -36,30 +36,48 @@ import basketball from '../../assets/workouts/basketball.png'
 import tennis from '../../assets/workouts/tennis.png'
 import './Onboarding.css'
 
-/** Shared frame for the five onboarding steps. */
-function Step({ step, fill, fillColor = 'var(--main-green)', title, back, next, cta = 'Continue', tight = false, overlay, children }) {
+/**
+ * Shared frame for step-by-step flows (onboarding, hiker log): back button,
+ * step label + progress bar, title, pinned green button. `back`/`next` are
+ * routes; leave one out when Figma has no connection for it.
+ */
+export function Step({
+  step,
+  label = `Onboarding - STEP ${step} OF 5`,
+  fill,
+  fillColor = 'var(--main-green)',
+  title,
+  back,
+  next,
+  nextTransition,
+  cta = 'Continue',
+  tight = false,
+  bodyGap,
+  overlay,
+  children,
+}) {
   const go = useGo()
   return (
     <Screen
       className="onb"
       fixed={
         <>
-          <Button className="onb__cta" onClick={() => go(next)}>
+          <Button className="onb__cta" onClick={next ? () => go(next, nextTransition) : undefined}>
             {cta}
           </Button>
           {overlay}
         </>
       }
     >
-      <BackButton className="onb__back" onClick={() => go(back)} />
+      <BackButton className="onb__back" onClick={back ? () => go(back) : undefined} />
       <div className={tight ? 'onb__content onb__content--tight' : 'onb__content'}>
         <div className="onb__progress">
-          <p className="onb__step">Onboarding - STEP {step} OF 5</p>
+          <p className="onb__step">{label}</p>
           <div className="onb__track">
             <div className="onb__fill" style={{ width: fill, background: fillColor }} />
           </div>
         </div>
-        <div className="onb__body">
+        <div className="onb__body" style={bodyGap ? { gap: bodyGap } : undefined}>
           {title}
           {children}
         </div>

@@ -1,4 +1,5 @@
 <svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="154.703" height="154.703" viewBox="0 0 154.703 154.703" fill="none" xmlns="http://www.w3.org/2000/svg">
+<<<<<<< Updated upstream
 <g id="Back button" filter="url(#filter0_d_0_4)">
 <rect x="55" y="47" width="44.7029" height="44.7029" rx="22.3515" fill="#F5F5F5" shape-rendering="crispEdges"/>
 <rect x="55.4967" y="47.4967" width="43.7095" height="43.7095" rx="21.8548" stroke="white" stroke-width="0.993399" shape-rendering="crispEdges"/>
@@ -6,14 +7,28 @@
 </g>
 <defs>
 <filter id="filter0_d_0_4" x="0" y="0" width="154.703" height="154.703" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+=======
+<g id="Back button" filter="url(#filter0_d_0_105)">
+<rect x="55" y="47" width="44.7029" height="44.7029" rx="22.3515" fill="#F5F5F5" shape-rendering="crispEdges"/>
+<rect x="55.4967" y="47.4967" width="43.7095" height="43.7095" rx="21.8548" stroke="white" stroke-width="0.993399" shape-rendering="crispEdges"/>
+<path id="Vector" d="M85.4956 63.7028C85.7235 63.9279 85.8515 64.2331 85.8515 64.5513C85.8515 64.8695 85.7235 65.1747 85.4956 65.3997L75.7727 75.0001C75.5447 75.2251 75.2357 75.3515 74.9134 75.3515C74.5911 75.3515 74.282 75.2251 74.0541 75.0001L69.1926 70.1999C68.9712 69.9736 68.8487 69.6704 68.8515 69.3558C68.8543 69.0411 68.9821 68.7402 69.2074 68.5177C69.4328 68.2952 69.7376 68.1689 70.0563 68.1662C70.3749 68.1635 70.682 68.2844 70.9112 68.503L74.9134 72.4548L83.7771 63.7028C84.005 63.4779 84.3141 63.3515 84.6364 63.3515C84.9586 63.3515 85.2677 63.4779 85.4956 63.7028Z" fill-rule="evenodd" clip-rule="evenodd" fill="#414141"/>
+</g>
+<defs>
+<filter id="filter0_d_0_105" x="0" y="0" width="154.703" height="154.703" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+>>>>>>> Stashed changes
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="8"/>
 <feGaussianBlur stdDeviation="27.5"/>
 <feComposite in2="hardAlpha" operator="out"/>
 <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+<<<<<<< Updated upstream
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_4"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_4" result="shape"/>
+=======
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_105"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_105" result="shape"/>
+>>>>>>> Stashed changes
 </filter>
 </defs>
 </svg>

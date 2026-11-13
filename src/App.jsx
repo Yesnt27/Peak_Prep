@@ -5,6 +5,7 @@ import Splash from './screens/Splash.jsx'
 import Welcome from './screens/Welcome.jsx'
 import Home from './screens/home/Home.jsx'
 import HikeDetails from './screens/hike/HikeDetails.jsx'
+<<<<<<< Updated upstream
 import TrainingOverview from './screens/hike/TrainingOverview.jsx'
 import { PackingEdit, PackingList } from './screens/packing/Packing.jsx'
 import { FirstAidModule, HeatExposure } from './screens/first-aid/Module.jsx'
@@ -31,6 +32,46 @@ import Profile, { Privacy } from './screens/profile/Profile.jsx'
 import { AddFriends, FriendList, FriendSearch } from './screens/profile/Friends.jsx'
 import CompletedHikes from './screens/profile/Completed.jsx'
 import { EditHealthStats, HealthInfo } from './screens/profile/Health.jsx'
+=======
+import TrainingOverview from './screens/training/TrainingOverview.jsx'
+import { PackingEdit, PackingList } from './screens/packing/Packing.jsx'
+import {
+  FirstAidCertified,
+  FirstAidCorrect,
+  FirstAidLegal,
+  FirstAidLesson,
+  FirstAidOverview,
+  FirstAidPractice,
+} from './screens/firstaid/FirstAid.jsx'
+import {
+  LogCongrats,
+  LogDetails,
+  LogDifficulty,
+  LogEmergency,
+  LogNotes,
+  LogPhysical,
+  LogReview,
+} from './screens/log/HikerLog.jsx'
+import {
+  NewTrainingDate,
+  NewTrainingGoal,
+  NewTrainingGroup,
+  NewTrainingHike,
+  NewTrainingSchedule,
+  NewTrainingTrip,
+} from './screens/newtraining/NewTraining.jsx'
+import {
+  CompletedHikes,
+  EditHealth,
+  FavouriteHikes,
+  FriendAdd,
+  Friends,
+  FriendSearch,
+  HealthInfo,
+  Privacy,
+  ProfileHome,
+} from './screens/profile/Profile.jsx'
+>>>>>>> Stashed changes
 import {
   OnboardingActivity,
   OnboardingExperience,
@@ -55,6 +96,7 @@ export default function App() {
         <Route path="/home/:tab" element={<Home />} />
         <Route path="/hike" element={<HikeDetails />} />
         <Route path="/training" element={<TrainingOverview />} />
+<<<<<<< Updated upstream
         <Route path="/packing/all" element={<PackingList key="all" tab="all" />} />
         <Route path="/packing/to-pack" element={<PackingList key="to-pack" tab="to-pack" />} />
         <Route path="/packing/packed" element={<PackingList key="packed" tab="packed" />} />
@@ -90,6 +132,43 @@ export default function App() {
         <Route path="/profile/friends/search" element={<FriendSearch />} />
         <Route path="/profile/completed" element={<CompletedHikes key="recent" tab="recent" />} />
         <Route path="/profile/completed/favourited" element={<CompletedHikes key="fav" tab="favourited" />} />
+=======
+        <Route path="/packing/all" element={<PackingList filter="all" />} />
+        <Route path="/packing/to-pack" element={<PackingList filter="to-pack" />} />
+        <Route path="/packing/packed" element={<PackingList filter="packed" />} />
+        <Route path="/packing/edit" element={<PackingEdit />} />
+
+        <Route path="/first-aid" element={<FirstAidOverview />} />
+        <Route path="/first-aid/lesson" element={<FirstAidLesson />} />
+        <Route path="/first-aid/practice" element={<FirstAidPractice />} />
+        <Route path="/first-aid/correct" element={<FirstAidCorrect />} />
+        <Route path="/first-aid/legal" element={<FirstAidLegal />} />
+        <Route path="/first-aid/certified" element={<FirstAidCertified />} />
+
+        <Route path="/log/congrats" element={<LogCongrats />} />
+        <Route path="/log/details" element={<LogDetails />} />
+        <Route path="/log/difficulty" element={<LogDifficulty />} />
+        <Route path="/log/emergency" element={<LogEmergency />} />
+        <Route path="/log/physical" element={<LogPhysical />} />
+        <Route path="/log/notes" element={<LogNotes />} />
+        <Route path="/log/review" element={<LogReview />} />
+
+        <Route path="/new-training" element={<NewTrainingHike />} />
+        <Route path="/new-training/date" element={<NewTrainingDate />} />
+        <Route path="/new-training/trip" element={<NewTrainingTrip />} />
+        <Route path="/new-training/group" element={<NewTrainingGroup />} />
+        <Route path="/new-training/goal" element={<NewTrainingGoal />} />
+        <Route path="/new-training/schedule" element={<NewTrainingSchedule />} />
+
+        <Route path="/profile" element={<ProfileHome />} />
+        <Route path="/profile/health" element={<HealthInfo />} />
+        <Route path="/profile/health/edit" element={<EditHealth />} />
+        <Route path="/profile/friends" element={<Friends />} />
+        <Route path="/profile/friends/search" element={<FriendSearch />} />
+        <Route path="/profile/friends/add" element={<FriendAdd />} />
+        <Route path="/profile/hikes" element={<CompletedHikes />} />
+        <Route path="/profile/hikes/favourites" element={<FavouriteHikes />} />
+>>>>>>> Stashed changes
         <Route path="/profile/privacy" element={<Privacy />} />
       </AnimatedRoutes>
     </Device>

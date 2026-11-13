@@ -1,0 +1,266 @@
+.log-search,
+.log-input {
+  display: flex;
+  align-items: flex-start;
+  gap: 11.975px;
+  width: 355px;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: #ededed;
+  color: #414141;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.log-search img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.log-input {
+  align-items: center;
+}
+
+.log-icon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.log-icon--strenuous {
+  display: block;
+  background: #414141;
+  -webkit-mask: url('../../assets/log/strenuous-mask.png') 0 0 / 24px 24px no-repeat;
+  mask: url('../../assets/log/strenuous-mask.png') 0 0 / 24px 24px no-repeat;
+}
+
+.log-notes {
+  position: relative;
+  width: 355px;
+  height: 302px;
+  border-radius: 11.975px;
+  background: #ededed;
+}
+
+.log-notes span {
+  position: absolute;
+  left: 31px;
+  top: 24px;
+  opacity: 0.45;
+  color: #414141;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+/* ---------- Trail card ---------- */
+.log-card {
+  position: relative;
+  flex: none;
+  width: 355px;
+  height: 305px;
+}
+
+.log-card__photo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 355px;
+  height: 266.25px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.log-card__fade {
+  position: absolute;
+  left: 0;
+  top: 145.17px;
+  width: 355px;
+  height: 52px;
+  background: linear-gradient(to top, #414141, rgba(65, 65, 65, 0));
+}
+
+.log-card__base {
+  position: absolute;
+  left: 0;
+  top: 197px;
+  width: 355px;
+  height: 108px;
+}
+
+.log-card__name,
+.log-card__loc,
+.log-card__meta {
+  position: absolute;
+  left: 18.1px;
+  color: #414141;
+}
+
+.log-card__name {
+  top: 213px;
+  font: 400 20px/1.139 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+.log-card__name--black {
+  color: #000;
+}
+
+.log-card__loc {
+  top: 240.17px;
+  width: 179px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.log-card__meta {
+  top: 268.18px;
+  width: 266.5px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.log-card__dots {
+  position: absolute;
+  left: calc(50% + 1.58px);
+  top: 178.17px;
+  display: flex;
+  gap: 4px;
+  transform: translateX(-50%);
+}
+
+.log-card__dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.log-card__dots .log-card__dot--current {
+  background: #ffd88b;
+}
+
+.log-card__bars span {
+  position: absolute;
+  top: 181.99px;
+  height: 5.014px;
+  border-radius: 13px;
+  background: #949494;
+}
+
+.log-card__bars .log-card__bar--current {
+  background: #5b5b5b;
+}
+
+.log-card__selected {
+  position: absolute;
+  left: 241.84px;
+  top: 15.18px;
+  width: 96.544px;
+  height: 26px;
+  border-radius: 20px;
+  background: #f5f5f5;
+}
+
+.log-card__selected img {
+  position: absolute;
+  left: 8.98px;
+  top: 7px;
+  width: 12.068px;
+  height: 12px;
+}
+
+.log-card__selected span {
+  position: absolute;
+  left: 29.24px;
+  top: 4.99px;
+  color: #414141;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.log-card__completed {
+  position: absolute;
+  left: 232.08px;
+  top: 15px;
+  width: 106px;
+  height: 26px;
+  border-radius: 20px;
+  background: #5b5b5b;
+}
+
+.log-card__completed img {
+  position: absolute;
+  left: 9px;
+  top: 7.28px;
+  width: 11.833px;
+  height: 13.653px;
+}
+
+.log-card__completed span {
+  position: absolute;
+  left: 28.72px;
+  top: 5px;
+  width: 68.28px;
+  color: #fff;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+/* ---------- Review ---------- */
+.log-review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  width: 355px;
+  min-height: 1516px;
+  margin: 125px 23px 0;
+  padding-bottom: 140px;
+}
+
+.log-review > * {
+  align-self: stretch;
+}
+
+.log-review__title {
+  color: #474747;
+}
+
+.log-answer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11.975px;
+  width: 356px;
+  height: 67.25px;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: #ededed;
+  color: #414141;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+.log-review__notes {
+  position: relative;
+  width: 355px;
+  height: 302px;
+}
+
+.log-review__notes p {
+  position: absolute;
+  left: 0;
+  top: 0.25px;
+  width: 355px;
+  height: 295px;
+  padding: 24px 30px 0 32px;
+  border-radius: 11.975px;
+  background: #ededed;
+  color: #414141;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}

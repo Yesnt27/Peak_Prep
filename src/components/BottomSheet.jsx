@@ -8,7 +8,7 @@ import './BottomSheet.css'
  * 25% black backdrop, closes on outside click. Opens with the prototype's
  * "move in" (300ms ease-out); closing is instant, as prototyped.
  */
-export default function BottomSheet({ open, title, onClose, children }) {
+export default function BottomSheet({ open, title, onClose, belowSearch, children }) {
   if (!open) return null
   return (
     <div className="sheet-layer">
@@ -18,9 +18,12 @@ export default function BottomSheet({ open, title, onClose, children }) {
           <div className="sheet__content">
             <BackButton onClick={onClose} label="Close" />
             <h2 className="sheet__title">{title}</h2>
-            <div className="sheet__search">
-              <img src={searchIcon} alt="" />
-              <span>Search</span>
+            <div className="sheet__search-group">
+              <div className="sheet__search">
+                <img src={searchIcon} alt="" />
+                <span>Search</span>
+              </div>
+              {belowSearch}
             </div>
             {children}
           </div>

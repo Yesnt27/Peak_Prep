@@ -100,6 +100,13 @@
   background: #414141;
 }
 
+.hike-card__dots--plain {
+  width: auto;
+  height: auto;
+  align-items: flex-start;
+  background: none;
+}
+
 .hike-card__dot {
   width: 6px;
   height: 6px;

@@ -1,8 +1,12 @@
+<<<<<<< Updated upstream
 /* Figma "Hike Details (hifi)" 1780:3160 */
+=======
+>>>>>>> Stashed changes
 .hd {
   background: #f5f5f5;
 }
 
+<<<<<<< Updated upstream
 /* ---------- Shared bits ---------- */
 .hd-icon {
   display: flex;
@@ -55,6 +59,14 @@
 
 .hd-icon--light-green {
   background: var(--light-green);
+=======
+.hd-page {
+  display: flex;
+  flex-direction: column;
+  width: 402px;
+  padding-bottom: 140px;
+  color: var(--body-copy-gray);
+>>>>>>> Stashed changes
 }
 
 /* ---------- Content ---------- */
@@ -62,6 +74,7 @@
   display: flex;
   flex-direction: column;
   gap: 28px;
+<<<<<<< Updated upstream
   padding: 20px 20px 140px;
   color: var(--body-copy-gray);
 }
@@ -73,12 +86,28 @@
 }
 
 .hd-about {
+=======
+  padding: 20px 20px 0;
+}
+
+.hd-para {
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.hd-flagged {
+  opacity: 0.7;
+>>>>>>> Stashed changes
   font: 400 13px/1.3 var(--font-poppins);
   letter-spacing: -0.26px;
 }
 
 /* Elevation profile */
+<<<<<<< Updated upstream
 .hd-elev {
+=======
+.hd-profile {
+>>>>>>> Stashed changes
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -87,18 +116,27 @@
   background: #fff;
 }
 
+<<<<<<< Updated upstream
 .hd-elev__head,
 .hd-elev__axis {
+=======
+.hd-profile__head {
+>>>>>>> Stashed changes
   display: flex;
   justify-content: space-between;
   white-space: nowrap;
 }
 
+<<<<<<< Updated upstream
 .hd-elev__title {
+=======
+.hd-profile__title {
+>>>>>>> Stashed changes
   font: 600 13px/1.139 var(--font-poppins);
   letter-spacing: -0.26px;
 }
 
+<<<<<<< Updated upstream
 .hd-elev__summit {
   font: 500 12px/1.139 var(--font-poppins);
 }
@@ -106,10 +144,19 @@
 .hd-elev__chart {
   position: relative;
   width: 334px;
+=======
+.hd-profile__summit {
+  font: 500 12px/1.139 var(--font-poppins);
+}
+
+.hd-chart {
+  position: relative;
+>>>>>>> Stashed changes
   height: 110px;
   overflow: hidden;
 }
 
+<<<<<<< Updated upstream
 .hd-elev__chart img {
   position: absolute;
 }
@@ -140,13 +187,65 @@
 }
 
 .hd-elev__note {
+=======
+.hd-chart img {
+  position: absolute;
+  max-width: none;
+}
+
+.hd-chart__area {
+  left: 0;
+  top: 7.27%;
+  width: 100%;
+  height: 92.73%;
+}
+
+/* The line's SVG is padded for its stroke: inset -1.36% / -0.37% of its box. */
+.hd-chart__line {
+  left: -0.37%;
+  top: calc(7.27% - 1.36% * 0.8364);
+  width: 100.74%;
+  height: calc(83.64% * 1.0272);
+}
+
+.hd-chart__marker {
+  left: calc(29.23% - 0.75px);
+  top: 0;
+  width: 1.5px;
+  height: 100%;
+}
+
+.hd-chart__summit {
+  left: calc(48.31% - 1.0px);
+  top: calc(2.73% - 1px);
+  width: 12.277px;
+  height: 12px;
+}
+
+.hd-profile__axis {
+  display: flex;
+  justify-content: space-between;
+  font: 400 11px/1.44 var(--font-poppins);
+  white-space: nowrap;
+}
+
+.hd-profile__axis span {
+  opacity: 0.65;
+}
+
+.hd-profile__note {
+>>>>>>> Stashed changes
   color: var(--teal-2);
   font: 400 11px/1.44 var(--font-poppins);
   white-space: pre;
 }
 
 /* Readiness gap */
+<<<<<<< Updated upstream
 .hd-gap {
+=======
+.hd-ready {
+>>>>>>> Stashed changes
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -155,25 +254,45 @@
   background: var(--light-green);
 }
 
+<<<<<<< Updated upstream
 .hd-gap__row {
   display: flex;
   gap: 12px;
 }
 
 .hd-gap__text {
+=======
+.hd-ready__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.hd-ready__body {
+>>>>>>> Stashed changes
   display: flex;
   flex: 1 0 0;
   flex-direction: column;
   gap: 4px;
+<<<<<<< Updated upstream
   min-width: 0;
 }
 
 .hd-gap__title {
+=======
+}
+
+.hd-ready__title {
+>>>>>>> Stashed changes
   font: 600 16px/1.139 var(--font-poppins);
   letter-spacing: -0.32px;
 }
 
+<<<<<<< Updated upstream
 .hd-gap__body {
+=======
+.hd-ready__text {
+>>>>>>> Stashed changes
   font: 400 13px/1.3 var(--font-poppins);
   letter-spacing: -0.26px;
 }
@@ -184,7 +303,11 @@
   gap: 6px;
 }
 
+<<<<<<< Updated upstream
 .hd-bar__head {
+=======
+.hd-bar__row {
+>>>>>>> Stashed changes
   display: flex;
   justify-content: space-between;
   white-space: nowrap;
@@ -209,11 +332,26 @@
 
 .hd-bar__fill {
   flex: 1 0 0;
+<<<<<<< Updated upstream
+=======
+  height: 6px;
+>>>>>>> Stashed changes
   border-radius: 10px;
   background: var(--main-green);
 }
 
+<<<<<<< Updated upstream
 /* Two side-by-side tiles */
+=======
+/* Shared small pieces */
+.hd-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+>>>>>>> Stashed changes
 .hd-pair {
   display: flex;
   gap: 10px;
@@ -223,8 +361,14 @@
   display: flex;
   flex: 1 0 0;
   flex-direction: column;
+<<<<<<< Updated upstream
   gap: 6px;
   min-width: 0;
+=======
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 1px;
+>>>>>>> Stashed changes
   padding: 14px;
   border-radius: 12px;
   background: #fff;
@@ -234,7 +378,11 @@
   background: var(--yellow-3);
 }
 
+<<<<<<< Updated upstream
 .hd-tile__label {
+=======
+.hd-tile__eyebrow {
+>>>>>>> Stashed changes
   opacity: 0.75;
   font: 400 12px/1.35 var(--font-poppins);
   letter-spacing: -0.24px;
@@ -247,7 +395,11 @@
   white-space: nowrap;
 }
 
+<<<<<<< Updated upstream
 .hd-tile__sub {
+=======
+.hd-tile__note {
+>>>>>>> Stashed changes
   opacity: 0.8;
   font: 400 12px/1.35 var(--font-poppins);
   letter-spacing: -0.24px;
@@ -259,34 +411,59 @@
   white-space: nowrap;
 }
 
+<<<<<<< Updated upstream
 .hd-tile__body {
+=======
+.hd-tile__text {
+>>>>>>> Stashed changes
   opacity: 0.85;
   font: 400 12px/1.35 var(--font-poppins);
   letter-spacing: -0.24px;
 }
 
+<<<<<<< Updated upstream
 /* Flagged rows (wildlife + trail challenges) */
 .hd-flag {
   display: flex;
+=======
+.hd-flag {
+  display: flex;
+  align-items: flex-start;
+>>>>>>> Stashed changes
   gap: 12px;
   padding: 14px;
   border-radius: 12px;
   background: #fff;
 }
 
+<<<<<<< Updated upstream
 .hd-flag--wildlife {
   background: var(--yellow-3);
 }
 
 .hd-flag__text {
+=======
+.hd-flag--yellow {
+  background: var(--yellow-3);
+}
+
+.hd-flag__body {
+>>>>>>> Stashed changes
   display: flex;
   flex: 1 0 0;
   flex-direction: column;
   gap: 3px;
+<<<<<<< Updated upstream
   min-width: 0;
 }
 
 .hd-flag__head {
+=======
+  min-width: 1px;
+}
+
+.hd-flag__top {
+>>>>>>> Stashed changes
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -298,13 +475,20 @@
   white-space: nowrap;
 }
 
+<<<<<<< Updated upstream
 .hd-flag__body {
+=======
+.hd-flag__text {
+>>>>>>> Stashed changes
   opacity: 0.85;
   font: 400 12px/1.35 var(--font-poppins);
   letter-spacing: -0.24px;
 }
 
+<<<<<<< Updated upstream
 /* Link rows */
+=======
+>>>>>>> Stashed changes
 .hd-link {
   display: flex;
   align-items: center;
@@ -314,12 +498,19 @@
   background: #fff;
 }
 
+<<<<<<< Updated upstream
 .hd-link__text {
+=======
+.hd-link__body {
+>>>>>>> Stashed changes
   display: flex;
   flex: 1 0 0;
   flex-direction: column;
   gap: 2px;
+<<<<<<< Updated upstream
   min-width: 0;
+=======
+>>>>>>> Stashed changes
   white-space: nowrap;
 }
 
@@ -328,7 +519,11 @@
   letter-spacing: -0.28px;
 }
 
+<<<<<<< Updated upstream
 .hd-link__sub {
+=======
+.hd-link__text {
+>>>>>>> Stashed changes
   opacity: 0.7;
   font: 400 12px/1.35 var(--font-poppins);
   letter-spacing: -0.24px;
@@ -339,7 +534,11 @@
   height: 18px;
 }
 
+<<<<<<< Updated upstream
 .hd-ready {
+=======
+.hd-ready-cta {
+>>>>>>> Stashed changes
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -348,6 +547,7 @@
   background: var(--light-green);
 }
 
+<<<<<<< Updated upstream
 .hd-ready__title {
   font: 600 16px/1.139 var(--font-poppins);
   letter-spacing: -0.32px;
@@ -355,10 +555,19 @@
 }
 
 .hd-ready__body {
+=======
+.hd-ready-cta__title {
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.hd-ready-cta__text {
+>>>>>>> Stashed changes
   font: 400 13px/1.3 var(--font-poppins);
   letter-spacing: -0.26px;
 }
 
+<<<<<<< Updated upstream
 /* ---------- Fixed footer (Figma group 2142:3849, fixed when scrolling) ---------- */
 .hd-footer {
   position: absolute;
@@ -384,10 +593,28 @@
   position: absolute;
   bottom: 16px;
   left: 20px;
+=======
+/* ---------- Pinned action bar (Figma group 2142:3849) ---------- */
+.hd-bar-bottom {
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  width: 402px;
+  height: 202px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hd-bar-bottom__pill {
+  position: absolute;
+  left: 20px;
+  top: 95px;
+>>>>>>> Stashed changes
   width: 362px;
   height: 79px;
   border-radius: 50px;
   background: #f5f5f5;
+<<<<<<< Updated upstream
 }
 
 .hd-footer__cta,
@@ -405,6 +632,24 @@
 
 .hd-footer__fav {
   left: 309px;
+=======
+  pointer-events: auto;
+}
+
+.hd-bar-bottom__cta.btn {
+  position: absolute;
+  left: 29px;
+  top: 103px;
+  width: 269px;
+  height: 64px;
+  pointer-events: auto;
+}
+
+.hd-bar-bottom__fav {
+  position: absolute;
+  left: 309px;
+  top: 103px;
+>>>>>>> Stashed changes
   display: flex;
   align-items: center;
   justify-content: center;
@@ -412,9 +657,16 @@
   height: 64px;
   border-radius: 41px;
   background: #fff;
+<<<<<<< Updated upstream
 }
 
 .hd-footer__fav img {
+=======
+  pointer-events: auto;
+}
+
+.hd-bar-bottom__fav img {
+>>>>>>> Stashed changes
   width: 16px;
   height: 16px;
 }
