@@ -87,9 +87,9 @@ export function Correct() {
           <Button className="fa-bar__retry" onClick={() => go('/first-aid/practice')}>
             Retry
           </Button>
-          {/* No destination in the prototype; finishes the lesson back on the module list. */}
+          {/* Figma label was "20 mins"; renamed Continue. Finishes the lesson back on the module list. */}
           <Button className="fa-bar__mins" onClick={() => go('/first-aid', 'smart')}>
-            20 mins
+            Continue
           </Button>
         </div>
       }

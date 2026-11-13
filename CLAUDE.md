@@ -206,7 +206,7 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
   - Heat Exposure back → `/first-aid`.
   - Practice back → `/first-aid/heat`.
   - Legal side "Get First-aid certified" → `/first-aid/certified`.
-  - Correct! "20 mins" → `/first-aid`.
+  - Correct! "20 mins" → `/first-aid`, relabelled "Continue" (from Kenny).
 - Heat Exposure: the full text is shown, with no Figma fade, and "Start lesson" sits below it.
 - Completion turns green:
   - Reaching "Correct!" completes Heat Exposure.
