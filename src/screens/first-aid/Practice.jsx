@@ -47,7 +47,11 @@ export function Practice() {
                 </div>
               </div>
               <div className="fa-answer">
-                <p className="fa-answer__blank">___</p>
+                <textarea
+                  className="fa-answer__input"
+                  aria-label="Your answer"
+                  placeholder="Type your answer…"
+                />
                 <span className="fa-answer__q">
                   <img src={questionCircle} alt="" />
                   <span>?</span>

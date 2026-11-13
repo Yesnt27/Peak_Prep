@@ -612,10 +612,31 @@
   background: #ffecc7;
 }
 
-.fa-answer__blank {
-  color: #595959;
-  font: 500 13px/1.139 var(--font-poppins);
+.fa-answer {
+  gap: 10px;
+}
+
+.fa-answer__input {
+  flex: 1 0 0;
+  align-self: stretch;
+  min-width: 0;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: #414141;
+  font: 500 13px/1.4 var(--font-poppins);
   letter-spacing: -0.26px;
+  resize: none;
+  outline: none;
+}
+
+.fa-answer__input::placeholder {
+  color: #595959;
+  opacity: 0.7;
+}
+
+.fa-answer:focus-within {
+  box-shadow: 0 0 0 2px var(--yellow-2);
 }
 
 .fa-answer__q {
