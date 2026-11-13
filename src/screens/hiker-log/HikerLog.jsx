@@ -64,7 +64,7 @@ function Step(props) {
 /* 1646:11007 */
 export function Congrats() {
   return (
-    <Step step={1} fill={52} next="/log/details">
+    <Step step={1} fill={52} back="/training" next="/log/details">
       <div className="fs-body fs-body--congrats">
         <div className="fs-intro">
           <h1 className="fs-title">Congratulations!</h1>
@@ -184,8 +184,10 @@ export function ReviewDetails() {
     <Screen
       className="fs hl"
       fixed={
-        // No destination in the prototype (open question 2).
-        <Button className="fs-cta">Done</Button>
+        // No destination in the prototype; the logged hike belongs in Completed hikes.
+        <Button className="fs-cta" onClick={() => go('/profile/completed', 'smart')}>
+          Done
+        </Button>
       }
     >
       <div className="hl-review-page">

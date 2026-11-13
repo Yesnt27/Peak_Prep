@@ -1,0 +1,177 @@
+/* Figma "Friendlist" 1646:13323, "Add" 2136:3603 / 2234:4055 */
+.fr {
+  background: #f5f5f5;
+  color: #414141;
+}
+
+.fr-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 356px;
+  margin: 48px 23px 0;
+  padding-bottom: 160px;
+}
+
+.fr-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.fr-title {
+  width: 100%;
+  height: 51px;
+  font: 600 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+}
+
+.fr-search-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  width: 100%;
+}
+
+.fr-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: #fff;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: pre;
+}
+
+.fr-search img {
+  width: 18px;
+  height: 18px;
+}
+
+.fr-search__placeholder {
+  opacity: 0.55;
+}
+
+.fr-add-link {
+  width: 100%;
+  font: 400 13px/normal var(--font-sf);
+  text-align: right;
+}
+
+.fr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  width: 322px;
+}
+
+.fr-person {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fr-person__who {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.fr-person__photo {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.fr-person__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 111px;
+}
+
+.fr-person__name {
+  width: 142px;
+  font: 700 16px/normal var(--font-sf);
+  white-space: nowrap;
+}
+
+.fr-person__sub {
+  width: 142px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+.fr-chip {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 19px;
+  border-radius: 20px;
+  background: #e8f2d1;
+  font: 400 13px/normal var(--font-sf);
+  transition: background-color 300ms var(--ease-out);
+}
+
+.fr-chip--add {
+  width: 63px;
+}
+
+.fr-chip--added {
+  background: #80ac3c;
+  transition: none;
+}
+
+@media (hover: hover) {
+  .fr-chip--view:hover,
+  .fr-chip--add:not(.fr-chip--added):hover {
+    background: #e7e7e7;
+  }
+}
+
+/* Add / search screens */
+.fr-panel {
+  position: absolute;
+  top: 221px;
+  left: 23px;
+  width: 356px;
+  height: 668px;
+  background: #fff;
+}
+
+.fr-divider {
+  position: absolute;
+  top: 238px;
+  left: 23px;
+  z-index: 1;
+}
+
+.fr-keyboard {
+  position: absolute;
+  top: 583px;
+  left: 10px;
+  width: 383px;
+  height: 283px;
+  overflow: hidden;
+  border-radius: 26px 26px 45px 45px;
+}
+
+.fr-keyboard img {
+  position: absolute;
+  top: -192.32%;
+  left: 0;
+  width: 100%;
+  max-width: none;
+  height: 292.33%;
+}

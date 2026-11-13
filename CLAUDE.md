@@ -210,4 +210,23 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 
 ## User-testing refinements
 
-_None yet._
+### Round 1 — dead buttons + first aid (from Kenny, 2026-11-12)
+
+- Link buttons that did nothing; fix back buttons. Done:
+  - Home avatar → `/profile`.
+  - Completed hikes avatar → `/profile`.
+  - Training overview back → `/home/training`.
+  - Hiker Log Congrats back → `/training`.
+  - Review Details "Done" → `/profile/completed`.
+  - Heat Exposure back → `/first-aid`.
+  - Practice back → `/first-aid/heat`.
+  - Legal side "Get First-aid certified" → `/first-aid/certified`.
+  - Correct! "20 mins" → `/first-aid`.
+- Heat Exposure: the full text is shown, with no Figma fade, and "Start lesson" sits below it.
+- Completion turns green:
+  - Reaching "Correct!" completes Heat Exposure.
+  - The lesson list rows go green, the progress count and bar update, and the Training overview Hiking safety steps go green with "Up next" advancing.
+  - Progress lives in `src/app/progress.js`, which uses sessionStorage only and resets in a new tab.
+- Get certified:
+  - The course cards open each organisation's site in a new tab.
+  - The page is no longer clipped at 923px, so the St. Johns card can be reached.

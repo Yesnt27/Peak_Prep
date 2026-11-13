@@ -105,7 +105,9 @@ export default function Home() {
             <p className="home__eyebrow">PEAKPREP</p>
             <h1 className="home__title">Where to next?</h1>
           </div>
-          <img className="home__avatar" src={avatar} alt="" />
+          <button type="button" className="home__avatar" aria-label="Profile" onClick={() => go('/profile', 'smart')}>
+            <img src={avatar} alt="" />
+          </button>
         </header>
         <SegmentedTabs tabs={TABS} value={selected} onChange={setSelected} />
         <div className="home__search-row">

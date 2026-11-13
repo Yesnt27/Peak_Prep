@@ -3,6 +3,8 @@ import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
 import NavBar from '../../components/NavBar.jsx'
 import ListItem from '../../components/ListItem.jsx'
+import { Fragment } from 'react'
+import { LESSONS, completedLessons } from '../../app/progress.js'
 import { Chip, HikeHero, KeyStats, SectionHeader } from './parts.jsx'
 import ringTrack from '../../assets/training/ring-track.svg'
 import ringFill from '../../assets/training/ring-fill.svg'
@@ -46,10 +48,12 @@ function BagStat({ title, value, unit, note, remaining, fill }) {
 /** Figma "Training overview (hi-fi)" 1780:3125. */
 export default function TrainingOverview() {
   const go = useGo()
+  const done = completedLessons()
+  const upNext = LESSONS.find(([name]) => !done.includes(name))
   return (
     <Screen className="to" fixed={<NavBar />}>
-      {/* The prototype gives this screen's back button no link. */}
       <HikeHero
+        onBack={() => go('/home/training')}
         chips={
           <>
             <Chip tone="yellow-1">Hard</Chip>
@@ -133,28 +137,29 @@ export default function TrainingOverview() {
 
           <div className="to-safety">
             <SectionHeader icon={shieldIcon} title="Hiking safety" sub="Brunswick Mountain Safety">
-              <Chip tone="yellow-1">2 of 4</Chip>
+              <Chip tone="yellow-1">
+                {done.length} of {LESSONS.length}
+              </Chip>
             </SectionHeader>
             <div className="to-safety__card">
               <div className="to-steps">
-                <span className="to-step to-step--done">
-                  <img src={checkIcon} alt="" />
-                </span>
-                <span className="to-step__line to-step__line--done" />
-                <span className="to-step to-step--done">
-                  <img src={checkIcon} alt="" />
-                </span>
-                <span className="to-step__line to-step__line--done" />
-                <span className="to-step to-step--current">3</span>
-                <span className="to-step__line" />
-                <span className="to-step to-step--todo">4</span>
+                {LESSONS.map(([name], i) => {
+                  const isDone = done.includes(name)
+                  const state = isDone ? 'done' : upNext?.[0] === name ? 'current' : 'todo'
+                  return (
+                    <Fragment key={name}>
+                      {i > 0 && <span className={isDone ? 'to-step__line to-step__line--done' : 'to-step__line'} />}
+                      <span className={`to-step to-step--${state}`}>{isDone ? <img src={checkIcon} alt="" /> : i + 1}</span>
+                    </Fragment>
+                  )
+                })}
               </div>
               <div className="to-next">
                 <div className="to-next__text">
-                  <p className="to-next__label">Up next</p>
-                  <p className="to-next__title">Heat Exposure</p>
+                  <p className="to-next__label">{upNext ? 'Up next' : 'All lessons'}</p>
+                  <p className="to-next__title">{upNext ? upNext[0] : 'Complete'}</p>
                 </div>
-                <Chip tone="yellow-1">8 scenarios</Chip>
+                {upNext && <Chip tone="yellow-1">{upNext[1].toLowerCase()}</Chip>}
               </div>
               <Button variant="primary" className="to-btn to-btn--round" onClick={() => go('/first-aid')}>
                 Continue lesson

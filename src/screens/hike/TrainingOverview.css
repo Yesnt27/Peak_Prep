@@ -288,7 +288,7 @@
 }
 
 .to-step--done {
-  background: var(--yellow-2);
+  background: var(--main-green);
 }
 
 .to-step--current {
@@ -312,7 +312,7 @@
 }
 
 .to-step__line--done {
-  background: var(--yellow-2);
+  background: var(--main-green);
 }
 
 .to-next {
