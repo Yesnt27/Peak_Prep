@@ -5,7 +5,7 @@ import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
 import { Tag } from '../../components/controls.jsx'
 import { lessonBySlug } from '../../data/firstAid.js'
-import { Back, Info, PracticeHeader, ScenarioBar } from './parts.jsx'
+import { Back, PracticeHeader, ScenarioBar } from './parts.jsx'
 
 const TIME_LIMIT = 3 * 60 // seconds per scenario
 
@@ -87,7 +87,6 @@ function Scenario({ lesson, index, onNext }) {
           <div className="fa-white fa-white--center fa-feedback">
             <div className="fa-white__head">
               <p>Suggested answer</p>
-              <Info size={27} />
             </div>
             <p className="fa-white__copy">{scenario.answer}</p>
           </div>

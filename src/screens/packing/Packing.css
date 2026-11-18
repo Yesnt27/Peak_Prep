@@ -23,14 +23,6 @@
   border-radius: 50%;
 }
 
-.pk-corner img {
-  position: absolute;
-  top: -47px;
-  left: -55px;
-  max-width: none;
-  pointer-events: none;
-}
-
 .pk-corner--edit {
   left: 333.3px;
 }

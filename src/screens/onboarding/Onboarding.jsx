@@ -153,6 +153,8 @@ export function OnboardingWelcome() {
   )
 }
 
+const NONE = 'None of these'
+
 const CONDITIONS = [
   ['Snow', snow],
   ['Rain', rain],
@@ -166,6 +168,10 @@ const CONDITIONS = [
 export function OnboardingExperience() {
   const account = useAccount()
   const isNew = account.type === 'new'
+  // Conditions are multi-select; "None of these" clears them, and picking a condition clears "None of these".
+  const [conditions, setConditions] = useState([])
+  const toggleCondition = (name) =>
+    setConditions(conditions.includes(name) ? conditions.filter((c) => c !== name) : [...conditions.filter((c) => c !== NONE), name])
   return (
     <Step
       step={2}
@@ -206,11 +212,16 @@ export function OnboardingExperience() {
       <Field label="Conditions you’ve hiked in:">
         <div className="onb__conditions">
           {CONDITIONS.map(([name, icon]) => (
-            <ToggleTag key={name} icon={icon}>
+            <ToggleTag key={name} icon={icon} selected={conditions.includes(name)} onChange={() => toggleCondition(name)}>
               {name}
             </ToggleTag>
           ))}
-          <ToggleTag>None of these</ToggleTag>
+          <ToggleTag
+            selected={conditions.includes(NONE)}
+            onChange={() => setConditions(conditions.includes(NONE) ? [] : [NONE])}
+          >
+            {NONE}
+          </ToggleTag>
         </div>
       </Field>
     </Step>

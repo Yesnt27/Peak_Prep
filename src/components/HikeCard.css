@@ -146,14 +146,21 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 10px;
   width: 100%;
 }
 
+/* Long names wrap instead of running into the rating. */
 .hike-card__title {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: 2px;
-  white-space: nowrap;
+  min-width: 0;
+}
+
+.hike-card__rating {
+  flex: none;
 }
 
 .hike-card__name {

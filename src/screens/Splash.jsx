@@ -20,6 +20,13 @@ export default function Splash() {
   const go = useGo()
   const [step, setStep] = useState(0)
 
+  // Phone browsers tint their top/bottom bars from theme-color: green during the intro, back to grey after.
+  useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]')
+    meta?.setAttribute('content', '#629000')
+    return () => meta?.setAttribute('content', '#f5f5f8')
+  }, [])
+
   // Plays on its own: a short hold on the wordmark, then the animation starts.
   useEffect(() => {
     if (step !== 0) return undefined

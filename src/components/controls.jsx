@@ -26,6 +26,27 @@ export function BackButton({ className = '', label = 'Back', darkHover = true, .
   )
 }
 
+const ICONS = {
+  pencil: (
+    <path d="M14.2 4.3l1.5-1.5a1.6 1.6 0 0 1 2.3 0l1.2 1.2a1.6 1.6 0 0 1 0 2.3l-1.5 1.5M14.2 4.3L4.6 13.9 3.5 18.5l4.6-1.1 9.6-9.6M14.2 4.3l3.5 3.5" />
+  ),
+  check: <path d="M4.5 11.5l4.5 4.5L17.5 6.5" />,
+}
+
+/**
+ * Round icon button in the back button's style (same size, border, shadow, dark hover),
+ * drawn as a vector so it stays sharp: `icon` = "pencil" (edit) or "check" (done).
+ */
+export function IconButton({ icon, label, className = '', ...rest }) {
+  return (
+    <button type="button" className={`back-btn icon-btn ${className}`} aria-label={label} {...rest}>
+      <svg viewBox="0 0 22 22" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        {ICONS[icon]}
+      </svg>
+    </button>
+  )
+}
+
 /** Figma "tag w/o icon states" and "tag w icon states": default / hover / selected. */
 export function Tag({ icon, selected = false, compact = false, className = '', children, ...rest }) {
   const cls = ['tag', selected && 'tag--selected', icon && 'tag--icon', compact && 'tag--compact', className]

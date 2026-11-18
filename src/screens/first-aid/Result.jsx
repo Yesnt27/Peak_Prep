@@ -11,15 +11,13 @@ import tempCircleRight from '../../assets/first-aid/temp-circle-right.svg'
 import tempArrow from '../../assets/first-aid/temp-arrow.svg'
 import heatWaves from '../../assets/first-aid/heat-waves.svg'
 import thermometerMask from '../../assets/first-aid/thermometer-mask.png'
-import plusCircle from '../../assets/first-aid/plus-circle.svg'
-import plus from '../../assets/first-aid/plus.svg'
 import eyeArcTop from '../../assets/first-aid/eye-arc-top.svg'
 import eyeArcBottom from '../../assets/first-aid/eye-arc-bottom.svg'
 import eyeShape from '../../assets/first-aid/eye-shape.svg'
 import eyeIris from '../../assets/first-aid/eye-iris.svg'
 import eyePupil from '../../assets/first-aid/eye-pupil.svg'
 import eyeGlint from '../../assets/first-aid/eye-glint.svg'
-import { Back, Info, PracticeHeader, ScenarioBar } from './parts.jsx'
+import { Back, PracticeHeader, ScenarioBar } from './parts.jsx'
 
 /* ---------- 1646:12263  Right or wrong → end of every lesson ---------- */
 
@@ -68,14 +66,12 @@ function Takeaways({ lesson }) {
       <div className="fa-white fa-white--center">
         <div className="fa-white__head">
           <p>Lesson complete!</p>
-          <Info size={27} />
         </div>
         <p className="fa-white__copy">{lesson.result.copy}</p>
       </div>
       <div className="fa-white fa-white--center">
         <div className="fa-white__head">
           <p>Key takeaways</p>
-          <PlusBadge />
         </div>
         <ul className="fa-takeaways">
           {lesson.result.takeaways.map((t) => (
@@ -87,15 +83,6 @@ function Takeaways({ lesson }) {
   )
 }
 
-function PlusBadge() {
-  return (
-    <span className="fa-plus">
-      <img src={plusCircle} alt="" />
-      <img className="fa-plus__icon" src={plus} alt="" />
-    </span>
-  )
-}
-
 /** Figma 1646:12263 cards (thermometer, Treating for Shock), heading renamed to match the other lessons. */
 function HeatResult() {
   return (
@@ -103,7 +90,6 @@ function HeatResult() {
       <div className="fa-white fa-white--center">
         <div className="fa-white__head">
           <p>Lesson complete!</p>
-          <Info size={27} />
         </div>
         <div className="fa-temp">
           <img className="fa-temp__right" src={tempCircleRight} alt="" />
@@ -125,7 +111,6 @@ function HeatResult() {
       <div className="fa-white fa-white--center">
         <div className="fa-white__head">
           <p>Next Steps</p>
-          <PlusBadge />
         </div>
         <div className="fa-white__copy">
           <p>Take a rest, preferably in a shaded area and treat for shock. Reassess every 5-15 mins.</p>

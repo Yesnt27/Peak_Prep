@@ -227,3 +227,92 @@
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
 }
+
+/* ---------- Review Details: flows with its content (answers come from the steps) ---------- */
+.hl-review-page {
+  min-height: 0;
+}
+
+.hl-content--review.fs-content {
+  padding-bottom: 160px; /* clear of the pinned Done button */
+}
+
+.hl-review__title.fs-title {
+  white-space: normal;
+}
+
+.hl-answer--empty {
+  color: #9a9a9a;
+}
+
+.hl-answer-notes {
+  height: auto;
+}
+
+.hl-answer-notes p {
+  position: static;
+  height: auto;
+  padding: 24px 30px;
+}
+
+/* Emergencies typed on step 4 (and listed on Review). */
+.hl-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.hl-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 57px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--body-copy-gray);
+  font: 400 16px/1.4 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.hl-item--new {
+  box-shadow: 0 0 0 2px #d4e6b8;
+}
+
+.hl-item__input {
+  flex: 1 0 0;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  outline: none;
+}
+
+.hl-item__remove {
+  display: flex;
+  flex: none;
+  margin: -8px;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.hl-item__remove img {
+  width: 19.809px;
+  height: 19.809px;
+}
+
+@media (hover: hover) {
+  .hl-item__remove:hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .hl-item__remove:active {
+    background: #e7e7e7;
+  }
+}

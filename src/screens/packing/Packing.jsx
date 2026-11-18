@@ -5,13 +5,11 @@ import Button from '../../components/Button.jsx'
 import NavBar from '../../components/NavBar.jsx'
 import ListItem from '../../components/ListItem.jsx'
 import SegmentedTabs from '../../components/SegmentedTabs.jsx'
-import { AddItem, BackButton } from '../../components/controls.jsx'
+import { AddItem, BackButton, IconButton } from '../../components/controls.jsx'
 import winterGear from '../../assets/packing/winter-gear.svg'
 import healthSafety from '../../assets/packing/health-safety.svg'
 import foodWater from '../../assets/packing/food-water.svg'
 import electronics from '../../assets/packing/electronics.svg'
-import editButton from '../../assets/packing/edit-button.svg'
-import doneButton from '../../assets/packing/done-button.svg'
 import pencil from '../../assets/packing/pencil.svg'
 import help from '../../assets/packing/help.svg'
 import stepperMinus from '../../assets/icons/stepper-minus.svg'
@@ -173,9 +171,7 @@ export function PackingList({ tab }) {
     <Screen className="pk" fixed={<NavBar />}>
       <div className="pk-page" style={{ minHeight: HEIGHTS[tab] }}>
         <BackButton className="pk-back" onClick={() => go('/training')} />
-        <button type="button" className="pk-corner pk-corner--edit" aria-label="Edit packing list" onClick={() => go('/packing/edit', 'smart')}>
-          <img src={editButton} alt="" />
-        </button>
+        <IconButton icon="pencil" label="Edit packing list" className="pk-corner pk-corner--edit" onClick={() => go('/packing/edit', 'smart')} />
         <div className="pk-content">
           <Title />
           <BagStats />
@@ -226,9 +222,7 @@ export function PackingEdit() {
       }
     >
       <div className="pk-page" style={{ minHeight: HEIGHTS.edit }}>
-        <button type="button" className="pk-corner pk-corner--done" aria-label="Done" onClick={() => go('/packing/packed', 'smart')}>
-          <img src={doneButton} alt="" />
-        </button>
+        <IconButton icon="check" label="Done editing" className="pk-corner pk-corner--done" onClick={() => go('/packing/packed', 'smart')} />
         <div className="pk-content">
           <Title edit />
           <div className="pk-max">

@@ -9,14 +9,17 @@ function measure() {
   const vh = window.innerHeight
   if (vw <= PHONE_MAX_WIDTH) {
     // Phone: fill the screen, scaled so the layout is always 402 design px wide.
-    return { phone: true, scale: vw / DESIGN_WIDTH }
+    // The height is given in design px too (screen height ÷ scale), so the frame exactly fills the
+    // screen in every browser (iOS Safari and Chrome handle % sizes inside `zoom` differently).
+    const scale = vw / DESIGN_WIDTH
+    return { phone: true, scale, height: vh / scale }
   }
   // Larger screens: show the 402 x 874 frame centered, scaled down if too tall.
   return { phone: false, scale: Math.min(1, vh / DESIGN_HEIGHT) }
 }
 
 export default function Device({ children }) {
-  const [{ phone, scale }, setLayout] = useState(measure)
+  const [{ phone, scale, height }, setLayout] = useState(measure)
 
   useLayoutEffect(() => {
     const update = () => setLayout(measure())
@@ -30,7 +33,7 @@ export default function Device({ children }) {
 
   return (
     <div className={phone ? 'stage stage--phone' : 'stage'}>
-      <div className="device" style={{ '--scale': scale }}>
+      <div className="device" style={phone ? { '--scale': scale, width: DESIGN_WIDTH, height } : { '--scale': scale }}>
         {children}
       </div>
     </div>

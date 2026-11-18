@@ -10,6 +10,12 @@ body,
   height: 100%;
 }
 
+/* Grey behind everything, so phone browsers tint their bars / edges grey (not the old green). */
+html,
+body {
+  background: var(--app-grey);
+}
+
 body {
   margin: 0;
   font-family: var(--font-poppins);
@@ -82,9 +88,14 @@ svg {
   background: var(--app-grey);
 }
 
+.stage--phone {
+  background: var(--app-grey);
+}
+
 .stage--phone .device {
-  width: 100%;
-  height: 100%;
+  /* Width/height are set in design px by Device.jsx, so the zoomed frame exactly fills the screen. */
+  align-self: start;
+  justify-self: start;
 }
 
 /* ---------- Route layers + prototype transitions ---------- */

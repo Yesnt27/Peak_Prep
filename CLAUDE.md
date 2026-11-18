@@ -331,3 +331,20 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - **Current Activity:** "Weekly Exercise routine" starts empty; workouts ticked in the "Add Workouts" sheet are added on Done, each with a working −/+ (times per week, 1–7).
 - **Safety Setup:** contact fields start with the Figma values (Sarah Lee, +1, Friend) as real text in body grey `#414141`.
 - **Friends (new account):** "add friends" / the search bar open a working search over everyone (`PEOPLE` = the 5 friends + Joanna Brown, Joanne Blue, John Bo, who now have profiles). "Add" adds them (chip reads "Added"), the rest of the row opens their profile, whose button shows "+ Add friend" / "− Unfriend" from the account; back returns to where it was opened. Friend List and the Profile friend count use `account.friends`.
+
+### Round 12 — packing icons, Hiker Log, conditions, lesson cards (from Olivia, 2026-11-18)
+
+- **Packing:** back → `/training` (unchanged, confirmed). The ✎ edit and ✓ done corner buttons are vector `IconButton`s (`components/controls.jsx`) in the back-button style (dark hover, white icon) instead of the blurry Figma exports. The edit screen matches "Packing - Edit.png"; Add Item + weight guessing as in Round 5.
+- **Hiker Log** answers are kept in `src/app/hikerLog.js` (sessionStorage): date, time, feel, emergency prep, typed emergencies, body, notes.
+  - "Add Emergency" opens a text row; entries list above it with × to remove.
+  - "How did your body handle this hike?" options: Extremely strenuous / Very challenging / Moderately challenging / Comfortable throughout.
+  - Review Details shows what was entered (or "Not answered"), uses the shared HikeCard (the old Figma card base clipped the longer name and "Completed" chip), title wraps, page flows with a 160px clearance for Done.
+- **Sign-up conditions:** "None of these" clears the other tags; picking a condition clears "None of these".
+- **First aid:** the "i" and "+" badges are removed from the results cards and the "Suggested answer" card.
+- **HikeCard:** long names wrap beside the rating instead of overlapping it.
+
+### Round 13 — intro centring, phone bars, bottom strip (from Olivia, 2026-11-18)
+
+- **Splash** keeps the Figma green background; the wordmark is centred on any screen height (`calc(50% - half size)`), not pinned to the 874px frame.
+- **Phone browser bars:** `index.html` has `<meta name="theme-color" content="#f5f5f8">`; the splash sets it to green while it shows and back to grey when it leaves, and `html`/`body` are `--app-grey`, so Safari's bars are grey on every screen after the intro.
+- **Bottom white strip on iPhone:** `zoom` with `height: 100%` left a gap in iOS Safari. On phones `Device.jsx` now sets the frame to 402 × (screen height ÷ scale) design px, so it exactly fills the screen in Safari and Chrome.
