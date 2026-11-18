@@ -17,35 +17,21 @@
   height: 32.782px;
 }
 
-.back-btn--dark-hover {
-  position: relative;
+/* Every round button (back, share, edit ✎, done ✓): light-grey hover / press, no dark state. */
+.back-btn {
   transition: background-color 300ms var(--ease-out);
 }
 
-.back-btn__chev--light {
-  position: absolute;
-  opacity: 0;
-  transition: opacity 300ms var(--ease-out);
-}
-
 @media (hover: hover) {
-  .back-btn--dark-hover:hover {
-    background: #4b4b4b;
-  }
-
-  .back-btn--dark-hover:hover .back-btn__chev--light {
-    opacity: 1;
+  .back-btn:hover {
+    background: #e7e7e7;
   }
 }
 
 /* Touch: the hover look shows while a finger is held down. */
 @media (hover: none) {
-  .back-btn--dark-hover:active {
-    background: #4b4b4b;
-  }
-
-  .back-btn--dark-hover:active .back-btn__chev--light {
-    opacity: 1;
+  .back-btn:active {
+    background: #e7e7e7;
   }
 }
 
@@ -499,22 +485,7 @@ textarea.type-field {
   text-align: right;
 }
 
-/* Round icon buttons (Packing edit ✎ / done ✓): back-button look, icon turns white on the dark hover. */
+/* Round icon buttons (Packing edit ✎ / done ✓): back-button look and hover. */
 .icon-btn {
   color: #414141;
-  transition: background-color 300ms var(--ease-out), color 300ms var(--ease-out);
-}
-
-@media (hover: hover) {
-  .icon-btn:hover {
-    background: #4b4b4b;
-    color: #fff;
-  }
-}
-
-@media (hover: none) {
-  .icon-btn:active {
-    background: #4b4b4b;
-    color: #fff;
-  }
 }

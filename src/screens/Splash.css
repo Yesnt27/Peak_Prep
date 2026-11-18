@@ -1,15 +1,17 @@
 .splash {
   position: absolute;
   inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   background: var(--main-green);
 }
 
 /* The "Peak Prep" wordmark, used as an alpha mask over the moving artwork. Centred on any screen height. */
 .splash__mark {
-  position: absolute;
-  left: calc(50% - 103.376px);
-  top: calc(50% - 68.779px);
+  position: relative; /* centred by .splash (flex), the same way in every browser */
+  flex: none;
   width: 206.751px;
   height: 137.557px;
   -webkit-mask-image: url('../assets/splash/wordmark-mask.svg');

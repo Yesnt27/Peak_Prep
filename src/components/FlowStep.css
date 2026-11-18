@@ -129,9 +129,21 @@
   white-space: nowrap;
 }
 
+/* Icon centred on the text line (was top-aligned). */
 .fs-search {
-  align-items: flex-start;
+  align-items: center;
   gap: 11.975px;
+}
+
+/* Typed text is body grey; the placeholder (e.g. MM/DD/YYYY) is light grey until something is typed. */
+.fs-input .type-field,
+.fs-search .type-field {
+  color: var(--body-copy-gray);
+}
+
+.fs-input .type-field::placeholder,
+.fs-search .type-field::placeholder {
+  color: #ababab;
 }
 
 .fs-search img {
@@ -142,6 +154,14 @@
 
 .fs-tags.tag-group {
   width: 356px;
+}
+
+/* Option tags as rounded tiles (months, days, time per session, log time…). */
+.fs-tiles .tag {
+  height: auto;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  line-height: 1.68;
 }
 
 /* ---------- Option rows ---------- */

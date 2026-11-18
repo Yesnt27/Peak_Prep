@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import backChevron from '../assets/icons/back-chevron.svg'
-import backChevronLight from '../assets/first-aid/back-chevron-light.svg'
 import addItemIcon from '../assets/icons/add-item.svg'
 import dropdownArrow from '../assets/icons/dropdown-arrow.png'
 import checkDefault from '../assets/icons/check-default.svg'
@@ -8,20 +7,11 @@ import checkHover from '../assets/icons/check-hover.svg'
 import checkGreen from '../assets/icons/check-green.svg'
 import './controls.css'
 
-/**
- * Round back button (Figma "Back button"). `darkHover` is the first-aid
- * variant (1646:12147): on hover it turns dark grey with a light chevron.
- */
-export function BackButton({ className = '', label = 'Back', darkHover = true, ...rest }) {
+/** Round back button (Figma "Back button"). Hover / press: light grey (the dark-grey hover was removed). */
+export function BackButton({ className = '', label = 'Back', ...rest }) {
   return (
-    <button
-      type="button"
-      className={`back-btn ${darkHover ? 'back-btn--dark-hover' : ''} ${className}`}
-      aria-label={label}
-      {...rest}
-    >
+    <button type="button" className={`back-btn ${className}`} aria-label={label} {...rest}>
       <img className="back-btn__chev" src={backChevron} alt="" />
-      {darkHover && <img className="back-btn__chev back-btn__chev--light" src={backChevronLight} alt="" />}
     </button>
   )
 }

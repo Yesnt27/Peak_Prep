@@ -348,3 +348,16 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - **Splash** keeps the Figma green background; the wordmark is centred on any screen height (`calc(50% - half size)`), not pinned to the 874px frame.
 - **Phone browser bars:** `index.html` has `<meta name="theme-color" content="#f5f5f8">`; the splash sets it to green while it shows and back to grey when it leaves, and `html`/`body` are `--app-grey`, so Safari's bars are grey on every screen after the intro.
 - **Bottom white strip on iPhone:** `zoom` with `height: 100%` left a gap in iOS Safari. On phones `Device.jsx` now sets the frame to 402 × (screen height ÷ scale) design px, so it exactly fills the screen in Safari and Chrome.
+- **Profile top spacing (Round 14):** your Profile tab starts at 68px like Home (`.fp-page--tab`); friend profiles start at 108px, just under the back button.
+- **Splash centring (Round 14):** `.splash` is a flex container that centres the wordmark (no `%` offsets inside `zoom`, which iOS Safari resolves differently).
+- **Packing corner buttons fix (Round 14):** `.pk-content` (now in normal flow from the top of the page) was covering the ‹ / ✎ / ✓ buttons and swallowing taps; `.pk-back` and `.pk-corner` now have `z-index: 2`. Checked with real taps (hit-testing), not `element.click()`.
+- **Packing corner buttons (Round 14):** no dark hover on ‹ / ✎ / ✓; light-grey `#e7e7e7` hover instead (`darkHover={false}`, `.icon-btn`).
+- **Round buttons (Round 14, replaces the Round 4 dark hover):** every back, share, ✎ and ✓ button uses one light-grey `#e7e7e7` hover/press (`.back-btn` in `controls.css`, `.share-btn`). The dark-grey hover, the `darkHover` prop and the light-chevron overlay are gone.
+
+### Round 15 — Completed Hike log polish (from Olivia, 2026-11-18)
+
+- **Congrats:** the trail card is the Home `HikeCard` (Brunswick); tapping it selects it (green ring). The old Figma `TrailCard` is gone.
+- **Search bars (`.fs-search`):** icon centred on the text line. **`.fs-input` / `.fs-search` text** is body grey; placeholders (e.g. MM/DD/YYYY) are light grey `#ababab`.
+- **Every log step's button is greyed out until answered** (pinned button, `ready`): card selected; date + time; feel; emergency prep; body; notes typed.
+- **Time to complete:** rounded tiles via the shared `.fs-tiles .tag` (FlowStep.css).
+- **Completed Hikes page** (`/profile/completed`): cards are the shared `HikeCard` with the "With Siena & Mark" row; "AYS" shown as "DAYS".

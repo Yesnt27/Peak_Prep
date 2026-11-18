@@ -2,7 +2,7 @@ import { useSyncExternalStore } from 'react'
 
 /** Answers from the Completed Hike (Hiker Log) steps, shown on Review Details. sessionStorage only. */
 const KEY = 'peakprep-hiker-log'
-const EMPTY = { date: '', time: null, feel: null, prep: null, emergencies: [], body: null, notes: '' }
+const EMPTY = { picked: false, date: '', time: null, feel: null, prep: null, emergencies: [], body: null, notes: '' }
 
 function read() {
   try {

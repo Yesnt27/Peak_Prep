@@ -9,57 +9,11 @@ import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/Fl
 import Button from '../../components/Button.jsx'
 import { AddItem, BackButton, TagGroup, TypeField } from '../../components/controls.jsx'
 import searchIcon from '../../assets/icons/search.png'
-import trailPhoto from '../../assets/hiker-log/trail-photo.png'
-import cardBase from '../../assets/hiker-log/card-base.svg'
-import selectedCheck from '../../assets/hiker-log/selected-check.svg'
-import completedCheck from '../../assets/hiker-log/completed-check.svg'
 import easyIcon from '../../assets/hiker-log/easy.svg'
 import mediumIcon from '../../assets/hiker-log/medium.svg'
 import difficultIcon from '../../assets/hiker-log/difficult.svg'
 import strenuousMask from '../../assets/hiker-log/strenuous-mask.png'
 import './HikerLog.css'
-
-/** The trail card used on Congrats (selected) and Review (completed). */
-function TrailCard({ review = false }) {
-  return (
-    <div className={review ? 'hl-card hl-card--review' : 'hl-card'}>
-      <img className="hl-card__photo" src={trailPhoto} alt="" />
-      {!review && <div className="hl-card__shade" />}
-      <img className="hl-card__base" src={cardBase} alt="" />
-      <p className="hl-card__name">Brunswick Mountain Trail</p>
-      <p className="hl-card__loc">Lions Bay, BC</p>
-      <p className="hl-card__stats">Hard · 14.3 km · Elev. 1,539 m · Est. 7-9 hours</p>
-      {review ? (
-        <>
-          <div className="hl-card__bars">
-            <span style={{ left: 144.91, width: 8.357 }} />
-            <span style={{ left: 154.94, width: 8.357 }} />
-            <span className="hl-card__bar--current" style={{ left: 164.96, width: 20.057 }} />
-            <span style={{ left: 186.69, width: 8.357 }} />
-            <span style={{ left: 196.72, width: 6.686 }} />
-            <span style={{ left: 205.08, width: 5.014 }} />
-          </div>
-          <div className="hl-card__completed">
-            <img src={completedCheck} alt="" />
-            <span>Completed</span>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="hl-card__dots">
-            {[0, 1, 2, 3, 4, 5].map((i) => (
-              <span key={i} className={i === 2 ? 'hl-card__dot hl-card__dot--current' : 'hl-card__dot'} />
-            ))}
-          </div>
-          <div className="hl-card__selected">
-            <img src={selectedCheck} alt="" />
-            <span>Selected</span>
-          </div>
-        </>
-      )}
-    </div>
-  )
-}
 
 function Step(props) {
   return <FlowStep label="Completed Hike" {...props} />
@@ -67,8 +21,9 @@ function Step(props) {
 
 /* 1646:11007 */
 export function Congrats() {
+  const log = useHikerLog()
   return (
-    <Step step={1} fill={52} back="/training" next="/log/details">
+    <Step step={1} fill={52} back="/training" next="/log/details" ready={log.picked}>
       <div className="fs-body fs-body--congrats">
         <div className="fs-intro">
           <h1 className="fs-title">Congratulations!</h1>
@@ -81,7 +36,8 @@ export function Congrats() {
               <TypeField defaultValue="Brunswick Mountain Trail" enterKeyHint="search" />
             </div>
           </Field>
-          <TrailCard />
+          {/* Same card as Home; tap it to confirm this is the hike you completed (green ring). */}
+          <HikeCard {...HIKES.brunswick} saved selected={log.picked} onClick={() => setLog({ picked: !log.picked })} />
         </div>
       </div>
     </Step>
@@ -92,7 +48,7 @@ export function Congrats() {
 export function LogDetails() {
   const log = useHikerLog()
   return (
-    <Step step={2} fill={85} back="/log/congrats" next="/log/difficulty">
+    <Step step={2} fill={85} back="/log/congrats" next="/log/difficulty" ready={Boolean(log.date.trim() && log.time)}>
       <div className="fs-body">
         <h1 className="fs-title">Log details</h1>
         <Field label="Date of completed hike">
@@ -107,7 +63,7 @@ export function LogDetails() {
         </Field>
         <Field label="Time to complete the hike">
           <TagGroup
-            className="fs-tags"
+            className="fs-tags fs-tiles"
             options={['1-4 hrs', '4-8 hrs', '8-12 hrs', '12+ hrs']}
             value={log.time}
             onChange={(time) => setLog({ time })}
@@ -131,7 +87,7 @@ const FEEL_ICONS = {
 export function Difficulty() {
   const log = useHikerLog()
   return (
-    <Step step={3} fill={180} back="/log/details" next="/log/emergency">
+    <Step step={3} fill={180} back="/log/details" next="/log/emergency" ready={Boolean(log.feel)}>
       <div className="fs-body">
         <h1 className="fs-title">How did it feel?</h1>
         <Options
@@ -154,7 +110,7 @@ export function EmergencyPrep() {
     setDraft(null)
   }
   return (
-    <Step step={4} fill={256} back="/log/difficulty" next="/log/physical">
+    <Step step={4} fill={256} back="/log/difficulty" next="/log/physical" ready={Boolean(log.prep)}>
       <div className="fs-body fs-body--center">
         <h1 className="fs-title fs-title--wrap">How prepared were you for emergencies? </h1>
         <Options
@@ -214,7 +170,7 @@ const BODY = ['Extremely strenuous', 'Very challenging', 'Moderately challenging
 export function PhysicalPrep() {
   const log = useHikerLog()
   return (
-    <Step step={5} fill={298} back="/log/emergency" next="/log/notes">
+    <Step step={5} fill={298} back="/log/emergency" next="/log/notes" ready={Boolean(log.body)}>
       <div className="fs-body fs-body--center">
         <h1 className="fs-title fs-title--wrap">How did your body handle this hike?</h1>
         <Options value={log.body} onChange={(body) => setLog({ body })} options={BODY.map((label) => ({ label }))} />
@@ -227,7 +183,7 @@ export function PhysicalPrep() {
 export function GeneralNotes() {
   const log = useHikerLog()
   return (
-    <Step step={6} fill={350} back="/log/physical" next="/log/review" cta="Review">
+    <Step step={6} fill={350} back="/log/physical" next="/log/review" cta="Review" ready={Boolean(log.notes.trim())}>
       <div className="fs-intro">
         <h1 className="fs-title">General notes</h1>
         <p className="fs-sub">Any final thoughts?</p>

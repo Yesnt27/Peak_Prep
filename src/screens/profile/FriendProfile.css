@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
-  padding: 125px 23px 150px;
+  padding: 108px 23px 150px; /* header just below the back button (48–93px) */
   color: var(--body-copy-gray);
 }
 
@@ -273,4 +273,9 @@
   .fp-photo-pick:active .fp-photo-pick__badge {
     background: #80ac3c;
   }
+}
+
+/* Your own Profile tab has no back button: start at the same height as Home. */
+.fp-page--tab {
+  padding-top: 68px;
 }

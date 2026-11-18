@@ -38,7 +38,7 @@ export function ProfileView({
 }) {
   return (
     <Screen className="fp" fixed={<NavBar />}>
-      <div className="fp-page">
+      <div className={onBack ? 'fp-page' : 'fp-page fp-page--tab'}>
         {onBack && <BackButton className="fp-back" onClick={onBack} />}
 
         <header className="fp-head">

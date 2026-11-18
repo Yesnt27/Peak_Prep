@@ -48,7 +48,7 @@ export function FirstAidModule() {
   return (
     <Screen className="fa">
       <div className="fa-page" style={{ minHeight: 1355 }}>
-        <BackButton darkHover className="fa-back fa-back--module" onClick={() => go('/training')} />
+        <BackButton className="fa-back fa-back--module" onClick={() => go('/training')} />
         <div className="fa-progress">
           <p>Lessons Completed - {done.length} of {LESSONS.length}</p>
           <div className="fa-progress__bar">

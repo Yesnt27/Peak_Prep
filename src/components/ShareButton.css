@@ -21,32 +21,20 @@
   height: 18px;
 }
 
-/* Same dark hover as the back button beside it. */
+/* Same light-grey hover as the back button beside it. */
 .share-btn {
   transition: background-color 300ms var(--ease-out);
 }
 
-.share-btn img {
-  transition: filter 300ms var(--ease-out);
-}
-
 @media (hover: hover) {
   .share-btn:hover {
-    background: #4b4b4b;
-  }
-
-  .share-btn:hover img {
-    filter: brightness(0) invert(1);
+    background: #e7e7e7;
   }
 }
 
 @media (hover: none) {
   .share-btn:active {
-    background: #4b4b4b;
-  }
-
-  .share-btn:active img {
-    filter: brightness(0) invert(1);
+    background: #e7e7e7;
   }
 }
 

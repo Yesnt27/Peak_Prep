@@ -8,7 +8,7 @@ import './FirstAid.css'
 
 export function Back({ to, transition }) {
   const go = useGo()
-  return <BackButton darkHover className="fa-back" onClick={() => go(to, transition)} />
+  return <BackButton className="fa-back" onClick={() => go(to, transition)} />
 }
 
 export function Info({ size = 19 }) {

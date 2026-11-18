@@ -14,7 +14,12 @@
   left: 23px;
 }
 
-/* The corner buttons are Figma exports that include their drop shadow. */
+/* Corner buttons sit above .pk-content (which starts at the top of the page) so taps reach them. */
+.pk-back,
+.pk-corner {
+  z-index: 2;
+}
+
 .pk-corner {
   position: absolute;
   top: 48.3px;
