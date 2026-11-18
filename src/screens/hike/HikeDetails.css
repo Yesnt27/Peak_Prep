@@ -360,54 +360,55 @@
 }
 
 /* ---------- Fixed footer (Figma group 2142:3849, fixed when scrolling) ---------- */
+/* Same box, blur and pill as the nav bar (NavBar.css): 402 x 202, pill 361 x 66 at 29px from the bottom,
+   53px-tall controls inside it. */
 .hd-footer {
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
-  height: 190px;
+  z-index: 10;
+  height: 202px;
   pointer-events: none;
 }
 
 .hd-footer__blur {
   position: absolute;
-  right: 0;
-  bottom: -12px;
-  left: 0;
-  height: 202px;
+  inset: 0;
 }
 
 .hd-footer__pill {
   position: absolute;
-  bottom: 16px;
-  left: 20px;
-  width: 362px;
-  height: 79px;
+  inset: 52.97% 5.09% 14.36% 5.09%;
+  border: 1px solid #fff;
   border-radius: 50px;
   background: #f5f5f5;
+  box-shadow: 0 8px 55px 0 rgba(0, 0, 0, 0.18);
+  pointer-events: auto;
 }
 
 .hd-footer__cta,
 .hd-footer__fav {
   position: absolute;
-  bottom: 23px;
+  bottom: 35.5px;
   pointer-events: auto;
 }
 
 .hd-footer__cta.btn {
-  left: 29px;
-  width: 269px;
-  height: 64px;
+  left: 27px;
+  width: 287px;
+  height: 53px;
+  padding: 0;
 }
 
 .hd-footer__fav {
-  left: 309px;
+  left: 322px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 41px;
+  width: 53px;
+  height: 53px;
+  border-radius: 50%;
   background: #fff;
 }
 

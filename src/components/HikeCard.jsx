@@ -27,6 +27,7 @@ export default function HikeCard({
   friendsText = 'Join Siena & 3 friends training',
   avatars = [friend1, friend2, friend3],
   plainDots = false,
+  selected = false,
   onClick,
 }) {
   const [liked, setLiked] = useState(saved)
@@ -45,7 +46,7 @@ export default function HikeCard({
       }
     : {}
   return (
-    <div className="hike-card" {...open}>
+    <div className={selected ? 'hike-card hike-card--selected' : 'hike-card'} aria-pressed={onClick ? selected : undefined} {...open}>
       <div className="hike-card__image">
         <img className="hike-card__photo" src={image} alt="" />
         <div className="hike-card__top">

@@ -100,3 +100,12 @@
     opacity: 0;
   }
 }
+
+/* Selected tab (you are on that page): the filled green icon (Figma hover variant) stays on. */
+.navbar__btn--current .navbar__icon--hover {
+  opacity: 1;
+}
+
+.navbar__btn--current .navbar__icon--default {
+  opacity: 0;
+}

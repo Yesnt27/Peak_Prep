@@ -137,7 +137,7 @@ Only `.github/workflows/deploy.yml` may publish to Pages. It runs `npm ci` + `np
 
 Things the Figma file does not answer. Nothing has been invented for these; each is left as the prototype has it.
 
-1. **Splash start:** the prototype starts the splash animation on a tap of the "Peak Prep" wordmark. On the web there is no hint to tap. Keep the tap, or auto-play on load?
+1. ~~**Splash start**~~ — resolved Round 8: auto-plays.
 2. **Unwired buttons:** on Training overview two green buttons have a hover state but no destination (`1750:8313`, `1637:5519`); on Hiker Log – Review Details the final button (`1646:11106`) has none either.
 3. **Unreachable screens:** nothing in the prototype links to Training Schedule (`2068:5154`) and, through it, the three Training detail screens (`2068:5528`, `2084:6318`, `2084:6351`).
 4. **Static form fields:** text fields (Name, Age, emergency contact…), search bars, the workout count stepper and the "remove" (×) icons have no interaction in the prototype, so they are static here too. Should any become real inputs for testing?
@@ -281,6 +281,7 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 
 ### Round 6 — Profile tab redesign (from Olivia, 2026-11-18)
 
+- Friend profile button: "+ Add friend" (light green) ↔ "− Unfriend" (grey `#e7e7e7`), Round 10.
 - `/profile` now uses the friend-profile layout (`ProfileView`, exported from `FriendProfile.jsx`) for Hudson Kemp: friend count (tap → Friend List), "7+ Years Exp.", level bar, then two side-by-side buttons **Health Stats** → `/profile/health` and **Settings** → `/profile/settings`, then **Completed Hikes** (Saint Mark, Grouse Grind, Mt. Everest) with "See all ›" → `/profile/completed`.
 - (Superseded in Round 7: the Profile card screen was removed; Settings is now the Privacy screen.)
 - Level "Advanced", the progress bar (60%) and "3 hikes" on Hudson's profile are not in Figma; set to fit the friend-profile layout.
@@ -293,3 +294,16 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - **New training → Target Hike:** "Not sure yet? See hikes for your level" → `/new-training/level`, hike cards for an advanced hiker (Black Tusk, Brunswick, Panorama Ridge, Wedgemount). Tapping a card returns to `/new-training?hike=<key>` with that hike as the target.
 - **Invite Friends sheet:** "copy invite link" removed; share button top right (`BottomSheet` now takes `action` and `onDone`). "Add" toggles to a green check; Done adds the ticked friends under "Invite friends to train together" on Who's coming; closing without Done discards changes.
 - **Goal:** "Add your own goal" opens a text row; the goal becomes a selectable option (flag icon) and is selected. `Options` can now be controlled (`value` / `onChange`).
+
+### Round 8 — splash, tiles, bottom bars, nav selected state (from Olivia, 2026-11-18)
+
+- **Splash** auto-plays 600ms after load (no tap), then goes to `/welcome` as before.
+- **New training → Your training schedule:** Training Availability days and Time per session use the month tiles' shape (12px radius, same padding) via `.nt-tiles`; hover/selected colours unchanged.
+- **Bottom bars match the nav bar:** Hike details ("Start Preparation" + heart) and the lesson results bar (Retry / Continue) use the NavBar box exactly: 402 × 202, same blur, pill `inset: 52.97% 5.09% 14.36% 5.09%` (361 × 66, 29px from the bottom) with border + shadow, 53px-tall controls inside.
+- **Nav bar selected state:** the tab for the current page (`/home…`, `/new-training…`, `/profile…`) keeps the filled green (Figma hover) icon; `aria-current="page"`.
+
+### Round 9 — Create flow buttons (from Olivia, 2026-11-18)
+
+- New training steps pass `pinned={false}` to `FlowStep`'s `Step`: Continue / Done sits at the end of the page (pushed to the screen bottom on short pages, after the content on long ones), not fixed. Hiker Log keeps the pinned button.
+- Each step's button is greyed out (`ready={false}` → disabled `.btn`) until an answer is picked: Target Hike = tap the hike card (green ring; a hike picked on "Hikes for your level" arrives already picked); Hike Date = a month; Trip Type / Who's coming / Goal = an option; Schedule = at least one day and a time per session.
+- `TagGroup`, `ToggleTag` and `HikeCard` (`selected`) can now be controlled.

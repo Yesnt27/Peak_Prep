@@ -40,8 +40,11 @@ export function Tag({ icon, selected = false, compact = false, className = '', c
 }
 
 /** Figma "meow": a wrapping row of tags where one can be selected at a time. */
-export function TagGroup({ options, compact = false, className = '' }) {
-  const [selected, setSelected] = useState(null)
+export function TagGroup({ options, compact = false, className = '', value, onChange }) {
+  const [inner, setInner] = useState(null)
+  // Uncontrolled by default; pass `value` + `onChange` to control it.
+  const selected = value !== undefined ? value : inner
+  const setSelected = onChange ?? setInner
   return (
     <div className={`tag-group ${className}`}>
       {options.map((option) => (
@@ -59,8 +62,10 @@ export function TagGroup({ options, compact = false, className = '' }) {
 }
 
 /** A tag that toggles on its own (used for multi-select tag lists). */
-export function ToggleTag({ icon, children }) {
-  const [selected, setSelected] = useState(false)
+export function ToggleTag({ icon, children, selected: value, onChange }) {
+  const [inner, setInner] = useState(false)
+  const selected = value !== undefined ? value : inner
+  const setSelected = onChange ?? setInner
   return (
     <Tag icon={icon} selected={selected} onClick={() => setSelected(!selected)}>
       {children}

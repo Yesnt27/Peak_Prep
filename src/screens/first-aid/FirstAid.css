@@ -779,48 +779,48 @@
 }
 
 /* Fixed bottom bar (Figma group 2124:5149) */
+/* Same box, blur and pill as the nav bar (NavBar.css), 53px buttons inside. */
 .fa-bar {
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
-  height: 195px;
+  z-index: 10;
+  height: 202px;
   pointer-events: none;
 }
 
 .fa-bar__blur {
   position: absolute;
-  right: 0;
-  bottom: -7px;
-  left: 0;
-  height: 202px;
+  inset: 0;
 }
 
 .fa-bar__pill {
   position: absolute;
-  bottom: 33px;
-  left: 23px;
-  width: 356px;
-  height: 79px;
+  inset: 52.97% 5.09% 14.36% 5.09%;
+  border: 1px solid #fff;
   border-radius: 50px;
   background: #f5f5f5;
+  box-shadow: 0 8px 55px 0 rgba(0, 0, 0, 0.18);
+  pointer-events: auto;
 }
 
 .fa-bar .btn {
   position: absolute;
-  bottom: 40px;
-  height: 64px;
+  bottom: 35.5px;
+  height: 53px;
+  padding: 0;
   pointer-events: auto;
 }
 
 .fa-bar__retry.btn {
-  left: 32px;
-  width: 124px;
+  left: 27px;
+  width: 110px;
 }
 
 .fa-bar__mins.btn {
-  left: 167px;
-  width: 204px;
+  left: 145px;
+  width: 230px;
 }
 
 /* ---------- 12394 Legal side ---------- */

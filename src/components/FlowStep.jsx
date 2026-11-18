@@ -9,23 +9,45 @@ import './FlowStep.css'
  * Shared frame for the step-by-step flows ("Completed Hike - STEP x OF 6",
  * "New Training - STEP x OF 6"): back button, progress bar, pinned button.
  * `back` omitted = the prototype gives that back button no link.
+ * `pinned={false}`: the button sits at the end of the page instead of being fixed (New training).
+ * `ready={false}`: the button is greyed out and can't be pressed until an answer is picked.
  */
-export function Step({ label, step, of = 6, fill, back, next, nextTransition, cta = 'Continue', overlay, children }) {
+export function Step({
+  label,
+  step,
+  of = 6,
+  fill,
+  back,
+  next,
+  nextTransition,
+  cta = 'Continue',
+  overlay,
+  pinned = true,
+  ready = true,
+  children,
+}) {
   const go = useGo()
+  const button = (
+    <Button
+      className={pinned ? 'fs-cta' : 'fs-cta fs-cta--inline'}
+      disabled={!ready}
+      onClick={() => go(next, nextTransition)}
+    >
+      {cta}
+    </Button>
+  )
   return (
     <Screen
       className="fs"
       fixed={
         <>
-          <Button className="fs-cta" onClick={() => go(next, nextTransition)}>
-            {cta}
-          </Button>
+          {pinned && button}
           {overlay}
         </>
       }
     >
       <BackButton className="fs-back" onClick={back ? () => go(back) : undefined} />
-      <div className="fs-content">
+      <div className={pinned ? 'fs-content' : 'fs-content fs-content--inline'}>
         <div className="fs-progress">
           <p>
             {label} - STEP {step} OF {of}
@@ -35,6 +57,7 @@ export function Step({ label, step, of = 6, fill, back, next, nextTransition, ct
           </div>
         </div>
         {children}
+        {!pinned && button}
       </div>
     </Screen>
   )

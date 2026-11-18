@@ -20,6 +20,13 @@ export default function Splash() {
   const go = useGo()
   const [step, setStep] = useState(0)
 
+  // Plays on its own: a short hold on the wordmark, then the animation starts.
+  useEffect(() => {
+    if (step !== 0) return undefined
+    const timer = setTimeout(() => setStep(1), 600)
+    return () => clearTimeout(timer)
+  }, [step])
+
   useEffect(() => {
     if (step === 0) return undefined
     const timer = setTimeout(() => {
@@ -34,12 +41,7 @@ export default function Splash() {
 
   return (
     <div className="splash">
-      <button
-        type="button"
-        className="splash__mark"
-        aria-label="Peak Prep — open app"
-        onClick={() => step === 0 && setStep(1)}
-      >
+      <div className="splash__mark" role="img" aria-label="Peak Prep">
         <span
           className="splash__art"
           style={{ transform: `translate(${x}px, ${y}px)`, transition: `transform ${ms}ms ${ease}` }}
@@ -53,7 +55,7 @@ export default function Splash() {
             style={{ opacity: last ? 1 : 0, transition: `opacity ${ms}ms ${ease}` }}
           />
         </span>
-      </button>
+      </div>
     </div>
   )
 }

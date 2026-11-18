@@ -145,20 +145,29 @@
   line-height: 1;
 }
 
+/* After "Add friend": grey "− Unfriend" (hover / press a shade darker). */
 .fp-add--added {
-  background: #d4e6b8;
+  background: #e7e7e7;
 }
 
 @media (hover: hover) {
-  .fp-add:hover {
+  .fp-add:not(.fp-add--added):hover {
     background: #d4e6b8;
+  }
+
+  .fp-add--added:hover {
+    background: #d9d9d9;
   }
 }
 
 /* Touch: the hover look shows while a finger is held down. */
 @media (hover: none) {
-  .fp-add:active {
+  .fp-add:not(.fp-add--added):active {
     background: #d4e6b8;
+  }
+
+  .fp-add--added:active {
+    background: #d9d9d9;
   }
 }
 

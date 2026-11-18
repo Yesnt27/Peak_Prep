@@ -343,3 +343,11 @@
 .nt-goal-add {
   width: 100%;
 }
+
+/* Training availability + time per session: same rounded tiles as the months. */
+.nt-tiles .tag {
+  height: auto;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  line-height: 1.68;
+}

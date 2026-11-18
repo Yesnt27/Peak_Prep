@@ -102,9 +102,9 @@ export default function FriendProfile() {
           onClick={() => setAdded(!added)}
         >
           <span className="fp-add__icon" aria-hidden="true">
-            {added ? '✓' : '+'}
+            {added ? '−' : '+'}
           </span>
-          {added ? 'Request sent' : 'Add friend'}
+          {added ? 'Unfriend' : 'Add friend'}
         </button>
       }
       section={<h2 className="fp-section__title">Recent Activities</h2>}

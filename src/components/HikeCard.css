@@ -95,6 +95,12 @@
 
 .hike-card[role='button'] {
   cursor: pointer;
+  transition: box-shadow 300ms var(--ease-out);
+}
+
+/* Picked (New training → Target Hike): green ring. */
+.hike-card--selected {
+  box-shadow: 0 0 0 3px var(--main-green);
 }
 
 .hike-card__dots {

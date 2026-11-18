@@ -28,8 +28,9 @@ import eli from '../../assets/friends/eli.jpg'
 import owen from '../../assets/friends/owen.jpg'
 import './NewTraining.css'
 
+/** New training steps: Continue sits at the end of the page and stays grey until an answer is picked. */
 function Step(props) {
-  return <FlowStep label="New Training" {...props} />
+  return <FlowStep label="New Training" pinned={false} {...props} />
 }
 
 function Intro({ title, sub }) {
@@ -47,8 +48,10 @@ export function TargetHike() {
   // A hike picked on "Hikes for your level" arrives as ?hike=<key>.
   const key = useSearchParams()[0].get('hike')
   const hike = HIKES[key] ?? HIKES.blackTusk
+  // Tap the card to pick it; a hike chosen on "Hikes for your level" arrives already picked.
+  const [picked, setPicked] = useState(Boolean(key))
   return (
-    <Step step={1} fill={52} back="/home/saved" next="/new-training/date">
+    <Step step={1} fill={52} back="/home/saved" next="/new-training/date" ready={picked}>
       <div className="fs-body nt-body">
         <Intro title="Target Hike" sub="The hike you’re training for." />
         <div className="nt-target">
@@ -58,7 +61,7 @@ export function TargetHike() {
               <TypeField key={hike.title} defaultValue={key ? hike.title : 'Black Tusk'} enterKeyHint="search" />
             </div>
           </Field>
-          <HikeCard {...hike} />
+          <HikeCard {...hike} selected={picked} onClick={() => setPicked(!picked)} />
           <button type="button" className="nt-link" onClick={() => go('/new-training/level', 'smart')}>
             Not sure yet? See hikes for your level
           </button>
@@ -99,7 +102,7 @@ export function HikeDate() {
   const [year, setYear] = useState(2027)
   const [month, setMonth] = useState(null)
   return (
-    <Step step={2} fill={85} back="/new-training" next="/new-training/trip">
+    <Step step={2} fill={85} back="/new-training" next="/new-training/trip" ready={month !== null}>
       <div className="fs-body nt-body">
         <Intro title="Hike Date" />
         <Field label="Year">
@@ -146,11 +149,14 @@ export function HikeDate() {
 
 /* 1646:5714  new training 21 */
 export function TripType() {
+  const [trip, setTrip] = useState(null)
   return (
-    <Step step={3} fill={180} back="/new-training/date" next="/new-training/who">
+    <Step step={3} fill={180} back="/new-training/date" next="/new-training/who" ready={trip !== null}>
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Trip Type" sub="Day trip or a few nights out?" />
         <Options
+          value={trip}
+          onChange={setTrip}
           options={[
             {
               label: 'Day hike',
@@ -183,6 +189,7 @@ export function WhosComing() {
   const [sheet, setSheet] = useState(false)
   const [invited, setInvited] = useState([]) // names confirmed with Done
   const [picked, setPicked] = useState([]) // names ticked in the open sheet
+  const [group, setGroup] = useState(null)
   const open = () => {
     setPicked(invited)
     setSheet(true)
@@ -194,6 +201,7 @@ export function WhosComing() {
       fill={256}
       back="/new-training/trip"
       next="/new-training/goal"
+      ready={group !== null}
       overlay={
         <BottomSheet
           open={sheet}
@@ -236,6 +244,8 @@ export function WhosComing() {
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Who’s coming?" />
         <Options
+          value={group}
+          onChange={setGroup}
           options={[
             { label: 'Solo' },
             { label: 'With a partner' },
@@ -279,7 +289,7 @@ export function Goal() {
     setDraft(null)
   }
   return (
-    <Step step={5} fill={298} back="/new-training/who" next="/new-training/schedule">
+    <Step step={5} fill={298} back="/new-training/who" next="/new-training/schedule" ready={selected !== null}>
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Goal" />
         <Options
@@ -336,8 +346,19 @@ const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 
 /* 1646:5749  new training 22 */
 export function Schedule() {
+  const [days, setDays] = useState([])
+  const [time, setTime] = useState(null)
+  const toggleDay = (d) => setDays(days.includes(d) ? days.filter((x) => x !== d) : [...days, d])
   return (
-    <Step step={6} fill={350} back="/new-training/goal" next="/training" nextTransition="smart" cta="Done">
+    <Step
+      step={6}
+      fill={350}
+      back="/new-training/goal"
+      next="/training"
+      nextTransition="smart"
+      cta="Done"
+      ready={days.length > 0 && time !== null}
+    >
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Your training schedule" sub="We’ll build the plan around your life." />
         <Field label="Training start date">
@@ -347,14 +368,16 @@ export function Schedule() {
         </Field>
         <Field label="Training Availability">
           {/* Several days can be picked. */}
-          <div className="nt-days">
+          <div className="nt-days nt-tiles">
             {DAYS.map((d) => (
-              <ToggleTag key={d}>{d}</ToggleTag>
+              <ToggleTag key={d} selected={days.includes(d)} onChange={() => toggleDay(d)}>
+                {d}
+              </ToggleTag>
             ))}
           </div>
         </Field>
         <Field label="Time per session:">
-          <TagGroup className="fs-tags" options={['15-30 min', '30-60 min', '1hr+']} />
+          <TagGroup className="fs-tags nt-tiles" options={['15-30 min', '30-60 min', '1hr+']} value={time} onChange={setTime} />
         </Field>
         <div className="nt-toggle-row">
           <span>Include practice hikes</span>

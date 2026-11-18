@@ -31,6 +31,19 @@
   width: 100%;
 }
 
+/* Button at the end of the page (not fixed): pushed to the bottom of the screen on short pages,
+   after the content on long ones. Same 41px bottom gap as the pinned version. */
+.fs-content--inline {
+  min-height: calc(100% - 125px);
+  padding-bottom: 41px;
+}
+
+.fs-cta--inline.btn {
+  position: static;
+  flex: none;
+  margin-top: auto;
+}
+
 .fs-progress {
   display: flex;
   flex-direction: column;
