@@ -127,8 +127,7 @@
   display: flex;
   flex: 1 0 0;
   align-items: center;
-  justify-content: center;
-  gap: 83px;
+  justify-content: space-between;
   width: 355px;
   padding: 14.969px 19.958px;
   border-radius: 11.975px;
@@ -138,18 +137,9 @@
   white-space: nowrap;
 }
 
-.fa-lesson--first {
-  gap: 119px;
-}
-
 .fa-lesson--done {
   background: var(--light-green);
   color: var(--main-green);
-}
-
-.fa-lesson--next {
-  background: var(--yellow-1);
-  text-align: center;
 }
 
 .fa-lesson__name {
@@ -326,6 +316,18 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .fa-card:active {
+    background: var(--yellow-2);
+  }
+
+  .fa-card:active .fa-card__icon,
+  .fa-card:active .fa-card__pill-fill {
+    background: var(--yellow-3);
+  }
+}
+
 /* Trail etiquette carousel */
 .fa-etiquette__title {
   top: 1031px;
@@ -361,18 +363,19 @@
 .fa-etiquette__inner {
   position: absolute;
   top: 18px;
+  right: 16px;
   left: 16px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  width: 175px;
+  gap: 18px;
 }
 
 .fa-etiquette__icon {
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 55px;
   height: 55px;
-  padding: 15px 11px 11px 15px;
   border-radius: 27.5px;
   background: var(--yellow-2);
 }
@@ -382,13 +385,7 @@
   height: 24px;
 }
 
-/* Figma: the arrow sits in a 33.4px box, rotated 145deg. */
-.fa-etiquette__icon--rotate {
-  align-items: center;
-  justify-content: center;
-  padding: 11px;
-}
-
+/* Figma: the arrow is rotated 145deg. */
 .fa-etiquette__icon--rotate img {
   transform: rotate(145deg);
 }
@@ -396,12 +393,7 @@
 .fa-etiquette__text {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  height: 89px;
-}
-
-.fa-etiquette__text--first {
-  gap: 36px;
+  gap: 8px;
 }
 
 .fa-etiquette__name {
@@ -409,18 +401,11 @@
   letter-spacing: -0.32px;
 }
 
-.fa-etiquette__text--first .fa-etiquette__name {
-  flex: 1 0 0;
-}
-
 .fa-etiquette__body {
   font: 400 13px/1.3 var(--font-poppins);
   letter-spacing: -0.26px;
 }
 
-.fa-etiquette__body--wide {
-  width: 186px;
-}
 
 /* ---------- 12254 Heat Exposure ---------- */
 .fa-heat {
@@ -469,16 +454,6 @@
 }
 
 /* ---------- Practice header + scenario bar (12155, 12263) ---------- */
-.fa-practice {
-  position: absolute;
-  top: 126px;
-  left: 23px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  width: 356px;
-}
-
 .fa-practice__head {
   display: flex;
   flex-direction: column;
@@ -561,35 +536,10 @@
   align-items: center;
 }
 
-/* ---------- 12155 Practice question ---------- */
-.fa-question__top {
-  display: flex;
-  justify-content: space-between;
-}
-
-.fa-question__img {
-  position: relative;
-  width: 108px;
-  height: 127px;
-  overflow: hidden;
-  /* Figma: flipped vertically + rotated 180deg = mirrored horizontally. */
-  transform: scaleX(-1);
-}
-
-.fa-question__img img {
-  position: absolute;
-  top: -33.86%;
-  left: -48.15%;
-  width: 197.22%;
-  max-width: none;
-  height: 167.72%;
-}
-
 .fa-question__text {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 150px;
+  gap: 12px;
 }
 
 .fa-question__title {
@@ -598,8 +548,8 @@
 }
 
 .fa-question__body {
-  font: 400 12px/1.35 var(--font-poppins);
-  letter-spacing: -0.24px;
+  font: 400 13px/1.4 var(--font-poppins);
+  letter-spacing: -0.26px;
 }
 
 .fa-answer {
@@ -639,21 +589,6 @@
   box-shadow: 0 0 0 2px var(--yellow-2);
 }
 
-.fa-answer__q {
-  position: relative;
-  width: 33px;
-  height: 33px;
-}
-
-.fa-answer__q span {
-  position: absolute;
-  top: 3px;
-  left: 13px;
-  color: #fff;
-  font: 400 16px/1.68 var(--font-poppins);
-  letter-spacing: -0.32px;
-}
-
 /* Figma "Frame 1410103808": yellow-2, hover yellow-1 (instant). */
 .fa-skip {
   position: absolute;
@@ -673,6 +608,13 @@
 
 @media (hover: hover) {
   .fa-skip:hover {
+    background: var(--yellow-1);
+  }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .fa-skip:active {
     background: var(--yellow-1);
   }
 }
@@ -1230,6 +1172,13 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .fa-course:active {
+    background: var(--yellow-3);
+  }
+}
+
 .fa-course__logo {
   position: relative;
   flex: none;
@@ -1300,17 +1249,31 @@
 
 /* Hover states matching the rest of the app (300ms, touch-safe). */
 .fa-level,
-.fa-lesson--next {
+.fa-lesson {
   transition: background-color 300ms var(--ease-out);
 }
 
+/* Lesson rows: grey → yellow (the old "up next" colour) on hover / press; done rows → light green. */
 @media (hover: hover) {
-  .fa-level:not(.fa-level--selected):hover {
+  .fa-level:not(.fa-level--selected):hover,
+  .fa-lesson--done:hover {
     background: #d4e6b8;
   }
 
-  .fa-lesson--next:hover {
-    background: var(--yellow-2);
+  .fa-lesson:not(.fa-lesson--done):hover {
+    background: var(--yellow-1);
+  }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .fa-level:not(.fa-level--selected):active,
+  .fa-lesson--done:active {
+    background: #d4e6b8;
+  }
+
+  .fa-lesson:not(.fa-lesson--done):active {
+    background: var(--yellow-1);
   }
 }
 
@@ -1336,4 +1299,137 @@
 .fa-etiquette--dragging {
   scroll-snap-type: none;
   cursor: grabbing;
+}
+
+/* ---------- Lesson flow: intro → practice → results (every lesson) ---------- */
+/* Same 23px gutters and 125px title line as the Figma frames, but in normal flow so long copy never overlaps. */
+.fa-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-height: 100%;
+  padding: 125px 23px 48px;
+}
+
+.fa-flow--bar {
+  gap: 40px;
+  padding-bottom: 220px; /* room for the fixed Retry / Continue bar */
+}
+
+.fa-scn {
+  gap: 40px;
+  animation: fa-step-in var(--t-smart) var(--ease-out);
+}
+
+@keyframes fa-step-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.fa-flow .fa-heat__photo {
+  flex: none;
+}
+
+.fa-flow .fa-heat__photo img {
+  left: 0;
+  width: 100%;
+  object-fit: cover;
+}
+
+.fa-flow .fa-heat__text {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fa-flow__cta.btn {
+  flex: none;
+  margin-top: auto;
+}
+
+.fa-timer {
+  font-variant-numeric: tabular-nums;
+}
+
+.fa-timer--up {
+  color: var(--yellow-2);
+}
+
+/* Hint: Figma tag (grey → #e7e7e7 hover → #d4e6b8 selected) on the white card. */
+.fa-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: -10px;
+}
+
+.fa-hint__btn.tag {
+  height: 32px;
+  background: var(--app-grey);
+  font-size: 13px;
+}
+
+.fa-hint__text {
+  font: 400 13px/1.4 var(--font-poppins);
+  letter-spacing: -0.26px;
+  animation: fa-step-in var(--t-smart) var(--ease-out);
+}
+
+.fa-feedback {
+  gap: 12px;
+  animation: fa-step-in var(--t-smart) var(--ease-out);
+}
+
+.fa-feedback .fa-white__copy {
+  line-height: 1.4;
+}
+
+/* Skip (Figma yellow pill) + Check / Next (green button) */
+.fa-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.fa-skip--inline {
+  position: static;
+  flex: none;
+  height: 64px;
+}
+
+.fa-actions__main.btn {
+  flex: 1 0 0;
+  width: auto;
+  height: 64px;
+}
+
+.fa-takeaways {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 400 13px/1.4 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fa-takeaways li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.fa-takeaways li::before {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--main-green);
+  content: '';
 }

@@ -81,11 +81,20 @@
   height: 32px;
   border-radius: 16px;
   background: #fff;
+  transition: transform 150ms var(--ease-out);
+}
+
+.hike-card__save:active {
+  transform: scale(0.88);
 }
 
 .hike-card__save img {
   width: 16px;
   height: 16px;
+}
+
+.hike-card[role='button'] {
+  cursor: pointer;
 }
 
 .hike-card__dots {
@@ -257,6 +266,8 @@
 .hike-card__avatars img {
   width: 24px;
   height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .hike-card__avatars img + img {

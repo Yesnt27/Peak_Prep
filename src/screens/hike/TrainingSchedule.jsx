@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import NavBar from '../../components/NavBar.jsx'
@@ -17,18 +18,14 @@ const chevron = <img className="ts-chevron" src={rowChevron} alt="" />
 /** Figma "Training Schedule" 2068:5154 (opened from Training overview). */
 export default function TrainingSchedule() {
   const go = useGo()
+  const location = useLocation()
   return (
     <Screen className="to ts" fixed={<NavBar />}>
       <div className="ts-page">
-        <BackButton className="ts-back" onClick={() => go('/training', 'smart')} />
+        <BackButton className="ts-back" onClick={() => go(location.state?.from || '/training', 'smart')} />
         <div className="ts-content">
-          <div className="ts-head">
-            <h1 className="ts-title">Training</h1>
-            <p className="ts-sub">Black Tusk Winter Hike Training Schedule</p>
-            <PrepStatus />
-          </div>
           <section className="to-section ts-daily">
-            <h2 className="ts-title">Daily Training</h2>
+            <h1 className="ts-title">Daily Training</h1>
             <SectionHeader icon={calendarIcon} title="October 2026">
               <div className="to-cal__nav">
                 <span className="to-cal__arrow">
@@ -45,6 +42,7 @@ export default function TrainingSchedule() {
             <ListItem tone="green" label="Weighted Walk · 15kg" meta={chevron} defaultChecked />
             <ListItem tone="green" label="Endurance" meta={chevron} />
           </section>
+          <PrepStatus />
         </div>
       </div>
     </Screen>

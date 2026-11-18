@@ -1,10 +1,11 @@
 import { TypeField } from '../../components/controls.jsx'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import NavBar from '../../components/NavBar.jsx'
 import HikeCard from '../../components/HikeCard.jsx'
+import Dropdown from '../../components/Dropdown.jsx'
 import ListItem from '../../components/ListItem.jsx'
 import SegmentedTabs from '../../components/SegmentedTabs.jsx'
 import avatar from '../../assets/home/avatar.png'
@@ -65,44 +66,16 @@ function Explore({ go, sort }) {
 }
 
 function SortMenu({ sort, onChange }) {
-  const [open, setOpen] = useState(false)
-  const ref = useRef(null)
   const current = SORTS.find((s) => s.id === sort) ?? SORTS[0]
-
-  useEffect(() => {
-    if (!open) return undefined
-    const close = (e) => !ref.current?.contains(e.target) && setOpen(false)
-    document.addEventListener('pointerdown', close)
-    return () => document.removeEventListener('pointerdown', close)
-  }, [open])
-
   return (
-    <div className="home__sort-wrap" ref={ref}>
-      <button type="button" className="home__sort" aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen(!open)}>
-        <span>Sort: {current.label}</span>
-        <img className={open ? 'home__sort-arrow home__sort-arrow--open' : 'home__sort-arrow'} src={chevDown} alt="" />
-      </button>
-      {open && (
-        <ul className="home__sort-menu" role="listbox">
-          {SORTS.map((s) => (
-            <li key={s.id}>
-              <button
-                type="button"
-                role="option"
-                aria-selected={s.id === current.id}
-                className={s.id === current.id ? 'home__sort-option home__sort-option--selected' : 'home__sort-option'}
-                onClick={() => {
-                  onChange(s.id)
-                  setOpen(false)
-                }}
-              >
-                {s.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+    <Dropdown options={SORTS} value={sort} onChange={onChange} triggerClassName="home__sort">
+      {(open) => (
+        <>
+          <span>Sort: {current.label}</span>
+          <img className={open ? 'dd-arrow dd-arrow--open' : 'dd-arrow'} src={chevDown} alt="" />
+        </>
       )}
-    </div>
+    </Dropdown>
   )
 }
 
@@ -113,17 +86,17 @@ function Training({ go }) {
         <div className="today__head">
           <div className="today__label">
             <p className="today__title">Today's training</p>
-            <p className="today__sub">Tue, Oct 28 · for Mount Brunswick</p>
+            <p className="today__sub">Tue, Oct 28 · for Brunswick Mountain Trail</p>
           </div>
           <span className="today__count">2 of 3 done</span>
         </div>
         <ListItem label="Stair Climber · lv.6" meta="40 min" defaultChecked />
         <ListItem label="Weighted Walk · 15kg" meta="20 min" defaultChecked />
-        <ListItem label="Endurance" meta="0.0 kg" />
-        <div className="today__link">
+        <ListItem label="Endurance" meta="20 min" />
+        <button type="button" className="today__link" onClick={() => go('/training/schedule', 'smart', '/home/training')}>
           <span>Full analytics</span>
           <img src={chevRightGreen} alt="" />
-        </div>
+        </button>
       </section>
       <HikeCard
         {...HIKES.brunswick}

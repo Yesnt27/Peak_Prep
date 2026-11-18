@@ -19,21 +19,10 @@
   width: 355px;
 }
 
-.ts-head {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
 .ts-title {
   font: 700 30px/1.139 var(--font-poppins);
   letter-spacing: -0.6px;
   white-space: nowrap;
-}
-
-.ts-sub {
-  font: 400 16px/1.68 var(--font-poppins);
-  letter-spacing: -0.32px;
 }
 
 .ts-chevron {

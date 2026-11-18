@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import ProgressiveBlur from '../../components/ProgressiveBlur.jsx'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
@@ -25,6 +26,7 @@ import sunIcon from '../../assets/hike/sun.svg'
 import nosigIcon from '../../assets/hike/nosig.svg'
 import dropIcon from '../../assets/hike/drop.svg'
 import heartFilled from '../../assets/hike/heart-filled.svg'
+import heartOutline from '../../assets/icons/heart-outline.svg'
 import './HikeDetails.css'
 
 /** Flagged trail challenge row (white card, pale-yellow icon + chip). */
@@ -77,6 +79,7 @@ function Bar({ label, value, remaining }) {
 /** Figma "Hike Details (hifi)" 1780:3160. */
 export default function HikeDetails() {
   const go = useGo()
+  const [liked, setLiked] = useState(true)
   return (
     <Screen
       className="hd"
@@ -86,12 +89,18 @@ export default function HikeDetails() {
             <ProgressiveBlur />
           </div>
           <div className="hd-footer__pill" />
-          <Button className="hd-footer__cta" onClick={() => go('/first-aid/practice')}>
-            Start Preperation
+          <Button className="hd-footer__cta" onClick={() => go('/training', 'smart')}>
+            Start Preparation
           </Button>
-          {/* Figma "Fav button": both variants show the filled heart, so a click changes nothing visible. */}
-          <button type="button" className="hd-footer__fav" aria-label="Favourite">
-            <img src={heartFilled} alt="" />
+          {/* Same like toggle as the hike cards: filled (liked) ↔ outline. */}
+          <button
+            type="button"
+            className="hd-footer__fav"
+            aria-pressed={liked}
+            aria-label={liked ? 'Unlike' : 'Like'}
+            onClick={() => setLiked(!liked)}
+          >
+            <img src={liked ? heartFilled : heartOutline} alt="" />
           </button>
         </div>
       }

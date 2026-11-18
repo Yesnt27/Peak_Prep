@@ -157,7 +157,7 @@ export default function TrainingOverview() {
           </Button>
 
           <div className="to-safety">
-            <SectionHeader icon={shieldIcon} title="Hiking safety" sub="Brunswick Mountain Safety">
+            <SectionHeader icon={shieldIcon} title="Hiking safety" sub="Brunswick Mountain Trail Safety">
               <Chip tone="yellow-1">
                 {done.length} of {LESSONS.length}
               </Chip>

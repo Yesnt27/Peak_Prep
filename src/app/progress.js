@@ -4,13 +4,10 @@
  */
 const KEY = 'peakprep-lessons'
 
-// Figma "Brunsick Mountain Safety" lessons: [name, scenario count].
-export const LESSONS = [
-  ['Dehydration', '8 Scenarios'],
-  ['Scramble Safety', '8 Scenarios'],
-  ['Heat Exposure', '8 Scenarios'],
-  ['Snowy Peaks', '3 Scenarios'],
-]
+import { LESSONS as LESSON_DATA } from '../data/firstAid.js'
+
+// "Brunswick Mountain Trail Safety" lessons: [name, scenario count, slug].
+export const LESSONS = LESSON_DATA.map((l) => [l.name, `${l.scenarios.length} Scenarios`, l.slug])
 const DEFAULT = ['Dehydration', 'Scramble Safety']
 
 function read() {

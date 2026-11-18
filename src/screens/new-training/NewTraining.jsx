@@ -1,12 +1,16 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import useGo from '../../app/useGo.js'
+import Screen from '../../components/Screen.jsx'
+import ShareButton from '../../components/ShareButton.jsx'
 import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/FlowStep.jsx'
 import HikeCard from '../../components/HikeCard.jsx'
 import BottomSheet from '../../components/BottomSheet.jsx'
-import { AddItem, TagGroup, ToggleSwitch, ToggleTag, TypeField } from '../../components/controls.jsx'
+import { AddItem, BackButton, TagGroup, ToggleSwitch, ToggleTag, TypeField } from '../../components/controls.jsx'
 import { HIKES } from '../../data/hikes.js'
 import searchIcon from '../../assets/icons/search.png'
 import yearArrow from '../../assets/new-training/year-arrow.png'
-import linkIcon from '../../assets/new-training/link.png'
+import checkGreen from '../../assets/icons/check-green.svg'
 import dayHike from '../../assets/new-training/day-hike-mask.png'
 import overnight from '../../assets/new-training/overnight-mask.png'
 import multiDay from '../../assets/new-training/multi-day-mask.png'
@@ -15,6 +19,7 @@ import reachTop from '../../assets/new-training/reach-top-mask.png'
 import feelGood from '../../assets/new-training/feel-good-mask.png'
 import beatClock from '../../assets/new-training/beat-clock-mask.png'
 import keepUp from '../../assets/new-training/keep-up-mask.png'
+import flagMask from '../../assets/newtraining/flag-mask.png'
 import joanna from '../../assets/friends/joanna.jpg'
 import joanne from '../../assets/friends/joanne.jpg'
 import john from '../../assets/friends/john.jpg'
@@ -38,6 +43,10 @@ function Intro({ title, sub }) {
 
 /* 1646:5644  new training 19 */
 export function TargetHike() {
+  const go = useGo()
+  // A hike picked on "Hikes for your level" arrives as ?hike=<key>.
+  const key = useSearchParams()[0].get('hike')
+  const hike = HIKES[key] ?? HIKES.blackTusk
   return (
     <Step step={1} fill={52} back="/home/saved" next="/new-training/date">
       <div className="fs-body nt-body">
@@ -46,15 +55,37 @@ export function TargetHike() {
           <Field label="Search trails:">
             <div className="fs-search nt-search">
               <img src={searchIcon} alt="" />
-              <TypeField defaultValue="Black Tusk" enterKeyHint="search" />
+              <TypeField key={hike.title} defaultValue={key ? hike.title : 'Black Tusk'} enterKeyHint="search" />
             </div>
           </Field>
-          <HikeCard {...HIKES.blackTusk} />
-          {/* No link in the prototype. */}
-          <p className="nt-link">Not sure yet? See hikes for your level</p>
+          <HikeCard {...hike} />
+          <button type="button" className="nt-link" onClick={() => go('/new-training/level', 'smart')}>
+            Not sure yet? See hikes for your level
+          </button>
         </div>
       </div>
     </Step>
+  )
+}
+
+// Hikes that suit the user's level (Hudson: Advanced, 7+ yrs), hardest first.
+const LEVEL_HIKES = ['blackTusk', 'brunswick', 'panorama', 'wedgemount']
+
+/** "Not sure yet?" → hikes for your level, as cards. Tapping one makes it the target hike. */
+export function LevelHikes() {
+  const go = useGo()
+  return (
+    <Screen className="fs">
+      <BackButton className="fs-back" onClick={() => go('/new-training', 'smart')} />
+      <div className="nt-level">
+        <Intro title="Hikes for your level" sub="Picked for an advanced hiker with 7+ years of experience." />
+        <div className="nt-level__cards">
+          {LEVEL_HIKES.map((k) => (
+            <HikeCard key={k} {...HIKES[k]} onClick={() => go(`/new-training?hike=${k}`, 'smart')} />
+          ))}
+        </div>
+      </div>
+    </Screen>
   )
 }
 
@@ -150,6 +181,13 @@ const FRIENDS = [
 /* 1646:5788  new training 23 (+ overlay 2175:7829) */
 export function WhosComing() {
   const [sheet, setSheet] = useState(false)
+  const [invited, setInvited] = useState([]) // names confirmed with Done
+  const [picked, setPicked] = useState([]) // names ticked in the open sheet
+  const open = () => {
+    setPicked(invited)
+    setSheet(true)
+  }
+  const toggle = (name) => setPicked(picked.includes(name) ? picked.filter((n) => n !== name) : [...picked, name])
   return (
     <Step
       step={4}
@@ -157,25 +195,40 @@ export function WhosComing() {
       back="/new-training/trip"
       next="/new-training/goal"
       overlay={
-        <BottomSheet open={sheet} title="Invite Friends" onClose={() => setSheet(false)}>
-          <div className="nt-invite-link">
-            <img src={linkIcon} alt="" />
-            <span>copy invite link</span>
-          </div>
+        <BottomSheet
+          open={sheet}
+          title="Invite Friends"
+          onClose={() => setSheet(false)}
+          onDone={() => {
+            setInvited(picked)
+            setSheet(false)
+          }}
+          action={<ShareButton label="Share invite link" />}
+        >
           <div className="nt-friends">
-            {FRIENDS.map(([photo, name, handle]) => (
-              <div className="nt-friend" key={name}>
-                <div className="nt-friend__who">
-                  <img className="nt-friend__photo" src={photo} alt="" />
-                  <div className="nt-friend__text">
-                    <p className="nt-friend__name">{name}</p>
-                    <p className="nt-friend__handle">{handle}</p>
+            {FRIENDS.map(([photo, name, handle]) => {
+              const on = picked.includes(name)
+              return (
+                <div className="nt-friend" key={name}>
+                  <div className="nt-friend__who">
+                    <img className="nt-friend__photo" src={photo} alt="" />
+                    <div className="nt-friend__text">
+                      <p className="nt-friend__name">{name}</p>
+                      <p className="nt-friend__handle">{handle}</p>
+                    </div>
                   </div>
+                  <button
+                    type="button"
+                    className={on ? 'nt-friend__add nt-friend__add--on' : 'nt-friend__add'}
+                    aria-pressed={on}
+                    aria-label={on ? `Remove ${name}` : `Add ${name}`}
+                    onClick={() => toggle(name)}
+                  >
+                    {on ? <img src={checkGreen} alt="" /> : 'Add'}
+                  </button>
                 </div>
-                {/* Figma "view tag gr": hover state only. */}
-                <span className="nt-friend__add">Add</span>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </BottomSheet>
       }
@@ -191,7 +244,21 @@ export function WhosComing() {
           ]}
         />
         <Field label="Invite friends to train together:">
-          <AddItem onClick={() => setSheet(true)}>Add Friend</AddItem>
+          {invited.length > 0 && (
+            <div className="nt-invited">
+              {FRIENDS.filter(([, name]) => invited.includes(name)).map(([photo, name, handle]) => (
+                <div className="nt-invited__row" key={name}>
+                  <img src={photo} alt="" />
+                  <div>
+                    <p className="nt-invited__name">{name}</p>
+                    <p className="nt-friend__handle">{handle}</p>
+                  </div>
+                  <img className="nt-invited__check" src={checkGreen} alt="Invited" />
+                </div>
+              ))}
+            </div>
+          )}
+          <AddItem onClick={open}>Add Friend</AddItem>
         </Field>
       </div>
     </Step>
@@ -200,11 +267,24 @@ export function WhosComing() {
 
 /* 1646:5732  new training 8 */
 export function Goal() {
+  const [selected, setSelected] = useState(null)
+  const [custom, setCustom] = useState([]) // the user's own goals
+  const [draft, setDraft] = useState(null) // text being typed, or null
+  const commit = () => {
+    const goal = draft?.trim()
+    if (goal) {
+      if (!custom.includes(goal)) setCustom([...custom, goal])
+      setSelected(goal)
+    }
+    setDraft(null)
+  }
   return (
     <Step step={5} fill={298} back="/new-training/who" next="/new-training/schedule">
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Goal" />
         <Options
+          value={selected}
+          onChange={setSelected}
           options={[
             {
               label: 'Reach the top',
@@ -222,8 +302,31 @@ export function Goal() {
               label: 'Keep up with the group',
               icon: <SmallIcon mask={keepUp} maskStyle={{ inset: '0 1px 1px 0' }} />,
             },
+            ...custom.map((label) => ({ label, icon: <SmallIcon mask={flagMask} /> })),
           ]}
         />
+        {draft !== null && (
+          <div className="fs-option nt-goal-new">
+            <SmallIcon mask={flagMask} />
+            <input
+              className="nt-goal-new__input"
+              autoFocus
+              placeholder="Type your goal"
+              aria-label="Your own goal"
+              enterKeyHint="done"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onBlur={commit}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') e.currentTarget.blur()
+                if (e.key === 'Escape') setDraft(null)
+              }}
+            />
+          </div>
+        )}
+        <AddItem className="nt-goal-add" onClick={() => (draft === null ? setDraft('') : commit())}>
+          Add your own goal
+        </AddItem>
       </div>
     </Step>
   )

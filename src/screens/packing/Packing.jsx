@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
@@ -16,6 +16,8 @@ import pencil from '../../assets/packing/pencil.svg'
 import help from '../../assets/packing/help.svg'
 import stepperMinus from '../../assets/icons/stepper-minus.svg'
 import stepperPlus from '../../assets/icons/stepper-plus.svg'
+import checkDefault from '../../assets/icons/check-default.svg'
+import { addedItems, guessWeight, setAddedItems } from '../../app/packing.js'
 import './Packing.css'
 
 // Data as shown in Figma "Packing - All Items" (1646:11433). [name, weight, packed]
@@ -81,6 +83,37 @@ function GroupHead({ icon, name, count }) {
   )
 }
 
+/** "?" next to the title: tap to open the explanation, tap again or anywhere else to close. */
+function HelpButton() {
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+  useEffect(() => {
+    if (!open) return
+    const close = (e) => {
+      if (!ref.current?.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('pointerdown', close)
+    return () => document.removeEventListener('pointerdown', close)
+  }, [open])
+  return (
+    <span className="pk-help-wrap" ref={ref}>
+      <button
+        type="button"
+        className={open ? 'pk-help pk-help--open' : 'pk-help'}
+        aria-label="About this packing list"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+      >
+        <img src={help} alt="" />
+        <span>?</span>
+      </button>
+      <span className={open ? 'pk-pop pk-pop--open' : 'pk-pop'} role="tooltip">
+        This packing list is recommended based on your health data and potential trail hazards
+      </span>
+    </span>
+  )
+}
+
 function Title({ edit }) {
   return (
     <div className="pk-title">
@@ -89,14 +122,11 @@ function Title({ edit }) {
         {edit ? (
           <img className="pk-title__pencil" src={pencil} alt="" />
         ) : (
-          // Figma "Group 1410103755": hover swaps to the darker yellow, no click action.
-          <span className="pk-help">
-            <img src={help} alt="" />
-            <span>?</span>
-          </span>
+          // Figma "Group 1410103755": hover swaps to the darker yellow; tap opens the explanation.
+          <HelpButton />
         )}
       </div>
-      <p className="pk-title__sub">Black Tusk Winter Hike Packing List</p>
+      <p className="pk-title__sub">Brunswick Mountain Trail Packing List</p>
     </div>
   )
 }
@@ -135,7 +165,9 @@ export function PackingList({ tab }) {
   const go = useGo()
   const [selected, setSelected] = useState(tab)
   const filter = tab === 'all' ? () => true : tab === 'packed' ? (item) => item[2] : (item) => !item[2]
-  const groups = GROUPS.map((g) => ({ ...g, items: g.items.filter(filter) })).filter((g) => g.items.length)
+  const groups = GROUPS.map((g) => ({ ...g, items: [...g.items, ...addedItems(g.name)].filter(filter) })).filter(
+    (g) => g.items.length,
+  )
 
   return (
     <Screen className="pk" fixed={<NavBar />}>
@@ -171,10 +203,19 @@ export function PackingList({ tab }) {
   )
 }
 
+const KG_PER_LB = 0.4536
+
 /** Figma "Packing - Edit" 1646:11507. */
 export function PackingEdit() {
   const go = useGo()
   const [unit, setUnit] = useState('kg')
+  const [max, setMax] = useState(10)
+  const switchUnit = (next) => {
+    if (next === unit) return
+    // Keep the same limit when switching units, rounded to a whole number.
+    setMax((m) => Math.max(1, Math.round(next === 'lb' ? m / KG_PER_LB : m * KG_PER_LB)))
+    setUnit(next)
+  }
   return (
     <Screen
       className="pk"
@@ -193,11 +234,26 @@ export function PackingEdit() {
           <div className="pk-max">
             <p className="pk-max__label">Maximum packing weight</p>
             <div className="pk-max__row">
-              {/* The stepper has no interaction in the prototype. */}
               <div className="pk-stepper">
-                <img src={stepperMinus} alt="" />
-                <span>10</span>
-                <img src={stepperPlus} alt="" />
+                <button
+                  type="button"
+                  className="pk-stepper__btn"
+                  aria-label="Decrease maximum weight"
+                  disabled={max <= 1}
+                  onClick={() => setMax(max - 1)}
+                >
+                  <img src={stepperMinus} alt="" />
+                </button>
+                <span aria-live="polite">{max}</span>
+                <button
+                  type="button"
+                  className="pk-stepper__btn"
+                  aria-label="Increase maximum weight"
+                  disabled={max >= 99}
+                  onClick={() => setMax(max + 1)}
+                >
+                  <img src={stepperPlus} alt="" />
+                </button>
               </div>
               <SegmentedTabs
                 className="pk-unit"
@@ -207,21 +263,59 @@ export function PackingEdit() {
                 ]}
                 value={unit}
                 animated
-                onChange={setUnit}
+                onChange={switchUnit}
               />
             </div>
           </div>
           {GROUPS.map((g) => (
-            <div className="pk-group" key={g.name}>
-              <GroupHead {...g} />
-              {g.items.map(([name, weight, packed]) => (
-                <ListItem key={name} label={name} meta={weight} defaultChecked={packed} />
-              ))}
-              <AddItem>Add Item</AddItem>
-            </div>
+            <EditGroup key={g.name} group={g} />
           ))}
         </div>
       </div>
     </Screen>
+  )
+}
+
+/** One category on the Edit screen: Figma items, items the user added, and "Add Item". */
+function EditGroup({ group }) {
+  const [items, setItems] = useState(() => addedItems(group.name))
+  const [draft, setDraft] = useState(null) // text of the row being typed, or null
+  const save = (next) => {
+    setItems(next)
+    setAddedItems(group.name, next)
+  }
+  const commit = () => {
+    const name = draft?.trim()
+    if (name) save([...items, [name, guessWeight(name), false]])
+    setDraft(null)
+  }
+  return (
+    <div className="pk-group">
+      <GroupHead {...group} />
+      {[...group.items, ...items].map(([name, weight, packed], i) => (
+        <ListItem key={`${i}-${name}`} label={name} meta={weight} defaultChecked={packed} />
+      ))}
+      {draft !== null && (
+        <div className="list-item pk-new">
+          <img className="pk-new__box" src={checkDefault} alt="" />
+          <input
+            className="pk-new__input"
+            autoFocus
+            placeholder="New item"
+            aria-label={`New ${group.name} item`}
+            enterKeyHint="done"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onBlur={commit}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') e.currentTarget.blur()
+              if (e.key === 'Escape') setDraft(null)
+            }}
+          />
+          <span className="list-item__meta pk-new__meta">{guessWeight(draft)}</span>
+        </div>
+      )}
+      <AddItem onClick={() => (draft === null ? setDraft('') : commit())}>Add Item</AddItem>
+    </div>
   )
 }

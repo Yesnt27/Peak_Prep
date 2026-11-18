@@ -55,6 +55,13 @@
   padding-bottom: 200px;
 }
 
+.sheet__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+}
+
 .sheet__title {
   color: #414141;
   font: 700 30px/1.139 var(--font-poppins);

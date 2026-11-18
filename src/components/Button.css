@@ -52,3 +52,27 @@
     background-color: #80ac3c;
   }
 }
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .btn--green:active {
+    background-color: #006b45;
+  }
+
+  .btn--yellow:active {
+    background-color: #bd6014;
+  }
+
+  .btn--primary:active {
+    background-color: #80ac3c;
+  }
+}
+
+/* Disabled (e.g. Check before anything is typed): grey, no hover. */
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:active {
+  background-color: #d9d9d9;
+  color: #8a8a8a;
+  cursor: default;
+}

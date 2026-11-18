@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import calendarIcon from '../assets/icons/calendar.svg'
 import heartOutline from '../assets/icons/heart-outline.svg'
 import heartFilled from '../assets/icons/heart-filled.svg'
@@ -28,9 +29,23 @@ export default function HikeCard({
   plainDots = false,
   onClick,
 }) {
-  const Root = onClick ? 'button' : 'div'
+  const [liked, setLiked] = useState(saved)
+  // The card is a div with a button role so the heart can be its own real button inside it.
+  const open = onClick
+    ? {
+        role: 'button',
+        tabIndex: 0,
+        onClick,
+        onKeyDown: (e) => {
+          if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault()
+            onClick()
+          }
+        },
+      }
+    : {}
   return (
-    <Root className="hike-card" {...(onClick ? { type: 'button', onClick } : {})}>
+    <div className="hike-card" {...open}>
       <div className="hike-card__image">
         <img className="hike-card__photo" src={image} alt="" />
         <div className="hike-card__top">
@@ -43,9 +58,18 @@ export default function HikeCard({
             )}
             <span className="hike-card__tag">{tag}</span>
           </div>
-          <span className="hike-card__save">
-            <img src={saved ? heartFilled : heartOutline} alt="" />
-          </span>
+          <button
+            type="button"
+            className="hike-card__save"
+            aria-pressed={liked}
+            aria-label={liked ? `Unlike ${title}` : `Like ${title}`}
+            onClick={(e) => {
+              e.stopPropagation()
+              setLiked(!liked)
+            }}
+          >
+            <img src={liked ? heartFilled : heartOutline} alt="" />
+          </button>
         </div>
         <div className={plainDots ? 'hike-card__dots hike-card__dots--plain' : 'hike-card__dots'}>
           <span className="hike-card__dot hike-card__dot--active" />
@@ -97,6 +121,6 @@ export default function HikeCard({
           </div>
         )}
       </div>
-    </Root>
+    </div>
   )
 }

@@ -355,6 +355,13 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .to-day:not(.to-day--today):active {
+    background: #d4e6b8;
+  }
+}
+
 .to-day.to-day--today {
   color: #fff;
 }

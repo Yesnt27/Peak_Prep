@@ -62,3 +62,10 @@
     background: var(--light-green);
   }
 }
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .seg-tabs__tab:not(.seg-tabs__tab--selected):active {
+    background: var(--light-green);
+  }
+}

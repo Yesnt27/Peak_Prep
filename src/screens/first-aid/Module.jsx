@@ -10,8 +10,9 @@ import recycle from '../../assets/first-aid/recycle.svg'
 import personHike from '../../assets/first-aid/person-hike.svg'
 import headphones from '../../assets/first-aid/headphones.svg'
 import pawPrint from '../../assets/first-aid/paw-print.svg'
-import heatPhoto from '../../assets/first-aid/heat-exposure.png'
+import { useParams, Navigate } from 'react-router-dom'
 import { LESSONS, completedLessons } from '../../app/progress.js'
+import { lessonBySlug } from '../../data/firstAid.js'
 import { Back } from './parts.jsx'
 
 /* ---------- 1646:12184  First aid module (lesson list) ---------- */
@@ -55,32 +56,22 @@ export function FirstAidModule() {
           </div>
         </div>
         <div className="fa-module">
-          <h1 className="fa-module__title">Brunsick Mountain Safety</h1>
+          <h1 className="fa-module__title">Brunswick Mountain Trail Safety</h1>
           <p className="fa-module__sub">Select a lesson to complete:</p>
           <div className="fa-lessons">
-            {LESSONS.map(([name, scenarios], i) => {
+            {/* Every lesson is a button with the same states: grey → yellow on hover/press; done = green. */}
+            {LESSONS.map(([name, scenarios, slug]) => {
               const isDone = done.includes(name)
-              const cls = ['fa-lesson', i === 0 && 'fa-lesson--first', isDone && 'fa-lesson--done']
-              const body = (
-                <>
-                  <span className="fa-lesson__name">{name}</span>
-                  <span>{isDone ? 'COMPLETE' : scenarios}</span>
-                </>
-              )
-              // Heat Exposure is the only lesson with screens in Figma.
-              return name === 'Heat Exposure' ? (
+              return (
                 <button
                   type="button"
                   key={name}
-                  className={[...cls, !isDone && 'fa-lesson--next'].filter(Boolean).join(' ')}
-                  onClick={() => go('/first-aid/heat', 'slide-in-left')}
+                  className={isDone ? 'fa-lesson fa-lesson--done' : 'fa-lesson'}
+                  onClick={() => go(`/first-aid/${slug}`, 'slide-in-left')}
                 >
-                  {body}
+                  <span className="fa-lesson__name">{name}</span>
+                  <span>{isDone ? 'COMPLETE' : scenarios}</span>
                 </button>
-              ) : (
-                <div key={name} className={cls.filter(Boolean).join(' ')}>
-                  {body}
-                </div>
               )
             })}
           </div>
@@ -121,15 +112,15 @@ export function FirstAidModule() {
 
         <p className="fa-etiquette__title">Trail Etiquette 101</p>
         <div className="fa-etiquette" onPointerDown={dragScroll}>
-          {ETIQUETTE.map((item, i) => (
+          {ETIQUETTE.map((item) => (
             <div className="fa-etiquette__card" key={item.title}>
               <div className="fa-etiquette__inner">
                 <span className={item.rotate ? 'fa-etiquette__icon fa-etiquette__icon--rotate' : 'fa-etiquette__icon'}>
                   <img src={item.icon} alt="" />
                 </span>
-                <div className={i === 0 ? 'fa-etiquette__text fa-etiquette__text--first' : 'fa-etiquette__text'}>
+                <div className="fa-etiquette__text">
                   <p className="fa-etiquette__name">{item.title}</p>
-                  <p className={i >= 2 ? 'fa-etiquette__body fa-etiquette__body--wide' : 'fa-etiquette__body'}>{item.body}</p>
+                  <p className="fa-etiquette__body">{item.body}</p>
                 </div>
               </div>
             </div>
@@ -140,33 +131,26 @@ export function FirstAidModule() {
   )
 }
 
-/* ---------- 1646:12254  Heat Exposure (lesson intro) ---------- */
+/* ---------- 1646:12254  Lesson intro (Heat Exposure layout, used by every lesson) ---------- */
 
-export function HeatExposure() {
+export function LessonIntro() {
   const go = useGo()
+  const lesson = lessonBySlug(useParams().lesson)
+  if (!lesson) return <Navigate to="/first-aid" replace />
   return (
     <Screen className="fa">
-      <div className="fa-page" style={{ minHeight: 900 }}>
+      <div className="fa-page fa-flow">
         <Back to="/first-aid" transition="slide-out-left" />
-        <div className="fa-heat">
-          <h1 className="fa-module__title">Heat Exposure</h1>
-          <div className="fa-heat__photo">
-            <img src={heatPhoto} alt="" />
-          </div>
+        <h1 className="fa-module__title">{lesson.name}</h1>
+        <div className="fa-heat__photo">
+          <img src={lesson.photo} alt="" />
         </div>
         <div className="fa-heat__text">
-          <p>
-            Heat exposure is caused by overexposure to the sun. On a long climb, hard effort and not enough water can
-            add up and effects a lot of people.
-          </p>
-          <p>&nbsp;</p>
-          <p>
-            Ways to avoid heat exposure by starting your hike early in the cooler part of the day, drinking water
-            consistently, and wearing loose, light clothing. Slow your pace on sunny, exposed sections and rest in the
-            shade whenever you can.
-          </p>
+          {lesson.intro.map((p) => (
+            <p key={p.slice(0, 20)}>{p}</p>
+          ))}
         </div>
-        <Button className="fa-heat__start" onClick={() => go('/first-aid/practice')}>
+        <Button className="fa-flow__cta" onClick={() => go(`/first-aid/${lesson.slug}/practice`)}>
           Start lesson
         </Button>
       </div>

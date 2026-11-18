@@ -5,21 +5,16 @@
 }
 
 .hi-content {
-  display: flex;
-  flex-direction: column;
-  gap: 23px;
+  position: relative;
   width: 356px;
-  margin: 57px 23px 0;
+  margin: 0 23px;
+  padding-top: 125px; /* same title line as the other screens */
 }
 
-.hi-top {
-  display: flex;
-  justify-content: space-between;
-}
-
-.hi-top img {
-  width: 50.425px;
-  height: 50.425px;
+.hi-back {
+  position: absolute;
+  top: 48px;
+  left: 0;
 }
 
 .hi-body {
@@ -39,31 +34,6 @@
   letter-spacing: -0.4px;
 }
 
-.hi-tags {
-  display: flex;
-  gap: 15px;
-}
-
-/* Figma "health tag": hover light grey (300ms). */
-.hi-tag {
-  display: flex;
-  align-items: center;
-  height: 30px;
-  padding: 0 15px;
-  border-radius: 100px;
-  background: #fff;
-  font: 400 16px/1.68 var(--font-poppins);
-  letter-spacing: -0.32px;
-  white-space: nowrap;
-  transition: background-color 300ms var(--ease-out);
-}
-
-@media (hover: hover) {
-  .hi-tag:hover {
-    background: #e7e7e7;
-  }
-}
-
 .hi-card {
   display: flex;
   flex-direction: column;
@@ -81,148 +51,6 @@
 
 .hi-muted-light {
   color: #c4c4c4;
-}
-
-/* Daily calories */
-.hi-cal {
-  gap: 18px;
-  color: #000;
-}
-
-.hi-cal__title {
-  font: 500 16px/1.139 var(--font-poppins);
-  letter-spacing: -0.32px;
-}
-
-.hi-cal__value {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font: 400 30px/1.139 var(--font-poppins);
-  letter-spacing: -0.6px;
-}
-
-.hi-cal__unit {
-  font-size: 16px;
-  line-height: 1.68;
-  letter-spacing: -0.32px;
-}
-
-.hi-cal__bar {
-  position: relative;
-  height: 28px;
-}
-
-.hi-cal__track,
-.hi-cal__fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 11.5px;
-  border-radius: 11.706px;
-}
-
-.hi-cal__track {
-  width: 296px;
-  background: #e8f2d1;
-}
-
-.hi-cal__fill {
-  width: 98.093px;
-  background: #80ac3c;
-}
-
-.hi-cal__min,
-.hi-cal__max {
-  position: absolute;
-  top: 16.5px;
-  color: #6b6b6b;
-  font: 400 13px/1.3 var(--font-poppins);
-  letter-spacing: -0.26px;
-}
-
-.hi-cal__min {
-  left: 0;
-}
-
-.hi-cal__max {
-  right: 0;
-}
-
-.hi-rings {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.hi-ring {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 9px;
-  width: 59.57px;
-}
-
-.hi-ring__graphic {
-  position: relative;
-  width: 59.57px;
-  height: 59.6px;
-}
-
-.hi-ring__graphic > * {
-  position: absolute;
-}
-
-.hi-ring__track {
-  top: 0;
-  left: 0.43px;
-}
-
-.hi-ring--carbs .hi-ring__track {
-  top: 0.3px;
-}
-
-/* Figma flips each arc (rotate 180 + flip vertical = mirror horizontally). */
-.hi-ring__arc {
-  top: 0;
-  left: 0;
-  transform: scaleX(-1);
-}
-
-.hi-ring--protein .hi-ring__arc {
-  left: 0;
-  transform: translateX(-1.13px) scaleX(-1);
-}
-
-.hi-ring--fat .hi-ring__arc {
-  top: 0.14px;
-}
-
-.hi-ring__pct {
-  font: 400 16px/1.68 var(--font-poppins);
-  letter-spacing: -0.32px;
-  white-space: nowrap;
-}
-
-.hi-ring--carbs .hi-ring__pct {
-  top: 16.77px;
-  left: 14px;
-}
-
-.hi-ring--protein .hi-ring__pct {
-  top: 17.55px;
-  left: 13.43px;
-}
-
-.hi-ring--fat .hi-ring__pct {
-  top: 16.55px;
-  left: 15.85px;
-}
-
-.hi-ring__label {
-  color: #232323;
-  font: 400 13px/1.3 var(--font-poppins);
-  letter-spacing: -0.26px;
 }
 
 /* Steps */
@@ -348,9 +176,8 @@
 .hi-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
   gap: 20px;
-  height: 223px;
+  height: 101px;
 }
 
 .hi-tile {
@@ -445,78 +272,81 @@
   color: #414141;
 }
 
-.eh-content {
-  display: flex;
-  flex-direction: column;
-  width: 361.703px;
-  margin: 45px 0 0 21px;
-}
-
-.eh-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.eh-done img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-}
-
-.eh-title {
-  margin-top: 42px;
-  color: #474747;
-  font: 700 30px/1.139 var(--font-poppins);
-  letter-spacing: -0.6px;
-}
-
-.eh-rows {
+/* ---------- Basic Information rows (edit in place) ---------- */
+.hi-rows {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 37px;
 }
 
-.eh-row {
+.hi-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 57px;
-  padding: 10px 20px;
+  padding: 0 20px;
   border-radius: 12px;
   background: #fff;
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
   white-space: nowrap;
+  transition: box-shadow 300ms var(--ease-out);
 }
 
-.eh-row__value {
+.hi-row--editing {
+  box-shadow: 0 0 0 2px #d4e6b8;
+}
+
+.hi-row__value {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-right: -10px;
+  padding: 6px 10px;
+  border-radius: 8px;
 }
 
-.eh-row__value b {
+.hi-row__value b,
+.hi-row__input {
   font: 600 15px/1.3 var(--font-poppins);
   letter-spacing: -0.3px;
 }
 
-.eh-row__value--select {
-  justify-content: space-between;
-  width: 72px;
+.hi-row__input {
+  width: 140px;
+  border: 0;
+  background: transparent;
+  color: var(--body-copy-gray);
+  text-align: right;
+  outline: none;
 }
 
-.eh-pencil {
+.hi-pencil {
   width: 13px;
   height: 15px;
   object-fit: cover;
 }
 
-/* Figma: a 5 x 10 chevron rotated -90deg (points down). */
-.eh-chevron {
+/* Figma: a 5 x 10 chevron rotated -90deg (points down); flips up while the menu is open. */
+.hi-chevron {
   width: 6.667px;
   height: 11.667px;
   margin: 0 1.67px;
   transform: rotate(-90deg);
+}
+
+.hi-chevron.dd-arrow--open {
+  transform: rotate(90deg);
+}
+
+@media (hover: hover) {
+  .hi-row__value:hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .hi-row__value:active {
+    background: #e7e7e7;
+  }
 }

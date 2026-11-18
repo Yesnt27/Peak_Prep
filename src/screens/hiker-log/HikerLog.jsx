@@ -22,9 +22,9 @@ function TrailCard({ review = false }) {
       <img className="hl-card__photo" src={trailPhoto} alt="" />
       {!review && <div className="hl-card__shade" />}
       <img className="hl-card__base" src={cardBase} alt="" />
-      <p className="hl-card__name">The Black Tusk</p>
-      <p className="hl-card__loc">{review ? 'Garibaldi Provincial Park, BC' : 'Garibaldi Provincial Park, B'}</p>
-      <p className="hl-card__stats">Hard · 26.4 km · Elev. 1763 m · Est. 7-9 hours</p>
+      <p className="hl-card__name">Brunswick Mountain Trail</p>
+      <p className="hl-card__loc">Lions Bay, BC</p>
+      <p className="hl-card__stats">Hard · 14.3 km · Elev. 1,539 m · Est. 7-9 hours</p>
       {review ? (
         <>
           <div className="hl-card__bars">
@@ -74,7 +74,7 @@ export function Congrats() {
           <Field label="Search trails:">
             <div className="fs-search">
               <img src={searchIcon} alt="" />
-              <TypeField defaultValue="Black Tusk" enterKeyHint="search" />
+              <TypeField defaultValue="Brunswick Mountain Trail" enterKeyHint="search" />
             </div>
           </Field>
           <TrailCard />
@@ -194,7 +194,7 @@ export function ReviewDetails() {
       <div className="hl-review-page">
         <BackButton className="fs-back" onClick={() => go('/log/notes')} />
         <div className="fs-content hl-content--review">
-          <h1 className="fs-title fs-title--review">The Black Tusk</h1>
+          <h1 className="fs-title fs-title--review">Brunswick Mountain Trail</h1>
           <p className="fs-sub">MM/DD/YYYY, 8-12 hrs</p>
           <TrailCard review />
           <Field label="How did it feel?">

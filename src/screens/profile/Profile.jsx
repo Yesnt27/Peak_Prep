@@ -1,58 +1,60 @@
-import { TypeField } from '../../components/controls.jsx'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
-import NavBar from '../../components/NavBar.jsx'
 import hudson from '../../assets/profile/hudson.jpg'
-import searchIcon from '../../assets/profile/search.svg'
-import iconCompleted from '../../assets/profile/icon-completed.png'
 import iconHealth from '../../assets/profile/icon-health.png'
-import iconFriends from '../../assets/profile/icon-friends.png'
 import iconPrivacy from '../../assets/profile/icon-privacy.png'
-import roundBack from '../../assets/profile/round-back.svg'
+import { BackButton } from '../../components/controls.jsx'
 import chevron from '../../assets/profile/chevron.svg'
+import chevRightGreen from '../../assets/icons/chev-right-green.svg'
+import { FRIENDS } from '../../data/friends.js'
+import { ProfileView } from './FriendProfile.jsx'
 import './Profile.css'
 
-// [label, icon, route, hasHover] — Figma: the Privacy card links but has no hover state.
-const CARDS = [
-  ['Completed hikes', iconCompleted, '/profile/completed', true],
-  ['Health Stats', iconHealth, '/profile/health', true],
-  ['Friends', iconFriends, '/profile/friends', true],
-  ['Privacy', iconPrivacy, '/profile/privacy', false],
+// Hudson's completed hikes (Figma "Completed Hikes": Recent + Favourited), newest first.
+const COMPLETED = [
+  ['saintMark', 'Dec 12, 2026', 'With Siena & Mark', true],
+  ['grouse', 'July 25, 2025', 'With Siena & Mark', true],
+  ['everest', 'June 20, 2025', 'With Siena & Mark', true],
 ]
 
-/** Figma "Profile" 1646:13300. */
+/** Profile tab: the friend-profile layout for the user, with Health Stats + Settings. */
 export default function Profile() {
   const go = useGo()
   return (
-    <Screen className="pr" fixed={<NavBar />}>
-      <h1 className="pr-title">Profile</h1>
-      <div className="pr-content">
-        <div className="pr-user">
-          <img className="pr-user__photo" src={hudson} alt="" />
-          <div className="pr-user__text">
-            <p className="pr-user__name">Hudson Kemp</p>
-            <p className="pr-user__exp">7+ yrs of experience</p>
-          </div>
-        </div>
-        <div className="pr-search">
-          <img src={searchIcon} alt="" />
-          <TypeField tone="faint" className="pr-search__input" placeholder="Search" enterKeyHint="search" />
-        </div>
+    <ProfileView
+      photo={hudson}
+      name="Hudson Kemp"
+      stats={[
+        { value: FRIENDS.length, label: 'Friends', onClick: () => go('/profile/friends', 'smart') },
+        { value: '7+', label: 'Years Exp.' },
+      ]}
+      level="Advanced"
+      hikes={COMPLETED.length}
+      progress={0.6}
+      actions={
+        // Figma "profile card" style (profile.png): icon + label, hover light grey.
         <div className="pr-cards">
-          {CARDS.map(([label, icon, to, hover]) => (
-            <button
-              type="button"
-              key={label}
-              className={hover ? 'pr-card pr-card--hover' : 'pr-card'}
-              onClick={() => go(to, 'smart')}
-            >
-              <img src={icon} alt="" />
-              <span>{label}</span>
-            </button>
-          ))}
+          <button type="button" className="pr-card pr-card--hover" onClick={() => go('/profile/health', 'smart')}>
+            <img src={iconHealth} alt="" />
+            <span>Health Stats</span>
+          </button>
+          <button type="button" className="pr-card pr-card--hover" onClick={() => go('/profile/settings', 'smart')}>
+            <img src={iconPrivacy} alt="" />
+            <span>Settings</span>
+          </button>
         </div>
-      </div>
-    </Screen>
+      }
+      section={
+        <>
+          <h2 className="fp-section__title">Completed Hikes</h2>
+          <button type="button" className="fp-link" onClick={() => go('/profile/completed', 'smart')}>
+            <span>See all</span>
+            <img src={chevRightGreen} alt="" />
+          </button>
+        </>
+      }
+      activities={COMPLETED}
+    />
   )
 }
 
@@ -61,17 +63,15 @@ const PRIVACY = {
   Preferences: ['About Us', 'Theme', 'Help Center', 'Contact Us'],
 }
 
-/** Figma "Frame 1410103912" (Privacy) 1646:13422. Rows: hover only, no links. */
-export function Privacy() {
+/** Figma "Frame 1410103912" (Privacy) 1646:13422, titled "Settings" (Profile → Settings). Rows: hover only. */
+export function Settings() {
   const go = useGo()
   return (
     <Screen className="pr">
       <div className="pv-content">
-        <button type="button" className="pv-back" aria-label="Back" onClick={() => go('/profile', 'smart')}>
-          <img src={roundBack} alt="" />
-        </button>
+        <BackButton className="pv-back" onClick={() => go('/profile', 'smart')} />
         <div className="pv-body">
-          <h1 className="pv-title">Privacy</h1>
+          <h1 className="pv-title">Settings</h1>
           {Object.entries(PRIVACY).map(([section, rows]) => (
             <div className="pv-section" key={section}>
               <h2 className="pv-heading">{section}</h2>

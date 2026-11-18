@@ -89,3 +89,14 @@
     opacity: 0;
   }
 }
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .navbar__btn:active .navbar__icon--hover {
+    opacity: 1;
+  }
+
+  .navbar__btn:active .navbar__icon--default {
+    opacity: 0;
+  }
+}

@@ -54,8 +54,11 @@ export function Field({ label, children }) {
  * click selects (pale green, semibold); clicking the selected row clears it.
  * `selectable={false}` = rows that only have the hover state in the prototype.
  */
-export function Options({ options, selectable = true }) {
-  const [selected, setSelected] = useState(null)
+export function Options({ options, selectable = true, value, onChange }) {
+  const [inner, setInner] = useState(null)
+  // Uncontrolled by default; pass `value` + `onChange` to control it (e.g. Goal's custom goals).
+  const selected = value !== undefined ? value : inner
+  const setSelected = onChange ?? setInner
   return (
     <div className="fs-options">
       {options.map(({ label, icon }) => (

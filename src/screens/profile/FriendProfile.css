@@ -1,0 +1,219 @@
+/* Friend profile ("view-friend.png"), on the app's grid: 23px gutters, title line at 125px. */
+.fp {
+  background: var(--app-grey);
+}
+
+.fp-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 125px 23px 150px;
+  color: var(--body-copy-gray);
+}
+
+.fp-back {
+  position: absolute;
+  top: 48px;
+  left: 23px;
+}
+
+.fp-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.fp-photo {
+  flex: none;
+  width: 122px;
+  height: 122px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.fp-info {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.fp-name {
+  font: 700 20px/1.139 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+.fp-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.fp-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+/* Tappable stat (your friend count → Friend List): same look, light-grey press/hover. */
+.fp-stat--link {
+  margin: -4px -6px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  color: inherit;
+}
+
+@media (hover: hover) {
+  .fp-stat--link:hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .fp-stat--link:active {
+    background: #e7e7e7;
+  }
+}
+
+.fp-stats b {
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fp-level {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fp-level__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fp-level__name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.fp-smile {
+  width: 14px;
+  height: 14px;
+}
+
+.fp-level__bar {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--light-green);
+}
+
+.fp-level__bar span {
+  display: block;
+  height: 100%;
+  border-radius: 10px;
+  background: var(--main-green);
+}
+
+/* Light-green action row, same family as the "Add Item" / hike-card friends rows. */
+.fp-add {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+  border-radius: 12px;
+  background: var(--light-green);
+  color: var(--body-copy-gray);
+  font: 500 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.fp-add__icon {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.fp-add--added {
+  background: #d4e6b8;
+}
+
+@media (hover: hover) {
+  .fp-add:hover {
+    background: #d4e6b8;
+  }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .fp-add:active {
+    background: #d4e6b8;
+  }
+}
+
+.fp-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -9px; /* 16px to the first card */
+}
+
+.fp-section__title {
+  font: 600 20px/1.139 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+/* Two actions side by side (your profile: Health Stats + Settings). */
+.fp-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.fp-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* "See all ›": same green text link as Home's "Full analytics". */
+.fp-link {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--main-green);
+  font: 500 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.fp-link img {
+  width: 14px;
+  height: 14px;
+}
+
+.fp-link span {
+  transition: opacity 300ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .fp-link:hover span {
+    opacity: 0.7;
+  }
+}
+
+@media (hover: none) {
+  .fp-link:active span {
+    opacity: 0.7;
+  }
+}

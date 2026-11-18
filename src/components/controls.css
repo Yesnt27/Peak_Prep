@@ -19,11 +19,13 @@
 
 .back-btn--dark-hover {
   position: relative;
+  transition: background-color 300ms var(--ease-out);
 }
 
 .back-btn__chev--light {
   position: absolute;
   opacity: 0;
+  transition: opacity 300ms var(--ease-out);
 }
 
 @media (hover: hover) {
@@ -32,6 +34,17 @@
   }
 
   .back-btn--dark-hover:hover .back-btn__chev--light {
+    opacity: 1;
+  }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .back-btn--dark-hover:active {
+    background: #4b4b4b;
+  }
+
+  .back-btn--dark-hover:active .back-btn__chev--light {
     opacity: 1;
   }
 }
@@ -81,6 +94,13 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .tag:not(.tag--selected):active {
+    background: #e7e7e7;
+  }
+}
+
 .tag-group {
   display: flex;
   flex-wrap: wrap;
@@ -117,6 +137,13 @@
 
 @media (hover: hover) {
   .add-item:hover {
+    background: #d4e6b8;
+  }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .add-item:active {
     background: #d4e6b8;
   }
 }
@@ -206,6 +233,13 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .check-row:not(.check-row--selected):active .check-row__img--hover {
+    opacity: 1;
+  }
+}
+
 .check-row__label {
   flex: 1 0 0;
   min-width: 1px;
@@ -243,6 +277,13 @@
 
 @media (hover: hover) {
   .workout-card:not(.workout-card--selected):hover {
+    background: #e7e7e7;
+  }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .workout-card:not(.workout-card--selected):active {
     background: #e7e7e7;
   }
 }
@@ -363,6 +404,13 @@
 
 @media (hover: hover) {
   .option:not(.option--selected):hover {
+    background: #e7e7e7;
+  }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .option:not(.option--selected):active {
     background: #e7e7e7;
   }
 }

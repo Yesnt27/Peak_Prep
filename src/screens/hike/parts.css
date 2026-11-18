@@ -95,23 +95,6 @@
   justify-content: space-between;
 }
 
-.hk-hero__share {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  border: 1px solid #fff;
-  border-radius: 22.35px;
-  background: #f5f5f5;
-  box-shadow: 0 8px 55px rgba(0, 0, 0, 0.15);
-}
-
-.hk-hero__share img {
-  width: 18px;
-  height: 18px;
-}
-
 .hk-hero__title {
   position: relative;
   display: flex;

@@ -1,87 +1,94 @@
+import { useState } from 'react'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
+import Dropdown from '../../components/Dropdown.jsx'
 import { BackButton } from '../../components/controls.jsx'
-import roundBack from '../../assets/profile/round-back.svg'
-import roundEdit from '../../assets/profile/round-edit.svg'
-import ringTrack from '../../assets/profile/ring-track.svg'
-import ringCarbs from '../../assets/profile/ring-carbs.svg'
-import ringProtein from '../../assets/profile/ring-protein.svg'
-import ringFat from '../../assets/profile/ring-fat.svg'
 import dashLine from '../../assets/profile/dash-line.svg'
 import activityLegend from '../../assets/profile/activity-legend.svg'
 import activityChart from '../../assets/profile/activity-chart.svg'
-import maskBp from '../../assets/profile/mask-bp.png'
-import maskWater from '../../assets/profile/mask-water.png'
 import maskHeart from '../../assets/profile/mask-heart.png'
 import maskSleep from '../../assets/profile/mask-sleep.png'
-import doneIcon from '../../assets/profile/done.png'
 import pencil from '../../assets/profile/pencil.png'
 import chevron from '../../assets/profile/chevron.svg'
 import './Health.css'
 
-const RINGS = [
-  ['carbs', '50%', ringCarbs, 'hi-ring--carbs'],
-  ['protein', '68%', ringProtein, 'hi-ring--protein'],
-  ['fat', '96%', ringFat, 'hi-ring--fat'],
-]
-
 // [label, mask, value parts [text, bold], dot position] from Figma "watah" tiles.
 const TILES = [
-  ['BP', maskBp, [['120/80 ', true], ['mmHg', false]], 'low'],
-  ['Water', maskWater, [['3,700', true], [' ml ', false]], 'low'],
   ['Heart Rate', maskHeart, [['83', true], [' bmp', false]], 'low'],
   ['Sleep', maskSleep, [['7', true], ['h ', false], ['43', true], ['m', false]], 'high'],
 ]
 
-/** Figma "Health info" 1646:13208. */
+const GENDERS = ['Female', 'Male', 'Non-binary', 'Prefer not to say'].map((g) => ({ id: g, label: g }))
+
+// Values from the "Health info.png" reference (Figma Edit Health Stats).
+const FIELDS = [
+  ['Age', '23', 'numeric'],
+  ['Weight', '186lbs', 'text'],
+  ['Height', '6ft3”', 'text'],
+]
+
+/** A row whose value turns into a text field when tapped (pencil cue), saved on Enter or tapping away. */
+function EditRow({ label, initial, inputMode }) {
+  const [value, setValue] = useState(initial)
+  const [editing, setEditing] = useState(false)
+  const done = (v) => {
+    setValue(v.trim() || value)
+    setEditing(false)
+  }
+  return (
+    <div className={editing ? 'hi-row hi-row--editing' : 'hi-row'}>
+      <span>{label}</span>
+      {editing ? (
+        <input
+          className="hi-row__input"
+          autoFocus
+          defaultValue={value}
+          inputMode={inputMode}
+          enterKeyHint="done"
+          aria-label={label}
+          onFocus={(e) => e.target.select()}
+          onBlur={(e) => done(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') e.currentTarget.blur()
+            if (e.key === 'Escape') setEditing(false)
+          }}
+        />
+      ) : (
+        <button type="button" className="hi-row__value" aria-label={`Edit ${label}: ${value}`} onClick={() => setEditing(true)}>
+          <b>{value}</b>
+          <img className="hi-pencil" src={pencil} alt="" />
+        </button>
+      )}
+    </div>
+  )
+}
+
+/** Figma "Health info" 1646:13208, laid out as the "Health info.png" reference: edit in place. */
 export function HealthInfo() {
   const go = useGo()
+  const [gender, setGender] = useState('Female')
   return (
     <Screen className="hi">
       <div className="hi-content">
-        <div className="hi-top">
-          <button type="button" aria-label="Back" onClick={() => go('/profile', 'smart')}>
-            <img src={roundBack} alt="" />
-          </button>
-          <button type="button" aria-label="Edit health stats" onClick={() => go('/profile/health/edit', 'smart')}>
-            <img src={roundEdit} alt="" />
-          </button>
-        </div>
+        <BackButton className="hi-back" onClick={() => go('/profile', 'smart')} />
         <div className="hi-body">
           <h1 className="hi-title">Health Information</h1>
           <h2 className="hi-subtitle">Basic Information</h2>
-          <div className="hi-tags">
-            {['23 years', 'Male', '168lbs', '6ft3”'].map((t) => (
-              <span className="hi-tag" key={t}>
-                {t}
-              </span>
+          <div className="hi-rows">
+            <div className="hi-row">
+              <span>Gender</span>
+              <Dropdown options={GENDERS} value={gender} onChange={setGender} label="Gender" triggerClassName="hi-row__value">
+                {(open) => (
+                  <>
+                    <b>{gender}</b>
+                    <img className={open ? 'hi-chevron dd-arrow dd-arrow--open' : 'hi-chevron dd-arrow'} src={chevron} alt="" />
+                  </>
+                )}
+              </Dropdown>
+            </div>
+            {FIELDS.map(([label, value, mode]) => (
+              <EditRow key={label} label={label} initial={value} inputMode={mode} />
             ))}
-          </div>
-
-          <div className="hi-card hi-cal">
-            <p className="hi-cal__title">Daily Calories</p>
-            <p className="hi-cal__value">
-              <span>1285</span>
-              <span className="hi-cal__unit">kcal</span>
-            </p>
-            <div className="hi-cal__bar">
-              <div className="hi-cal__track" />
-              <div className="hi-cal__fill" />
-              <span className="hi-cal__min">0</span>
-              <span className="hi-cal__max">3000</span>
-            </div>
-            <div className="hi-rings">
-              {RINGS.map(([label, pct, arc, cls]) => (
-                <div className={`hi-ring ${cls}`} key={label}>
-                  <div className="hi-ring__graphic">
-                    <img className="hi-ring__track" src={ringTrack} alt="" />
-                    <img className="hi-ring__arc" src={arc} alt="" />
-                    <span className="hi-ring__pct">{pct}</span>
-                  </div>
-                  <p className="hi-ring__label">{label}</p>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="hi-card hi-steps">
@@ -153,51 +160,6 @@ export function HealthInfo() {
               </div>
             ))}
           </div>
-        </div>
-      </div>
-    </Screen>
-  )
-}
-
-const FIELDS = [
-  ['Age', '23'],
-  ['Weight', '186lbs'],
-  ['Height', '6ft3”t'],
-  ['Calories Goal', '3000'],
-]
-
-/** Figma "Frame 1410103913" (Edit Health Stats) 1646:13446. */
-export function EditHealthStats() {
-  const go = useGo()
-  const back = () => go('/profile/health', 'smart')
-  return (
-    <Screen className="eh">
-      <div className="eh-content">
-        <div className="eh-top">
-          <BackButton onClick={back} />
-          <button type="button" className="back-btn eh-done" aria-label="Done" onClick={back}>
-            <img src={doneIcon} alt="" />
-          </button>
-        </div>
-        <h1 className="eh-title">Edit Health Stats</h1>
-        {/* Static fields, like the prototype (open question 4). */}
-        <div className="eh-rows">
-          <div className="eh-row">
-            <span>Gender</span>
-            <span className="eh-row__value eh-row__value--select">
-              <b>Female</b>
-              <img className="eh-chevron" src={chevron} alt="" />
-            </span>
-          </div>
-          {FIELDS.map(([label, value]) => (
-            <div className="eh-row" key={label}>
-              <span>{label}</span>
-              <span className="eh-row__value">
-                <b>{value}</b>
-                <img className="eh-pencil" src={pencil} alt="" />
-              </span>
-            </div>
-          ))}
         </div>
       </div>
     </Screen>

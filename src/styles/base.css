@@ -36,6 +36,23 @@ button {
   padding: 0;
   cursor: pointer;
   text-align: inherit;
+  /* One hover/press fade for every button (components may override). */
+  transition: background-color 300ms var(--ease-out);
+}
+
+/* Tap fires straight away on phones (no double-tap-zoom wait); no long-press text selection. */
+button,
+a,
+input,
+textarea,
+[role='button'] {
+  touch-action: manipulation;
+}
+button,
+[role='button'] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 img,

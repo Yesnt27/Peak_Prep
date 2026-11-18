@@ -40,9 +40,10 @@
 }
 
 .pk-content {
-  position: absolute;
-  top: 125px;
-  left: 23px;
+  /* In normal flow (not absolute) so the page grows when items are added. */
+  position: relative;
+  margin-left: 23px;
+  padding: 125px 0 150px;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -83,6 +84,12 @@
   letter-spacing: -0.32px;
 }
 
+/* ---------- "?" help + pop-up ---------- */
+.pk-help-wrap {
+  position: relative;
+  display: flex;
+}
+
 .pk-help {
   position: relative;
   display: flex;
@@ -92,7 +99,7 @@
   height: 23px;
   border-radius: 50%;
   color: #000;
-  font: 500 12px/normal var(--font-inter);
+  font: 500 12px/normal var(--font-sf);
 }
 
 .pk-help img {
@@ -104,12 +111,60 @@
   position: relative;
 }
 
+.pk-help,
+.pk-help img {
+  transition: background-color 300ms var(--ease-out), opacity 300ms var(--ease-out);
+}
+
+.pk-help--open {
+  background: var(--yellow-2);
+}
+
+.pk-help--open img {
+  opacity: 0;
+}
+
+/* Figma-style callout: yellow-1 card just below the "?", ending 15px from the screen edge. */
+.pk-pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 8px;
+  z-index: 5;
+  width: 225px;
+  padding: 12px 13px;
+  border-radius: 12px;
+  background: var(--yellow-1);
+  color: #000;
+  font: 400 13px/1.15 var(--font-sf);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--t-smart) var(--ease-out), transform var(--t-smart) var(--ease-out);
+  pointer-events: none;
+}
+
+.pk-pop--open {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
 @media (hover: hover) {
   .pk-help:hover {
     background: var(--yellow-2);
   }
 
   .pk-help:hover img {
+    opacity: 0;
+  }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .pk-help:active {
+    background: var(--yellow-2);
+  }
+
+  .pk-help:active img {
     opacity: 0;
   }
 }
@@ -247,6 +302,72 @@
 .pk-stepper img {
   width: 19.809px;
   height: 19.809px;
+}
+
+.pk-stepper span {
+  min-width: 2ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.pk-stepper__btn {
+  display: flex;
+  margin: -8px;
+  padding: 8px; /* bigger tap target, same look */
+  border-radius: 50%;
+}
+
+.pk-stepper__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .pk-stepper__btn:not(:disabled):hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .pk-stepper__btn:not(:disabled):active {
+    background: #e7e7e7;
+  }
+}
+
+/* New item being typed: same row as a packing list item, with a text field. */
+.pk-new {
+  justify-content: flex-start;
+  gap: 12px;
+  padding-left: 19.9px;
+}
+
+.pk-new__box {
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.pk-new__input {
+  flex: 1 0 0;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #414141;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  outline: none;
+}
+
+.pk-new__input::placeholder {
+  color: #9a9a9a;
+}
+
+.pk-new:focus-within {
+  box-shadow: 0 0 0 2px #d4e6b8;
+}
+
+.pk-new__meta {
+  flex: none;
 }
 
 .pk-unit.seg-tabs {

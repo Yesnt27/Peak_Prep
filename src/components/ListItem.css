@@ -63,6 +63,13 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .list-item:not(.list-item--checked):active .list-item__hover {
+    opacity: 1;
+  }
+}
+
 .list-item__label {
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;

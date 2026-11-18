@@ -6,19 +6,21 @@ import { BackButton, TypeField } from '../../components/controls.jsx'
 import searchIcon from '../../assets/profile/search.svg'
 import divider from '../../assets/profile/search-divider.svg'
 import keyboard from '../../assets/profile/keyboard.jpg'
-import amber from '../../assets/friends/amber.jpg'
-import eli from '../../assets/friends/eli.jpg'
-import sam from '../../assets/friends/sam.jpg'
-import owen from '../../assets/friends/owen.jpg'
-import natalia from '../../assets/friends/natalia.jpg'
+import { FRIENDS } from '../../data/friends.js'
 import joanna from '../../assets/friends/joanna.jpg'
 import joanne from '../../assets/friends/joanne.jpg'
 import john from '../../assets/friends/john.jpg'
 import './Friends.css'
 
-/** Figma "view tag gr": pale green, hover light grey (300ms). No click action. */
-function ViewTag() {
-  return <span className="fr-chip fr-chip--view">View</span>
+/** Figma "view tag gr": pale green, hover light grey (300ms). Opens the friend's profile when given `onClick`. */
+function ViewTag({ onClick }) {
+  return onClick ? (
+    <button type="button" className="fr-chip fr-chip--view" onClick={onClick}>
+      View
+    </button>
+  ) : (
+    <span className="fr-chip fr-chip--view">View</span>
+  )
 }
 
 /** Figma "add friend": hover light grey, then click selects it (green). */
@@ -51,13 +53,6 @@ function Person({ photo, name, sub, action }) {
   )
 }
 
-const FRIENDS = [
-  [amber, 'Amber Kenz'],
-  [eli, 'Eli Eifler'],
-  [sam, 'Sam Eifler'],
-  [owen, 'Owen Interino'],
-  [natalia, 'Natalia Wang'],
-]
 
 /** Figma "Friendlist" 1646:13323. */
 export function FriendList() {
@@ -67,7 +62,7 @@ export function FriendList() {
       <div className="fr-content">
         <BackButton onClick={() => go('/profile', 'smart')} />
         <div className="fr-block">
-          <h1 className="fr-title">Friend list</h1>
+          <h1 className="fr-title">Friend List</h1>
           <div className="fr-search-block">
             <button type="button" className="fr-search" onClick={() => go('/profile/friends/search')}>
               <img src={searchIcon} alt="" />
@@ -78,8 +73,14 @@ export function FriendList() {
             </button>
           </div>
           <div className="fr-list">
-            {FRIENDS.map(([photo, name]) => (
-              <Person key={name} photo={photo} name={name} sub="Friends since 2017" action={<ViewTag />} />
+            {FRIENDS.map((f) => (
+              <Person
+                key={f.id}
+                photo={f.photo}
+                name={f.name}
+                sub={f.since}
+                action={<ViewTag onClick={() => go(`/profile/friends/${f.id}`, 'smart')} />}
+              />
             ))}
           </div>
         </div>

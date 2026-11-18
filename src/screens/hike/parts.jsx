@@ -1,6 +1,6 @@
+import ShareButton from '../../components/ShareButton.jsx'
 import { BackButton } from '../../components/controls.jsx'
 import hero from '../../assets/hike/hero.png'
-import shareIcon from '../../assets/hike/share.svg'
 import pinIcon from '../../assets/hike/pin.svg'
 import friend1 from '../../assets/hike/friend-1.png'
 import friend2 from '../../assets/hike/friend-2.svg'
@@ -39,9 +39,7 @@ export function HikeHero({ chips, onBack }) {
       <div className="hk-hero__scrim" />
       <div className="hk-hero__top">
         <BackButton onClick={onBack} />
-        <span className="hk-hero__share">
-          <img src={shareIcon} alt="" />
-        </span>
+        <ShareButton />
       </div>
       <div className="hk-hero__title">
         <div className="hk-hero__chips">{chips}</div>

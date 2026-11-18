@@ -24,6 +24,7 @@
 }
 
 .nt-link {
+  align-self: center;
   color: #414141;
   font: 600 16px/1.139 var(--font-poppins);
   letter-spacing: -0.32px;
@@ -95,6 +96,13 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .nt-month:not(.nt-month--selected):active {
+    background: #e7e7e7;
+  }
+}
+
 .nt-exact {
   width: 356px;
   padding: 14.969px 19.958px;
@@ -127,23 +135,6 @@
 }
 
 /* Invite Friends sheet */
-.nt-invite-link {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 3px;
-  width: 100%;
-  margin-top: -22px;
-  color: #414141;
-  font: 400 13px/normal var(--font-sf);
-}
-
-.nt-invite-link img {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-}
-
 .nt-friends {
   display: flex;
   flex-direction: column;
@@ -210,6 +201,13 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .nt-friend__add:active {
+    background: #e7e7e7;
+  }
+}
+
 /* Selectable months + year arrows (user testing round 3). */
 .nt-month {
   color: inherit;
@@ -234,4 +232,114 @@
   .nt-year__arrow:not(:disabled):hover {
     background: var(--yellow-1);
   }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .nt-year__arrow:not(:disabled):active {
+    background: var(--yellow-1);
+  }
+}
+
+/* "Not sure yet?" link: underline fades on hover / press. */
+.nt-link {
+  transition: opacity 300ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .nt-link:hover {
+    opacity: 0.7;
+  }
+}
+
+@media (hover: none) {
+  .nt-link:active {
+    opacity: 0.7;
+  }
+}
+
+/* Hikes for your level */
+.nt-level {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 125px 23px 48px;
+}
+
+.nt-level__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Invite sheet: ticked friend shows a green check instead of "Add". */
+.nt-friend__add--on {
+  background: #d4e6b8;
+}
+
+.nt-friend__add img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Friends confirmed with Done, shown on "Who's coming?" */
+.nt-invited {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.nt-invited__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.nt-invited__row > img:first-child {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nt-invited__row > div {
+  flex: 1 0 0;
+}
+
+.nt-invited__name {
+  color: var(--body-copy-gray);
+  font: 600 16px/1.3 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.nt-invited__check {
+  width: 20px;
+  height: 20px;
+}
+
+/* Goal: the user's own goal */
+.nt-goal-new {
+  width: 100%;
+  cursor: text;
+  box-shadow: 0 0 0 2px #d4e6b8;
+}
+
+.nt-goal-new__input {
+  flex: 0 1 auto;
+  width: 200px;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  outline: none;
+}
+
+.nt-goal-add {
+  width: 100%;
 }

@@ -169,6 +169,13 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .fs-option:not(.fs-option--selected):active {
+    background: #e7e7e7;
+  }
+}
+
 .fs-icon {
   display: flex;
   flex: none;

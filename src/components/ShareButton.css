@@ -1,0 +1,75 @@
+/* Round share button (Hike details hero, Invite Friends sheet). Same dark hover as the back button. */
+.share-wrap {
+  position: relative;
+  display: flex;
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border: 1px solid #fff;
+  border-radius: 22.35px;
+  background: #f5f5f5;
+  box-shadow: 0 8px 55px rgba(0, 0, 0, 0.15);
+}
+
+.share-btn img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Same dark hover as the back button beside it. */
+.share-btn {
+  transition: background-color 300ms var(--ease-out);
+}
+
+.share-btn img {
+  transition: filter 300ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .share-btn:hover {
+    background: #4b4b4b;
+  }
+
+  .share-btn:hover img {
+    filter: brightness(0) invert(1);
+  }
+}
+
+@media (hover: none) {
+  .share-btn:active {
+    background: #4b4b4b;
+  }
+
+  .share-btn:active img {
+    filter: brightness(0) invert(1);
+  }
+}
+
+/* "Link copied" pill: only shown where there is no native share sheet (desktop). */
+.share-toast {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 3;
+  padding: 8px 16px;
+  border-radius: 100px;
+  background: var(--body-copy-gray);
+  color: #fff;
+  font: 500 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
+  pointer-events: none;
+}
+
+.share-toast--show {
+  opacity: 1;
+  transform: none;
+}

@@ -249,3 +249,47 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
   - Training overview and Training Schedule share `PrepStatus` and `WeekStrip`, exported from `TrainingOverview.jsx`.
   - The row chevrons have no destination yet. The three Training detail screens (`2068:5528`, `2084:6318`, `2084:6351`) are still not built.
 - **Fix:** `ListItem` used `checkGreen` without importing it, and now imports it.
+
+### Round 4 — mobile taps, likes, share, first aid lessons (from Olivia, 2026-11-18)
+
+- **Mobile taps:** every `@media (hover: hover)` rule has a matching `@media (hover: none)` copy using `:active`, so on touch the hover look shows while a finger is held down and the tap works first time. Buttons get `touch-action: manipulation` and a default 300ms background fade (`base.css`); `main.jsx` adds an empty `touchstart` listener so iOS applies `:active`.
+- **Back buttons:** all use the Figma dark hover (`darkHover` now defaults to true). Share uses the same dark hover.
+- **Likes:** the hike card heart (`HikeCard.jsx`) and the Hike details heart toggle filled ↔ outline. The card is a `div role="button"` so the heart can be its own button.
+- **Home → Training:** Endurance shows "20 min". "Full analytics" → `/training/schedule`; its back returns to wherever it was opened from (`go(path, transition, from)`).
+- **Brunswick naming:** every title is "Brunswick Mountain Trail" (hike card, Home subtitle); the safety module is "Brunswick Mountain Trail Safety". "Start Preparation" (spelling fixed) → `/training`.
+- **Share:** `src/app/share.js` opens the native share sheet with https://yesnt27.github.io/Peak_Prep/; where there is none (most desktops) it copies the link and shows "Link copied".
+- **Fonts:** Poppins + SF Pro only (Black Han Sans stays for the logo wordmark). Inter removed. SF Pro can't be bundled (Apple licence), so `--font-sf` uses the system font: real SF Pro on Apple devices, the closest system font elsewhere.
+- **First aid lessons** (content in `src/data/firstAid.js`, written from Red Cross / Wilderness Medical Society / NOLS guidance; Heat Exposure intro + scenario 1 keep the Figma copy):
+  - Routes: `/first-aid/:lesson` (intro, Heat Exposure layout) → `/first-aid/:lesson/practice` → `/first-aid/:lesson/complete`. Slugs: `dehydration`, `scramble`, `heat`, `snowy-peaks`. Old `/first-aid/practice` and `/correct` redirect to the Heat versions.
+  - Scenario counts follow the lesson list: 8 / 8 / 8 / 3.
+  - Lesson rows are all buttons: grey → yellow-1 on hover/press; done rows green → `#d4e6b8`. Nothing is pre-selected.
+  - Practice: 3:00 countdown per scenario, "Scenario n of N", no image, answer box without "?", Hint tag reveals a hint, Check is grey until something is typed, then green. Check shows a "Suggested answer" card and turns into "Next scenario" / "See results". Skip moves on.
+  - Results: Heat Exposure keeps the Figma thermometer + Treating for Shock cards (heading now "Lesson complete!"); the others show "Lesson complete!" + "Key takeaways". Reaching results completes the lesson.
+  - Lesson photos reuse existing assets (Wedgemount Lake, Brunswick, the Everest photo); tag icons reuse drop / mountain / snow icons.
+- **Trail Etiquette cards:** all five use the same text spacing and centred icons.
+
+### Round 5 — schedule, packing edit, health, friend profiles (from Olivia, 2026-11-18)
+
+- **Training Schedule** (`/training/schedule`): "Training" title and "Black Tusk…" subtitle removed; page now starts with "Daily Training", and the green Prep status box sits at the bottom.
+- **Brunswick everywhere it's linked from the Brunswick training:** Packing subtitle "Brunswick Mountain Trail Packing List"; Hiker Log trail card, search field and review title now say Brunswick Mountain Trail, Lions Bay, BC, 14.3 km, 1,539 m. (Home's separate Black Tusk card and the New training example are other hikes and stay.)
+- **Packing edit:** the max-weight stepper −/+ works (1–99); switching kg ↔ lb converts the number. "Add Item" opens a new row with a text field; the weight is guessed from the name (`guessWeight` in `src/app/packing.js`, e.g. "Water (2L)" → 2.0 kg, unknown → 0.3 kg). Added items are kept in sessionStorage and show on the list tabs after Save. The bag stats (8 of 11, 7.8 kg) stay as the Figma values.
+- **Packing "?":** tap opens the yellow-1 callout from the reference ("This packing list is recommended based on your health data and potential trail hazards"); tap again or anywhere else closes it.
+- **Health Information** (`/profile/health`, from "Health info.png"): no calories/macros card, no BP or Water tiles, no separate edit screen (`/profile/health/edit` redirects here). Gender is a dropdown; Age / Weight / Height edit in place via the pencil. Height typo "6ft3”t" shown as "6ft3”".
+- **Dropdown:** Home's sort menu is now the shared `components/Dropdown.jsx`, also used for Gender.
+- **Friend List:** title is "Friend List" (and on the Profile card). "View" opens `/profile/friends/:id` (`FriendProfile.jsx`, data in `src/data/friends.js`), one profile per friend, laid out from "view-friend.png" on the app grid (23px gutters, 125px title line, shared HikeCard). Natalia Wang uses the reference's numbers and hikes. The Friend-search results (Figma names) are not linked.
+- `data/hikes.js` now also holds Saint Mark Summit, Mt. Everest ("DAYS", Figma had "AYS") and Grouse Grind.
+
+### Round 6 — Profile tab redesign (from Olivia, 2026-11-18)
+
+- `/profile` now uses the friend-profile layout (`ProfileView`, exported from `FriendProfile.jsx`) for Hudson Kemp: friend count (tap → Friend List), "7+ Years Exp.", level bar, then two side-by-side buttons **Health Stats** → `/profile/health` and **Settings** → `/profile/settings`, then **Completed Hikes** (Saint Mark, Grouse Grind, Mt. Everest) with "See all ›" → `/profile/completed`.
+- (Superseded in Round 7: the Profile card screen was removed; Settings is now the Privacy screen.)
+- Level "Advanced", the progress bar (60%) and "3 hikes" on Hudson's profile are not in Figma; set to fit the friend-profile layout.
+
+### Round 7 — Profile cards, Settings, New training (from Olivia, 2026-11-18)
+
+- **Profile:** Health Stats and Settings are the Figma "profile card" tiles again (icon + label, hover `#e7e7e7`), side by side.
+- **Settings** = the Figma Privacy screen (1646:13422) retitled "Settings" at `/profile/settings`; `/profile/privacy` redirects there. Back → `/profile`. Standard back button + 125px title line. The old card-grid screen is gone.
+- **Share:** `components/ShareButton.jsx` (native share sheet / "Link copied") is used by the Hike details hero and the Invite Friends sheet.
+- **New training → Target Hike:** "Not sure yet? See hikes for your level" → `/new-training/level`, hike cards for an advanced hiker (Black Tusk, Brunswick, Panorama Ridge, Wedgemount). Tapping a card returns to `/new-training?hike=<key>` with that hike as the target.
+- **Invite Friends sheet:** "copy invite link" removed; share button top right (`BottomSheet` now takes `action` and `onDone`). "Add" toggles to a green check; Done adds the ticked friends under "Invite friends to train together" on Who's coming; closing without Done discards changes.
+- **Goal:** "Add your own goal" opens a text row; the goal becomes a selectable option (flag icon) and is selected. `Options` can now be controlled (`value` / `onChange`).

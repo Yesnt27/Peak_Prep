@@ -140,6 +140,14 @@
   }
 }
 
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .fr-chip--view:active,
+  .fr-chip--add:not(.fr-chip--added):active {
+    background: #e7e7e7;
+  }
+}
+
 /* Add / search screens */
 .fr-panel {
   position: absolute;

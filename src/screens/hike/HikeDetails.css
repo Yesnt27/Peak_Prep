@@ -411,6 +411,14 @@
   background: #fff;
 }
 
+.hd-footer__fav {
+  transition: transform 150ms var(--ease-out);
+}
+
+.hd-footer__fav:active {
+  transform: scale(0.92);
+}
+
 .hd-footer__fav img {
   width: 16px;
   height: 16px;

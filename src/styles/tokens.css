@@ -15,8 +15,7 @@
   /* Font families */
   --font-poppins: 'Poppins', sans-serif;
   --font-display: 'Black Han Sans', sans-serif;
-  --font-inter: 'Inter', sans-serif;
-  --font-sf: -apple-system, 'SF Pro Text', 'SF Pro', system-ui, sans-serif;
+  --font-sf: 'SF Pro Text', 'SF Pro', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   /* Prototype transition timings */
   --t-smart: 300ms;

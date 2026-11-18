@@ -12,7 +12,7 @@ import './controls.css'
  * Round back button (Figma "Back button"). `darkHover` is the first-aid
  * variant (1646:12147): on hover it turns dark grey with a light chevron.
  */
-export function BackButton({ className = '', label = 'Back', darkHover = false, ...rest }) {
+export function BackButton({ className = '', label = 'Back', darkHover = true, ...rest }) {
   return (
     <button
       type="button"
@@ -27,8 +27,8 @@ export function BackButton({ className = '', label = 'Back', darkHover = false, 
 }
 
 /** Figma "tag w/o icon states" and "tag w icon states": default / hover / selected. */
-export function Tag({ icon, selected = false, compact = false, children, ...rest }) {
-  const cls = ['tag', selected && 'tag--selected', icon && 'tag--icon', compact && 'tag--compact']
+export function Tag({ icon, selected = false, compact = false, className = '', children, ...rest }) {
+  const cls = ['tag', selected && 'tag--selected', icon && 'tag--icon', compact && 'tag--compact', className]
     .filter(Boolean)
     .join(' ')
   return (
