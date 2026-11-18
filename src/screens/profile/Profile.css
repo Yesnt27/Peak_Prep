@@ -124,3 +124,11 @@
     background: #e7e7e7;
   }
 }
+
+/* Sign Out (under Account): same row, red label; back to the Log In / Sign Up screen. */
+.pv-row--signout {
+  width: 100%;
+  color: #c0392b;
+  font-weight: 500;
+  text-align: left;
+}

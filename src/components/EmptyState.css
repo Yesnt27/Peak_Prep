@@ -1,0 +1,27 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 30px 24px;
+  border-radius: 16px;
+  background: #fff;
+  color: var(--body-copy-gray);
+  text-align: center;
+}
+
+.empty__title {
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.empty__text {
+  font: 400 13px/1.4 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.empty .btn {
+  width: 100%;
+  margin-top: 12px;
+}

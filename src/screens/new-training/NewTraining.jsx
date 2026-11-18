@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import ShareButton from '../../components/ShareButton.jsx'
+import { getAccount, levelFor, updateAccount, useAccount } from '../../app/account.js'
 import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/FlowStep.jsx'
 import HikeCard from '../../components/HikeCard.jsx'
 import BottomSheet from '../../components/BottomSheet.jsx'
@@ -51,7 +52,14 @@ export function TargetHike() {
   // Tap the card to pick it; a hike chosen on "Hikes for your level" arrives already picked.
   const [picked, setPicked] = useState(Boolean(key))
   return (
-    <Step step={1} fill={52} back="/home/saved" next="/new-training/date" ready={picked}>
+    <Step
+      step={1}
+      fill={52}
+      back="/home/saved"
+      next="/new-training/date"
+      ready={picked}
+      onNext={() => updateAccount({ plannedHike: key ?? 'blackTusk' })}
+    >
       <div className="fs-body nt-body">
         <Intro title="Target Hike" sub="The hike you’re training for." />
         <div className="nt-target">
@@ -71,19 +79,30 @@ export function TargetHike() {
   )
 }
 
-// Hikes that suit the user's level (Hudson: Advanced, 7+ yrs), hardest first.
-const LEVEL_HIKES = ['blackTusk', 'brunswick', 'panorama', 'wedgemount']
+// Hikes that suit each level (Hudson, the demo account, is Advanced with 7+ yrs).
+const LEVEL_HIKES = {
+  Beginner: ['grouse', 'saintMark', 'wedgemount'],
+  Intermediate: ['wedgemount', 'saintMark', 'panorama'],
+  Advanced: ['blackTusk', 'brunswick', 'panorama', 'wedgemount'],
+}
 
 /** "Not sure yet?" → hikes for your level, as cards. Tapping one makes it the target hike. */
 export function LevelHikes() {
   const go = useGo()
+  const account = useAccount()
+  const isNew = account.type === 'new'
+  const level = isNew ? levelFor(account.years) : 'Advanced'
+  const years = isNew ? account.years || '0' : '7+'
   return (
     <Screen className="fs">
       <BackButton className="fs-back" onClick={() => go('/new-training', 'smart')} />
       <div className="nt-level">
-        <Intro title="Hikes for your level" sub="Picked for an advanced hiker with 7+ years of experience." />
+        <Intro
+          title="Hikes for your level"
+          sub={`Picked for ${/^[aeiou]/i.test(level) ? 'an' : 'a'} ${level.toLowerCase()} hiker with ${years} ${years === '1' ? 'year' : 'years'} of experience.`}
+        />
         <div className="nt-level__cards">
-          {LEVEL_HIKES.map((k) => (
+          {LEVEL_HIKES[level].map((k) => (
             <HikeCard key={k} {...HIKES[k]} onClick={() => go(`/new-training?hike=${k}`, 'smart')} />
           ))}
         </div>
@@ -358,6 +377,8 @@ export function Schedule() {
       nextTransition="smart"
       cta="Done"
       ready={days.length > 0 && time !== null}
+      // A new account's training page is built from the hike they picked, at 0%.
+      onNext={() => updateAccount({ training: { hike: getAccount().plannedHike ?? 'blackTusk' } })}
     >
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Your training schedule" sub="We’ll build the plan around your life." />

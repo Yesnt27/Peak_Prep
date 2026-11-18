@@ -28,9 +28,12 @@ export default function HikeCard({
   avatars = [friend1, friend2, friend3],
   plainDots = false,
   selected = false,
+  onLike,
   onClick,
 }) {
-  const [liked, setLiked] = useState(saved)
+  // With `onLike` the heart is controlled by the caller (a new account's saved hikes); otherwise it toggles on its own.
+  const [ownLiked, setOwnLiked] = useState(saved)
+  const liked = onLike ? saved : ownLiked
   // The card is a div with a button role so the heart can be its own real button inside it.
   const open = onClick
     ? {
@@ -66,7 +69,8 @@ export default function HikeCard({
             aria-label={liked ? `Unlike ${title}` : `Like ${title}`}
             onClick={(e) => {
               e.stopPropagation()
-              setLiked(!liked)
+              if (onLike) onLike()
+              else setOwnLiked(!liked)
             }}
           >
             <img src={liked ? heartFilled : heartOutline} alt="" />

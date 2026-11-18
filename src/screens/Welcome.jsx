@@ -1,5 +1,6 @@
 import useGo from '../app/useGo.js'
 import Button from '../components/Button.jsx'
+import { logIn, signUp } from '../app/account.js'
 import './Welcome.css'
 
 /** Figma "sign up/login". */
@@ -13,11 +14,24 @@ export default function Welcome() {
           <span className="welcome__title-brand">PeakPrep</span>
         </h1>
         <div className="welcome__actions">
-          <Button variant="yellow" onClick={() => go('/home/saved')}>
-            Sign In
+          {/* Log In = the demo account (Hudson Kemp); Sign Up = a new, empty account. */}
+          <Button
+            variant="yellow"
+            onClick={() => {
+              logIn()
+              go('/home/saved')
+            }}
+          >
+            Log In
           </Button>
-          <Button variant="green" onClick={() => go('/onboarding/welcome')}>
-            Create Account
+          <Button
+            variant="green"
+            onClick={() => {
+              signUp()
+              go('/onboarding/welcome')
+            }}
+          >
+            Sign Up
           </Button>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useGo from '../../app/useGo.js'
+import { getAccount, updateAccount, useAccount } from '../../app/account.js'
 import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
 import BottomSheet from '../../components/BottomSheet.jsx'
@@ -95,7 +96,14 @@ function Field({ label, children }) {
   )
 }
 
+// FieldCard row label → account field.
+const PROFILE_FIELDS = { Age: 'age', Weight: 'weight', Height: 'height', Sex: 'sex' }
+
 export function OnboardingWelcome() {
+  const account = getAccount()
+  const [values, setValues] = useState(() =>
+    Object.fromEntries(Object.entries(PROFILE_FIELDS).map(([label, key]) => [label, account[key] || undefined])),
+  )
   return (
     <Step
       step={1}
@@ -116,13 +124,24 @@ export function OnboardingWelcome() {
       <div className="onb__fields">
         <Field label="Name:">
           <div className="onb__input">
-            <TypeField tone="light" placeholder="John Smith" autoComplete="name" />
+            <TypeField
+              tone="light"
+              placeholder="John Smith"
+              autoComplete="name"
+              defaultValue={account.name}
+              onChange={(e) => updateAccount({ name: e.target.value })}
+            />
           </div>
         </Field>
         <Field label="Hiker profile:">
           <FieldCard
+            values={values}
+            onChange={(label, value) => {
+              setValues({ ...values, [label]: value })
+              updateAccount({ [PROFILE_FIELDS[label]]: value ?? '' })
+            }}
             rows={[
-              { label: 'Age', icon: pencil },
+              { label: 'Age', icon: pencil, inputMode: 'numeric' },
               { label: 'Weight', icon: pencil },
               { label: 'Height', icon: pencil },
               { label: 'Sex', options: ['Male', 'Female', 'Unspecified'], compact: true },
@@ -145,6 +164,8 @@ const CONDITIONS = [
 ]
 
 export function OnboardingExperience() {
+  const account = useAccount()
+  const isNew = account.type === 'new'
   return (
     <Step
       step={2}
@@ -154,8 +175,24 @@ export function OnboardingExperience() {
       next="/onboarding/activity"
       title={<h1 className="onb__title">Hiking Experience</h1>}
     >
+      {/* Not in Figma: added so a new account's profile can show years of experience + level. */}
+      <Field label="Years hiking:">
+        <div className="onb__input">
+          <TypeField
+            tone="light"
+            placeholder="e.g. 2"
+            inputMode="decimal"
+            defaultValue={account.years}
+            onChange={(e) => updateAccount({ years: e.target.value.trim() })}
+          />
+        </div>
+      </Field>
       <Field label="How often you hike:">
-        <TagGroup className="onb__tags" options={['Never', 'A few times a year', 'Monthly', 'Weekly']} />
+        <TagGroup
+          className="onb__tags"
+          options={['Never', 'A few times a year', 'Monthly', 'Weekly']}
+          {...(isNew ? { value: account.frequency || null, onChange: (v) => updateAccount({ frequency: v ?? '' }) } : {})}
+        />
       </Field>
       <Field label="Toughest hike:">
         <FieldCard
@@ -195,6 +232,18 @@ const WORKOUTS = [
 
 export function OnboardingActivity() {
   const [sheet, setSheet] = useState(false)
+  const [routine, setRoutine] = useState([]) // [[name, times per week], ...]
+  const [picked, setPicked] = useState([]) // names ticked in the open sheet
+  const open = () => {
+    setPicked(routine.map(([name]) => name))
+    setSheet(true)
+  }
+  const done = () => {
+    // Keep counts for workouts already in the routine; new ones start at 1.
+    setRoutine(picked.map((name) => routine.find(([n]) => n === name) ?? [name, 1]))
+    setSheet(false)
+  }
+  const setCount = (name, count) => setRoutine(routine.map((r) => (r[0] === name ? [name, count] : r)))
   return (
     <Step
       step={3}
@@ -205,10 +254,15 @@ export function OnboardingActivity() {
       next="/onboarding/health"
       title={<h1 className="onb__title">Current Activity</h1>}
       overlay={
-        <BottomSheet open={sheet} title="Workouts" onClose={() => setSheet(false)}>
+        <BottomSheet open={sheet} title="Add Workouts" onClose={() => setSheet(false)} onDone={done}>
           <div className="sheet__grid">
             {WORKOUTS.map(([name, icon]) => (
-              <WorkoutCard key={name} icon={icon}>
+              <WorkoutCard
+                key={name}
+                icon={icon}
+                selected={picked.includes(name)}
+                onChange={() => setPicked(picked.includes(name) ? picked.filter((n) => n !== name) : [...picked, name])}
+              >
                 {name}
               </WorkoutCard>
             ))}
@@ -223,18 +277,37 @@ export function OnboardingActivity() {
         />
       </Field>
       <Field label="Weekly Exercise routine:">
-        <div className="onb__chosen">
-          <div className="onb__chosen-name">
-            <img className="onb__chosen-icon" src={weightlifting} alt="" />
-            <span>Weight Lifting</span>
+        {routine.map(([name, count]) => (
+          <div className="onb__chosen" key={name}>
+            <div className="onb__chosen-name">
+              <img className="onb__chosen-icon" src={WORKOUTS.find(([n]) => n === name)[1]} alt="" />
+              <span>{name}</span>
+            </div>
+            {/* Times per week: 1–7. */}
+            <div className="onb__stepper">
+              <button
+                type="button"
+                className="onb__stepper-btn"
+                aria-label={`Fewer ${name} sessions`}
+                disabled={count <= 1}
+                onClick={() => setCount(name, count - 1)}
+              >
+                <img src={stepperMinus} alt="" />
+              </button>
+              <span aria-live="polite">{count}</span>
+              <button
+                type="button"
+                className="onb__stepper-btn"
+                aria-label={`More ${name} sessions`}
+                disabled={count >= 7}
+                onClick={() => setCount(name, count + 1)}
+              >
+                <img src={stepperPlus} alt="" />
+              </button>
+            </div>
           </div>
-          <div className="onb__stepper">
-            <img src={stepperMinus} alt="" />
-            <span>2</span>
-            <img src={stepperPlus} alt="" />
-          </div>
-        </div>
-        <AddItem onClick={() => setSheet(true)}>Add Workout</AddItem>
+        ))}
+        <AddItem onClick={open}>Add Workout</AddItem>
       </Field>
     </Step>
   )
@@ -265,20 +338,53 @@ export const HEALTH_CONDITIONS = [
 ]
 
 /** Bottom sheet with a list of selectable rows (injuries, health conditions). */
-export function ListSheet({ open, title, items, onClose }) {
+export function ListSheet({ open, title, items, onClose, picked, onPick, onDone }) {
   return (
-    <BottomSheet open={open} title={title} onClose={onClose}>
+    <BottomSheet open={open} title={title} onClose={onClose} onDone={onDone}>
       <div className="sheet__list">
         {items.map((item) => (
-          <CheckRow key={item}>{item}</CheckRow>
+          <CheckRow
+            key={item}
+            {...(picked ? { selected: picked.includes(item), onChange: () => onPick(item) } : {})}
+          >
+            {item}
+          </CheckRow>
         ))}
       </div>
     </BottomSheet>
   )
 }
 
+/** A list picked in a sheet: nothing chosen at first; ticks only count once Done is pressed. */
+function usePickList() {
+  const [chosen, setChosen] = useState([])
+  const [picked, setPicked] = useState([])
+  return {
+    chosen,
+    picked,
+    start: () => setPicked(chosen),
+    toggle: (item) => setPicked(picked.includes(item) ? picked.filter((i) => i !== item) : [...picked, item]),
+    commit: () => setChosen(picked),
+    remove: (item) => setChosen(chosen.filter((i) => i !== item)),
+  }
+}
+
+function Chosen({ items, onRemove }) {
+  return items.map((item) => (
+    <div className="onb__chosen" key={item}>
+      <span>{item}</span>
+      <button type="button" className="onb__remove-btn" aria-label={`Remove ${item}`} onClick={() => onRemove(item)}>
+        <img className="onb__remove" src={removeItem} alt="" />
+      </button>
+    </div>
+  ))
+}
+
 export function OnboardingHealth() {
   const [sheet, setSheet] = useState(null)
+  const injuries = usePickList()
+  const conditions = usePickList()
+  const close = () => setSheet(null)
   return (
     <Step
       step={4}
@@ -288,25 +394,54 @@ export function OnboardingHealth() {
       title={<h1 className="onb__title">Body &amp; Health</h1>}
       overlay={
         <>
-          <ListSheet open={sheet === 'injury'} title="Injuries" items={INJURIES} onClose={() => setSheet(null)} />
+          <ListSheet
+            open={sheet === 'injury'}
+            title="Add Injuries"
+            items={INJURIES}
+            picked={injuries.picked}
+            onPick={injuries.toggle}
+            onClose={close}
+            onDone={() => {
+              injuries.commit()
+              close()
+            }}
+          />
           <ListSheet
             open={sheet === 'health'}
-            title="Health Conditions"
+            title="Add Health Conditions"
             items={HEALTH_CONDITIONS}
-            onClose={() => setSheet(null)}
+            picked={conditions.picked}
+            onPick={conditions.toggle}
+            onClose={close}
+            onDone={() => {
+              conditions.commit()
+              close()
+            }}
           />
         </>
       }
     >
       <Field label="Injuries to plan around:">
-        <div className="onb__chosen">
-          <span>Knee Injury</span>
-          <img className="onb__remove" src={removeItem} alt="" />
-        </div>
-        <AddItem onClick={() => setSheet('injury')}>Add Injury</AddItem>
+        <Chosen items={injuries.chosen} onRemove={injuries.remove} />
+        <AddItem
+          onClick={() => {
+            injuries.start()
+            setSheet('injury')
+          }}
+        >
+          Add Injury
+        </AddItem>
       </Field>
       <Field label="Health Conditions:">
-        <AddItem onClick={() => setSheet('health')}>Add Health Conditions</AddItem>
+        <Chosen items={conditions.chosen} onRemove={conditions.remove} />
+        <AddItem
+          onClick={() => {
+            conditions.start()
+            setSheet('health')
+          }}
+        >
+          Add Health Conditions
+        </AddItem>
       </Field>
     </Step>
   )
@@ -330,7 +465,13 @@ export function OnboardingSafety() {
         ].map(([label, value]) => (
           <div className="onb__contact" key={label}>
             <p className="onb__contact-label">{label}</p>
-            <TypeField tone="light" className="onb__contact-value" placeholder={value} inputMode={label === 'PHONE NUMBER' ? 'tel' : undefined} />
+            <TypeField
+              tone="light"
+              className="onb__contact-value"
+              defaultValue={value}
+              inputMode={label === 'PHONE NUMBER' ? 'tel' : undefined}
+              aria-label={label}
+            />
           </div>
         ))}
         <AddItem>Add Emergency Contact</AddItem>

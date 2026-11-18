@@ -5,7 +5,7 @@ import addItemIcon from '../assets/icons/add-item.svg'
 import dropdownArrow from '../assets/icons/dropdown-arrow.png'
 import checkDefault from '../assets/icons/check-default.svg'
 import checkHover from '../assets/icons/check-hover.svg'
-import checkSelected from '../assets/icons/check-selected.svg'
+import checkGreen from '../assets/icons/check-green.svg'
 import './controls.css'
 
 /**
@@ -101,8 +101,10 @@ export function ToggleSwitch({ label }) {
 }
 
 /** Figma "content + checkmark": default / hover / selected row. */
-export function CheckRow({ children }) {
-  const [selected, setSelected] = useState(false)
+export function CheckRow({ children, selected: value, onChange }) {
+  const [inner, setInner] = useState(false)
+  const selected = value !== undefined ? value : inner
+  const setSelected = onChange ?? setInner
   return (
     <button
       type="button"
@@ -113,7 +115,7 @@ export function CheckRow({ children }) {
       <span className="check-row__box">
         <img className="check-row__img check-row__img--default" src={checkDefault} alt="" />
         <img className="check-row__img check-row__img--hover" src={checkHover} alt="" />
-        <img className="check-row__img check-row__img--selected" src={checkSelected} alt="" />
+        <img className="check-row__img check-row__img--selected" src={checkGreen} alt="" />
       </span>
       <span className="check-row__label">{children}</span>
     </button>
@@ -121,8 +123,10 @@ export function CheckRow({ children }) {
 }
 
 /** Figma "workout card states": default / hover / selected card. */
-export function WorkoutCard({ icon, children }) {
-  const [selected, setSelected] = useState(false)
+export function WorkoutCard({ icon, children, selected: value, onChange }) {
+  const [inner, setInner] = useState(false)
+  const selected = value !== undefined ? value : inner
+  const setSelected = onChange ?? setInner
   return (
     <button
       type="button"
@@ -141,8 +145,16 @@ export function WorkoutCard({ icon, children }) {
  * hairlines. Rows with `options` open a tag list below them (one row open at
  * a time); rows with `icon` just show that icon next to the placeholder.
  */
-export function FieldCard({ rows, className = '' }) {
+/** `values` / `onChange(label, value)` are optional: they let a form keep what was typed or picked. */
+export function FieldCard({ rows, className = '', values, onChange }) {
   const [open, setOpen] = useState(null)
+  // Picked options always show in the row (instead of "input"); the caller can also keep them.
+  const [own, setOwn] = useState({})
+  const vals = values ?? own
+  const change = (label, value) => {
+    if (!values) setOwn({ ...own, [label]: value })
+    onChange?.(label, value)
+  }
   return (
     <div className={`field-card ${className}`}>
       {rows.map((row) => {
@@ -153,9 +165,21 @@ export function FieldCard({ rows, className = '' }) {
             <span className="field-card__label">{row.label}</span>
             <span className={expandable ? 'field-card__value field-card__value--dropdown' : 'field-card__value'}>
               {expandable ? (
-                <span className="field-card__placeholder">input</span>
+                vals[row.label] ? (
+                  <span className="field-card__picked">{vals[row.label]}</span>
+                ) : (
+                  <span className="field-card__placeholder">input</span>
+                )
               ) : (
-                <TypeField tone="light" className="field-card__input" placeholder="input" aria-label={row.label} />
+                <TypeField
+                  tone="light"
+                  className="field-card__input"
+                  placeholder="input"
+                  aria-label={row.label}
+                  inputMode={row.inputMode}
+                  defaultValue={vals[row.label]}
+                  onChange={onChange ? (e) => onChange(row.label, e.target.value) : undefined}
+                />
               )}
               {expandable ? (
                 <img
@@ -186,7 +210,13 @@ export function FieldCard({ rows, className = '' }) {
             {expandable && (
               <div className={isOpen ? 'field-card__panel field-card__panel--open' : 'field-card__panel'}>
                 <div className="field-card__panel-inner">
-                  <TagGroup options={row.options} compact={row.compact} className="field-card__tags" />
+                  <TagGroup
+                    options={row.options}
+                    compact={row.compact}
+                    className="field-card__tags"
+                    value={vals[row.label] ?? null}
+                    onChange={(v) => change(row.label, v)}
+                  />
                 </div>
               </div>
             )}

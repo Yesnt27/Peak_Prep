@@ -183,7 +183,7 @@
   align-items: center;
   gap: 12px;
   width: 356px;
-  height: 50px;
+  height: 57.12px;
   padding: 0 20px;
   border-radius: 12px;
   background: #fff;
@@ -194,8 +194,26 @@
   transition: background-color 300ms var(--ease-out);
 }
 
+/* Same selection pattern as the option rows / tags: hover light grey, selected light green + semibold. */
+.check-row__img--hover {
+  display: none; /* the yellow hover circle; hover is the grey row now */
+}
+
 .check-row--selected {
-  background: var(--yellow-1);
+  background: #d4e6b8;
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .check-row:not(.check-row--selected):hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .check-row:not(.check-row--selected):active {
+    background: #e7e7e7;
+  }
 }
 
 .check-row__box {
@@ -331,6 +349,13 @@
 
 .field-card__placeholder {
   color: #cfcfcf;
+}
+
+/* The option picked in an expanding row, shown where "input" was. */
+.field-card__picked {
+  color: var(--body-copy-gray);
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .field-card__edit {

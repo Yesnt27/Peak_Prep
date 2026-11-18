@@ -24,6 +24,7 @@ export function Step({
   overlay,
   pinned = true,
   ready = true,
+  onNext,
   children,
 }) {
   const go = useGo()
@@ -31,7 +32,10 @@ export function Step({
     <Button
       className={pinned ? 'fs-cta' : 'fs-cta fs-cta--inline'}
       disabled={!ready}
-      onClick={() => go(next, nextTransition)}
+      onClick={() => {
+        onNext?.()
+        go(next, nextTransition)
+      }}
     >
       {cta}
     </Button>

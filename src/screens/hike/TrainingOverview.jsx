@@ -5,6 +5,8 @@ import NavBar from '../../components/NavBar.jsx'
 import ListItem from '../../components/ListItem.jsx'
 import { Fragment, useState } from 'react'
 import { LESSONS, completedLessons } from '../../app/progress.js'
+import { useAccount } from '../../app/account.js'
+import { HIKES } from '../../data/hikes.js'
 import { Chip, HikeHero, KeyStats, SectionHeader } from './parts.jsx'
 import ringTrack from '../../assets/training/ring-track.svg'
 import ringFill from '../../assets/training/ring-fill.svg'
@@ -47,21 +49,35 @@ function BagStat({ title, value, unit, note, remaining, fill }) {
 
 /** Figma "Training overview (hi-fi)" 1780:3125. */
 /** Readiness ring + prep rows (Training overview and Training Schedule). */
+/** A new account's training: the hike they picked, with nothing done yet. */
+function useFreshTraining() {
+  const account = useAccount()
+  return account.type === 'new' ? HIKES[account.training?.hike ?? account.plannedHike ?? 'blackTusk'] : null
+}
+
 export function PrepStatus() {
+  const fresh = useFreshTraining()
+  const rows = fresh
+    ? [
+        ['Prep status', 'Just started'],
+        ['Training completed', '0 of 6 weeks'],
+        ['Elevation goal', `0 / ${fresh.stats[1][0]} m`],
+      ]
+    : [
+        ['Prep status', 'On optimal track'],
+        ['Training completed', '3 of 6 weeks'],
+        ['Elevation goal', '3,389 / 4,120 m'],
+      ]
   return (
     <div className="to-prep">
       <div className="to-ring">
         <img src={ringTrack} alt="" />
-        <img src={ringFill} alt="" />
-        <p className="to-ring__value">82%</p>
+        {!fresh && <img src={ringFill} alt="" />}
+        <p className="to-ring__value">{fresh ? '0%' : '82%'}</p>
         <p className="to-ring__label">ready</p>
       </div>
       <div className="to-prep__rows">
-        {[
-          ['Prep status', 'On optimal track'],
-          ['Training completed', '3 of 6 weeks'],
-          ['Elevation goal', '3,389 / 4,120 m'],
-        ].map(([label, value]) => (
+        {rows.map(([label, value]) => (
           <div className="to-prep__row" key={label}>
             <p className="to-prep__label">{label}</p>
             <p className="to-prep__value">{value}</p>
@@ -74,6 +90,7 @@ export function PrepStatus() {
 
 /** Week strip: the green pill starts on today (28) and moves to the tapped day. */
 export function WeekStrip() {
+  const fresh = useFreshTraining()
   const [day, setDay] = useState('28')
   return (
     <div className="to-week">
@@ -88,7 +105,7 @@ export function WeekStrip() {
           <p className="to-day__weekday">{weekday}</p>
           <p className="to-day__date">{date}</p>
           <span className="to-day__dot">
-            {dot && <img src={date === day ? dotToday : dotDone} alt="" />}
+            {dot && !(fresh && dot === 'done') && <img src={date === day ? dotToday : dotDone} alt="" />}
           </span>
         </button>
       ))}
@@ -100,25 +117,38 @@ export default function TrainingOverview() {
   const go = useGo()
   const done = completedLessons()
   const upNext = LESSONS.find(([name]) => !done.includes(name))
+  const fresh = useFreshTraining()
+  // Difficulty chip from the card tag, e.g. "HARD • ALPINE" → "Hard".
+  const level = fresh ? fresh.tag.split(' • ')[0].toLowerCase().replace(/^./, (c) => c.toUpperCase()) : 'Hard'
   return (
     <Screen className="to" fixed={<NavBar />}>
       <HikeHero
+        hike={fresh ?? undefined}
+        friends={!fresh}
         onBack={() => go('/home/training')}
         chips={
           <>
-            <Chip tone="yellow-1">Hard</Chip>
-            <Chip>Sat, Dec 12</Chip>
+            <Chip tone="yellow-1">{level}</Chip>
+            {!fresh && <Chip>Sat, Dec 12</Chip>}
           </>
         }
       />
 
       <div className="to-content">
         <KeyStats
-          stats={[
-            ['1,539', 'm', 'in elevation'],
-            ['14.3', 'km', 'in distance'],
-            ['7–9', 'hrs', 'est. time'],
-          ]}
+          stats={
+            fresh
+              ? [
+                  [fresh.stats[1][0], 'm', 'in elevation'],
+                  [fresh.stats[0][0], 'km', 'in distance'],
+                  [fresh.stats[2][0], fresh.stats[2][1] === 'DAYS' ? 'days' : 'hrs', 'est. time'],
+                ]
+              : [
+                  ['1,539', 'm', 'in elevation'],
+                  ['14.3', 'km', 'in distance'],
+                  ['7–9', 'hrs', 'est. time'],
+                ]
+          }
         />
 
         <PrepStatus />
@@ -135,7 +165,7 @@ export default function TrainingOverview() {
             </div>
           </SectionHeader>
           <WeekStrip />
-          <p className="to-daily">Daily training · 2 of 3 done</p>
+          <p className="to-daily">Daily training · {fresh ? 0 : 2} of 3 done</p>
           <ListItem label="Stair Climber · lv.6" meta="40 min" />
           <ListItem label="Weighted Walk · 15kg" meta="20 min" />
           <ListItem label="Endurance" meta="20 min" />
@@ -146,11 +176,20 @@ export default function TrainingOverview() {
 
         <section className="to-section">
           <SectionHeader icon={bagIcon} title="Bag check" sub="Osprey Talon 33L">
-            <Chip tone="yellow-3">10.2 / 12 kg</Chip>
+            <Chip tone="yellow-3">{fresh ? '0 / 12 kg' : '10.2 / 12 kg'}</Chip>
           </SectionHeader>
           <div className="to-bag">
-            <BagStat title="Packed" value="8" unit="of 11" note="3 left to pack" remaining={21} fill={101} />
-            <BagStat title="Weight" value="7.8" unit="kg" note="85% of 12 kg limit" remaining={21} />
+            {fresh ? (
+              <>
+                <BagStat title="Packed" value="0" unit="of 11" note="11 left to pack" remaining="100%" />
+                <BagStat title="Weight" value="0" unit="kg" note="0% of 12 kg limit" remaining="100%" />
+              </>
+            ) : (
+              <>
+                <BagStat title="Packed" value="8" unit="of 11" note="3 left to pack" remaining={21} fill={101} />
+                <BagStat title="Weight" value="7.8" unit="kg" note="85% of 12 kg limit" remaining={21} />
+              </>
+            )}
           </div>
           <Button className="to-btn" onClick={() => go('/packing/all')}>
             Packing List

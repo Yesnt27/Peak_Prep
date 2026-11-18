@@ -3,6 +3,9 @@ import eli from '../assets/friends/eli.jpg'
 import sam from '../assets/friends/sam.jpg'
 import owen from '../assets/friends/owen.jpg'
 import natalia from '../assets/friends/natalia.jpg'
+import joanna from '../assets/friends/joanna.jpg'
+import joanne from '../assets/friends/joanne.jpg'
+import john from '../assets/friends/john.jpg'
 
 /**
  * Friend list (Figma "Friendlist" 1646:13323) and each friend's profile
@@ -92,4 +95,53 @@ export const FRIENDS = [
   },
 ]
 
-export const friendById = (id) => FRIENDS.find((f) => f.id === id)
+/** People on "Add friends" (Figma 2136:3603), not yet friends with the demo account. `since` = Figma subtitle. */
+export const OTHERS = [
+  {
+    id: 'joanna-brown',
+    photo: joanna,
+    name: 'Joanna Brown',
+    since: '>3 years of experience',
+    friends: 16,
+    years: 3,
+    level: 'Intermediate',
+    hikes: 12,
+    progress: 0.45,
+    activities: [
+      ['wedgemount', 'Sep 6, 2026', 'With Joanne', true],
+      ['grouse', 'Jul 12, 2026', 'With John', false],
+    ],
+  },
+  {
+    id: 'joanne-blue',
+    photo: joanne,
+    name: 'Joanne Blue',
+    since: '>5 years experience',
+    friends: 27,
+    years: 5,
+    level: 'Advanced',
+    hikes: 38,
+    progress: 0.85,
+    activities: [
+      ['panorama', 'Aug 23, 2026', 'With Joanna', true],
+      ['blackTusk', 'Jul 30, 2026', 'With Owen', true],
+    ],
+  },
+  {
+    id: 'john-bo',
+    photo: john,
+    name: 'John Bo',
+    since: '<1 year experience',
+    friends: 4,
+    years: 0,
+    level: 'Beginner',
+    hikes: 2,
+    progress: 0.1,
+    activities: [['grouse', 'Oct 11, 2026', 'With Joanna', true]],
+  },
+]
+
+/** Everyone a new account can find and add. */
+export const PEOPLE = [...FRIENDS, ...OTHERS]
+
+export const friendById = (id) => PEOPLE.find((f) => f.id === id)

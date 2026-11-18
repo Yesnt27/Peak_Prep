@@ -8,6 +8,8 @@ import chevron from '../../assets/profile/chevron.svg'
 import chevRightGreen from '../../assets/icons/chev-right-green.svg'
 import { FRIENDS } from '../../data/friends.js'
 import { ProfileView } from './FriendProfile.jsx'
+import EmptyState from '../../components/EmptyState.jsx'
+import { levelFor, readPhoto, signOut, updateAccount, useAccount } from '../../app/account.js'
 import './Profile.css'
 
 // Hudson's completed hikes (Figma "Completed Hikes": Recent + Favourited), newest first.
@@ -20,17 +22,22 @@ const COMPLETED = [
 /** Profile tab: the friend-profile layout for the user, with Health Stats + Settings. */
 export default function Profile() {
   const go = useGo()
+  const account = useAccount()
+  const isNew = account.type === 'new'
+  const years = isNew ? account.years || '0' : '7+'
   return (
     <ProfileView
-      photo={hudson}
-      name="Hudson Kemp"
+      // Log In = Hudson Kemp (the designed profile); Sign Up = what the new account entered.
+      photo={isNew ? account.photo : hudson}
+      name={isNew ? account.name.trim() || 'New hiker' : 'Hudson Kemp'}
+      onPhoto={isNew ? async (file) => updateAccount({ photo: await readPhoto(file) }) : undefined}
       stats={[
-        { value: FRIENDS.length, label: 'Friends', onClick: () => go('/profile/friends', 'smart') },
-        { value: '7+', label: 'Years Exp.' },
+        { value: isNew ? (account.friends ?? []).length : FRIENDS.length, label: 'Friends', onClick: () => go('/profile/friends', 'smart') },
+        { value: years, label: years === '1' ? 'Year Exp.' : 'Years Exp.' },
       ]}
-      level="Advanced"
-      hikes={COMPLETED.length}
-      progress={0.6}
+      level={isNew ? levelFor(account.years) : 'Advanced'}
+      hikes={isNew ? 0 : COMPLETED.length}
+      progress={isNew ? 0 : 0.6}
       actions={
         // Figma "profile card" style (profile.png): icon + label, hover light grey.
         <div className="pr-cards">
@@ -47,13 +54,16 @@ export default function Profile() {
       section={
         <>
           <h2 className="fp-section__title">Completed Hikes</h2>
-          <button type="button" className="fp-link" onClick={() => go('/profile/completed', 'smart')}>
-            <span>See all</span>
-            <img src={chevRightGreen} alt="" />
-          </button>
+          {!isNew && (
+            <button type="button" className="fp-link" onClick={() => go('/profile/completed', 'smart')}>
+              <span>See all</span>
+              <img src={chevRightGreen} alt="" />
+            </button>
+          )}
         </>
       }
-      activities={COMPLETED}
+      activities={isNew ? [] : COMPLETED}
+      empty={<EmptyState title="No completed hikes yet" text="Hikes you finish will show up here." />}
     />
   )
 }
@@ -82,6 +92,18 @@ export function Settings() {
                     <img src={chevron} alt="" />
                   </div>
                 ))}
+                {section === 'Account' && (
+                  <button
+                    type="button"
+                    className="pv-row pv-row--signout"
+                    onClick={() => {
+                      signOut()
+                      go('/welcome', 'smart')
+                    }}
+                  >
+                    <span>Sign Out</span>
+                  </button>
+                )}
               </div>
             </div>
           ))}

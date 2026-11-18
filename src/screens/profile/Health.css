@@ -350,3 +350,9 @@
     background: #e7e7e7;
   }
 }
+
+/* Empty value on a new account: tap to add. */
+.hi-row__add {
+  color: #9a9a9a;
+  font: 500 15px/1.3 var(--font-poppins);
+}

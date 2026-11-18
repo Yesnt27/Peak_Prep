@@ -307,3 +307,27 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - New training steps pass `pinned={false}` to `FlowStep`'s `Step`: Continue / Done sits at the end of the page (pushed to the screen bottom on short pages, after the content on long ones), not fixed. Hiker Log keeps the pinned button.
 - Each step's button is greyed out (`ready={false}` → disabled `.btn`) until an answer is picked: Target Hike = tap the hike card (green ring; a hike picked on "Hikes for your level" arrives already picked); Hike Date = a month; Trip Type / Who's coming / Goal = an option; Schedule = at least one day and a time per session.
 - `TagGroup`, `ToggleTag` and `HikeCard` (`selected`) can now be controlled.
+
+### Round 10 — Log In vs Sign Up accounts (from Olivia, 2026-11-18)
+
+- **Accounts** (`src/app/account.js`, sessionStorage, `useAccount()` hook): Welcome now says **Log In** (→ demo account: Hudson Kemp, every screen as designed) and **Sign Up** (→ a new, empty account, then the 5 sign-up steps). A new tab starts on the demo account.
+- **Sign-up steps save into the account:** name, age, weight, height, sex (`FieldCard` now takes `values` / `onChange`), **Years hiking** (new field on Hiking Experience, not in Figma) and how often they hike.
+- **Level** = `levelFor(years)`: < 2 Beginner, < 5 Intermediate, else Advanced.
+- **New account screens:**
+  - Profile: their name, 0 friends, their years, level, 0 hikes, empty "Completed Hikes" (no "See all"). Photo starts as their initial; tapping it opens the phone's photo picker (`<input type="file" accept="image/*">`), the image is downscaled (`readPhoto`) and kept in the account. Home's avatar uses it too.
+  - Friend List: "No friends yet" + Add friends.
+  - Health Stats: rows show what they entered ("Add"/"Choose" when empty) and edits save back; steps / monthly charts replaced by "No activity yet"; Heart Rate / Sleep show "--".
+  - Home: no hikes liked. Explore hearts save into the account; Saved lists them ("No saved hikes yet" + Explore hikes when empty). Training tab: "No training yet" + **Start training journey** → `/new-training`.
+  - Finishing New training saves `training: { hike }`; Home → Training then shows that hike at 0%, and `/training` shows it at 0%: its photo/name/stats, empty readiness ring, no done days, 0 of 3 daily, 0 packed, lessons 0 of 4 (lesson progress is per account).
+  - "Hikes for your level" uses their level (Beginner: Grouse Grind, Saint Mark, Wedgemount; Intermediate: Wedgemount, Saint Mark, Panorama; Advanced: as before).
+- Shared pieces: `components/Avatar.jsx`, `components/EmptyState.jsx`; `HikeCard` takes `onLike` (controlled heart); `FlowStep` `Step` takes `onNext`.
+- **Sign Out** (Settings → Account, red row) resets to the demo account state and goes to `/welcome` (Log In / Sign Up).
+- **Sign-up option tags** (`.onb .tag`) use the New training tile shape (12px radius, same padding); the small tags inside expanding rows keep 8×16px padding.
+
+### Round 11 — sign-up lists, steppers, contact text, adding friends (from Olivia, 2026-11-18)
+
+- **Body & Health:** nothing pre-selected (Figma's "Knee Injury" row removed). Sheets are titled "Add Injuries" / "Add Health Conditions"; ticks only count after Done (closing discards), chosen items appear as rows above the Add button and × removes them.
+- **Tick rows (`CheckRow`)** match the app's selection pattern: 356 × 57px, 12px radius, white → hover `#e7e7e7` → selected `#d4e6b8` + semibold with the green tick (yellow hover/selected icons dropped).
+- **Current Activity:** "Weekly Exercise routine" starts empty; workouts ticked in the "Add Workouts" sheet are added on Done, each with a working −/+ (times per week, 1–7).
+- **Safety Setup:** contact fields start with the Figma values (Sarah Lee, +1, Friend) as real text in body grey `#414141`.
+- **Friends (new account):** "add friends" / the search bar open a working search over everyone (`PEOPLE` = the 5 friends + Joanna Brown, Joanne Blue, John Bo, who now have profiles). "Add" adds them (chip reads "Added"), the rest of the row opens their profile, whose button shows "+ Add friend" / "− Unfriend" from the account; back returns to where it was opened. Friend List and the Profile friend count use `account.friends`.

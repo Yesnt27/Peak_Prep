@@ -7,6 +7,10 @@ import NavBar from '../../components/NavBar.jsx'
 import HikeCard from '../../components/HikeCard.jsx'
 import Dropdown from '../../components/Dropdown.jsx'
 import ListItem from '../../components/ListItem.jsx'
+import Avatar from '../../components/Avatar.jsx'
+import Button from '../../components/Button.jsx'
+import EmptyState from '../../components/EmptyState.jsx'
+import { toggleLike, useAccount } from '../../app/account.js'
 import SegmentedTabs from '../../components/SegmentedTabs.jsx'
 import avatar from '../../assets/home/avatar.png'
 import searchIcon from '../../assets/icons/search.svg'
@@ -46,7 +50,21 @@ function CardList({ go, cards, sort }) {
   ))
 }
 
-function Saved({ go, sort }) {
+/** A new account: hearts save into the account; Saved lists only what they liked. */
+function likeProps(account, hike) {
+  return { saved: account.liked.includes(hike), onLike: () => toggleLike(hike) }
+}
+
+function Saved({ go, sort, account, onExplore }) {
+  if (account.type === 'new') {
+    if (!account.liked.length)
+      return (
+        <EmptyState title="No saved hikes yet" text="Tap the heart on a hike to save it here.">
+          <Button onClick={onExplore}>Explore hikes</Button>
+        </EmptyState>
+      )
+    return <CardList go={go} sort={sort} cards={account.liked.map((hike) => ({ hike, ...likeProps(account, hike) }))} />
+  }
   const cards = [
     { hike: 'panorama', saved: true, friends: true },
     { hike: 'blackTusk', saved: true },
@@ -55,13 +73,14 @@ function Saved({ go, sort }) {
   return <CardList go={go} cards={cards} sort={sort} />
 }
 
-function Explore({ go, sort }) {
+function Explore({ go, sort, account }) {
+  const isNew = account.type === 'new'
   const cards = [
     { hike: 'blackTusk' },
-    { hike: 'brunswick', friends: true },
+    { hike: 'brunswick', friends: !isNew },
     { hike: 'wedgemount' },
-    { hike: 'panorama', friends: true },
-  ]
+    { hike: 'panorama', friends: !isNew },
+  ].map((c) => (isNew ? { ...c, ...likeProps(account, c.hike) } : c))
   return <CardList go={go} cards={cards} sort={sort} />
 }
 
@@ -79,7 +98,24 @@ function SortMenu({ sort, onChange }) {
   )
 }
 
-function Training({ go }) {
+function Training({ go, account }) {
+  if (account.type === 'new') {
+    if (!account.training)
+      return (
+        <EmptyState title="No training yet" text="Pick a hike and we’ll build a training plan around it.">
+          <Button onClick={() => go('/new-training')}>Start training journey</Button>
+        </EmptyState>
+      )
+    const key = account.training.hike
+    return (
+      <HikeCard
+        {...HIKES[key]}
+        {...likeProps(account, key)}
+        progress={{ text: '0% completed · just started', remaining: '100%' }}
+        onClick={() => go('/training')}
+      />
+    )
+  }
   return (
     <>
       <section className="today">
@@ -136,6 +172,7 @@ export default function Home() {
   }, [selected, active, go])
 
   const Content = CONTENT[active]
+  const account = useAccount()
 
   return (
     <Screen className="home" fixed={<NavBar />}>
@@ -146,7 +183,7 @@ export default function Home() {
             <h1 className="home__title">Where to next?</h1>
           </div>
           <button type="button" className="home__avatar" aria-label="Profile" onClick={() => go('/profile', 'smart')}>
-            <img src={avatar} alt="" />
+            {account.type === 'new' ? <Avatar src={account.photo} name={account.name} size={38} /> : <img src={avatar} alt="" />}
           </button>
         </header>
         <SegmentedTabs tabs={TABS} value={selected} onChange={setSelected} />
@@ -157,7 +194,7 @@ export default function Home() {
           </div>
           <SortMenu sort={sort} onChange={setSort} />
         </div>
-        <Content go={go} sort={sort} />
+        <Content go={go} sort={sort} account={account} onExplore={() => setSelected('explore')} />
       </div>
     </Screen>
   )

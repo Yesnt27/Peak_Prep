@@ -3,6 +3,8 @@ import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import Dropdown from '../../components/Dropdown.jsx'
 import { BackButton } from '../../components/controls.jsx'
+import EmptyState from '../../components/EmptyState.jsx'
+import { updateAccount, useAccount } from '../../app/account.js'
 import dashLine from '../../assets/profile/dash-line.svg'
 import activityLegend from '../../assets/profile/activity-legend.svg'
 import activityChart from '../../assets/profile/activity-chart.svg'
@@ -28,11 +30,13 @@ const FIELDS = [
 ]
 
 /** A row whose value turns into a text field when tapped (pencil cue), saved on Enter or tapping away. */
-function EditRow({ label, initial, inputMode }) {
+function EditRow({ label, initial, inputMode, onSave }) {
   const [value, setValue] = useState(initial)
   const [editing, setEditing] = useState(false)
   const done = (v) => {
-    setValue(v.trim() || value)
+    const next = v.trim() || value
+    setValue(next)
+    onSave?.(next)
     setEditing(false)
   }
   return (
@@ -55,7 +59,7 @@ function EditRow({ label, initial, inputMode }) {
         />
       ) : (
         <button type="button" className="hi-row__value" aria-label={`Edit ${label}: ${value}`} onClick={() => setEditing(true)}>
-          <b>{value}</b>
+          {value ? <b>{value}</b> : <span className="hi-row__add">Add</span>}
           <img className="hi-pencil" src={pencil} alt="" />
         </button>
       )}
@@ -64,9 +68,16 @@ function EditRow({ label, initial, inputMode }) {
 }
 
 /** Figma "Health info" 1646:13208, laid out as the "Health info.png" reference: edit in place. */
+// Sign-up "Sex" options → this dropdown's options.
+const SEX_TO_GENDER = { Male: 'Male', Female: 'Female', Unspecified: 'Prefer not to say' }
+// Health row → account field (new accounts).
+const FIELD_KEYS = { Age: 'age', Weight: 'weight', Height: 'height' }
+
 export function HealthInfo() {
   const go = useGo()
-  const [gender, setGender] = useState('Female')
+  const account = useAccount()
+  const isNew = account.type === 'new'
+  const [gender, setGender] = useState(isNew ? SEX_TO_GENDER[account.sex] ?? null : 'Female')
   return (
     <Screen className="hi">
       <div className="hi-content">
@@ -80,17 +91,28 @@ export function HealthInfo() {
               <Dropdown options={GENDERS} value={gender} onChange={setGender} label="Gender" triggerClassName="hi-row__value">
                 {(open) => (
                   <>
-                    <b>{gender}</b>
+                    {gender ? <b>{gender}</b> : <span className="hi-row__add">Choose</span>}
                     <img className={open ? 'hi-chevron dd-arrow dd-arrow--open' : 'hi-chevron dd-arrow'} src={chevron} alt="" />
                   </>
                 )}
               </Dropdown>
             </div>
             {FIELDS.map(([label, value, mode]) => (
-              <EditRow key={label} label={label} initial={value} inputMode={mode} />
+              <EditRow
+                key={label}
+                label={label}
+                initial={isNew ? account[FIELD_KEYS[label]] : value}
+                inputMode={mode}
+                onSave={isNew ? (v) => updateAccount({ [FIELD_KEYS[label]]: v }) : undefined}
+              />
             ))}
           </div>
 
+          {isNew ? (
+            // New account: no tracked activity yet.
+            <EmptyState title="No activity yet" text="Your steps and monthly activity will show here once you start training." />
+          ) : (
+            <>
           <div className="hi-card hi-steps">
             <div className="hi-steps__head">
               <p className="hi-muted-light">TOTAL</p>
@@ -137,6 +159,9 @@ export function HealthInfo() {
             </div>
           </div>
 
+            </>
+          )}
+
           <div className="hi-grid">
             {TILES.map(([label, mask, parts, dot]) => (
               <div className="hi-tile" key={label}>
@@ -146,7 +171,7 @@ export function HealthInfo() {
                     {label}
                   </p>
                   <p className="hi-tile__value">
-                    {parts.map(([text, bold], i) => (
+                    {(isNew ? [['--', true]] : parts).map(([text, bold], i) => (
                       <span key={i} className={bold ? 'hi-tile__bold' : undefined}>
                         {text}
                       </span>

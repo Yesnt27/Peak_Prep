@@ -188,7 +188,7 @@
 }
 
 .onb__contact-value {
-  color: #cfcfcf;
+  color: var(--body-copy-gray);
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
 }
@@ -205,4 +205,46 @@
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
   white-space: nowrap;
+}
+
+/* Sign-up option tags: same rounded tiles as New training (months, days, time per session). */
+.onb .tag {
+  height: auto;
+  min-height: 37px;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  line-height: 1.68;
+}
+
+/* The smaller tags inside the expanding Hiker profile / Toughest hike rows keep a lighter padding. */
+.onb .field-card__tags .tag {
+  padding: 8px 16px;
+}
+
+/* Working −/+ (times per week) and × (remove) buttons. */
+.onb__stepper-btn,
+.onb__remove-btn {
+  display: flex;
+  margin: -8px;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.onb__stepper-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .onb__stepper-btn:not(:disabled):hover,
+  .onb__remove-btn:hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .onb__stepper-btn:not(:disabled):active,
+  .onb__remove-btn:active {
+    background: #e7e7e7;
+  }
 }

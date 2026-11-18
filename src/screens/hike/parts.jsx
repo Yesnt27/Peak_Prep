@@ -31,11 +31,14 @@ export function SectionHeader({ icon, title, sub, children }) {
   )
 }
 
-/** `onBack` is omitted where the prototype gives the back button no link. */
-export function HikeHero({ chips, onBack }) {
+/**
+ * `onBack` is omitted where the prototype gives the back button no link.
+ * `hike` (data/hikes.js shape) swaps the Brunswick photo, name and place, e.g. a new account's own training.
+ */
+export function HikeHero({ chips, onBack, hike, friends = true }) {
   return (
     <header className="hk-hero">
-      <img className="hk-hero__img" src={hero} alt="" />
+      <img className="hk-hero__img" src={hike?.image ?? hero} alt="" />
       <div className="hk-hero__scrim" />
       <div className="hk-hero__top">
         <BackButton onClick={onBack} />
@@ -43,11 +46,12 @@ export function HikeHero({ chips, onBack }) {
       </div>
       <div className="hk-hero__title">
         <div className="hk-hero__chips">{chips}</div>
-        <h1 className="hk-hero__name">Brunswick Mountain Trail</h1>
+        <h1 className="hk-hero__name">{hike?.title ?? 'Brunswick Mountain Trail'}</h1>
         <p className="hk-hero__loc">
           <img src={pinIcon} alt="" />
-          Lions Bay, British Columbia, Canada
+          {hike?.location ?? 'Lions Bay, British Columbia, Canada'}
         </p>
+        {friends && (
         <div className="hk-hero__friends">
           <div className="hk-hero__avatars">
             <img src={friend1} alt="" />
@@ -56,6 +60,7 @@ export function HikeHero({ chips, onBack }) {
           </div>
           <p>Siena &amp; 3 friends training</p>
         </div>
+        )}
       </div>
     </header>
   )

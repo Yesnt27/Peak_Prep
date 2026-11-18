@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useParams } from 'react-router-dom'
+import { toggleFriend, useAccount } from '../../app/account.js'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import NavBar from '../../components/NavBar.jsx'
 import HikeCard from '../../components/HikeCard.jsx'
+import Avatar from '../../components/Avatar.jsx'
+import EmptyState from '../../components/EmptyState.jsx'
 import { BackButton } from '../../components/controls.jsx'
 import { HIKES } from '../../data/hikes.js'
 import { friendById } from '../../data/friends.js'
@@ -19,14 +22,48 @@ const WITH = [hudson, friendA, friendB]
  * user's own Profile tab. `stats`: [{ value, label, onClick? }];
  * `activities`: [hike key, date, with-text, liked]; `actions` sits under the header.
  */
-export function ProfileView({ photo, name, stats, level, hikes, progress, actions, section, activities, onBack }) {
+export function ProfileView({
+  photo,
+  name,
+  stats,
+  level,
+  hikes,
+  progress,
+  actions,
+  section,
+  activities,
+  empty,
+  onBack,
+  onPhoto,
+}) {
   return (
     <Screen className="fp" fixed={<NavBar />}>
       <div className="fp-page">
         {onBack && <BackButton className="fp-back" onClick={onBack} />}
 
         <header className="fp-head">
-          <img className="fp-photo" src={photo} alt="" />
+          {onPhoto ? (
+            // Tapping the photo opens the phone's photo picker (Photo Library / Take Photo / Choose File).
+            <label className="fp-photo-pick">
+              <Avatar className="fp-photo" src={photo} name={name} size={122} />
+              <span className="fp-photo-pick__badge" aria-hidden="true">
+                +
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                className="fp-photo-pick__input"
+                aria-label={photo ? 'Change profile photo' : 'Add profile photo'}
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) onPhoto(file)
+                  e.target.value = ''
+                }}
+              />
+            </label>
+          ) : (
+            <img className="fp-photo" src={photo} alt="" />
+          )}
           <div className="fp-info">
             <h1 className="fp-name">{name}</h1>
             <div className="fp-stats">
@@ -63,6 +100,7 @@ export function ProfileView({ photo, name, stats, level, hikes, progress, action
 
         <div className="fp-section">{section}</div>
         <div className="fp-cards">
+          {activities.length === 0 && empty}
           {activities.map(([key, date, withText, liked]) => (
             <HikeCard
               key={key + date}
@@ -84,12 +122,18 @@ export function ProfileView({ photo, name, stats, level, hikes, progress, action
 export default function FriendProfile() {
   const go = useGo()
   const friend = friendById(useParams().id)
-  const [added, setAdded] = useState(false)
+  const location = useLocation()
+  const account = useAccount()
+  const isNew = account.type === 'new'
+  const [ownAdded, setOwnAdded] = useState(false)
+  // New account: "Add friend" really adds them (Friend List + friend count); demo: a local toggle.
+  const added = isNew ? (account.friends ?? []).includes(friend?.id) : ownAdded
+  const toggle = () => (isNew ? toggleFriend(friend.id) : setOwnAdded(!ownAdded))
   if (!friend) return <Navigate to="/profile/friends" replace />
   return (
     <ProfileView
       {...friend}
-      onBack={() => go('/profile/friends', 'smart')}
+      onBack={() => go(location.state?.from ?? '/profile/friends', 'smart')}
       stats={[
         { value: friend.friends, label: 'Friends' },
         { value: friend.years, label: friend.years === 1 ? 'Year Exp.' : 'Years Exp.' },
@@ -99,7 +143,7 @@ export default function FriendProfile() {
           type="button"
           className={added ? 'fp-add fp-add--added' : 'fp-add'}
           aria-pressed={added}
-          onClick={() => setAdded(!added)}
+          onClick={toggle}
         >
           <span className="fp-add__icon" aria-hidden="true">
             {added ? '−' : '+'}

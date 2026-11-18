@@ -1,0 +1,15 @@
+.avatar {
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--light-green);
+  color: var(--main-green);
+  font-family: var(--font-poppins);
+  font-weight: 600;
+}
