@@ -1,9 +1,10 @@
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
+import NavBar from '../../components/NavBar.jsx'
 import hudson from '../../assets/profile/hudson.jpg'
 import iconHealth from '../../assets/profile/icon-health.png'
 import iconPrivacy from '../../assets/profile/icon-privacy.png'
-import { BackButton } from '../../components/controls.jsx'
+import { BackButton, ToggleSwitch } from '../../components/controls.jsx'
 import chevron from '../../assets/profile/chevron.svg'
 import chevRightGreen from '../../assets/icons/chev-right-green.svg'
 import { FRIENDS } from '../../data/friends.js'
@@ -77,7 +78,7 @@ const PRIVACY = {
 export function Settings() {
   const go = useGo()
   return (
-    <Screen className="pr">
+    <Screen className="pr" fixed={<NavBar />}>
       <div className="pv-content">
         <BackButton className="pv-back" onClick={() => go('/profile', 'smart')} />
         <div className="pv-body">
@@ -93,6 +94,12 @@ export function Settings() {
                   </div>
                 ))}
                 {section === 'Account' && (
+                  <button type="button" className="pv-row pv-row--link" onClick={() => go('/profile/settings/apps', 'smart')}>
+                    <span>Connected Apps</span>
+                    <img src={chevron} alt="" />
+                  </button>
+                )}
+                {section === 'Account' && (
                   <button
                     type="button"
                     className="pv-row pv-row--signout"
@@ -107,6 +114,44 @@ export function Settings() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    </Screen>
+  )
+}
+
+// Fitness apps and devices PeakPrep can read from (the demo account starts with Apple Watch + Apple Health on).
+const APPS = [
+  ['Apple Watch', 'Workouts, heart rate and sleep', true],
+  ['Apple Health', 'Steps, activity and health stats', true],
+  ['Strava', 'Hikes, runs and routes', false],
+  ['Garmin Connect', 'Watch activities and elevation', false],
+  ['Google Fit', 'Steps and workouts on Android', false],
+  ['Fitbit', 'Steps, heart rate and sleep', false],
+]
+
+/** Settings → Connected Apps: link watches and fitness apps that feed training and Health Stats. */
+export function ConnectedApps() {
+  const go = useGo()
+  const isNew = useAccount().type === 'new'
+  return (
+    <Screen className="pr" fixed={<NavBar />}>
+      <div className="pv-content">
+        <BackButton className="pv-back" onClick={() => go('/profile/settings', 'smart')} />
+        <div className="pv-body">
+          <h1 className="pv-title">Connected Apps</h1>
+          <p className="pv-lead">Link your watch and fitness apps so your training, steps and health stats update automatically.</p>
+          <div className="pv-rows">
+            {APPS.map(([name, sub, on]) => (
+              <div className="pv-row pv-row--app" key={name}>
+                <span className="pv-app">
+                  <span className="pv-app__name">{name}</span>
+                  <span className="pv-app__sub">{sub}</span>
+                </span>
+                <ToggleSwitch label={`Connect ${name}`} defaultOn={!isNew && on} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </Screen>

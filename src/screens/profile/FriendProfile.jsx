@@ -4,18 +4,13 @@ import { toggleFriend, useAccount } from '../../app/account.js'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import NavBar from '../../components/NavBar.jsx'
-import HikeCard from '../../components/HikeCard.jsx'
+import TrailCard from '../../components/TrailCard.jsx'
 import Avatar from '../../components/Avatar.jsx'
 import EmptyState from '../../components/EmptyState.jsx'
 import { BackButton } from '../../components/controls.jsx'
-import { HIKES } from '../../data/hikes.js'
 import { friendById } from '../../data/friends.js'
-import hudson from '../../assets/profile/hudson.jpg'
-import friendA from '../../assets/profile/friend-a.jpg'
-import friendB from '../../assets/profile/friend-b.jpg'
 import './FriendProfile.css'
 
-const WITH = [hudson, friendA, friendB]
 
 /**
  * Profile layout from "view-friend.png", shared by a friend's profile and the
@@ -101,16 +96,8 @@ export function ProfileView({
         <div className="fp-section">{section}</div>
         <div className="fp-cards">
           {activities.length === 0 && empty}
-          {activities.map(([key, date, withText, liked]) => (
-            <HikeCard
-              key={key + date}
-              {...HIKES[key]}
-              date={date}
-              saved={liked}
-              friends
-              friendsText={withText}
-              avatars={WITH}
-            />
+          {activities.map(([key, date, , liked]) => (
+            <TrailCard key={key + date} id={key} date={date} saved={liked} />
           ))}
         </div>
       </div>

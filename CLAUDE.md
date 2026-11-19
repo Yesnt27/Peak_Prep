@@ -361,3 +361,26 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - **Every log step's button is greyed out until answered** (pinned button, `ready`): card selected; date + time; feel; emergency prep; body; notes typed.
 - **Time to complete:** rounded tiles via the shared `.fs-tiles .tag` (FlowStep.css).
 - **Completed Hikes page** (`/profile/completed`): cards are the shared `HikeCard` with the "With Siena & Mark" row; "AYS" shown as "DAYS".
+
+### Round 16 — trail cards, per-hike details, new Training overview (from Olivia, 2026-11-19)
+
+- **Sign-up → Hiker profile / Toughest hike:** the "input" placeholder text is gone (empty until typed / picked).
+- **`components/TrailCard.jsx`** ("trail card.png") replaces `HikeCard` everywhere (Home, friend profiles, Completed Hikes, Hiker Log, New training). Difficulty (yellow-1) + type chips from the tag, working heart (own state, or `saved` + `onLike`), swipeable photo carousel (scroll-snap; mouse drag on desktop; dots pick a photo) over a dark bottom fade, rating beside the location, grey stat boxes. Tapping opens `/hike/:id` unless `onClick` is given; `selected` = green ring.
+  - With `progress={{ pct, text }}` + `date` it is the "trail-prep-progress card" (date chip, Prep status bar). Used for hikes being trained for (Home → Training; a new account's training hike); these open `/training`.
+- **Photos:** each hike has 2–4 photos (`photos` in `data/hikes.js`): the Figma image plus openly licensed Wikimedia Commons photos in `src/assets/hikes/` (resized to 800px). Credits + licences in `src/data/photoCredits.js`, shown at the bottom of each Hike Details page.
+- **Hike Details for every hike** (`/hike/:id`; `/hike` = Brunswick), content in `src/data/hikeDetails.js` (researched 2026-11-19 from BC Parks, Metro Vancouver, Grouse Mountain, trail guides, Wikivoyage; Brunswick keeps the Figma copy):
+  - More spacing (40px between sections); white key stats; "About this hike" clamped to 2 lines, tap to expand; elevation chart drawn from each hike's profile (`ElevationChart.jsx`); "Fit for you" computed from the demo's logged bests (6.8 km / 726 m; a new account shows "No hikes logged"); "Hazards & logistics" and "Trail challenges" are closed dropdowns (`Collapsible` in `HikeSections.jsx`).
+  - Footer: "Start Preparation" → the Create flow with that hike picked (`/new-training?hike=id`), or "View Training Plan" → `/training` for the hike you're training for. Heart = like (new accounts save it). Back returns to where it was opened.
+  - Corrected stats (Figma values were off): Saint Mark Summit 11 km / 460 m / 4–5 hrs; Grouse Grind 2.5 km / 800 m / 1–2 hrs.
+- **Training overview** ("training overview 3.png"): hero with just the date chip and hike name (`HikeHero minimal`), white readiness card, four tiles (Training Schedule teal → schedule, Bag Check green → packing, Hiking Safety yellow → first aid, About this trail white → `/hike/:id`) with the light-grey round ›. "Hike Completed!" stays below (not in the image) so the hike log is reachable. A new account's page uses their hike and the month/year picked in Create.
+- `HikeCard.jsx/.css` deleted.
+
+### Round 17 — card colours, spacing, connected apps (from Olivia, 2026-11-19)
+
+- **First aid module:** "Go Further" and "Trail Etiquette 101" cards are white (were yellow-3); Go Further hover is light grey `#e7e7e7`; the "Suggested · 20 hrs" pill track is app grey.
+- **Training overview:** shorter hero (`.hk-hero--minimal`, 310px; was 420px, briefly 260px).
+- **Hike Details:** every card has 20px padding with roomier gaps (readiness gap, pace / start-by tiles, hazards, challenges, links); "N flagged" removed from Trail challenges; "Siena & 3 friends training" shows on every hike's banner (a new account only once it has friends).
+- **Daily Training** (`/training/schedule`): the Prep status box is removed.
+- **Settings:** has the nav bar; new **Connected Apps** row under Account → `/profile/settings/apps` (nav bar too): Apple Watch, Apple Health, Strava, Garmin Connect, Google Fit, Fitbit with switches (`ToggleSwitch` takes `defaultOn`); the demo account starts with Apple Watch + Apple Health on, a new account with none.
+- **Packing edit (Round 17):** no pencil next to the "Packing" title.
+- **Hike Details banner (Round 17):** 12px between chips, name, location and friends line (was 6px).

@@ -95,8 +95,8 @@ export function AddItem({ children, className = '', ...rest }) {
 }
 
 /** Figma "toggle switch". */
-export function ToggleSwitch({ label }) {
-  const [on, setOn] = useState(false)
+export function ToggleSwitch({ label, defaultOn = false }) {
+  const [on, setOn] = useState(defaultOn)
   return (
     <button
       type="button"
@@ -159,7 +159,7 @@ export function WorkoutCard({ icon, children, selected: value, onChange }) {
 /** `values` / `onChange(label, value)` are optional: they let a form keep what was typed or picked. */
 export function FieldCard({ rows, className = '', values, onChange }) {
   const [open, setOpen] = useState(null)
-  // Picked options always show in the row (instead of "input"); the caller can also keep them.
+  // Picked options show in the row (empty until picked); the caller can also keep them.
   const [own, setOwn] = useState({})
   const vals = values ?? own
   const change = (label, value) => {
@@ -179,13 +179,12 @@ export function FieldCard({ rows, className = '', values, onChange }) {
                 vals[row.label] ? (
                   <span className="field-card__picked">{vals[row.label]}</span>
                 ) : (
-                  <span className="field-card__placeholder">input</span>
+                  <span className="field-card__placeholder" />
                 )
               ) : (
                 <TypeField
                   tone="light"
                   className="field-card__input"
-                  placeholder="input"
                   aria-label={row.label}
                   inputMode={row.inputMode}
                   defaultValue={vals[row.label]}

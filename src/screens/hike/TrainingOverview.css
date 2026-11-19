@@ -365,3 +365,90 @@
 .to-day.to-day--today {
   color: #fff;
 }
+
+/* ---------- "training overview 3.png": four tiles into the plan ---------- */
+.to-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.to-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 12px;
+  height: 140px;
+  padding: 18px 16px;
+  border-radius: 12px;
+  color: var(--body-copy-gray);
+  text-align: left;
+}
+
+.to-tile--teal {
+  background: var(--teal-1);
+}
+
+.to-tile--green {
+  background: var(--light-green);
+}
+
+.to-tile--yellow {
+  background: var(--yellow-3);
+}
+
+.to-tile--white {
+  background: #fff;
+}
+
+.to-tile__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.to-tile__title {
+  max-width: 105px;
+  font: 600 20px/1.1 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+/* Small round › (same look and hover as the app's round buttons). */
+.to-tile__go {
+  position: absolute;
+  right: 14px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: #f5f5f5;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: background-color 300ms var(--ease-out);
+}
+
+.to-tile__go img {
+  width: 18px;
+  height: 18px;
+}
+
+@media (hover: hover) {
+  .to-tile:hover .to-tile__go {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .to-tile:active .to-tile__go {
+    background: #e7e7e7;
+  }
+}
+
+/* Readiness card is white on the overview ("training overview 3.png"); Training Schedule keeps green. */
+.to-content .to-prep {
+  background: #fff;
+}

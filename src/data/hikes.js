@@ -5,11 +5,35 @@ import wedgemountLake from '../assets/home/wedgemount-lake.jpg'
 import saintMark from '../assets/profile/saint-mark.jpg'
 import everest from '../assets/profile/everest.jpg'
 import grouseGrind from '../assets/profile/grouse-grind.jpg'
+import panorama2 from '../assets/hikes/panorama-2.jpg'
+import panorama3 from '../assets/hikes/panorama-3.jpg'
+import panorama4 from '../assets/hikes/panorama-4.jpg'
+import blackTusk2 from '../assets/hikes/blackTusk-2.jpg'
+import blackTusk3 from '../assets/hikes/blackTusk-3.jpg'
+import blackTusk4 from '../assets/hikes/blackTusk-4.jpg'
+import brunswick2 from '../assets/hikes/brunswick-2.jpg'
+import brunswick3 from '../assets/hikes/brunswick-3.jpg'
+import wedgemount2 from '../assets/hikes/wedgemount-2.jpg'
+import wedgemount3 from '../assets/hikes/wedgemount-3.jpg'
+import wedgemount4 from '../assets/hikes/wedgemount-4.jpg'
+import saintMark2 from '../assets/hikes/saintMark-2.jpg'
+import everest2 from '../assets/hikes/everest-2.jpg'
+import everest3 from '../assets/hikes/everest-3.jpg'
+import everest4 from '../assets/hikes/everest-4.jpg'
+import grouse2 from '../assets/hikes/grouse-2.jpg'
+import grouse3 from '../assets/hikes/grouse-3.jpg'
+import grouse4 from '../assets/hikes/grouse-4.jpg'
 
-/** Hike card data as shown in Figma "home/hike card" instances. */
+/**
+ * Hike card data (Figma "home/hike card"). `image` is the Figma photo; `photos` adds the
+ * openly licensed Commons photos for the card carousel (credits: data/photoCredits.js).
+ * Stats for Saint Mark's Summit and the Grouse Grind are corrected from research (Figma had
+ * 7–9 hours / 1.9 km); the rest match Figma.
+ */
 export const HIKES = {
   panorama: {
     image: panoramaRidge,
+    photos: [panoramaRidge, panorama2, panorama3, panorama4],
     tag: 'HARD • ALPINE',
     title: 'Panorama Ridge',
     location: 'Garibaldi Provincial Park, BC',
@@ -18,6 +42,7 @@ export const HIKES = {
   },
   blackTusk: {
     image: blackTusk,
+    photos: [blackTusk, blackTusk2, blackTusk3, blackTusk4],
     tag: 'STRENUOUS • SCRAMBLE',
     title: 'The Black Tusk',
     location: 'Garibaldi Provincial Park, BC',
@@ -26,6 +51,7 @@ export const HIKES = {
   },
   brunswick: {
     image: mountBrunswick,
+    photos: [mountBrunswick, brunswick2, brunswick3],
     tag: 'STRENUOUS • SCRAMBLE',
     title: 'Brunswick Mountain Trail',
     location: 'Lions Bay, BC',
@@ -34,23 +60,25 @@ export const HIKES = {
   },
   wedgemount: {
     image: wedgemountLake,
+    photos: [wedgemountLake, wedgemount2, wedgemount3, wedgemount4],
     tag: 'HARD • STEEP INCLINE',
     title: 'Wedgemount Lake',
     location: 'Whistler, BC',
     rating: '4.8 (810)',
     stats: [['12.0', 'KM'], ['1,200', 'M ELEV'], ['6–7', 'HOURS']],
   },
-  // From Figma "Completed Hikes" cards (used on friend profiles).
   saintMark: {
     image: saintMark,
+    photos: [saintMark, saintMark2],
     tag: 'MODERATE • FLAT',
     title: 'Saint Mark Summit',
     location: 'West Van, BC',
     rating: '4.8 (215)',
-    stats: [['10', 'KM'], ['570', 'M ELEV'], ['7–9', 'HOURS']],
+    stats: [['11', 'KM'], ['460', 'M ELEV'], ['4–5', 'HOURS']],
   },
   everest: {
     image: everest,
+    photos: [everest, everest2, everest3, everest4],
     tag: 'DIFFICULT • SLOPE',
     title: 'Mt. Everest',
     location: 'Kathmandu, NPL',
@@ -59,10 +87,11 @@ export const HIKES = {
   },
   grouse: {
     image: grouseGrind,
+    photos: [grouseGrind, grouse2, grouse3, grouse4],
     tag: 'MODERATE • ARDUOUS',
     title: 'Grouse Grind',
     location: 'North Van, BC',
     rating: '4.3 (375)',
-    stats: [['1.9', 'KM'], ['780', 'M ELEV'], ['7–9', 'HOURS']],
+    stats: [['2.5', 'KM'], ['800', 'M ELEV'], ['1–2', 'HOURS']],
   },
 }

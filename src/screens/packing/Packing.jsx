@@ -10,7 +10,6 @@ import winterGear from '../../assets/packing/winter-gear.svg'
 import healthSafety from '../../assets/packing/health-safety.svg'
 import foodWater from '../../assets/packing/food-water.svg'
 import electronics from '../../assets/packing/electronics.svg'
-import pencil from '../../assets/packing/pencil.svg'
 import help from '../../assets/packing/help.svg'
 import stepperMinus from '../../assets/icons/stepper-minus.svg'
 import stepperPlus from '../../assets/icons/stepper-plus.svg'
@@ -117,9 +116,8 @@ function Title({ edit }) {
     <div className="pk-title">
       <div className={edit ? 'pk-title__row pk-title__row--edit' : 'pk-title__row'}>
         <h1>Packing</h1>
-        {edit ? (
-          <img className="pk-title__pencil" src={pencil} alt="" />
-        ) : (
+        {/* Edit mode shows just the title (no pencil); the list shows the "?" help. */}
+        {!edit && (
           // Figma "Group 1410103755": hover swaps to the darker yellow; tap opens the explanation.
           <HelpButton />
         )}

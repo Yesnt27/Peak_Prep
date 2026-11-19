@@ -187,7 +187,7 @@
   height: 239px;
   overflow: hidden;
   border-radius: 30px;
-  background: var(--yellow-3);
+  background: #fff;
   text-align: left;
   transition: background-color 150ms var(--ease-out);
 }
@@ -282,7 +282,7 @@
   height: 40px;
   padding-right: 60px;
   border-radius: 30px;
-  background: #fff;
+  background: var(--app-grey);
 }
 
 .fa-card__pill-fill {
@@ -305,26 +305,17 @@
   white-space: nowrap;
 }
 
+/* White cards with the app's light-grey hover / press. */
 @media (hover: hover) {
   .fa-card:hover {
-    background: var(--yellow-2);
-  }
-
-  .fa-card:hover .fa-card__icon,
-  .fa-card:hover .fa-card__pill-fill {
-    background: var(--yellow-3);
+    background: #e7e7e7;
   }
 }
 
 /* Touch: the hover look shows while a finger is held down. */
 @media (hover: none) {
   .fa-card:active {
-    background: var(--yellow-2);
-  }
-
-  .fa-card:active .fa-card__icon,
-  .fa-card:active .fa-card__pill-fill {
-    background: var(--yellow-3);
+    background: #e7e7e7;
   }
 }
 
@@ -357,7 +348,7 @@
   height: 207px;
   overflow: hidden;
   border-radius: 30px;
-  background: var(--yellow-3);
+  background: #fff;
 }
 
 .fa-etiquette__inner {

@@ -30,7 +30,7 @@ import {
   WhosComing,
   LevelHikes,
 } from './screens/new-training/NewTraining.jsx'
-import Profile, { Settings } from './screens/profile/Profile.jsx'
+import Profile, { ConnectedApps, Settings } from './screens/profile/Profile.jsx'
 import { AddFriends, FriendList, FriendSearch } from './screens/profile/Friends.jsx'
 import FriendProfile from './screens/profile/FriendProfile.jsx'
 import CompletedHikes from './screens/profile/Completed.jsx'
@@ -58,6 +58,7 @@ export default function App() {
 
         <Route path="/home/:tab" element={<Home />} />
         <Route path="/hike" element={<HikeDetails />} />
+        <Route path="/hike/:id" element={<HikeDetails />} />
         <Route path="/training" element={<TrainingOverview />} />
         <Route path="/training/schedule" element={<TrainingSchedule />} />
         <Route path="/packing/all" element={<PackingList key="all" tab="all" />} />
@@ -94,6 +95,7 @@ export default function App() {
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/settings" element={<Settings />} />
+        <Route path="/profile/settings/apps" element={<ConnectedApps />} />
         <Route path="/profile/health" element={<HealthInfo />} />
         <Route path="/profile/health/edit" element={<Navigate to="/profile/health" replace />} />
         <Route path="/profile/friends" element={<FriendList />} />

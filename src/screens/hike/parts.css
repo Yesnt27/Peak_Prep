@@ -194,3 +194,8 @@
   font: 400 12px/1.35 var(--font-poppins);
   letter-spacing: -0.24px;
 }
+
+/* Training overview: shorter hero (date + name only). */
+.hk-hero--minimal {
+  height: 310px;
+}

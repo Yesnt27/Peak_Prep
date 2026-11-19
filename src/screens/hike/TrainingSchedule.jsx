@@ -5,7 +5,7 @@ import NavBar from '../../components/NavBar.jsx'
 import ListItem from '../../components/ListItem.jsx'
 import { BackButton } from '../../components/controls.jsx'
 import { SectionHeader } from './parts.jsx'
-import { PrepStatus, WeekStrip } from './TrainingOverview.jsx'
+import { WeekStrip } from './TrainingOverview.jsx'
 import calendarIcon from '../../assets/training/calendar.svg'
 import chevLeft from '../../assets/training/chev-left.svg'
 import chevRight from '../../assets/training/chev-right.svg'
@@ -42,7 +42,6 @@ export default function TrainingSchedule() {
             <ListItem tone="green" label="Weighted Walk · 15kg" meta={chevron} defaultChecked />
             <ListItem tone="green" label="Endurance" meta={chevron} />
           </section>
-          <PrepStatus />
         </div>
       </div>
     </Screen>

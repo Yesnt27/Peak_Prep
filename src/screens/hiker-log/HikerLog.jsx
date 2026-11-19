@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import useGo from '../../app/useGo.js'
 import { setLog, useHikerLog } from '../../app/hikerLog.js'
-import HikeCard from '../../components/HikeCard.jsx'
-import { HIKES } from '../../data/hikes.js'
+import TrailCard from '../../components/TrailCard.jsx'
 import removeItem from '../../assets/icons/remove-item.svg'
 import Screen from '../../components/Screen.jsx'
 import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/FlowStep.jsx'
@@ -37,7 +36,7 @@ export function Congrats() {
             </div>
           </Field>
           {/* Same card as Home; tap it to confirm this is the hike you completed (green ring). */}
-          <HikeCard {...HIKES.brunswick} saved selected={log.picked} onClick={() => setLog({ picked: !log.picked })} />
+          <TrailCard id="brunswick" saved selected={log.picked} onClick={() => setLog({ picked: !log.picked })} />
         </div>
       </div>
     </Step>
@@ -228,7 +227,7 @@ export function ReviewDetails() {
             <h1 className="fs-title hl-review__title">Brunswick Mountain Trail</h1>
             <p className="fs-sub">{sub}</p>
           </div>
-          <HikeCard {...HIKES.brunswick} saved />
+          <TrailCard id="brunswick" saved />
           <Field label="How did it feel?">
             <Answer>
               {log.feel && (

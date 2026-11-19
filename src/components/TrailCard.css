@@ -1,0 +1,254 @@
+/* "trail card.png" / "trail-prep-progress card.png": 356 wide, 200px photo, white body. */
+.tc {
+  flex: none;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  color: var(--body-copy-gray);
+  cursor: pointer;
+  transition: box-shadow 300ms var(--ease-out);
+}
+
+.tc--selected {
+  box-shadow: 0 0 0 3px var(--main-green);
+}
+
+/* ---------- Photo carousel ---------- */
+.tc-media {
+  position: relative;
+  height: 200px;
+}
+
+.tc-photos {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.tc-photos::-webkit-scrollbar {
+  display: none;
+}
+
+.tc-photos--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+}
+
+.tc-photo {
+  flex: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scroll-snap-align: start;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Dark fade at the bottom so the dots stay visible on any photo. */
+.tc-fade {
+  position: absolute;
+  inset: auto 0 0;
+  height: 70px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+.tc-top {
+  position: absolute;
+  inset: 12px 12px auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.tc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tc-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 100px;
+  background: #fff;
+  font: 500 12px/1 var(--font-poppins);
+  white-space: nowrap;
+}
+
+.tc-chip--level {
+  background: var(--yellow-1);
+}
+
+.tc-chip--date {
+  background: var(--light-green);
+}
+
+.tc-chip img {
+  width: 12px;
+  height: 12px;
+}
+
+.tc-heart {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: auto;
+  transition: transform 150ms var(--ease-out);
+}
+
+.tc-heart:active {
+  transform: scale(0.88);
+}
+
+.tc-heart img {
+  width: 16px;
+  height: 16px;
+}
+
+.tc-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transform: translateX(-50%);
+}
+
+.tc-dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border-radius: 100px;
+  background: #fff;
+  opacity: 0.9;
+  transition: width 300ms var(--ease-out), background-color 300ms var(--ease-out);
+}
+
+.tc-dot--active {
+  width: 18px;
+  background: var(--main-green);
+  opacity: 1;
+}
+
+/* ---------- Body ---------- */
+.tc-body {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px 16px;
+}
+
+.tc-name {
+  font: 600 20px/1.2 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+.tc-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.tc-location {
+  min-width: 0;
+  opacity: 0.75;
+  font: 400 13px/1.3 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.tc-rating {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 4px;
+  font: 400 13px/1.3 var(--font-poppins);
+}
+
+.tc-rating img {
+  width: 13px;
+  height: 13px;
+}
+
+.tc-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tc-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  border-radius: 10px;
+  background: var(--app-grey);
+}
+
+.tc-stat__value {
+  font: 500 16px/1.15 var(--font-poppins);
+}
+
+.tc-stat__label {
+  opacity: 0.6;
+  font: 400 10px/1.2 var(--font-poppins);
+  letter-spacing: 0.02em;
+}
+
+/* Prep status (training cards) */
+.tc-prep {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.tc-prep__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tc-prep__label {
+  font: 600 14px/1.2 var(--font-poppins);
+}
+
+.tc-prep__text {
+  font: 400 12px/1.2 var(--font-poppins);
+}
+
+.tc-prep__bar {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--light-green);
+}
+
+.tc-prep__bar span {
+  display: block;
+  height: 100%;
+  border-radius: 10px;
+  background: var(--main-green);
+  transition: width 300ms var(--ease-out);
+}

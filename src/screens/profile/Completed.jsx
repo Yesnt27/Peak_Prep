@@ -5,35 +5,16 @@ import NavBar from '../../components/NavBar.jsx'
 import SegmentedTabs from '../../components/SegmentedTabs.jsx'
 import { BackButton, TypeField } from '../../components/controls.jsx'
 import hudson from '../../assets/profile/hudson.jpg'
-import friendA from '../../assets/profile/friend-a.jpg'
-import friendB from '../../assets/profile/friend-b.jpg'
-import everest from '../../assets/profile/everest.jpg'
-import grouse from '../../assets/profile/grouse-grind.jpg'
-import saintMark from '../../assets/profile/saint-mark.jpg'
 import searchIcon from '../../assets/profile/search.svg'
 import chevDown from '../../assets/icons/chev-down.svg'
-import HikeCard from '../../components/HikeCard.jsx'
+import TrailCard from '../../components/TrailCard.jsx'
 import './Completed.css'
 
-// Card data as shown in Figma ("AYS" in the file is shown as "DAYS").
-const HIKES = {
-  everest: { image: everest, date: 'June 20, 2025', tag: 'DIFFICULT • SLOPE', title: 'Mt. Everest', place: 'Kathmandu, NPL', rating: '5.0 (303)', stats: [['130', 'KM'], ['5,545', 'M ELEV'], ['12-18', 'DAYS']] },
-  grouse: { image: grouse, date: 'July 25, 2025', tag: 'MODERATE • ARDUOUS', title: 'Grouse Grind', place: 'North Van, BC', rating: '4.3 (375)', stats: [['1.9', 'KM'], ['780', 'M ELEV'], ['7-9', 'HOURS']] },
-  saintMark: { image: saintMark, date: 'Dec 12, 2026', tag: 'MODERATE • FLAT', title: 'Saint Mark Summit', place: 'West Van, BC', rating: '4.8 (215)', stats: [['10', 'KM'], ['570', 'M ELEV'], ['7-9', 'HOURS']] },
-}
-
-/** The app's standard hike card, with the "With Siena & Mark" row (Figma "Hike" card 1580:2147). */
-function CompletedCard({ place, ...hike }) {
-  return (
-    <HikeCard
-      {...hike}
-      location={place}
-      saved
-      friends
-      friendsText="With Siena & Mark"
-      avatars={[hudson, friendA, friendB]}
-    />
-  )
+// Completed hikes (Figma "Completed Hikes" cards): [hike key, date].
+const DONE = {
+  everest: ['everest', 'June 20, 2025'],
+  grouse: ['grouse', 'July 25, 2025'],
+  saintMark: ['saintMark', 'Dec 12, 2026'],
 }
 
 const TABS = [
@@ -56,7 +37,7 @@ export default function CompletedHikes({ tab }) {
     return () => clearTimeout(timer)
   }, [selected, tab, go])
 
-  const cards = tab === 'recent' ? [HIKES.everest, HIKES.grouse] : [HIKES.saintMark, HIKES.grouse]
+  const cards = tab === 'recent' ? [DONE.everest, DONE.grouse] : [DONE.saintMark, DONE.grouse]
 
   return (
     <Screen className="ch" fixed={<NavBar />}>
@@ -80,8 +61,8 @@ export default function CompletedHikes({ tab }) {
           </div>
         </div>
         <p className="ch-section">Training journeys</p>
-        {cards.map((h) => (
-          <CompletedCard key={h.title} {...h} />
+        {cards.map(([key, date]) => (
+          <TrailCard key={key} id={key} date={date} saved />
         ))}
       </div>
     </Screen>

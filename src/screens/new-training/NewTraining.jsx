@@ -5,7 +5,7 @@ import Screen from '../../components/Screen.jsx'
 import ShareButton from '../../components/ShareButton.jsx'
 import { getAccount, levelFor, updateAccount, useAccount } from '../../app/account.js'
 import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/FlowStep.jsx'
-import HikeCard from '../../components/HikeCard.jsx'
+import TrailCard from '../../components/TrailCard.jsx'
 import BottomSheet from '../../components/BottomSheet.jsx'
 import { AddItem, BackButton, TagGroup, ToggleSwitch, ToggleTag, TypeField } from '../../components/controls.jsx'
 import { HIKES } from '../../data/hikes.js'
@@ -69,7 +69,7 @@ export function TargetHike() {
               <TypeField key={hike.title} defaultValue={key ? hike.title : 'Black Tusk'} enterKeyHint="search" />
             </div>
           </Field>
-          <HikeCard {...hike} selected={picked} onClick={() => setPicked(!picked)} />
+          <TrailCard id={key && HIKES[key] ? key : 'blackTusk'} selected={picked} onClick={() => setPicked(!picked)} />
           <button type="button" className="nt-link" onClick={() => go('/new-training/level', 'smart')}>
             Not sure yet? See hikes for your level
           </button>
@@ -103,7 +103,7 @@ export function LevelHikes() {
         />
         <div className="nt-level__cards">
           {LEVEL_HIKES[level].map((k) => (
-            <HikeCard key={k} {...HIKES[k]} onClick={() => go(`/new-training?hike=${k}`, 'smart')} />
+            <TrailCard key={k} id={k} onClick={() => go(`/new-training?hike=${k}`, 'smart')} />
           ))}
         </div>
       </div>
@@ -121,7 +121,14 @@ export function HikeDate() {
   const [year, setYear] = useState(2027)
   const [month, setMonth] = useState(null)
   return (
-    <Step step={2} fill={85} back="/new-training" next="/new-training/trip" ready={month !== null}>
+    <Step
+      step={2}
+      fill={85}
+      back="/new-training"
+      next="/new-training/trip"
+      ready={month !== null}
+      onNext={() => updateAccount({ plannedDate: `${month.slice(0, 3)} ${year}` })}
+    >
       <div className="fs-body nt-body">
         <Intro title="Hike Date" />
         <Field label="Year">
@@ -378,7 +385,9 @@ export function Schedule() {
       cta="Done"
       ready={days.length > 0 && time !== null}
       // A new account's training page is built from the hike they picked, at 0%.
-      onNext={() => updateAccount({ training: { hike: getAccount().plannedHike ?? 'blackTusk' } })}
+      onNext={() =>
+        updateAccount({ training: { hike: getAccount().plannedHike ?? 'blackTusk', date: getAccount().plannedDate } })
+      }
     >
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Your training schedule" sub="We’ll build the plan around your life." />

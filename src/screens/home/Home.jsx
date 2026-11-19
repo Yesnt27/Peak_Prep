@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import NavBar from '../../components/NavBar.jsx'
-import HikeCard from '../../components/HikeCard.jsx'
+import TrailCard from '../../components/TrailCard.jsx'
 import Dropdown from '../../components/Dropdown.jsx'
 import ListItem from '../../components/ListItem.jsx'
 import Avatar from '../../components/Avatar.jsx'
@@ -43,11 +43,10 @@ function sortCards(cards, sort) {
   return [...cards].sort((a, b) => statValue(HIKES[a.hike], stat) - statValue(HIKES[b.hike], stat))
 }
 
-// Demo: every card opens the Brunswick Mountain hike details (/hike).
-function CardList({ go, cards, sort }) {
-  return sortCards(cards, sort).map(({ hike, ...props }) => (
-    <HikeCard key={hike} {...HIKES[hike]} {...props} onClick={() => go('/hike')} />
-  ))
+// Each card opens its own hike's details (/hike/:id).
+function CardList({ cards, sort }) {
+  // eslint-disable-next-line no-unused-vars
+  return sortCards(cards, sort).map(({ hike, friends, ...props }) => <TrailCard key={hike} id={hike} {...props} />)
 }
 
 /** A new account: hearts save into the account; Saved lists only what they liked. */
@@ -108,11 +107,11 @@ function Training({ go, account }) {
       )
     const key = account.training.hike
     return (
-      <HikeCard
-        {...HIKES[key]}
+      <TrailCard
+        id={key}
         {...likeProps(account, key)}
-        progress={{ text: '0% completed · just started', remaining: '100%' }}
-        onClick={() => go('/training')}
+        progress={{ pct: 0, text: '0% ready · just started' }}
+        onClick={() => go('/training', 'smart')}
       />
     )
   }
@@ -134,20 +133,20 @@ function Training({ go, account }) {
           <img src={chevRightGreen} alt="" />
         </button>
       </section>
-      <HikeCard
-        {...HIKES.brunswick}
+      {/* Hikes being trained for: the prep-progress card, opening the training plan. */}
+      <TrailCard
+        id="brunswick"
         date="Sat, Dec 12"
         saved
-        friends
-        progress={{ text: '82% completed · 10 days to go', remaining: 58 }}
-        onClick={() => go('/training')}
+        progress={{ pct: 82, text: '82% ready · 10 days to go' }}
+        onClick={() => go('/training', 'smart')}
       />
-      <HikeCard
-        {...HIKES.blackTusk}
+      <TrailCard
+        id="blackTusk"
         date="Jun 23–24"
         saved
-        progress={{ text: '34% completed · 7 months to go', remaining: 212 }}
-        onClick={() => go('/training')}
+        progress={{ pct: 34, text: '34% ready · 7 months to go' }}
+        onClick={() => go('/training', 'smart')}
       />
     </>
   )
