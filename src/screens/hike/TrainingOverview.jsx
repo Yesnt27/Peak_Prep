@@ -14,6 +14,7 @@ import ringFill from '../../assets/training/ring-fill.svg'
 import bagIcon from '../../assets/training/bag.svg'
 import shieldIcon from '../../assets/training/shield.svg'
 import checkIcon from '../../assets/training/check.svg'
+import heatHiker from '../../assets/training/heat-hiker.jpg'
 import './TrainingOverview.css'
 
 function BagStat({ title, value, unit, note, remaining, fill }) {
@@ -153,6 +154,10 @@ export default function TrainingOverview() {
             </Chip>
           </SectionHeader>
           <div className="to-safety__card">
+            {/* Figma "Mask group" 2525:4506: photo fading into the card; opens the Heat Exposure lesson. */}
+            <button type="button" className="to-safety__photo" aria-label="Open Heat Exposure lesson" onClick={() => go('/first-aid/heat')}>
+              <img src={heatHiker} alt="" />
+            </button>
             <div className="to-steps">
               {LESSONS.map(([name], i) => {
                 const isDone = done.includes(name)
