@@ -3,33 +3,18 @@ import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
 import NavBar from '../../components/NavBar.jsx'
 import ListItem from '../../components/ListItem.jsx'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { LESSONS, completedLessons } from '../../app/progress.js'
 import { useAccount } from '../../app/account.js'
 import { HIKES } from '../../data/hikes.js'
 import { Chip, HikeHero, KeyStats, SectionHeader } from './parts.jsx'
+import TrainingCalendar from './TrainingCalendar.jsx'
 import ringTrack from '../../assets/training/ring-track.svg'
 import ringFill from '../../assets/training/ring-fill.svg'
-import calendarIcon from '../../assets/training/calendar.svg'
-import chevLeft from '../../assets/training/chev-left.svg'
-import chevRight from '../../assets/training/chev-right.svg'
-import dotDone from '../../assets/training/dot-done.svg'
-import dotToday from '../../assets/training/dot-today.svg'
 import bagIcon from '../../assets/training/bag.svg'
 import shieldIcon from '../../assets/training/shield.svg'
 import checkIcon from '../../assets/training/check.svg'
 import './TrainingOverview.css'
-
-// [weekday, date, dot]: 'done' = green dot, 'today' = selected day, null = no dot.
-const WEEK = [
-  ['S', '26', 'done'],
-  ['M', '27', 'done'],
-  ['T', '28', 'today'],
-  ['W', '29', null],
-  ['T', '30', null],
-  ['F', '31', null],
-  ['S', '01', null],
-]
 
 function BagStat({ title, value, unit, note, remaining, fill }) {
   return (
@@ -88,31 +73,6 @@ export function PrepStatus() {
   )
 }
 
-/** Week strip: the green pill starts on today (28) and moves to the tapped day. */
-export function WeekStrip() {
-  const fresh = useFreshTraining()
-  const [day, setDay] = useState('28')
-  return (
-    <div className="to-week">
-      {WEEK.map(([weekday, date, dot]) => (
-        <button
-          type="button"
-          className={date === day ? 'to-day to-day--today' : 'to-day'}
-          key={date}
-          aria-pressed={date === day}
-          onClick={() => setDay(date)}
-        >
-          <p className="to-day__weekday">{weekday}</p>
-          <p className="to-day__date">{date}</p>
-          <span className="to-day__dot">
-            {dot && !(fresh && dot === 'done') && <img src={date === day ? dotToday : dotDone} alt="" />}
-          </span>
-        </button>
-      ))}
-    </div>
-  )
-}
-
 export default function TrainingOverview() {
   const go = useGo()
   const done = completedLessons()
@@ -154,17 +114,7 @@ export default function TrainingOverview() {
         <PrepStatus />
 
         <section className="to-section">
-          <SectionHeader icon={calendarIcon} title="October 2026">
-            <div className="to-cal__nav">
-              <span className="to-cal__arrow">
-                <img src={chevLeft} alt="" />
-              </span>
-              <span className="to-cal__arrow">
-                <img src={chevRight} alt="" />
-              </span>
-            </div>
-          </SectionHeader>
-          <WeekStrip />
+          <TrainingCalendar />
           <p className="to-daily">Daily training · {fresh ? 0 : 2} of 3 done</p>
           <ListItem label="Stair Climber · lv.6" meta="40 min" />
           <ListItem label="Weighted Walk · 15kg" meta="20 min" />
@@ -194,37 +144,37 @@ export default function TrainingOverview() {
           <Button className="to-btn" onClick={() => go('/packing/all')}>
             Packing List
           </Button>
+        </section>
 
-          <div className="to-safety">
-            <SectionHeader icon={shieldIcon} title="Hiking safety" sub="Brunswick Mountain Trail Safety">
-              <Chip tone="yellow-1">
-                {done.length} of {LESSONS.length}
-              </Chip>
-            </SectionHeader>
-            <div className="to-safety__card">
-              <div className="to-steps">
-                {LESSONS.map(([name], i) => {
-                  const isDone = done.includes(name)
-                  const state = isDone ? 'done' : upNext?.[0] === name ? 'current' : 'todo'
-                  return (
-                    <Fragment key={name}>
-                      {i > 0 && <span className={isDone ? 'to-step__line to-step__line--done' : 'to-step__line'} />}
-                      <span className={`to-step to-step--${state}`}>{isDone ? <img src={checkIcon} alt="" /> : i + 1}</span>
-                    </Fragment>
-                  )
-                })}
-              </div>
-              <div className="to-next">
-                <div className="to-next__text">
-                  <p className="to-next__label">{upNext ? 'Up next' : 'All lessons'}</p>
-                  <p className="to-next__title">{upNext ? upNext[0] : 'Complete'}</p>
-                </div>
-                {upNext && <Chip tone="yellow-1">{upNext[1].toLowerCase()}</Chip>}
-              </div>
-              <Button variant="primary" className="to-btn to-btn--round" onClick={() => go('/first-aid')}>
-                Continue lesson
-              </Button>
+        <section className="to-section to-safety">
+          <SectionHeader icon={shieldIcon} title="Hiking safety" sub="Brunswick Mountain Trail Safety">
+            <Chip tone="yellow-1">
+              {done.length} of {LESSONS.length}
+            </Chip>
+          </SectionHeader>
+          <div className="to-safety__card">
+            <div className="to-steps">
+              {LESSONS.map(([name], i) => {
+                const isDone = done.includes(name)
+                const state = isDone ? 'done' : upNext?.[0] === name ? 'current' : 'todo'
+                return (
+                  <Fragment key={name}>
+                    {i > 0 && <span className={isDone ? 'to-step__line to-step__line--done' : 'to-step__line'} />}
+                    <span className={`to-step to-step--${state}`}>{isDone ? <img src={checkIcon} alt="" /> : i + 1}</span>
+                  </Fragment>
+                )
+              })}
             </div>
+            <div className="to-next">
+              <div className="to-next__text">
+                <p className="to-next__label">{upNext ? 'Up next' : 'All lessons'}</p>
+                <p className="to-next__title">{upNext ? upNext[0] : 'Complete'}</p>
+              </div>
+              {upNext && <Chip tone="yellow-1">{upNext[1].toLowerCase()}</Chip>}
+            </div>
+            <Button variant="primary" className="to-btn to-btn--round" onClick={() => go('/first-aid')}>
+              Continue lesson
+            </Button>
           </div>
         </section>
 

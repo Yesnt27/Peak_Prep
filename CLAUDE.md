@@ -361,3 +361,9 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - **Every log step's button is greyed out until answered** (pinned button, `ready`): card selected; date + time; feel; emergency prep; body; notes typed.
 - **Time to complete:** rounded tiles via the shared `.fs-tiles .tag` (FlowStep.css).
 - **Completed Hikes page** (`/profile/completed`): cards are the shared `HikeCard` with the "With Siena & Mark" row; "AYS" shown as "DAYS".
+
+### Round 16 — Training spacing + calendar arrows (from Kenny, 2026-11-19)
+
+- **Training overview spacing:** sections 44px apart (was 28), 20px inside a section (was 16), 28px top padding; Prep status and the Hiking safety card have 20px padding and gaps; "Daily training" label has 4px extra above. Hiking safety is now its own section (it sat inside Bag check, 16px under Packing List). Bag check tiles fill the column width (were 353px, short of the buttons' edge).
+- **Calendar arrows** (`src/screens/hike/TrainingCalendar.jsx`, used by Training overview and Training Schedule): ‹ / › step one month (October 2026 → September 2026, December 2026 → January 2027), no limit. The selected day number is kept (clamped to the month's length) and the strip shows the Sun–Sat week around it. October 2026 shows the Figma week and dots; other months show real dates with no training dots (no data in Figma). Arrows have the round-button `#e7e7e7` hover. The daily training list doesn't change with the month.
+- **Heat Exposure graphic (open):** Figma `2525:4433` is the Hiking safety card with an empty 214px area at the top of the card (no image layer in the frame). Waiting on Kenny for the graphic and where it goes.
