@@ -1,10 +1,8 @@
 import { useEffect } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
-import ProgressiveBlur from '../../components/ProgressiveBlur.jsx'
 import useGo from '../../app/useGo.js'
 import { completeLesson } from '../../app/progress.js'
 import Screen from '../../components/Screen.jsx'
-import Button from '../../components/Button.jsx'
 import { lessonBySlug } from '../../data/firstAid.js'
 import tempCircleLeft from '../../assets/first-aid/temp-circle-left.svg'
 import tempCircleRight from '../../assets/first-aid/temp-circle-right.svg'
@@ -17,7 +15,7 @@ import eyeShape from '../../assets/first-aid/eye-shape.svg'
 import eyeIris from '../../assets/first-aid/eye-iris.svg'
 import eyePupil from '../../assets/first-aid/eye-pupil.svg'
 import eyeGlint from '../../assets/first-aid/eye-glint.svg'
-import { Back, PracticeHeader, ScenarioBar } from './parts.jsx'
+import { ActionBar, Back, PracticeHeader, ScenarioBar } from './parts.jsx'
 
 /* ---------- 1646:12263  Right or wrong → end of every lesson ---------- */
 
@@ -33,19 +31,11 @@ export function LessonComplete() {
     <Screen
       className="fa"
       fixed={
-        <div className="fa-bar">
-          {/* Same progressive blur as the nav bar: clear at the top, strongest behind the buttons. */}
-          <div className="fa-bar__blur">
-            <ProgressiveBlur />
-          </div>
-          <div className="fa-bar__pill" />
-          <Button className="fa-bar__retry" onClick={() => go(`/first-aid/${lesson.slug}/practice`)}>
-            Retry
-          </Button>
-          <Button className="fa-bar__mins" onClick={() => go('/first-aid', 'smart')}>
-            Continue
-          </Button>
-        </div>
+        <ActionBar
+          label="Continue"
+          onRetry={() => go(`/first-aid/${lesson.slug}/practice`)}
+          onNext={() => go('/first-aid', 'smart')}
+        />
       }
     >
       <div className="fa-page fa-flow fa-flow--bar">

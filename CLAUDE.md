@@ -384,3 +384,12 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - **Settings:** has the nav bar; new **Connected Apps** row under Account → `/profile/settings/apps` (nav bar too): Apple Watch, Apple Health, Strava, Garmin Connect, Google Fit, Fitbit with switches (`ToggleSwitch` takes `defaultOn`); the demo account starts with Apple Watch + Apple Health on, a new account with none.
 - **Packing edit (Round 17):** no pencil next to the "Packing" title.
 - **Hike Details banner (Round 17):** 12px between chips, name, location and friends line (was 6px).
+
+### Round 18 — quiz feedback layout (from Kenny, 2026-11-20)
+
+- **After Check** the question card is replaced by the Figma "Right or wrong" (`1646:12263`) cards (`first-aid/Feedback.jsx` + `Feedback.css`), for every lesson:
+  - Card 1: the situation's name as the title (answers are free text, so no "Correct!"), a photo (Heat only), then what is happening (`feedback`).
+  - Card 2: **Next Steps** (`steps`), then a round 121px photo in the eye-ring slot (yellow-1 ring) beside the key points, styled like "Treating for Shock" (scenario 1 keeps Figma's W·A·R·T·S).
+  - Pinned Retry / Next bar (Figma group `2124:5149`, now the shared `ActionBar` in `parts.jsx`, also used by Results). Retry restarts the same scenario (empty answer, 3:00); the main button reads "Next scenario" / "See results".
+- **Data:** each scenario's old `answer` is split into `title` / `feedback` / `steps`, keeping the original sentences. Heat photos, credits and key points live in `src/data/heatVisuals.js`.
+- **Photos** are openly licensed from Wikimedia Commons, resized to 800px in `src/assets/first-aid/heat/`, credited in small print under the cards. This environment now allows `commons.wikimedia.org`, `upload.wikimedia.org` and `thumb.wikimedia.org`.

@@ -1369,15 +1369,6 @@
   animation: fa-step-in var(--t-smart) var(--ease-out);
 }
 
-.fa-feedback {
-  gap: 12px;
-  animation: fa-step-in var(--t-smart) var(--ease-out);
-}
-
-.fa-feedback .fa-white__copy {
-  line-height: 1.4;
-}
-
 /* Skip (Figma yellow pill) + Check / Next (green button) */
 .fa-actions {
   display: flex;

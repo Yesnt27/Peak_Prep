@@ -1,5 +1,7 @@
 import useGo from '../../app/useGo.js'
 import { BackButton } from '../../components/controls.jsx'
+import Button from '../../components/Button.jsx'
+import ProgressiveBlur from '../../components/ProgressiveBlur.jsx'
 import info27 from '../../assets/first-aid/info-27.svg'
 import info19 from '../../assets/first-aid/info-19.svg'
 import './FirstAid.css'
@@ -9,6 +11,25 @@ import './FirstAid.css'
 export function Back({ to, transition }) {
   const go = useGo()
   return <BackButton className="fa-back" onClick={() => go(to, transition)} />
+}
+
+/** Figma group 2124:5149: Retry + main button in the nav-bar pill, pinned to the bottom. */
+export function ActionBar({ label, onRetry, onNext, className = '' }) {
+  return (
+    <div className={`fa-bar ${className}`}>
+      {/* Same progressive blur as the nav bar: clear at the top, strongest behind the buttons. */}
+      <div className="fa-bar__blur">
+        <ProgressiveBlur />
+      </div>
+      <div className="fa-bar__pill" />
+      <Button className="fa-bar__retry" onClick={onRetry}>
+        Retry
+      </Button>
+      <Button className="fa-bar__mins" onClick={onNext}>
+        {label}
+      </Button>
+    </div>
+  )
 }
 
 export function Info({ size = 19 }) {

@@ -1,0 +1,82 @@
+/* ---------- 1646:12263 Right or wrong → quiz feedback after Check ---------- */
+.fa-fb {
+  animation: fa-step-in var(--t-smart) var(--ease-out);
+}
+
+/* Figma copy: Header 4, 13px / 1.6 */
+.fa-fb__copy {
+  line-height: 1.6;
+}
+
+/* Where Figma has the thermometer → heat waves illustration */
+.fa-fb__photo {
+  display: block;
+  width: 100%;
+  height: 170px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* Next Steps row: same 27px gap as Figma's eye ring + "Treating for Shock" */
+.fa-fb__row {
+  align-items: center;
+  width: 100%;
+}
+
+/* Round photo in the eye ring's 121px slot, ringed in the ring's yellow */
+.fa-fb__ring {
+  flex: none;
+  width: 121px;
+  height: 121px;
+  border: 4px solid var(--yellow-1);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.fa-fb__row .fa-shock__text {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+}
+
+.fa-fb__row .fa-shock__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fa-fb__point {
+  position: relative;
+  padding-left: 12px;
+}
+
+.fa-fb__point::before {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--main-green);
+  content: '';
+}
+
+.fa-fb__credits {
+  width: 100%;
+  opacity: 0.6;
+  font: 400 11px/1.4 var(--font-poppins);
+}
+
+.fa-fb__credits a {
+  color: inherit;
+}
+
+/* Retry / Next bar fades in with the cards */
+.fa-bar--in {
+  animation: fa-step-in var(--t-smart) var(--ease-out);
+}
+
+/* Charts / posters: whole image at its own shape, no crop */
+.fa-fb__photo--whole {
+  height: auto;
+}
