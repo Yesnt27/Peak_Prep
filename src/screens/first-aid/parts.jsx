@@ -5,6 +5,7 @@ import ProgressiveBlur from '../../components/ProgressiveBlur.jsx'
 import info27 from '../../assets/first-aid/info-27.svg'
 import info19 from '../../assets/first-aid/info-19.svg'
 import './FirstAid.css'
+import './Practice.css'
 
 /* ---------- Shared pieces ---------- */
 
@@ -21,6 +22,8 @@ export function ActionBar({ label, onRetry, onNext, className = '' }) {
       <div className="fa-bar__blur">
         <ProgressiveBlur />
       </div>
+      {/* Fade to the page grey under the blur, so content never ends abruptly (Round 20). */}
+      <div className="fa-bar__fade" />
       <div className="fa-bar__pill" />
       <Button className="fa-bar__retry" onClick={onRetry}>
         Retry
@@ -41,41 +44,41 @@ export function Info({ size = 19 }) {
   )
 }
 
-/** `seconds` = time left, shown as m:ss; omitted on the results screen (no timer). */
-export function PracticeHeader({ seconds }) {
+/**
+ * Figma 2579:6448 header for the practice + results screens: grey 50px back button,
+ * "First aid fundamentals / Practice", the teal timer box (`seconds` left, as m:ss; omitted on results)
+ * and the lesson tag.
+ */
+export function PracticeTop({ lesson, back, seconds }) {
+  const go = useGo()
   const timed = seconds !== undefined
   const time = timed ? `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}` : ''
   return (
-    <div className="fa-practice__head">
-      <p className="fa-practice__kicker">First aid fundamentals</p>
-      <div className="fa-practice__title">
-        <h1>Practice</h1>
+    <div className="fa-q__top">
+      <BackButton className="fa-q__back" onClick={() => go(back)} />
+      <header className="fa-q__head">
+        <div>
+          <p className="fa-q__kicker">First aid fundamentals</p>
+          <h1 className="fa-q__title">Practice</h1>
+        </div>
         {timed && (
-          <p className={seconds === 0 ? 'fa-timer fa-timer--up' : 'fa-timer'} aria-label={`${time} left`}>
+          <p className={seconds === 0 ? 'fa-q__timer fa-q__timer--up' : 'fa-q__timer'} aria-label={`${time} left`}>
             {time}
           </p>
         )}
-      </div>
+      </header>
+      <LessonTag lesson={lesson} className="fa-q__tag" />
     </div>
   )
 }
 
-/** "Scenario n of N" + the lesson's category tag. `index` is omitted on the results screen. */
-export function ScenarioBar({ lesson, index }) {
+/** The lesson's category tag (Figma 2579:6490): icon + e.g. "Heat-related situations" on yellow-3. */
+export function LessonTag({ lesson, className = '' }) {
   const icon = lesson.icon
   return (
-    <>
-      <div className="fa-scenario__count">
-        <p>
-          {index === undefined
-            ? `${lesson.scenarios.length} of ${lesson.scenarios.length} scenarios`
-            : `Scenario ${index + 1} of ${lesson.scenarios.length}`}
-        </p>
-      </div>
-      <div className="fa-scenario__tag">
-        <span className="fa-fire" style={{ WebkitMaskImage: `url("${icon}")`, maskImage: `url("${icon}")` }} />
-        <p>{lesson.tag}</p>
-      </div>
-    </>
+    <div className={`fa-scenario__tag ${className}`}>
+      <span className="fa-fire" style={{ WebkitMaskImage: `url("${icon}")`, maskImage: `url("${icon}")` }} />
+      <p>{lesson.tag}</p>
+    </div>
   )
 }

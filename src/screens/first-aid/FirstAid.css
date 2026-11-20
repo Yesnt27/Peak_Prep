@@ -444,33 +444,9 @@
   left: 23px;
 }
 
-/* ---------- Practice header + scenario bar (12155, 12263) ---------- */
-.fa-practice__head {
-  display: flex;
-  flex-direction: column;
-}
-
 .fa-practice__kicker {
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
-}
-
-.fa-practice__title {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  line-height: 1.139;
-  white-space: nowrap;
-}
-
-.fa-practice__title h1 {
-  font: 700 30px/1.139 var(--font-poppins);
-  letter-spacing: -0.6px;
-}
-
-.fa-practice__title p {
-  font: 400 24px/1.139 var(--font-poppins);
-  letter-spacing: -0.48px;
 }
 
 .fa-scenario {
@@ -525,89 +501,6 @@
 
 .fa-white--center {
   align-items: center;
-}
-
-.fa-question__text {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.fa-question__title {
-  font: 600 16px/1.139 var(--font-poppins);
-  letter-spacing: -0.32px;
-}
-
-.fa-question__body {
-  font: 400 13px/1.4 var(--font-poppins);
-  letter-spacing: -0.26px;
-}
-
-.fa-answer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  height: 130px;
-  padding: 10px 20px;
-  border-radius: 12px;
-  background: #ffecc7;
-}
-
-.fa-answer {
-  gap: 10px;
-}
-
-.fa-answer__input {
-  flex: 1 0 0;
-  align-self: stretch;
-  min-width: 0;
-  padding: 2px 0;
-  border: 0;
-  background: transparent;
-  color: #414141;
-  font: 500 13px/1.4 var(--font-poppins);
-  letter-spacing: -0.26px;
-  resize: none;
-  outline: none;
-}
-
-.fa-answer__input::placeholder {
-  color: #595959;
-  opacity: 0.7;
-}
-
-.fa-answer:focus-within {
-  box-shadow: 0 0 0 2px var(--yellow-2);
-}
-
-/* Figma "Frame 1410103808": yellow-2, hover yellow-1 (instant). */
-.fa-skip {
-  position: absolute;
-  top: 783px;
-  left: 244px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 134px;
-  height: 50px;
-  border-radius: 49.895px;
-  background: var(--yellow-2);
-  color: #414141;
-  font: 600 16px/1.139 var(--font-poppins);
-  letter-spacing: -0.32px;
-}
-
-@media (hover: hover) {
-  .fa-skip:hover {
-    background: var(--yellow-1);
-  }
-}
-
-/* Touch: the hover look shows while a finger is held down. */
-@media (hover: none) {
-  .fa-skip:active {
-    background: var(--yellow-1);
-  }
 }
 
 /* ---------- 12263 Correct! ---------- */
@@ -784,6 +677,12 @@
 .fa-bar__blur {
   position: absolute;
   inset: 0;
+}
+
+.fa-bar__fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(244, 244, 244, 0) 20%, #f4f4f4 62%);
 }
 
 .fa-bar__pill {
@@ -1302,16 +1201,6 @@
   padding: 125px 23px 48px;
 }
 
-.fa-flow--bar {
-  gap: 40px;
-  padding-bottom: 220px; /* room for the fixed Retry / Continue bar */
-}
-
-.fa-scn {
-  gap: 40px;
-  animation: fa-step-in var(--t-smart) var(--ease-out);
-}
-
 @keyframes fa-step-in {
   from {
     opacity: 0;
@@ -1338,54 +1227,6 @@
 .fa-flow__cta.btn {
   flex: none;
   margin-top: auto;
-}
-
-.fa-timer {
-  font-variant-numeric: tabular-nums;
-}
-
-.fa-timer--up {
-  color: var(--yellow-2);
-}
-
-/* Hint: Figma tag (grey → #e7e7e7 hover → #d4e6b8 selected) on the white card. */
-.fa-hint {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  margin-top: -10px;
-}
-
-.fa-hint__btn.tag {
-  height: 32px;
-  background: var(--app-grey);
-  font-size: 13px;
-}
-
-.fa-hint__text {
-  font: 400 13px/1.4 var(--font-poppins);
-  letter-spacing: -0.26px;
-  animation: fa-step-in var(--t-smart) var(--ease-out);
-}
-
-/* Skip (Figma yellow pill) + Check / Next (green button) */
-.fa-actions {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-}
-
-.fa-skip--inline {
-  position: static;
-  flex: none;
-  height: 64px;
-}
-
-.fa-actions__main.btn {
-  flex: 1 0 0;
-  width: auto;
-  height: 64px;
 }
 
 .fa-takeaways {

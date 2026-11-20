@@ -406,3 +406,14 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
   - The readiness ring is drawn from the training's % (SVG, was a fixed 82% image).
   - Packing subtitle, Hiking Safety title and the Hike Completed log (search field, trail card, review title) use the opened hike's name.
   - Still shared across hikes: packing items, lesson progress, the week strip and Home's "Today's training" (Brunswick).
+
+### Round 20 — practice screen from Figma 2579:6448, bottom fades, keyboard (from Kenny, 2026-11-20)
+
+- **Practice question** (`first-aid/Practice.jsx` + `Practice.css`) follows Figma "First aid module" `2579:6448`; every box was measured against the frame (back, title, timer, tag, image, sheet, count, question, answer box, "?", pill, Skip, Check all at the Figma x/y/size):
+  - 50px `#d9d9d9` back button; "First aid fundamentals" + "Practice" (Medium 30px); timer in a 79×63 light-teal box (yellow-3 at 0:00); lesson tag under the title.
+  - 402×308 image block (Figma grey placeholder) = the lesson photo (Heat: the Heat Exposure photo; not the per-scenario photos, which give answers away). White sheet overlaps it by 89px.
+  - Sheet: "Scenario n of N", the question at 222px wide, yellow-3 answer box 320×172 with placeholder "Type your answer___" and the 33px `#595959` "?" (tap = shows the hint under the question).
+  - Bottom: `#f5f5f5` pill with **Skip** (green, 124px) and **Check** (yellow-2, 204px). Check is always enabled, as in the frame (Round 4 had it grey until typed).
+- **Shared header:** `PracticeTop` in `parts.jsx` is used by the question, the feedback after Check and the lesson results, so the screens no longer jump between header styles. `PracticeHeader` / `ScenarioBar` and the old question CSS were removed.
+- **Bottom fades:** the question bar has a white fade (clear → white over 80px) under the pill; the Retry / Next and Retry / Continue bars fade to the page grey `#f4f4f4` under their blur.
+- **Mobile keyboard** (`app/Device.jsx`, app-wide): on phones the frame follows `window.visualViewport` (height + iOS `offsetTop`), so it shrinks to the area above the keyboard and pinned bars ride on top of it; the focused field is scrolled into view (`scroll-margin` on the answer box clears the bar). Checked with a simulated 336px keyboard on a 390×844 screen: question, typed text and Skip / Check all stay visible.

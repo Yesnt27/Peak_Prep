@@ -15,7 +15,7 @@ import eyeShape from '../../assets/first-aid/eye-shape.svg'
 import eyeIris from '../../assets/first-aid/eye-iris.svg'
 import eyePupil from '../../assets/first-aid/eye-pupil.svg'
 import eyeGlint from '../../assets/first-aid/eye-glint.svg'
-import { ActionBar, Back, PracticeHeader, ScenarioBar } from './parts.jsx'
+import { ActionBar, PracticeTop } from './parts.jsx'
 
 /* ---------- 1646:12263  Right or wrong → end of every lesson ---------- */
 
@@ -38,11 +38,12 @@ export function LessonComplete() {
         />
       }
     >
-      <div className="fa-page fa-flow fa-flow--bar">
-        <Back to="/first-aid" />
-        <PracticeHeader />
-        <div className="fa-scenario">
-          <ScenarioBar lesson={lesson} />
+      <div className="fa-q">
+        <PracticeTop lesson={lesson} back="/first-aid" />
+        <div className="fa-scenario fa-q__feedback">
+          <p className="fa-scenario__count">
+            {lesson.scenarios.length} of {lesson.scenarios.length} scenarios
+          </p>
           {lesson.slug === 'heat' ? <HeatResult /> : <Takeaways lesson={lesson} />}
         </div>
       </div>

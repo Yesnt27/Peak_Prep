@@ -3,14 +3,14 @@ import { Navigate, useParams } from 'react-router-dom'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
-import { Tag } from '../../components/controls.jsx'
 import { lessonBySlug } from '../../data/firstAid.js'
 import Feedback from './Feedback.jsx'
-import { ActionBar, Back, PracticeHeader, ScenarioBar } from './parts.jsx'
+import { ActionBar, PracticeTop } from './parts.jsx'
+import './Practice.css'
 
 const TIME_LIMIT = 3 * 60 // seconds per scenario
 
-/* ---------- 1646:12155  Practice → 1646:12263 feedback (one scenario at a time, every lesson) ---------- */
+/* ---------- 2579:6448  Practice question → 1646:12263 feedback (one scenario at a time, every lesson) ---------- */
 
 export function Practice() {
   const go = useGo()
@@ -36,31 +36,42 @@ export function Practice() {
     <Screen
       className="fa"
       fixed={
-        checked && (
+        checked ? (
           <ActionBar className="fa-bar--in" label={last ? 'See results' : 'Next scenario'} onRetry={retry} onNext={next} />
+        ) : (
+          <QuestionBar onSkip={next} onCheck={() => setChecked(true)} />
         )
       }
     >
-      <Scenario
-        key={`${index}.${attempt}`}
-        lesson={lesson}
-        index={index}
-        checked={checked}
-        onCheck={() => setChecked(true)}
-        onSkip={next}
-      />
+      <Scenario key={`${index}.${attempt}`} lesson={lesson} index={index} checked={checked} />
     </Screen>
   )
 }
 
+/** Figma group 2579:6470: Skip (green) + Check (yellow) in a grey pill, over a white fade so the page never cuts off. */
+function QuestionBar({ onSkip, onCheck }) {
+  return (
+    <div className="fa-qbar">
+      <div className="fa-qbar__pill">
+        <Button variant="green" className="fa-qbar__skip" onClick={onSkip}>
+          Skip
+        </Button>
+        <Button variant="yellow" className="fa-qbar__check" onClick={onCheck}>
+          Check
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 /** Keyed by scenario + attempt, so the answer, hint and timer start fresh each time. */
-function Scenario({ lesson, index, checked, onCheck, onSkip }) {
+function Scenario({ lesson, index, checked }) {
   const ref = useRef(null)
   const [answer, setAnswer] = useState('')
   const [hint, setHint] = useState(false)
   const [left, setLeft] = useState(TIME_LIMIT)
   const scenario = lesson.scenarios[index]
-  const hasAnswer = answer.trim().length > 0
+  const count = `Scenario ${index + 1} of ${lesson.scenarios.length}`
 
   // New scenario, or the answer was just checked: back to the top of the page.
   useEffect(() => {
@@ -75,48 +86,43 @@ function Scenario({ lesson, index, checked, onCheck, onSkip }) {
   }, [checked, left])
 
   return (
-    <div className={`fa-page fa-flow fa-scn${checked ? ' fa-flow--bar' : ''}`} ref={ref}>
-      <Back to={`/first-aid/${lesson.slug}`} />
-      <PracticeHeader seconds={left} />
-      <div className="fa-scenario">
-        <ScenarioBar lesson={lesson} index={index} />
-        {checked ? (
-          <Feedback scenario={scenario} />
-        ) : (
-          <>
-            <div className="fa-white fa-white--question">
-              <div className="fa-question__text">
-                <p className="fa-question__title">Scenario {index + 1}</p>
-                <p className="fa-question__body">{scenario.text}</p>
-              </div>
-              <div className="fa-answer">
-                <textarea
-                  className="fa-answer__input"
-                  aria-label="Your answer"
-                  placeholder="Type your answer…"
-                  value={answer}
-                  onChange={(e) => setAnswer(e.target.value)}
-                />
-              </div>
-              <div className="fa-hint">
-                <Tag compact selected={hint} className="fa-hint__btn" onClick={() => setHint(!hint)}>
-                  Hint
-                </Tag>
-                {hint && <p className="fa-hint__text">{scenario.hint}</p>}
-              </div>
-            </div>
+    <div className="fa-q" ref={ref}>
+      <PracticeTop lesson={lesson} back={`/first-aid/${lesson.slug}`} seconds={left} />
 
-            <div className="fa-actions">
-              <button type="button" className="fa-skip fa-skip--inline" onClick={onSkip}>
-                Skip
+      {checked ? (
+        <div className="fa-scenario fa-q__feedback">
+          <p className="fa-scenario__count">{count}</p>
+          <Feedback scenario={scenario} />
+        </div>
+      ) : (
+        <>
+          {/* Figma's grey image block (2579:6485): the lesson photo. */}
+          <img className="fa-q__photo" src={lesson.photo} alt="" />
+          <section className="fa-q__sheet">
+            <p className="fa-q__count">{count}</p>
+            <p className="fa-q__text">{scenario.text}</p>
+            {hint && <p className="fa-q__hint-text">Hint: {scenario.hint}</p>}
+            <div className="fa-q__answer">
+              <textarea
+                className="fa-q__input"
+                aria-label="Your answer"
+                placeholder="Type your answer___"
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+              />
+              <button
+                type="button"
+                className="fa-q__hint"
+                aria-label={hint ? 'Hide hint' : 'Show hint'}
+                aria-pressed={hint}
+                onClick={() => setHint(!hint)}
+              >
+                ?
               </button>
-              <Button className="fa-actions__main" disabled={!hasAnswer} onClick={onCheck}>
-                Check
-              </Button>
             </div>
-          </>
-        )}
-      </div>
+          </section>
+        </>
+      )}
     </div>
   )
 }

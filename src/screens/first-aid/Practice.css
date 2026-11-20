@@ -1,0 +1,230 @@
+/* ---------- Figma 2579:6448 "First aid module" → practice question (positions in design px) ---------- */
+.fa-q {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: #f4f4f4;
+  color: var(--body-copy-gray);
+  animation: fa-step-in var(--t-smart) var(--ease-out);
+}
+
+/* Back (19, 44) → title block (20, 107) → tag (22, 183) */
+.fa-q__top {
+  display: flex;
+  flex-direction: column;
+  padding: 44px 24px 0 20px;
+}
+
+/* Group 1410103679: 50px #d9d9d9 circle, dark chevron, no border or shadow */
+.fa-q__back.back-btn {
+  width: 50px;
+  height: 50px;
+  margin-left: -1px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #d9d9d9;
+  filter: none;
+}
+
+.fa-q__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 13px;
+}
+
+/* Figma text boxes use Poppins' normal line height: kicker 107–131, title 125–170 (they overlap 6px) */
+.fa-q__kicker {
+  font: 400 16px/24px var(--font-poppins);
+}
+
+.fa-q__title {
+  margin-top: -6px;
+  font: 500 30px/45px var(--font-poppins);
+}
+
+/* Timer box (299, 107), 79 × 63, light teal */
+.fa-q__timer {
+  display: grid;
+  place-items: center;
+  width: 79px;
+  height: 63px;
+  border-radius: 12px;
+  background: var(--teal-1);
+  font: 500 24px/1 var(--font-poppins);
+  font-variant-numeric: tabular-nums;
+}
+
+.fa-q__timer--up {
+  background: var(--yellow-3);
+}
+
+.fa-q__tag.fa-scenario__tag {
+  width: 356px;
+  margin: 13px 0 0 2px;
+}
+
+/* Image block (0, 248), 402 × 308; the white sheet overlaps its last 89px */
+.fa-q__photo {
+  flex: none;
+  width: 402px;
+  height: 308px;
+  margin-top: 18px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* White sheet (0, 467) to the bottom; bottom padding lets the answer box scroll clear of the fade */
+.fa-q__sheet {
+  position: relative;
+  flex: 1 0 auto;
+  margin-top: -89px;
+  padding: 30px 50px 180px 32px;
+  border-radius: 12px 12px 0 0;
+  background: #fff;
+}
+
+.fa-q__count,
+.fa-q__text,
+.fa-q__hint-text {
+  margin-left: 5px;
+}
+
+/* "Scenario 2 of 8" (37, 497) */
+.fa-q__count {
+  font: 400 16px/24px var(--font-poppins);
+}
+
+/* Question (37, 529), 222px wide */
+.fa-q__text {
+  max-width: 222px;
+  margin-top: 8px;
+  font: 400 12px/18px var(--font-poppins);
+}
+
+.fa-q__hint-text {
+  max-width: 300px;
+  margin-top: 8px;
+  color: #595959;
+  font: 500 12px/18px var(--font-poppins);
+  animation: fa-step-in var(--t-smart) var(--ease-out);
+}
+
+/* Answer box (32, 622), 320 × 172, yellow-3 */
+.fa-q__answer {
+  position: relative;
+  width: 320px;
+  height: 172px;
+  margin-top: 21px;
+  border-radius: 12px;
+  background: var(--yellow-3);
+}
+
+/* Outline only while typing (not when the "?" inside it is tapped) */
+.fa-q__answer:has(.fa-q__input:focus) {
+  box-shadow: 0 0 0 2px var(--yellow-2);
+}
+
+/* Placeholder at (52, 640); right padding keeps text clear of the "?" */
+.fa-q__input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 18px 53px 16px 20px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--body-copy-gray);
+  font: 500 13px/1.4 var(--font-poppins);
+  resize: none;
+  outline: none;
+  /* While the keyboard is up, scrolling into view keeps the box above the Skip / Check bar and its fade */
+  scroll-margin: 16px 0 180px;
+}
+
+.fa-q__input::placeholder {
+  color: #595959;
+  opacity: 1;
+}
+
+/* Ellipse 10 at (307, 634): 33px #595959 circle, white "?" */
+.fa-q__hint {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background: #595959;
+  color: #fff;
+  font: 400 16px/1 var(--font-poppins);
+  transition: background-color 300ms var(--ease-out);
+}
+
+.fa-q__hint[aria-pressed='true'] {
+  background: var(--body-copy-gray);
+}
+
+@media (hover: hover) {
+  .fa-q__hint:hover {
+    background: var(--body-copy-gray);
+  }
+}
+
+/* Touch: the hover look shows while a finger is held down. */
+@media (hover: none) {
+  .fa-q__hint:active {
+    background: var(--body-copy-gray);
+  }
+}
+
+/* After Check / results: count + cards under the same header */
+
+.fa-q__feedback {
+  padding: 18px 23px 220px; /* room for the Retry / Next bar */
+}
+
+/* ---------- Bottom bar (group 2579:6470) ---------- */
+/* White fade (clear → white over 80px) behind the pill, so content fades out instead of cutting off */
+.fa-qbar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  height: 177px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff 80px);
+  pointer-events: none;
+}
+
+/* Pill (23, 777), 356 × 79, 18px above the bottom */
+.fa-qbar__pill {
+  position: absolute;
+  bottom: 18px;
+  left: 23px;
+  display: flex;
+  gap: 11px;
+  width: 356px;
+  height: 79px;
+  padding: 8px 8px 7px 9px;
+  border-radius: 50px;
+  background: #f5f5f5;
+  pointer-events: auto;
+}
+
+/* Skip (32, 785) 124 × 64 · Check (167, 785) 204 × 64 */
+.fa-qbar .btn {
+  height: 64px;
+  padding: 0;
+}
+
+.fa-qbar__skip.btn {
+  width: 124px;
+}
+
+.fa-qbar__check.btn {
+  width: 204px;
+}
