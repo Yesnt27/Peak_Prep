@@ -393,3 +393,16 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
   - Pinned Retry / Next bar (Figma group `2124:5149`, now the shared `ActionBar` in `parts.jsx`, also used by Results). Retry restarts the same scenario (empty answer, 3:00); the main button reads "Next scenario" / "See results".
 - **Data:** each scenario's old `answer` is split into `title` / `feedback` / `steps`, keeping the original sentences. Heat photos, credits and key points live in `src/data/heatVisuals.js`.
 - **Photos** are openly licensed from Wikimedia Commons, resized to 800px in `src/assets/first-aid/heat/`, credited in small print under the cards. This environment now allows `commons.wikimedia.org`, `upload.wikimedia.org` and `thumb.wikimedia.org`.
+
+### Round 19 — quiz photos fixed, Profile spacing, one training page per hike (from Kenny, 2026-11-20)
+
+- **Quiz photos:** every Heat scenario now has both photos (16 files in `src/assets/first-aid/heat/`). The missing ones had failed on Wikimedia's rate limit (HTTP 429) for full-size originals; they are now taken as standard-size thumbnails (`thumb.wikimedia.org`). Scenario 8's feedback image is the EPA "Slip, Slop, Slap & Wrap" sun-safety poster (playful animal theme; swap if it feels off).
+- **Profile spacing** (`FriendProfile.css`, so friend profiles match): sections 25 → 36px, header lines 12 → 16px, photo ↔ text 20 → 24px, title → first card 16 → 20px, between hike cards 16 → 24px.
+- **One training page per hike:**
+  - `/training` shows the training you opened last (`account.activeTraining`, set by `openTraining(hike)`); `useTraining()` / `trainingsFor(account)` in `app/account.js`.
+  - Demo trainings live in `src/data/trainings.js`: Brunswick (Figma values) and Black Tusk (from its Home card: Jun 23–24, 34%, 7 months to go; "On track" set to fit).
+  - Home → Training lists every training; each card opens its own page. Hike Details shows "View Training Plan" for any hike you train for.
+  - New training works on both accounts (`planTraining`, `startTraining`): Done adds the hike to Home → Training at 0% (newest first) and opens it. The single `account.training` field is replaced by `trainings: []` (old sessions still read).
+  - The readiness ring is drawn from the training's % (SVG, was a fixed 82% image).
+  - Packing subtitle, Hiking Safety title and the Hike Completed log (search field, trail card, review title) use the opened hike's name.
+  - Still shared across hikes: packing items, lesson progress, the week strip and Home's "Today's training" (Brunswick).

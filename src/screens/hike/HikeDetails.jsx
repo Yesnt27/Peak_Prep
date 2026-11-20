@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import ProgressiveBlur from '../../components/ProgressiveBlur.jsx'
 import useGo from '../../app/useGo.js'
-import { toggleLike, useAccount } from '../../app/account.js'
+import { openTraining, toggleLike, trainingsFor, useAccount } from '../../app/account.js'
 import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
 import { HIKES } from '../../data/hikes.js'
@@ -38,8 +38,12 @@ export default function HikeDetails() {
   const [difficulty, type] = hike.tag.split(' • ').map(titleCase)
   const [km, elev, time] = hike.stats
   // Start Preparation: your existing plan if you're training for this hike, otherwise the Create flow with it picked.
-  const training = isNew ? account.training?.hike === id : id === 'brunswick'
-  const start = () => go(training ? '/training' : `/new-training?hike=${id}`, 'smart')
+  // Training for this hike already → "View Training Plan" opens it; otherwise start the Create flow with it picked.
+  const training = trainingsFor(account).some((t) => t.hike === id)
+  const start = () => {
+    if (training) openTraining(id)
+    go(training ? '/training' : `/new-training?hike=${id}`, 'smart')
+  }
   // Back to wherever the hike was opened from.
   const back = () => (window.history.state?.idx > 0 ? window.history.back() : go('/home/saved'))
   const credits = hike.photos.map((src) => Object.entries(PHOTO_CREDITS).find(([f]) => src.includes(f.replace('.jpg', '')))?.[1]).filter(Boolean)

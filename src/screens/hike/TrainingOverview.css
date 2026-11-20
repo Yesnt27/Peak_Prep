@@ -49,10 +49,23 @@
   height: 76px;
 }
 
-.to-ring img {
+.to-ring img,
+.to-ring__fill {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.to-ring__fill {
+  width: 76px;
+  height: 76px;
+  overflow: visible;
+}
+
+.to-ring__fill circle {
+  fill: none;
+  stroke: var(--main-green);
+  stroke-width: 6.08;
 }
 
 .to-ring__value,

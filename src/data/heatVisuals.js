@@ -9,6 +9,11 @@ import drinkSun from '../assets/first-aid/heat/drink-sun.jpg'
 import steepSlope from '../assets/first-aid/heat/steep-slope.jpg'
 import descend from '../assets/first-aid/heat/descend.jpg'
 import sips from '../assets/first-aid/heat/sips.jpg'
+import unwell from '../assets/first-aid/heat/unwell.jpg'
+import cpr from '../assets/first-aid/heat/cpr.jpg'
+import sunSafety from '../assets/first-aid/heat/sun-safety.jpg'
+import recovery from '../assets/first-aid/heat/recovery.jpg'
+import sunHat from '../assets/first-aid/heat/sun-hat.jpg'
 
 /**
  * Heat Exposure quiz feedback visuals, one entry per scenario (same order as firstAid.js).
@@ -95,6 +100,12 @@ const HEAT_VISUALS = [
     key: { title: 'Heading down', items: ['Descend slowly', 'Keep them cool and hydrated', 'Stay together', 'Watch for symptoms'] },
   },
   {
+    photo: {
+      src: unwell,
+      alt: 'An exhausted hiker lying on an open mountainside beside their pack',
+      pos: '50% 70%',
+      credit: { artist: 'Alan Reid', license: 'CC BY-SA 2.0', source: commons('Exhausted_in_Glen_Tilt_-_geograph.org.uk_-_5062102.jpg') },
+    },
     stepsPhoto: {
       src: sips,
       alt: 'Health workers helping a patient take small sips of rehydration solution',
@@ -104,9 +115,33 @@ const HEAT_VISUALS = [
     key: { title: 'Small sips', items: ['Rest in the shade', 'Cool them down', 'Tiny sips, often', 'Still vomiting: call for help'] },
   },
   {
+    photo: {
+      src: cpr,
+      alt: 'Chest compressions on a CPR training manikin',
+      pos: '50% 45%',
+      credit: { artist: 'U.S. Air Force, Tanner Doerr', license: 'Public domain', source: commons('42nd_CES_perform_CPR_training_(9106100).jpg') },
+    },
+    stepsPhoto: {
+      src: recovery,
+      alt: 'A medic rolling a patient into the recovery position',
+      pos: '42% 78%',
+      credit: { artist: 'U.S. Army, Robert Yde', license: 'Public domain', source: commons('15th_BSB_medics_provide_first_aid_training_to_AAFES_employees_DVIDS58219.jpg') },
+    },
     key: { title: 'Check in order', items: ['Scene is safe', 'Response and breathing', 'Call 911', 'CPR, or recovery position'] },
   },
   {
+    photo: {
+      src: sunSafety,
+      alt: 'EPA sun safety poster: slip on a shirt, slop on sunscreen, slap on a hat and wrap on sunglasses',
+      fit: 'whole',
+      credit: { artist: 'U.S. EPA SunWise', license: 'Public domain', source: commons('On_"Don\'t_Fry_Day"_(and_Every_Day),_Slip,_Slop,_Slap_&_Wrap!_-_NARA_-_6061277.jpg') },
+    },
+    stepsPhoto: {
+      src: sunHat,
+      alt: 'A hiker in a sun hat, sunglasses and light layers on a sunny desert trail',
+      pos: '38% 40%',
+      credit: { artist: 'Joshua Tree NPS', license: 'Public domain', source: commons('Hiker_ready_for_desert_weather_(52030114156).jpg') },
+    },
     key: { title: 'Hot-day plan', items: ['Start very early', 'Extra water and electrolytes', 'Hat, sunscreen, light layers', 'Set a turnaround time'] },
   },
 ]

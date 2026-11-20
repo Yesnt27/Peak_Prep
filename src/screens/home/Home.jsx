@@ -10,7 +10,7 @@ import ListItem from '../../components/ListItem.jsx'
 import Avatar from '../../components/Avatar.jsx'
 import Button from '../../components/Button.jsx'
 import EmptyState from '../../components/EmptyState.jsx'
-import { toggleLike, useAccount } from '../../app/account.js'
+import { openTraining, toggleLike, trainingsFor, useAccount } from '../../app/account.js'
 import SegmentedTabs from '../../components/SegmentedTabs.jsx'
 import avatar from '../../assets/home/avatar.png'
 import searchIcon from '../../assets/icons/search.svg'
@@ -98,22 +98,30 @@ function SortMenu({ sort, onChange }) {
 }
 
 function Training({ go, account }) {
+  const trainings = trainingsFor(account)
+  // Each card opens the Training overview for its own hike.
+  const open = (hike) => {
+    openTraining(hike)
+    go('/training', 'smart')
+  }
+  const cards = trainings.map((t) => (
+    <TrailCard
+      key={t.hike}
+      id={t.hike}
+      date={t.date}
+      {...(account.type === 'new' ? likeProps(account, t.hike) : { saved: true })}
+      progress={{ pct: t.pct, text: t.fresh ? '0% ready · just started' : `${t.pct}% ready · ${t.toGo}` }}
+      onClick={() => open(t.hike)}
+    />
+  ))
   if (account.type === 'new') {
-    if (!account.training)
+    if (!trainings.length)
       return (
         <EmptyState title="No training yet" text="Pick a hike and we’ll build a training plan around it.">
           <Button onClick={() => go('/new-training')}>Start training journey</Button>
         </EmptyState>
       )
-    const key = account.training.hike
-    return (
-      <TrailCard
-        id={key}
-        {...likeProps(account, key)}
-        progress={{ pct: 0, text: '0% ready · just started' }}
-        onClick={() => go('/training', 'smart')}
-      />
-    )
+    return cards
   }
   return (
     <>
@@ -133,21 +141,8 @@ function Training({ go, account }) {
           <img src={chevRightGreen} alt="" />
         </button>
       </section>
-      {/* Hikes being trained for: the prep-progress card, opening the training plan. */}
-      <TrailCard
-        id="brunswick"
-        date="Sat, Dec 12"
-        saved
-        progress={{ pct: 82, text: '82% ready · 10 days to go' }}
-        onClick={() => go('/training', 'smart')}
-      />
-      <TrailCard
-        id="blackTusk"
-        date="Jun 23–24"
-        saved
-        progress={{ pct: 34, text: '34% ready · 7 months to go' }}
-        onClick={() => go('/training', 'smart')}
-      />
+      {/* Hikes being trained for: the prep-progress card, opening that hike's training plan. */}
+      {cards}
     </>
   )
 }

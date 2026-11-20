@@ -7,7 +7,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 36px; /* Round 19: roomier (was 25px) */
   padding: 108px 23px 150px; /* header just below the back button (48–93px) */
   color: var(--body-copy-gray);
 }
@@ -21,7 +21,7 @@
 .fp-head {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
 }
 
 .fp-photo {
@@ -36,7 +36,7 @@
   display: flex;
   flex: 1 0 0;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   min-width: 0;
 }
 
@@ -175,7 +175,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: -9px; /* 16px to the first card */
+  margin-bottom: -16px; /* 20px to the first card */
 }
 
 .fp-section__title {
@@ -193,7 +193,7 @@
 .fp-cards {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
 /* "See all ›": same green text link as Home's "Full analytics". */

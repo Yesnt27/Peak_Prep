@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import ShareButton from '../../components/ShareButton.jsx'
-import { getAccount, levelFor, updateAccount, useAccount } from '../../app/account.js'
+import { levelFor, planTraining, startTraining, useAccount } from '../../app/account.js'
 import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/FlowStep.jsx'
 import TrailCard from '../../components/TrailCard.jsx'
 import BottomSheet from '../../components/BottomSheet.jsx'
@@ -58,7 +58,7 @@ export function TargetHike() {
       back="/home/saved"
       next="/new-training/date"
       ready={picked}
-      onNext={() => updateAccount({ plannedHike: key ?? 'blackTusk' })}
+      onNext={() => planTraining({ plannedHike: key ?? 'blackTusk' })}
     >
       <div className="fs-body nt-body">
         <Intro title="Target Hike" sub="The hike you’re training for." />
@@ -127,7 +127,7 @@ export function HikeDate() {
       back="/new-training"
       next="/new-training/trip"
       ready={month !== null}
-      onNext={() => updateAccount({ plannedDate: `${month.slice(0, 3)} ${year}` })}
+      onNext={() => planTraining({ plannedDate: `${month.slice(0, 3)} ${year}` })}
     >
       <div className="fs-body nt-body">
         <Intro title="Hike Date" />
@@ -384,10 +384,8 @@ export function Schedule() {
       nextTransition="smart"
       cta="Done"
       ready={days.length > 0 && time !== null}
-      // A new account's training page is built from the hike they picked, at 0%.
-      onNext={() =>
-        updateAccount({ training: { hike: getAccount().plannedHike ?? 'blackTusk', date: getAccount().plannedDate } })
-      }
+      // Done adds the picked hike to Home → Training at 0% and opens its training page.
+      onNext={startTraining}
     >
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Your training schedule" sub="We’ll build the plan around your life." />

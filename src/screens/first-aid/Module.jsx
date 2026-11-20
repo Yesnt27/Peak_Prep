@@ -14,6 +14,8 @@ import { useParams, Navigate } from 'react-router-dom'
 import { LESSONS, completedLessons } from '../../app/progress.js'
 import { lessonBySlug } from '../../data/firstAid.js'
 import { Back } from './parts.jsx'
+import { useTraining } from '../../app/account.js'
+import { HIKES } from '../../data/hikes.js'
 
 /* ---------- 1646:12184  First aid module (lesson list) ---------- */
 
@@ -43,6 +45,7 @@ function dragScroll(e) {
 }
 
 export function FirstAidModule() {
+  const { hike } = useTraining()
   const go = useGo()
   const done = completedLessons()
   return (
@@ -56,7 +59,7 @@ export function FirstAidModule() {
           </div>
         </div>
         <div className="fa-module">
-          <h1 className="fa-module__title">Brunswick Mountain Trail Safety</h1>
+          <h1 className="fa-module__title">{HIKES[hike].title} Safety</h1>
           <p className="fa-module__sub">Select a lesson to complete:</p>
           <div className="fa-lessons">
             {/* Every lesson is a button with the same states: grey → yellow on hover/press; done = green. */}

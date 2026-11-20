@@ -20,9 +20,9 @@ export default function Feedback({ scenario }) {
       <section className="fa-white fa-white--center fa-fb">
         <h2 className="fa-white__head">Next Steps</h2>
         <p className="fa-white__copy fa-fb__copy">{steps}</p>
-        {stepsPhoto && (
+        {(stepsPhoto || key) && (
           <div className="fa-shock fa-fb__row">
-            <Photo className="fa-fb__ring" photo={stepsPhoto} />
+            {stepsPhoto && <Photo className="fa-fb__ring" photo={stepsPhoto} />}
             {key && (
               <div className="fa-shock__text">
                 <p className="fa-shock__title">{key.title}</p>

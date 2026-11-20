@@ -13,6 +13,8 @@ import mediumIcon from '../../assets/hiker-log/medium.svg'
 import difficultIcon from '../../assets/hiker-log/difficult.svg'
 import strenuousMask from '../../assets/hiker-log/strenuous-mask.png'
 import './HikerLog.css'
+import { useTraining } from '../../app/account.js'
+import { HIKES } from '../../data/hikes.js'
 
 function Step(props) {
   return <FlowStep label="Completed Hike" {...props} />
@@ -21,6 +23,7 @@ function Step(props) {
 /* 1646:11007 */
 export function Congrats() {
   const log = useHikerLog()
+  const { hike } = useTraining()
   return (
     <Step step={1} fill={52} back="/training" next="/log/details" ready={log.picked}>
       <div className="fs-body fs-body--congrats">
@@ -32,11 +35,11 @@ export function Congrats() {
           <Field label="Search trails:">
             <div className="fs-search">
               <img src={searchIcon} alt="" />
-              <TypeField defaultValue="Brunswick Mountain Trail" enterKeyHint="search" />
+              <TypeField key={hike} defaultValue={HIKES[hike].title} enterKeyHint="search" />
             </div>
           </Field>
           {/* Same card as Home; tap it to confirm this is the hike you completed (green ring). */}
-          <TrailCard id="brunswick" saved selected={log.picked} onClick={() => setLog({ picked: !log.picked })} />
+          <TrailCard id={hike} saved selected={log.picked} onClick={() => setLog({ picked: !log.picked })} />
         </div>
       </div>
     </Step>
@@ -209,6 +212,7 @@ function Answer({ children }) {
 export function ReviewDetails() {
   const go = useGo()
   const log = useHikerLog()
+  const { hike } = useTraining()
   const sub = [log.date || 'No date', log.time].filter(Boolean).join(' · ')
   return (
     <Screen
@@ -224,10 +228,10 @@ export function ReviewDetails() {
         <BackButton className="fs-back" onClick={() => go('/log/notes')} />
         <div className="fs-content hl-content--review">
           <div className="fs-intro">
-            <h1 className="fs-title hl-review__title">Brunswick Mountain Trail</h1>
+            <h1 className="fs-title hl-review__title">{HIKES[hike].title}</h1>
             <p className="fs-sub">{sub}</p>
           </div>
-          <TrailCard id="brunswick" saved />
+          <TrailCard id={hike} saved />
           <Field label="How did it feel?">
             <Answer>
               {log.feel && (

@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react'
+import { DEMO_TRAININGS } from '../data/trainings.js'
 
 /**
  * Who is using the prototype (no backend):
@@ -21,7 +22,8 @@ const NEW_ACCOUNT = {
   liked: [], // hike keys (data/hikes.js)
   friends: [], // person ids (data/friends.js)
   plannedHike: null, // picked on New training → Target Hike
-  training: null, // { hike } once New training is finished
+  trainings: [], // [{ hike, date }] started in New training (newest first)
+  activeTraining: null, // hike key of the training opened last (shown on /training)
 }
 
 const DEMO = { type: 'demo' }
@@ -84,6 +86,44 @@ export function toggleLike(key) {
 export function toggleFriend(id) {
   const friends = account.friends ?? []
   updateAccount({ friends: friends.includes(id) ? friends.filter((f) => f !== id) : [...friends, id] })
+}
+
+/* ---------- Trainings (both account types) ---------- */
+
+/** New training answers kept until Done (works on the demo account too). */
+export function planTraining(patch) {
+  set({ ...account, ...patch })
+}
+
+/** New training → Done: add the planned hike at 0% and open it. */
+export function startTraining() {
+  const hike = account.plannedHike ?? 'blackTusk'
+  const others = (account.trainings ?? []).filter((t) => t.hike !== hike)
+  set({ ...account, trainings: [{ hike, date: account.plannedDate }, ...others], activeTraining: hike })
+}
+
+/** Remember which training /training (and its Packing / Safety / Hike log pages) shows. */
+export function openTraining(hike) {
+  if (account.activeTraining !== hike) set({ ...account, activeTraining: hike })
+}
+
+/**
+ * Every hike this account trains for, newest first: ones started in New training (0%, `fresh`),
+ * then, on the demo account, the designed ones (data/trainings.js).
+ */
+export function trainingsFor(acc) {
+  const started = [...(acc.trainings ?? []), ...(acc.training ? [acc.training] : [])] // `training` = before Round 19
+    .filter((t, i, all) => all.findIndex((o) => o.hike === t.hike) === i)
+    .map((t) => ({ ...t, pct: 0, fresh: true }))
+  const designed = acc.type === 'new' ? [] : DEMO_TRAININGS.filter((d) => !started.some((t) => t.hike === d.hike))
+  return [...started, ...designed]
+}
+
+/** The training /training shows: the one opened last, else the first; a new account with none previews its planned hike. */
+export function useTraining() {
+  const acc = useAccount()
+  const list = trainingsFor(acc)
+  return list.find((t) => t.hike === acc.activeTraining) ?? list[0] ?? { hike: acc.plannedHike ?? 'blackTusk', pct: 0, fresh: true }
 }
 
 /** React hook: re-renders when the account changes. */

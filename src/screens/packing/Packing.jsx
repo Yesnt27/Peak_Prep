@@ -16,6 +16,8 @@ import stepperPlus from '../../assets/icons/stepper-plus.svg'
 import checkDefault from '../../assets/icons/check-default.svg'
 import { addedItems, guessWeight, setAddedItems } from '../../app/packing.js'
 import './Packing.css'
+import { useTraining } from '../../app/account.js'
+import { HIKES } from '../../data/hikes.js'
 
 // Data as shown in Figma "Packing - All Items" (1646:11433). [name, weight, packed]
 const GROUPS = [
@@ -112,6 +114,7 @@ function HelpButton() {
 }
 
 function Title({ edit }) {
+  const { hike } = useTraining()
   return (
     <div className="pk-title">
       <div className={edit ? 'pk-title__row pk-title__row--edit' : 'pk-title__row'}>
@@ -122,7 +125,7 @@ function Title({ edit }) {
           <HelpButton />
         )}
       </div>
-      <p className="pk-title__sub">Brunswick Mountain Trail Packing List</p>
+      <p className="pk-title__sub">{HIKES[hike].title} Packing List</p>
     </div>
   )
 }
