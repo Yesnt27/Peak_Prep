@@ -8,7 +8,7 @@
   animation: fa-step-in var(--t-smart) var(--ease-out);
 }
 
-/* Back (19, 44) → title block (20, 107) → tag (22, 183) */
+/* Back (19, 44) → title block (20, 107) → tag (22, 183); no timer (Round 21) */
 .fa-q__top {
   display: flex;
   flex-direction: column;
@@ -28,9 +28,6 @@
 }
 
 .fa-q__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   margin-top: 13px;
 }
 
@@ -42,22 +39,6 @@
 .fa-q__title {
   margin-top: -6px;
   font: 500 30px/45px var(--font-poppins);
-}
-
-/* Timer box (299, 107), 79 × 63, light teal */
-.fa-q__timer {
-  display: grid;
-  place-items: center;
-  width: 79px;
-  height: 63px;
-  border-radius: 12px;
-  background: var(--teal-1);
-  font: 500 24px/1 var(--font-poppins);
-  font-variant-numeric: tabular-nums;
-}
-
-.fa-q__timer--up {
-  background: var(--yellow-3);
 }
 
 .fa-q__tag.fa-scenario__tag {
@@ -85,53 +66,38 @@
   background: #fff;
 }
 
-.fa-q__count,
-.fa-q__text,
-.fa-q__hint-text {
-  margin-left: 5px;
-}
-
-/* "Scenario 2 of 8" (37, 497) */
+/* Count, question and hint share the answer box's left edge (x 32) and width (320px) */
 .fa-q__count {
   font: 400 16px/24px var(--font-poppins);
 }
 
-/* Question (37, 529), 222px wide */
 .fa-q__text {
-  max-width: 222px;
+  max-width: 320px;
   margin-top: 8px;
   font: 400 12px/18px var(--font-poppins);
 }
 
-.fa-q__hint-text {
-  max-width: 300px;
-  margin-top: 8px;
-  color: #595959;
-  font: 500 12px/18px var(--font-poppins);
-  animation: fa-step-in var(--t-smart) var(--ease-out);
-}
-
-/* Answer box (32, 622), 320 × 172, yellow-3 */
+/* Answer box (32, 622), 320 × 172, yellow-3; lighter while you type in it */
 .fa-q__answer {
-  position: relative;
   width: 320px;
   height: 172px;
   margin-top: 21px;
   border-radius: 12px;
   background: var(--yellow-3);
+  transition: background-color 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
 }
 
-/* Outline only while typing (not when the "?" inside it is tapped) */
-.fa-q__answer:has(.fa-q__input:focus) {
+.fa-q__answer:focus-within {
+  background: #fff6e3; /* yellow-3 halfway to white */
   box-shadow: 0 0 0 2px var(--yellow-2);
 }
 
-/* Placeholder at (52, 640); right padding keeps text clear of the "?" */
+/* Placeholder at (52, 640) */
 .fa-q__input {
   display: block;
   width: 100%;
   height: 100%;
-  padding: 18px 53px 16px 20px;
+  padding: 18px 20px 16px;
   border: 0;
   border-radius: 12px;
   background: transparent;
@@ -148,37 +114,30 @@
   opacity: 1;
 }
 
-/* Ellipse 10 at (307, 634): 33px #595959 circle, white "?" */
-.fa-q__hint {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  display: grid;
-  place-items: center;
-  width: 33px;
-  height: 33px;
-  border-radius: 50%;
-  background: #595959;
-  color: #fff;
-  font: 400 16px/1 var(--font-poppins);
-  transition: background-color 300ms var(--ease-out);
+/* Hint (Round 4 style): grey tag below the answer box; tap shows the hint under it */
+.fa-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 320px;
+  margin-top: 15px;
 }
 
-.fa-q__hint[aria-pressed='true'] {
-  background: var(--body-copy-gray);
+.fa-hint__btn.tag {
+  height: 32px;
+  font-size: 13px;
 }
 
-@media (hover: hover) {
-  .fa-q__hint:hover {
-    background: var(--body-copy-gray);
-  }
+/* Grey on the white sheet; hover #e7e7e7 and selected #d4e6b8 still come from the shared tag */
+.fa-hint__btn:not(.tag--selected) {
+  background: var(--app-grey);
 }
 
-/* Touch: the hover look shows while a finger is held down. */
-@media (hover: none) {
-  .fa-q__hint:active {
-    background: var(--body-copy-gray);
-  }
+.fa-hint__text {
+  font: 400 13px/1.4 var(--font-poppins);
+  letter-spacing: -0.26px;
+  animation: fa-step-in var(--t-smart) var(--ease-out);
 }
 
 /* After Check / results: count + cards under the same header */

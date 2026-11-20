@@ -46,26 +46,16 @@ export function Info({ size = 19 }) {
 
 /**
  * Figma 2579:6448 header for the practice + results screens: grey 50px back button,
- * "First aid fundamentals / Practice", the teal timer box (`seconds` left, as m:ss; omitted on results)
- * and the lesson tag.
+ * "First aid fundamentals / Practice" and the lesson tag. No timer: it's a learning module (Round 21).
  */
-export function PracticeTop({ lesson, back, seconds }) {
+export function PracticeTop({ lesson, back }) {
   const go = useGo()
-  const timed = seconds !== undefined
-  const time = timed ? `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}` : ''
   return (
     <div className="fa-q__top">
       <BackButton className="fa-q__back" onClick={() => go(back)} />
       <header className="fa-q__head">
-        <div>
-          <p className="fa-q__kicker">First aid fundamentals</p>
-          <h1 className="fa-q__title">Practice</h1>
-        </div>
-        {timed && (
-          <p className={seconds === 0 ? 'fa-q__timer fa-q__timer--up' : 'fa-q__timer'} aria-label={`${time} left`}>
-            {time}
-          </p>
-        )}
+        <p className="fa-q__kicker">First aid fundamentals</p>
+        <h1 className="fa-q__title">Practice</h1>
       </header>
       <LessonTag lesson={lesson} className="fa-q__tag" />
     </div>

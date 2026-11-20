@@ -417,3 +417,11 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - **Shared header:** `PracticeTop` in `parts.jsx` is used by the question, the feedback after Check and the lesson results, so the screens no longer jump between header styles. `PracticeHeader` / `ScenarioBar` and the old question CSS were removed.
 - **Bottom fades:** the question bar has a white fade (clear → white over 80px) under the pill; the Retry / Next and Retry / Continue bars fade to the page grey `#f4f4f4` under their blur.
 - **Mobile keyboard** (`app/Device.jsx`, app-wide): on phones the frame follows `window.visualViewport` (height + iOS `offsetTop`), so it shrinks to the area above the keyboard and pinned bars ride on top of it; the focused field is scrolled into view (`scroll-margin` on the answer box clears the bar). Checked with a simulated 336px keyboard on a 390×844 screen: question, typed text and Skip / Check all stay visible.
+
+### Round 21 — practice: hint below, no timer, lighter box while typing, aligned text (from Kenny, 2026-11-20)
+
+- **Hint** is back below the answer box (Round 4 style): grey "Hint" tag (hover `#e7e7e7`, selected `#d4e6b8`), tap shows the hint text under it. The "?" circle inside the box is gone. On a full-size phone the Hint tag sits just under the Skip / Check bar, so it is reached by scrolling a little.
+- **No timer** anywhere in the lesson (question, feedback, results): it's a learning module. The countdown and the teal timer box are removed.
+- **Answer box while typing:** fills lighter (`#fff6e3`, yellow-3 halfway to white) with the yellow-2 outline; back to yellow-3 when you leave it.
+- **Alignment:** "Scenario n of N", the question and the hint start at the answer box's left edge (x 32) and use its 320px width (were indented 5px and 222px wide).
+- **Keyboard fix hardened** (`Device.jsx`): the focused field is scrolled into view in a layout effect after the frame resizes, not before (it could run against the old frame size).

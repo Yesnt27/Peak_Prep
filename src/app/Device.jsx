@@ -23,10 +23,8 @@ function measure() {
 
 /** After the keyboard opens or closes, keep the field being typed in on screen (its scroll-margin clears pinned bars). */
 function revealFocusedField() {
-  requestAnimationFrame(() => {
-    const el = document.activeElement
-    if (el?.matches?.('input, textarea, [contenteditable="true"]')) el.scrollIntoView({ block: 'nearest' })
-  })
+  const el = document.activeElement
+  if (el?.matches?.('input, textarea, [contenteditable="true"]')) el.scrollIntoView({ block: 'nearest' })
 }
 
 export default function Device({ children }) {
@@ -34,22 +32,21 @@ export default function Device({ children }) {
 
   useLayoutEffect(() => {
     const update = () => setLayout(measure())
-    const onViewport = () => {
-      update()
-      revealFocusedField()
-    }
     const vv = window.visualViewport
     window.addEventListener('resize', update)
     window.addEventListener('orientationchange', update)
-    vv?.addEventListener('resize', onViewport)
+    vv?.addEventListener('resize', update)
     vv?.addEventListener('scroll', update)
     return () => {
       window.removeEventListener('resize', update)
       window.removeEventListener('orientationchange', update)
-      vv?.removeEventListener('resize', onViewport)
+      vv?.removeEventListener('resize', update)
       vv?.removeEventListener('scroll', update)
     }
   }, [])
+
+  // Runs once the resized frame is in the DOM, so the scroll is measured against the new (shorter) frame.
+  useLayoutEffect(revealFocusedField, [height])
 
   return (
     <div className={phone ? 'stage stage--phone' : 'stage'} style={phone && top ? { transform: `translateY(${top}px)` } : undefined}>
