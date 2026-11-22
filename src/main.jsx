@@ -10,6 +10,7 @@ import '@fontsource/black-han-sans/latin-400.css'
 
 import './styles/tokens.css'
 import './styles/base.css'
+import './app/pressed.js'
 import App from './App.jsx'
 
 // iOS Safari only applies :active (the press-and-hold look) once a touch listener exists.

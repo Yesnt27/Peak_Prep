@@ -8,11 +8,10 @@
   top: 48px;
 }
 
-/* Pinned "Continue" button: 356 x 68 at y=765 of the 874 frame. */
-.onb__cta {
-  position: absolute;
-  left: 23px;
-  bottom: 41px;
+/* Round 25: in the page flow, pushed to 41px from the screen bottom on short steps. */
+.onb__cta.btn {
+  flex: none;
+  margin-top: auto;
 }
 
 .onb__content {
@@ -21,8 +20,9 @@
   align-items: center;
   gap: 28px;
   width: 356px;
+  min-height: calc(100% - 125px);
   margin: 125px 23px 0;
-  padding-bottom: 200px;
+  padding-bottom: 41px;
 }
 
 .onb__content--tight {

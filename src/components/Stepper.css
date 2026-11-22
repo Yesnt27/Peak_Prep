@@ -7,30 +7,41 @@
   margin: -8px;
   padding: 8px; /* 36px tap target, 20px icon */
   border-radius: 50%;
-  transition: background-color 300ms var(--ease-out);
 }
 
 .sign-icon {
-  display: block;
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
   width: 20px;
   height: 20px;
+  border-radius: 50%;
+  transition: background-color 300ms var(--ease-out);
+}
+
+/* The bar; "+" adds the same bar turned upright. */
+.sign-icon span,
+.sign-icon--plus::after {
+  width: 9px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--body-copy-gray);
+  transition: background-color 300ms var(--ease-out);
+}
+
+.sign-icon--plus::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: '';
+  transform: translate(-50%, -50%) rotate(90deg);
 }
 
 .sign-btn:disabled {
   opacity: 0.35;
   cursor: default;
-}
-
-@media (hover: hover) {
-  .sign-btn:not(:disabled):hover {
-    background: #e7e7e7;
-  }
-}
-
-@media (hover: none) {
-  .sign-btn:not(:disabled):active {
-    background: #e7e7e7;
-  }
 }
 
 .stepper {
@@ -57,26 +68,48 @@
   color: #ababab;
 }
 
-/* Round 24: "−" = light-grey circle, light red on hover / press (no grey ring around it). */
+/* Round 24: "−" = light grey → light red. */
 .sign-icon--minus {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
   background: #e7e7e7;
-  transition: background-color 300ms var(--ease-out);
 }
 
-.sign-icon--minus span {
-  width: 9px;
-  height: 2px;
-  border-radius: 1px;
-  background: var(--body-copy-gray);
+/*
+ * Round 28: every "+" in the app except the nav bar's Create tab (Round 29, keeps its Figma icon).
+ * The circle is the only thing that changes:
+ * light green + dark mark → PeakPrep green + white mark (hover, press and hold).
+ */
+.sign-icon--plus {
+  background: var(--plus-circle, var(--light-green));
+}
+
+.sign-icon--plus span,
+.sign-icon--plus::after {
+  background: var(--plus-mark, var(--body-copy-gray));
+}
+
+.sign-icon--large {
+  width: 25px;
+  height: 25px;
+}
+
+.sign-icon--large span,
+.sign-icon--large::after {
+  width: 11px;
+}
+
+.plus-btn[data-held]:not(:disabled) {
+  --plus-circle: var(--main-green);
+  --plus-mark: #fff;
+}
+
+.sign-btn--minus[data-held]:not(:disabled) .sign-icon--minus {
+  background: #f6c6c1;
 }
 
 @media (hover: hover) {
-  .sign-btn--minus:not(:disabled):hover {
-    background: transparent;
+  .plus-btn:not(:disabled):hover {
+    --plus-circle: var(--main-green);
+    --plus-mark: #fff;
   }
 
   .sign-btn--minus:not(:disabled):hover .sign-icon--minus {
@@ -85,11 +118,36 @@
 }
 
 @media (hover: none) {
-  .sign-btn--minus:not(:disabled):active {
-    background: transparent;
+  .plus-btn:not(:disabled):active {
+    --plus-circle: var(--main-green);
+    --plus-mark: #fff;
   }
 
   .sign-btn--minus:not(:disabled):active .sign-icon--minus {
     background: #f6c6c1;
   }
+}
+
+/* Round 25: inside a field card (Age), the height of the unit dropdowns beside it. */
+.stepper--compact {
+  gap: 14px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 10px;
+}
+
+/* Round 26: press and hold without selecting text, opening the long-press menu or scrolling the page. */
+.stepper,
+.stepper .sign-btn {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.stepper .sign-btn {
+  touch-action: none;
+}
+
+.stepper .sign-icon {
+  pointer-events: none;
 }

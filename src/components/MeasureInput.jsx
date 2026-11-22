@@ -6,7 +6,7 @@ import './MeasureInput.css'
  * Weight / height text with units that stay visible while typing (Round 20).
  * Stored as one string: weight "150 lbs" / "68 kg"; height `5ft 8"` / "173 cm".
  */
-const nums = (v) => String(v ?? '').match(/\d+(?:\.\d+)?/g) ?? []
+const nums = (v) => String(v ?? '').match(/\d+(?:\.\d*)?/g) ?? []
 
 export function parseWeight(v, fallbackUnit = 'lbs') {
   const s = String(v ?? '')
@@ -16,12 +16,14 @@ export function parseWeight(v, fallbackUnit = 'lbs') {
 export function parseHeight(v, fallbackUnit = 'ft') {
   const s = String(v ?? '')
   const unit = /cm/i.test(s) ? 'cm' : /ft|'|"|”/.test(s) ? 'ft' : fallbackUnit
-  const [a = '', b = ''] = nums(s)
+  // Half-typed heights: `ft 3"` is feet cleared, `6ft "` is inches cleared.
+  const typed = s.match(/^([\d.]*)\s*ft\s*([\d.]*)/)
+  const [a = '', b = ''] = typed ? typed.slice(1) : nums(s)
   return unit === 'cm' ? { unit, cm: a } : { unit, ft: a, inch: b }
 }
 
 export const formatWeight = ({ n, unit }) => (n ? `${n} ${unit}` : '')
-export const formatHeight = (h) => (h.unit === 'cm' ? (h.cm ? `${h.cm} cm` : '') : h.ft ? `${h.ft}ft ${h.inch || 0}"` : '')
+export const formatHeight = (h) => (h.unit === 'cm' ? (h.cm ? `${h.cm} cm` : '') : h.ft || h.inch ? `${h.ft}ft ${h.inch}"` : '')
 
 const round1 = (n) => String(Math.round(n * 10) / 10)
 
@@ -116,7 +118,7 @@ export default function MeasureInput({ kind, value, unit, onChange, autoFocus, o
   return (
     <span className="measure" onBlur={blur}>
       <Box {...events} showUnit autoFocus={autoFocus} label="Height, feet" placeholder="5" width={28} value={h.ft} unit="ft" onChange={(ft) => onChange(formatHeight({ ...h, ft }))} />
-      <Box {...events} showUnit label="Height, inches" placeholder="8" width={28} value={h.inch} unit={'"'} onChange={(inch) => onChange(formatHeight({ ...h, ft: h.ft || '0', inch }))} />
+      <Box {...events} showUnit label="Height, inches" placeholder="8" width={28} value={h.inch} unit={'"'} onChange={(inch) => onChange(formatHeight({ ...h, inch }))} />
     </span>
   )
 }

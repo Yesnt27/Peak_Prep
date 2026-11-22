@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import backChevron from '../assets/icons/back-chevron.svg'
-import addItemIcon from '../assets/icons/add-item.svg'
 import dropdownArrow from '../assets/icons/dropdown-arrow.png'
 import checkDefault from '../assets/icons/check-default.svg'
 import checkHover from '../assets/icons/check-hover.svg'
 import checkGreen from '../assets/icons/check-green.svg'
 import Dropdown from './Dropdown.jsx'
+import { SignIcon } from './Stepper.jsx'
 import './controls.css'
 
 /** Round back button (Figma "Back button"). Hover / press: light grey (the dark-grey hover was removed). */
@@ -85,11 +85,11 @@ export function ToggleTag({ icon, children, selected: value, onChange }) {
   )
 }
 
-/** Figma "add item": white row with a green plus, turns pale green (#d4e6b8) on hover. */
+/** Figma "add item": white row with the app's "+"; only the "+" changes on hover / press (Round 28). */
 export function AddItem({ children, className = '', ...rest }) {
   return (
-    <button type="button" className={`add-item ${className}`} {...rest}>
-      <img className="add-item__icon" src={addItemIcon} alt="" />
+    <button type="button" className={`add-item plus-btn ${className}`} {...rest}>
+      <SignIcon sign="plus" />
       <span>{children}</span>
     </button>
   )
@@ -210,12 +210,8 @@ export function FieldCard({ rows, className = '', values, onChange }) {
                     onChange={(e) => change(row.label, e.target.value)}
                   />
                 )}
-                {row.unitControl ? (
-                  // Unit dropdown (Round 21), e.g. lbs / kg.
-                  row.unitControl
-                ) : (
-                  <img className="field-card__edit" src={row.icon} alt="" />
-                )}
+                {/* Unit dropdown (Round 21), e.g. lbs / kg. No pencils (Round 25). */}
+                {row.unitControl}
               </span>
             )}
           </div>

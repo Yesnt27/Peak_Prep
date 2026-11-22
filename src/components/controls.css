@@ -108,30 +108,6 @@
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
   text-align: left;
-  transition: background-color 300ms var(--ease-out);
-}
-
-.add-item__icon {
-  flex: none;
-  width: 19.809px;
-  height: 19.809px;
-}
-
-.add-item:active {
-  background: #d4e6b8;
-}
-
-@media (hover: hover) {
-  .add-item:hover {
-    background: #d4e6b8;
-  }
-}
-
-/* Touch: the hover look shows while a finger is held down. */
-@media (hover: none) {
-  .add-item:active {
-    background: #d4e6b8;
-  }
 }
 
 /* ---------- Toggle switch ---------- */
@@ -344,50 +320,11 @@
   white-space: nowrap;
 }
 
-.field-card__edit {
-  width: 13px;
-  height: 15px;
-  object-fit: cover;
-}
-
 .field-card__arrow {
   width: 13px;
   height: 13px;
   object-fit: contain;
   transition: transform 300ms var(--ease-out);
-}
-
-.field-card__units {
-  display: inline-flex;
-  flex: none;
-  padding: 2px;
-  border-radius: 8px;
-  background: #fff;
-}
-
-.field-card__unit {
-  min-width: 34px;
-  padding: 0 6px;
-  border-radius: 6px;
-  color: #8a8a8a;
-  font: 500 12px/1.9 var(--font-poppins);
-}
-
-.field-card__unit--on {
-  background: #d4e6b8;
-  color: var(--body-copy-gray);
-}
-
-@media (hover: hover) {
-  .field-card__unit:not(.field-card__unit--on):hover {
-    background: #e7e7e7;
-  }
-}
-
-@media (hover: none) {
-  .field-card__unit:not(.field-card__unit--on):active {
-    background: #e7e7e7;
-  }
 }
 
 /* ---------- Option cards ---------- */

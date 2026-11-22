@@ -26,7 +26,8 @@
 
 .hi-title {
   font: 700 30px/1.139 var(--font-poppins);
-  letter-spacing: -0.6px;  margin-bottom: 16px; /* Round 20 rhythm: title → first section 36px */
+  letter-spacing: -0.6px;
+  margin-bottom: 16px; /* Round 20 rhythm: title → first section 36px */
 }
 
 /* Round 19 rhythm: 32px between sections (20px gap + 12px). */
@@ -277,7 +278,7 @@
   color: #414141;
 }
 
-/* ---------- Basic Information rows (edit in place) ---------- */
+/* ---------- Activity & Health rows: the grey sign-up field (Round 25) ---------- */
 .hi-rows {
   display: flex;
   flex-direction: column;
@@ -291,78 +292,13 @@
   height: 57px;
   padding: 0 20px;
   border-radius: 12px;
-  background: #fff;
+  background: #ededed;
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
   white-space: nowrap;
-  transition: box-shadow 300ms var(--ease-out);
 }
 
-.hi-row--editing {
-  box-shadow: 0 0 0 2px #d4e6b8;
-}
-
-.hi-row__value {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-right: -10px;
-  padding: 6px 10px;
-  border-radius: 8px;
-}
-
-.hi-row__value b,
-.hi-row__input {
-  font: 600 15px/1.3 var(--font-poppins);
-  letter-spacing: -0.3px;
-}
-
-.hi-row__input {
-  width: 140px;
-  border: 0;
-  background: transparent;
-  color: var(--body-copy-gray);
-  text-align: right;
-  outline: none;
-}
-
-.hi-pencil {
-  width: 13px;
-  height: 15px;
-  object-fit: cover;
-}
-
-/* Figma: a 5 x 10 chevron rotated -90deg (points down); flips up while the menu is open. */
-.hi-chevron {
-  width: 6.667px;
-  height: 11.667px;
-  margin: 0 1.67px;
-  transform: rotate(-90deg);
-}
-
-.hi-chevron.dd-arrow--open {
-  transform: rotate(90deg);
-}
-
-@media (hover: hover) {
-  .hi-row__value:hover {
-    background: #e7e7e7;
-  }
-}
-
-@media (hover: none) {
-  .hi-row__value:active {
-    background: #e7e7e7;
-  }
-}
-
-/* Empty value on a new account: tap to add. */
-.hi-row__add {
-  color: #9a9a9a;
-  font: 500 15px/1.3 var(--font-poppins);
-}
-
-/* Round 18: sign-up answers (read-only); long lists wrap instead of overflowing. */
+/* Round 18: sign-up answers; long lists wrap instead of overflowing. */
 .hi-row--info {
   gap: 16px;
   height: auto;
@@ -375,21 +311,10 @@
   flex: none;
 }
 
-.hi-row__text {
+.hi-row__right .hi-row__text {
   min-width: 0;
   text-align: right;
   white-space: normal;
-}
-
-/* Round 21: weight / height = number (tap to type) + unit dropdown. */
-.hi-measure {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.hi-measure .unit-dd {
-  background: var(--app-grey);
 }
 
 /* Activity & Health rows open the sign-up field underneath to edit it. */

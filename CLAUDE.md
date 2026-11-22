@@ -499,3 +499,35 @@ App-wide patterns (measured on every route at 402px; outliers fixed):
 ### Round 24 — "−" look (from Olivia, 2026-11-22)
 
 - Every "−" (`SignButton` / `SignIcon` in `components/Stepper.jsx`) is a light-grey circle (#e7e7e7) with a dark bar, turning light red (#f6c6c1) on hover / press. "+" keeps the green Figma circle. On the grey Unfriend pill the "−" circle is white so it stays visible (light red when the pill is hovered).
+
+### Round 25 — shared profile card, age stepper, unpinned sign-up button (from Olivia, 2026-11-22)
+
+- **`components/ProfileCard.jsx`** is the one Gender > Age > Weight > Height card, used by sign-up step 1 ("Hiker profile") and Health Information ("Basic Information"). Edit it there, not per screen. Replaces Health's separate white rows and tap-to-edit.
+- **Age** is a −/+ stepper (`.stepper--compact`, 1–120) in both places, with no pencil. Blank shows a grey 18 (not from Figma) and saves nothing until tapped: "−" answers 18, "+" goes to 19.
+- **Gender** (was "Sex" in sign-up) has one option list: Female / Male / Non-binary / Prefer not to say. Still stored as `account.sex`.
+- **Health → Activity & Health** rows are the grey sign-up field (#ededed), with the same value text and arrow as the card. The editors underneath are the sign-up components.
+- **Sign-up steps:** Continue / Skip for now / Done is in the page flow on all 5 steps (bottom of the screen on short pages, after the content on long ones). Bottom-sheet Done buttons stay pinned.
+- **`MeasureInput`** saves on every keystroke, so half-typed values must parse back unchanged: "84." (decimal being typed), `ft 3"` (feet cleared), `6ft "` (inches cleared).
+
+### Round 26 — "Sex", saved starting age, press and hold (from Olivia, 2026-11-22)
+
+- The profile card's first row says **Sex** (replaces "Gender" from Round 25), on sign-up and Health Information. Same four options.
+- **Age starts saved at 18** for new accounts (`START_AGE` in `app/account.js`), shown as a real value (replaces Round 25's unsaved grey 18).
+- **Press and hold on every `Stepper`** (`components/useHoldRepeat.js`): a tap is one step; holding repeats after 400ms (120ms apart, then 70ms) until released or at the limit. Remove "−" buttons (`SignButton` on its own) don't repeat.
+
+### Round 27 — "+" look (from Olivia, 2026-11-22)
+
+- Every `SignButton` / `SignIcon` "+" is a light-green circle (`--light-green`) with a dark "+", turning PeakPrep green (`--main-green`) with a white "+" on hover / press. No grey ring around "+" or "−" (replaces the Round 22 ring and green Figma circle). On the light-green Add friend pill the circle is white, like "−" on Unfriend.
+- The "+" inside "Add …" rows (`AddItem`) is a different control and keeps its Figma icon.
+
+### Round 28 — one "+" on every screen, Intersex (from Olivia, 2026-11-22)
+
+- **Sex** options: Female / Male / Intersex / Prefer not to say. An earlier saved "Non-binary" is not converted; it shows "Choose".
+- **Every "+" is `SignIcon sign="plus"` inside a `.plus-btn`** (replaces Round 27's exceptions). Light-green circle + dark mark → PeakPrep green + white mark on hover, press and hold. Nothing else on the control changes. Never add a per-button "+" colour; use this class.
+  - Steppers, every "Add …" row (`AddItem`, no row tint any more), Add friend (pill is now white so the circle shows, no tint), the profile-photo badge and the nav bar Create tab (25px `large` icon; stays green on `/new-training…`).
+- `src/app/pressed.js` sets `data-held` on the pressed "+" / "−", since phones drop `:active` during a long press.
+
+### Round 29 — nav "+" exception, emergency contact moved (from Olivia, 2026-11-22)
+
+- **The nav bar Create "+" is the one and only exception** to the Round 28 "+" style. It keeps its Figma icon (plain dark "+" → green "+", 300ms). Don't give it `plus-btn` / `SignIcon`.
+- **Emergency contact** (name, phone, relationship, share trip plan) is edited in Settings → Manage Profile, under its own "Emergency Contact" heading, and no longer appears on Health Information (replaces Round 21's split). Sign-up step 5 is unchanged and uses the same saved values.

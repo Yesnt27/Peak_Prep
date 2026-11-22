@@ -1,19 +1,18 @@
 import { useState } from 'react'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
-import Dropdown from '../../components/Dropdown.jsx'
+import ProfileCard from '../../components/ProfileCard.jsx'
 import { BackButton } from '../../components/controls.jsx'
 import EmptyState from '../../components/EmptyState.jsx'
-import MeasureInput, { UnitDropdown, convertHeight, convertWeight, parseHeight, parseWeight } from '../../components/MeasureInput.jsx'
-import { ActivityFields, FieldOptions, HealthFields, SafetyFields } from '../onboarding/Onboarding.jsx'
+import { ActivityFields, FieldOptions, HealthFields } from '../onboarding/Onboarding.jsx'
 import '../onboarding/Onboarding.css'
-import { updateAccount, useAccount } from '../../app/account.js'
+import { useAccount } from '../../app/account.js'
 import dashLine from '../../assets/profile/dash-line.svg'
 import activityLegend from '../../assets/profile/activity-legend.svg'
 import activityChart from '../../assets/profile/activity-chart.svg'
 import maskHeart from '../../assets/profile/mask-heart.png'
 import maskSleep from '../../assets/profile/mask-sleep.png'
-import chevron from '../../assets/profile/chevron.svg'
+import dropdownArrow from '../../assets/icons/dropdown-arrow.png'
 import './Health.css'
 
 // [label, mask, value parts [text, bold], dot position] from Figma "watah" tiles.
@@ -22,118 +21,13 @@ const TILES = [
   ['Sleep', maskSleep, [['7', true], ['h ', false], ['43', true], ['m', false]], 'high'],
 ]
 
-const GENDERS = ['Female', 'Male', 'Non-binary', 'Prefer not to say'].map((g) => ({ id: g, label: g }))
-
-/** A row whose value turns into a text field when tapped (pencil cue), saved on Enter or tapping away. */
-function EditRow({ label, initial, inputMode, onSave }) {
-  const [value, setValue] = useState(initial)
-  const [editing, setEditing] = useState(false)
-  const done = (v) => {
-    const next = v.trim() || value
-    setValue(next)
-    onSave?.(next)
-    setEditing(false)
-  }
-  return (
-    <div className={editing ? 'hi-row hi-row--editing' : 'hi-row'}>
-      <span>{label}</span>
-      {editing ? (
-        <input
-          className="hi-row__input"
-          autoFocus
-          defaultValue={value}
-          inputMode={inputMode}
-          enterKeyHint="done"
-          aria-label={label}
-          onFocus={(e) => e.target.select()}
-          onBlur={(e) => done(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') e.currentTarget.blur()
-            if (e.key === 'Escape') setEditing(false)
-          }}
-        />
-      ) : (
-        <button
-          type="button"
-          className="hi-row__value"
-          aria-label={`Edit ${label}: ${value}`}
-          onClick={() => setEditing(true)}
-        >
-          {value ? <b>{value}</b> : <span className="hi-row__add">Add</span>}
-        </button>
-      )}
-    </div>
-  )
-}
-
 /** Figma "Health info" 1646:13208, laid out as the "Health info.png" reference: edit in place. */
-// Sign-up "Sex" options → this dropdown's options.
-const SEX_TO_GENDER = { Male: 'Male', Female: 'Female', Unspecified: 'Prefer not to say' }
-
-/**
- * Weight / Height row (Round 21): tap the number to type it (units stay visible), and pick the
- * unit from the dropdown beside it, which converts the value (186 lbs → 84.4 kg).
- */
-function MeasureRow({ label, kind, account }) {
-  const key = kind
-  const unitKey = `${kind}Unit`
-  const value = account[key] ?? ''
-  const unit = kind === 'weight' ? parseWeight(value, account[unitKey] ?? 'lbs').unit : parseHeight(value, account[unitKey] ?? 'ft').unit
-  const [editing, setEditing] = useState(false)
-  const [draft, setDraft] = useState(value)
-  const shown = (() => {
-    if (kind === 'weight') return parseWeight(value).n
-    const h = parseHeight(value)
-    return h.unit === 'cm' ? h.cm : h.ft ? `${h.ft} ft ${h.inch || 0}"` : ''
-  })()
-  const convert = kind === 'weight' ? convertWeight : convertHeight
-  return (
-    <div className={editing ? 'hi-row hi-row--editing' : 'hi-row'}>
-      <span>{label}</span>
-      <span className="hi-measure">
-        {editing ? (
-          <MeasureInput
-            kind={kind}
-            unit={unit}
-            value={draft}
-            autoFocus
-            showUnit={false}
-            onChange={setDraft}
-            onBlur={() => {
-              updateAccount({ [key]: draft })
-              setEditing(false)
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') e.currentTarget.blur()
-              if (e.key === 'Escape') setEditing(false)
-            }}
-          />
-        ) : (
-          <button
-            type="button"
-            className="hi-row__value"
-            aria-label={`Edit ${label}`}
-            onClick={() => {
-              setDraft(value)
-              setEditing(true)
-            }}
-          >
-            {shown ? <b>{shown}</b> : <span className="hi-row__add">Add</span>}
-          </button>
-        )}
-        <UnitDropdown kind={kind} unit={unit} onChange={(u) => updateAccount({ [unitKey]: u, [key]: convert(value, u) })} />
-      </span>
-    </div>
-  )
-}
-
 /**
  * Activity & Health (Round 21): each row shows the sign-up answer; tapping it opens the same
  * sign-up field below the row to change it. These are only edited here (not in Settings).
  */
 function SignUpRows({ account }) {
   const [open, setOpen] = useState(null)
-  const contact = account.contact ?? {}
   const rows = [
     ['Daily steps', account.steps, <ActivityFields key="s" parts={['steps']} />],
     [
@@ -143,7 +37,6 @@ function SignUpRows({ account }) {
     ],
     ['Injuries', (account.injuries ?? []).join(', '), <HealthFields key="i" parts={['injuries']} />],
     ['Health conditions', (account.healthConditions ?? []).join(', '), <HealthFields key="c" parts={['conditions']} />],
-    ['Emergency contact', [contact.name, contact.relationship].filter((v) => v?.trim()).join(', '), <SafetyFields key="e" />],
   ]
   return (
     <>
@@ -156,8 +49,8 @@ function SignUpRows({ account }) {
               <button type="button" className="hi-row hi-row--info hi-row--button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : label)}>
                 <span>{label}</span>
                 <span className="hi-row__right">
-                  {value ? <b className="hi-row__text">{value}</b> : <span className="hi-row__add">Add</span>}
-                  <img className={isOpen ? 'hi-chevron dd-arrow dd-arrow--open' : 'hi-chevron dd-arrow'} src={chevron} alt="" />
+                  {value ? <span className="field-card__picked hi-row__text">{value}</span> : <span className="field-card__placeholder">Add</span>}
+                  <img className={isOpen ? 'field-card__arrow dd-arrow dd-arrow--open' : 'field-card__arrow dd-arrow'} src={dropdownArrow} alt="" />
                 </span>
               </button>
               <div className="hi-edit__body">
@@ -177,11 +70,6 @@ export function HealthInfo() {
   const go = useGo()
   const account = useAccount()
   const isNew = account.type === 'new'
-  const [gender, setGenderState] = useState(SEX_TO_GENDER[account.sex] ?? account.sex ?? null)
-  const setGender = (g) => {
-    setGenderState(g)
-    updateAccount({ sex: g === 'Prefer not to say' ? 'Unspecified' : g ?? '' })
-  }
   return (
     <Screen className="hi">
       <div className="hi-content">
@@ -189,22 +77,7 @@ export function HealthInfo() {
         <div className="hi-body">
           <h1 className="hi-title">Health Information</h1>
           <h2 className="hi-subtitle">Basic Information</h2>
-          <div className="hi-rows">
-            <div className="hi-row">
-              <span>Gender</span>
-              <Dropdown options={GENDERS} value={gender} onChange={setGender} label="Gender" triggerClassName="hi-row__value">
-                {(open) => (
-                  <>
-                    {gender ? <b>{gender}</b> : <span className="hi-row__add">Choose</span>}
-                    <img className={open ? 'hi-chevron dd-arrow dd-arrow--open' : 'hi-chevron dd-arrow'} src={chevron} alt="" />
-                  </>
-                )}
-              </Dropdown>
-            </div>
-            <EditRow label="Age" initial={account.age ?? ''} inputMode="numeric" onSave={(v) => updateAccount({ age: v })} />
-            <MeasureRow label="Weight" kind="weight" account={account} />
-            <MeasureRow label="Height" kind="height" account={account} />
-          </div>
+          <ProfileCard />
 
           <SignUpRows account={account} />
 

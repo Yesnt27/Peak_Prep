@@ -40,10 +40,10 @@ export function ProfileView({
         <header className="fp-head">
           {onPhoto ? (
             // Tapping the photo opens the phone's photo picker (Photo Library / Take Photo / Choose File).
-            <label className="fp-photo-pick">
+            <label className="fp-photo-pick plus-btn">
               <Avatar className="fp-photo" src={photo} name={name} size={122} />
               <span className="fp-photo-pick__badge" aria-hidden="true">
-                +
+                <SignIcon sign="plus" large />
               </span>
               <input
                 type="file"
@@ -129,7 +129,7 @@ export default function FriendProfile() {
       actions={
         <button
           type="button"
-          className={added ? 'fp-add fp-add--added' : 'fp-add'}
+          className={added ? 'fp-add fp-add--added' : 'fp-add plus-btn'}
           aria-pressed={added}
           onClick={toggle}
         >

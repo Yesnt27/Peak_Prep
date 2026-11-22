@@ -9,10 +9,13 @@ import { DEMO_TRAININGS } from '../data/trainings.js'
  */
 const KEY = 'peakprep-account'
 
+// Round 26: a new account's age is saved as 18 from the start; − / + changes it.
+const START_AGE = '18'
+
 const NEW_ACCOUNT = {
   type: 'new',
   name: '',
-  age: '',
+  age: START_AGE,
   weight: '',
   height: '',
   sex: '',
@@ -47,7 +50,7 @@ const PROFILE_KEYS = new Set([
 function read() {
   try {
     const saved = JSON.parse(sessionStorage.getItem(KEY))
-    if (saved && saved.type) return saved.type === 'demo' ? { ...DEMO, ...saved } : saved
+    if (saved && saved.type) return saved.type === 'demo' ? { ...DEMO, ...saved } : { ...saved, age: saved.age || START_AGE }
   } catch {
     // storage blocked: demo account
   }

@@ -14,11 +14,10 @@ import {
   ToggleTag,
   WorkoutCard,
  TypeField } from '../../components/controls.jsx'
-import pencil from '../../assets/icons/pencil.png'
+import ProfileCard from '../../components/ProfileCard.jsx'
 import searchIcon from '../../assets/icons/search.svg'
 import { HIKES } from '../../data/hikes.js'
 import Stepper, { SignButton } from '../../components/Stepper.jsx'
-import MeasureInput, { UnitDropdown, convertHeight, convertWeight, parseHeight, parseWeight } from '../../components/MeasureInput.jsx'
 import snow from '../../assets/conditions/snow.png'
 import rain from '../../assets/conditions/rain.png'
 import heat from '../../assets/conditions/heat.png'
@@ -40,7 +39,7 @@ import './Onboarding.css'
 
 /**
  * Shared frame for step-by-step flows (onboarding, hiker log): back button,
- * step label + progress bar, title, pinned green button. `back`/`next` are
+ * step label + progress bar, title, green button at the end of the page (Round 25). `back`/`next` are
  * routes; leave one out when Figma has no connection for it.
  */
 export function Step({
@@ -62,17 +61,7 @@ export function Step({
 }) {
   const go = useGo()
   return (
-    <Screen
-      className="onb"
-      fixed={
-        <>
-          <Button className="onb__cta" disabled={!ready} onClick={next ? () => go(next, nextTransition) : undefined}>
-            {skip ? SKIP_LABEL : cta}
-          </Button>
-          {overlay}
-        </>
-      }
-    >
+    <Screen className="onb" fixed={overlay}>
       <BackButton className="onb__back" onClick={back ? () => go(back) : undefined} />
       <div className={tight ? 'onb__content onb__content--tight' : 'onb__content'}>
         <div className="onb__progress">
@@ -85,6 +74,10 @@ export function Step({
           {title}
           {children}
         </div>
+        {/* Round 25: not pinned. At the screen bottom on short steps, after the content on long ones. */}
+        <Button className="onb__cta" disabled={!ready} onClick={next ? () => go(next, nextTransition) : undefined}>
+          {skip ? SKIP_LABEL : cta}
+        </Button>
       </div>
     </Screen>
   )
@@ -123,15 +116,8 @@ function Field({ label, required: isRequired = false, children }) {
 
 
 
-// FieldCard row label → account field.
-const PROFILE_FIELDS = { Age: 'age', Weight: 'weight', Height: 'height', Sex: 'sex' }
-
 export function OnboardingWelcome() {
   const account = useAccount()
-  const [values, setValues] = useState(() => ({ Age: account.age || undefined, Sex: account.sex || undefined }))
-  // Round 20: weight / height keep their units visible while typing; the switch changes the unit.
-  const weightUnit = parseWeight(account.weight, account.weightUnit ?? 'lbs').unit
-  const heightUnit = parseHeight(account.height, account.heightUnit ?? 'ft').unit
   return (
     <Step
       step={1}
@@ -163,41 +149,10 @@ export function OnboardingWelcome() {
           </div>
         </Field>
         <Field label="Hiker profile:">
-          <ProfileCard account={account} values={values} setValues={setValues} weightUnit={weightUnit} heightUnit={heightUnit} />
+          <ProfileCard />
         </Field>
       </div>
     </Step>
-  )
-}
-
-/** Age / Weight / Height / Sex card (sign-up step 1 and Settings → Manage Profile). */
-export function ProfileCard({ account, values, setValues, weightUnit, heightUnit }) {
-  return (
-    <FieldCard
-      values={values}
-      onChange={(label, value) => {
-        setValues({ ...values, [label]: value })
-        updateAccount({ [PROFILE_FIELDS[label]]: value ?? '' })
-      }}
-      rows={[
-        { label: 'Age', icon: pencil, inputMode: 'numeric' },
-        {
-          label: 'Weight',
-          render: () => <MeasureInput kind="weight" unit={weightUnit} value={account.weight} onChange={(v) => updateAccount({ weight: v })} showUnit={false} />,
-          unitControl: (
-            <UnitDropdown kind="weight" unit={weightUnit} onChange={(u) => updateAccount({ weightUnit: u, weight: convertWeight(account.weight, u) })} />
-          ),
-        },
-        {
-          label: 'Height',
-          render: () => <MeasureInput kind="height" unit={heightUnit} value={account.height} onChange={(v) => updateAccount({ height: v })} showUnit={false} />,
-          unitControl: (
-            <UnitDropdown kind="height" unit={heightUnit} onChange={(u) => updateAccount({ heightUnit: u, height: convertHeight(account.height, u) })} />
-          ),
-        },
-        { label: 'Sex', options: ['Male', 'Female', 'Unspecified'] },
-      ]}
-    />
   )
 }
 
