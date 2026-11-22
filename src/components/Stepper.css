@@ -1,0 +1,95 @@
+/* Round 22: one "−" / "+" look everywhere. */
+.sign-btn {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  margin: -8px;
+  padding: 8px; /* 36px tap target, 20px icon */
+  border-radius: 50%;
+  transition: background-color 300ms var(--ease-out);
+}
+
+.sign-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.sign-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .sign-btn:not(:disabled):hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .sign-btn:not(:disabled):active {
+    background: #e7e7e7;
+  }
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--body-copy-gray);
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.stepper__value {
+  min-width: 2ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepper__value--empty {
+  color: #ababab;
+}
+
+/* Round 24: "−" = light-grey circle, light red on hover / press (no grey ring around it). */
+.sign-icon--minus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e7e7e7;
+  transition: background-color 300ms var(--ease-out);
+}
+
+.sign-icon--minus span {
+  width: 9px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--body-copy-gray);
+}
+
+@media (hover: hover) {
+  .sign-btn--minus:not(:disabled):hover {
+    background: transparent;
+  }
+
+  .sign-btn--minus:not(:disabled):hover .sign-icon--minus {
+    background: #f6c6c1;
+  }
+}
+
+@media (hover: none) {
+  .sign-btn--minus:not(:disabled):active {
+    background: transparent;
+  }
+
+  .sign-btn--minus:not(:disabled):active .sign-icon--minus {
+    background: #f6c6c1;
+  }
+}

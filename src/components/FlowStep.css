@@ -190,6 +190,26 @@
   transition: background-color 300ms var(--ease-out);
 }
 
+.fs-option--disabled,
+.fs-option--disabled:hover,
+.fs-option--disabled:active {
+  background: #ededed !important;
+  color: #ababab;
+  cursor: not-allowed;
+}
+
+.fs-option--disabled .fs-icon {
+  opacity: 0.35;
+}
+
+.fs-note {
+  width: 356px;
+  color: var(--body-copy-gray);
+  font: 400 13px/1.4 var(--font-poppins);
+  letter-spacing: -0.26px;
+  text-align: center;
+}
+
 .fs-option--selected {
   background: #d4e6b8;
   font-weight: 600;
@@ -234,7 +254,7 @@
 }
 
 .fs-title--review {
-  color: #474747;
+  color: var(--body-copy-gray);
 }
 
 .fs-icon img {

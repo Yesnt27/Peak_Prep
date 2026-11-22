@@ -67,7 +67,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 420px;
-  padding: 48px 20px 24px;
+  padding: 48px 23px 24px; /* Round 19: 23px app gutter */
   overflow: hidden;
   border-radius: 0 0 24px 24px;
 }

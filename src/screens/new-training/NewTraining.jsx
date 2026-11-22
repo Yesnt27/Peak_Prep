@@ -8,7 +8,7 @@ import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/Fl
 import TrailCard from '../../components/TrailCard.jsx'
 import BottomSheet from '../../components/BottomSheet.jsx'
 import { AddItem, BackButton, TagGroup, ToggleSwitch, ToggleTag, TypeField } from '../../components/controls.jsx'
-import { HIKES } from '../../data/hikes.js'
+import { HIKES, tripLimits } from '../../data/hikes.js'
 import searchIcon from '../../assets/icons/search.png'
 import yearArrow from '../../assets/new-training/year-arrow.png'
 import checkGreen from '../../assets/icons/check-green.svg'
@@ -175,9 +175,20 @@ export function HikeDate() {
 
 /* 1646:5714  new training 21 */
 export function TripType() {
-  const [trip, setTrip] = useState(null)
+  const account = useAccount()
+  const hike = HIKES[account.plannedHike ?? 'blackTusk']
+  const limits = tripLimits(hike)
+  const [trip, setTrip] = useState(() => (account.plannedTrip && limits[account.plannedTrip] ? account.plannedTrip : null))
+  const off = ['Day hike', 'Overnight'].filter((t) => !limits[t])
   return (
-    <Step step={3} fill={180} back="/new-training/date" next="/new-training/who" ready={trip !== null}>
+    <Step
+      step={3}
+      fill={180}
+      back="/new-training/date"
+      next="/new-training/who"
+      ready={trip !== null}
+      onNext={() => planTraining({ plannedTrip: trip })}
+    >
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Trip Type" sub="Day trip or a few nights out?" />
         <Options
@@ -194,8 +205,13 @@ export function TripType() {
               icon: <SmallIcon mask={multiDay} maskStyle={{ inset: '1.92px 0 -0.96px 0.96px', WebkitMaskPosition: '-0.96px -1.92px', maskPosition: '-0.96px -1.92px' }} />,
             },
             { label: 'Summit hike', icon: <SmallIcon src={summit} /> },
-          ]}
+          ].map((o) => ({ ...o, disabled: !limits[o.label] }))}
         />
+        {off.length > 0 && (
+          <p className="fs-note">
+            {limits.reason}, so {off.map((t) => t.toLowerCase()).join(' or ')} isn’t realistic.
+          </p>
+        )}
       </div>
     </Step>
   )
@@ -385,7 +401,7 @@ export function Schedule() {
       cta="Done"
       ready={days.length > 0 && time !== null}
       // Done adds the picked hike to Home → Training at 0% and opens its training page.
-      onNext={startTraining}
+      onNext={() => startTraining({ days, time })}
     >
       <div className="fs-body fs-body--center nt-body">
         <Intro title="Your training schedule" sub="We’ll build the plan around your life." />

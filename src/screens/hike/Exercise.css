@@ -1,0 +1,164 @@
+/* "Training - Endurance.png" (Round 20) on the app grid: back (23, 48), title at 125, 23px gutter. */
+.ex {
+  background: var(--app-grey);
+}
+
+.ex-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 125px 23px 160px;
+  color: var(--body-copy-gray);
+}
+
+.ex-back {
+  position: absolute;
+  top: 48px;
+  left: 23px;
+}
+
+.ex-title {
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
+}
+
+.ex-sub {
+  margin-top: 16px;
+  font: 400 16px/1.5 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.ex-media {
+  position: relative;
+  height: 420px; /* controls clear the nav bar on a 874px screen */
+  margin-top: 20px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #ddd;
+}
+
+.ex-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Line drawings: whole figure on white. */
+.ex-media--drawing {
+  background: #fff;
+}
+
+.ex-media--drawing img {
+  padding: 24px 24px 90px;
+  object-fit: contain;
+}
+
+.ex-timer {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  padding: 4px 0;
+  border-radius: 12px;
+  background: #fff;
+  font: 600 36px/1.4 var(--font-poppins);
+  letter-spacing: -0.72px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.ex-progress {
+  position: relative;
+  height: 5px;
+  margin: 22px 0 0;
+  border-radius: 3px;
+  background: #b5b5b5;
+}
+
+.ex-progress__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--main-green);
+}
+
+.ex-progress__thumb {
+  position: absolute;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--main-green);
+  transform: translate(-50%, -50%);
+}
+
+.ex-controls {
+  display: flex;
+  align-items: stretch;
+  height: 61px;
+  margin-top: 20px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.ex-step {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: var(--body-copy-gray);
+}
+
+.ex-step:disabled {
+  color: #cfcfcf;
+}
+
+.ex-main {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  border-radius: 12px;
+  background: var(--main-green);
+  color: #fff;
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+}
+
+@media (hover: hover) {
+  .ex-step:not(:disabled):hover {
+    background: #e7e7e7;
+  }
+
+  .ex-main:hover {
+    background: #80ac3c;
+  }
+}
+
+@media (hover: none) {
+  .ex-step:not(:disabled):active {
+    background: #e7e7e7;
+  }
+
+  .ex-main:active {
+    background: #80ac3c;
+  }
+}
+
+.ex-how {
+  margin-top: 20px;
+  font: 400 16px/1.5 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.ex-credit {
+  margin-top: 12px;
+  color: #8a8a8a;
+  font: 400 11px/1.44 var(--font-poppins);
+}
+
+.ex-credit a {
+  color: inherit;
+}

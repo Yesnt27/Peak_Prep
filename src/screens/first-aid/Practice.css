@@ -8,42 +8,30 @@
   animation: fa-step-in var(--t-smart) var(--ease-out);
 }
 
-/* Back (19, 44) → title block (20, 107) → tag (22, 183); no timer (Round 21) */
+/* Round 19 app pattern: standard back button (23, 48), kicker + title from y 125 (as Legal side), 23px gutter */
 .fa-q__top {
   display: flex;
   flex-direction: column;
-  padding: 44px 24px 0 20px;
-}
-
-/* Group 1410103679: 50px #d9d9d9 circle, dark chevron, no border or shadow */
-.fa-q__back.back-btn {
-  width: 50px;
-  height: 50px;
-  margin-left: -1px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: #d9d9d9;
-  filter: none;
+  padding: 48px 23px 0;
 }
 
 .fa-q__head {
-  margin-top: 13px;
+  margin-top: 32px;
 }
 
-/* Figma text boxes use Poppins' normal line height: kicker 107–131, title 125–170 (they overlap 6px) */
 .fa-q__kicker {
-  font: 400 16px/24px var(--font-poppins);
+  font: 400 16px/1.5 var(--font-poppins);
 }
 
 .fa-q__title {
-  margin-top: -6px;
-  font: 500 30px/45px var(--font-poppins);
+  margin-top: 2px;
+  font: 700 30px/1.139 var(--font-poppins);
+  letter-spacing: -0.6px;
 }
 
 .fa-q__tag.fa-scenario__tag {
   width: 356px;
-  margin: 13px 0 0 2px;
+  margin: 20px 0 0;
 }
 
 /* Image block (0, 248), 402 × 308; the white sheet overlaps its last 89px */
@@ -51,7 +39,7 @@
   flex: none;
   width: 402px;
   height: 308px;
-  margin-top: 18px;
+  margin-top: 24px;
   border-radius: 12px;
   object-fit: cover;
 }
@@ -61,35 +49,34 @@
   position: relative;
   flex: 1 0 auto;
   margin-top: -89px;
-  padding: 30px 50px 180px 32px;
+  padding: 28px 23px 200px;
   border-radius: 12px 12px 0 0;
   background: #fff;
 }
 
-/* Count, question and hint share the answer box's left edge (x 32) and width (320px) */
+/* Count, question and hint share the answer box's left edge and width (app gutter: 23px) */
 .fa-q__count {
-  font: 400 16px/24px var(--font-poppins);
+  font: 600 16px/1.5 var(--font-poppins);
 }
 
 .fa-q__text {
-  max-width: 320px;
   margin-top: 8px;
-  font: 400 12px/18px var(--font-poppins);
+  font: 400 16px/1.5 var(--font-poppins);
+  letter-spacing: -0.32px;
 }
 
 /* Answer box (32, 622), 320 × 172, yellow-3; lighter while you type in it */
 .fa-q__answer {
-  width: 320px;
+  width: 100%;
   height: 172px;
-  margin-top: 21px;
+  margin-top: 20px;
   border-radius: 12px;
-  background: var(--yellow-3);
+  background: #ededed; /* Round 22: the app's grey input field */
   transition: background-color 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
 }
 
 .fa-q__answer:focus-within {
-  background: #fff6e3; /* yellow-3 halfway to white */
-  box-shadow: 0 0 0 2px var(--yellow-2);
+  box-shadow: 0 0 0 2px #d4e6b8;
 }
 
 /* Placeholder at (52, 640) */
@@ -102,7 +89,8 @@
   border-radius: 12px;
   background: transparent;
   color: var(--body-copy-gray);
-  font: 500 13px/1.4 var(--font-poppins);
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
   resize: none;
   outline: none;
   /* While the keyboard is up, scrolling into view keeps the box above the Skip / Check bar and its fade */
@@ -110,7 +98,7 @@
 }
 
 .fa-q__input::placeholder {
-  color: #595959;
+  color: #ababab;
   opacity: 1;
 }
 
@@ -120,8 +108,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-  max-width: 320px;
-  margin-top: 15px;
+  margin-top: 16px;
 }
 
 .fa-hint__btn.tag {
@@ -146,44 +133,4 @@
   padding: 18px 23px 220px; /* room for the Retry / Next bar */
 }
 
-/* ---------- Bottom bar (group 2579:6470) ---------- */
-/* White fade (clear → white over 80px) behind the pill, so content fades out instead of cutting off */
-.fa-qbar {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
-  height: 177px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff 80px);
-  pointer-events: none;
-}
-
-/* Pill (23, 777), 356 × 79, 18px above the bottom */
-.fa-qbar__pill {
-  position: absolute;
-  bottom: 18px;
-  left: 23px;
-  display: flex;
-  gap: 11px;
-  width: 356px;
-  height: 79px;
-  padding: 8px 8px 7px 9px;
-  border-radius: 50px;
-  background: #f5f5f5;
-  pointer-events: auto;
-}
-
-/* Skip (32, 785) 124 × 64 · Check (167, 785) 204 × 64 */
-.fa-qbar .btn {
-  height: 64px;
-  padding: 0;
-}
-
-.fa-qbar__skip.btn {
-  width: 124px;
-}
-
-.fa-qbar__check.btn {
-  width: 204px;
-}
+/* Bottom bar: Skip / Check use the shared ActionBar (nav-bar pill, 53px controls), Round 19. */

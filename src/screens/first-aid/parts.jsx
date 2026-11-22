@@ -15,7 +15,7 @@ export function Back({ to, transition }) {
 }
 
 /** Figma group 2124:5149: Retry + main button in the nav-bar pill, pinned to the bottom. */
-export function ActionBar({ label, onRetry, onNext, className = '' }) {
+export function ActionBar({ label, onRetry, onNext, retryLabel = 'Retry', nextVariant = 'green', nextDisabled = false, className = '' }) {
   return (
     <div className={`fa-bar ${className}`}>
       {/* Same progressive blur as the nav bar: clear at the top, strongest behind the buttons. */}
@@ -26,9 +26,9 @@ export function ActionBar({ label, onRetry, onNext, className = '' }) {
       <div className="fa-bar__fade" />
       <div className="fa-bar__pill" />
       <Button className="fa-bar__retry" onClick={onRetry}>
-        Retry
+        {retryLabel}
       </Button>
-      <Button className="fa-bar__mins" onClick={onNext}>
+      <Button variant={nextVariant} className="fa-bar__mins" disabled={nextDisabled} onClick={onNext}>
         {label}
       </Button>
     </div>

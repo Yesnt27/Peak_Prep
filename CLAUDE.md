@@ -425,3 +425,77 @@ Goal: build a high-quality frontend prototype while keeping token use low. Spend
 - **Answer box while typing:** fills lighter (`#fff6e3`, yellow-3 halfway to white) with the yellow-2 outline; back to yellow-3 when you leave it.
 - **Alignment:** "Scenario n of N", the question and the hint start at the answer box's left edge (x 32) and use its 320px width (were indented 5px and 222px wide).
 - **Keyboard fix hardened** (`Device.jsx`): the focused field is scrolled into view in a layout effect after the frame resizes, not before (it could run against the old frame size).
+
+### Round 18 — first aid content, course filters, sign-up required fields (from Olivia, 2026-11-22)
+
+- **Dropdown standard:** the Home "Sort" menu (`components/Dropdown.jsx`) is the one dropdown. Sign-up option rows (Sex, Toughest hike Distance / Elevation / Time) now open it; `FieldCard`'s expanding tag panels are gone.
+- **Placeholders:** light grey `#ababab` everywhere (`.type-field--light`, field-card "Choose", practice answer box). The practice box uses body text (Poppins 16px, `#414141`); its placeholder is "Type your answer. . .". (The timer was already removed.)
+- **Lessons** (`data/firstAid.js`): `intro` is now sections `{ h?, p }` that teach everything the scenarios test; `overview` bullets show in a white "Overview" card above Start lesson. Repeated scenarios cut. Counts are now Dehydration 7, Scramble 7, Heat 7, Snowy Peaks 4 (added "Soaked in cold water"). The heat visuals for the removed "Can't keep fluids down" scenario were removed with it.
+- **Legal side:** no chevrons on the "Steps to take" boxes.
+- **Get certified:** courses in `data/courses.js` (11 real courses, links checked 2026-11-22). Course level and category (single-select each) filter the list; nothing picked = all. "Wilderness" category added (not in Figma). Cards show the length and "See dates" (Figma's dates/prices had passed); each opens its own course page. Categories and courses are now in normal flow.
+- **Sign-up:** "Create Account" (was Sign Up). Required fields get a red `*` before the title and grey out the button until filled: Name, Years hiking, Daily steps, Weekly exercise routine (≥1 workout). Steps with only optional fields (Body & Health, Safety Setup) say **"Skip for now"** until something is entered (`SKIP_LABEL` in `Onboarding.jsx`).
+  - Weight / Height have a unit toggle (lbs ↔ kg, ft ↔ cm); saved with the unit, e.g. "150 lbs".
+  - "How often do you hike?", "Lower Back Pain".
+  - Emergency contact fields are empty with grey placeholders (Jane Doe / +1 / Friend).
+  - Toughest hike: a search bar opens a "Toughest Hike" bottom sheet (search + the Explore hikes). Picking one fills Distance / Elevation / Time. `BottomSheet` takes `onSearch` and `searchPlaceholder`.
+- **Sign-up answers carry over** (new account fields in `account.js`): Health Stats shows an "Activity & Health" section (daily steps, weekly exercise, injuries, conditions, emergency contact). Hike Details "Fit for you" compares the hike against the toughest hike entered (the picked hike's stats, or the top of the chosen ranges).
+
+### Round 19 — spacing + styling pass, Legal steps, "None" exercise (from Olivia, 2026-11-22)
+
+App-wide patterns (measured on every route at 402px; outliers fixed):
+
+| Pattern | Standard |
+| --- | --- |
+| Side gutter | 23px (Hike Details, Training, First aid module, Legal / Get certified cards, Practice / Results were 20–32px) |
+| Back button | 45px circle at (23, 48); Practice / Results had a 50px grey Figma variant, Completed hikes sat at 60px |
+| Page title | 700 30px `--body-copy-gray`, first line at y 125 (kicker pages: kicker at 125); `#474747` and 500/600 weights removed |
+| Section heading | 600 20px body grey (`.fa-section-title` was 16px black) |
+| Vertical rhythm | title → first section 28px, between sections 32px, heading → content 20px (Health, Settings) |
+| Main button | 356 × 68, 41px from the bottom when pinned (Packing Save, Training "Hike Completed!" were off) |
+| Two-button bar | nav-bar pill with 53px controls: Practice Skip / Check now uses the shared `ActionBar` (`retryLabel`, `nextVariant`) |
+| Cards / tiles | 12px radius, 16–20px padding (course level tiles were 20px radius) |
+
+- **Legal side:** all three "Steps to take" boxes, without arrows; heights now fit their text. "Get First-aid certified" sits after the steps (not pinned) so it never covers step 3. The page is in normal flow.
+- **Get certified:** in normal flow from the title down.
+- **Practice:** question text 16px body; answer box and hint use the full 356px width.
+- **Sign-up → Weekly Exercise routine:** "None" tag (`account.noExercise`) answers the required question; adding a workout clears it. Health Stats shows "None".
+
+### Round 20 — training pages, packing per hike, Manage Profile, units (from Olivia, 2026-11-22)
+
+- **First aid intro:** the Overview card sits right after the first paragraph.
+- **Weight / height units:** `components/MeasureInput.jsx` keeps the unit beside the number while typing (Health Stats edit, sign-up, Manage Profile). Height in ft has separate ft and " boxes. Stored as "186 lbs" / `6ft 3"` / "173 cm". Sign-up rows have an lbs|kg and ft|cm switch.
+- **Settings → Manage Profile** (`/profile/settings/profile`, `ManageProfile.jsx`): Name + every sign-up field, using the same components. The sign-up steps are now thin wrappers around `ExperienceFields` / `ActivityFields` / `HealthFields` / `SafetyFields` (+ `ProfileCard`) in `Onboarding.jsx`. Bottom sheets render through `ScreenPortal` (`Screen.jsx`), so they stay pinned wherever they're used. Profile fields (`PROFILE_KEYS` in `account.js`) also save on the demo account; Hudson's defaults are the Figma values (+ "Knee Injury", which puts the Knee Brace on his packing list). Settings title → first section is now 36px (Health too).
+- **Training Schedule** (`/training/schedule`): month/year and week strip follow today's date; ‹ › change week. Dots = training days (faded until done). A new training only trains on the days picked in New training → Your training schedule (saved with the training, with time per session and trip type); other days show "Rest day". Rows: tick on the left, name + › open the exercise.
+- **Exercise page** (`/training/exercise/:id?date=`, "Training - Endurance.png"): title = the row text, "Month D Workout n/N", photo/drawing, 5:00 timer, progress bar, ‹ / Start → pause/play / ›. Finishing ticks the exercise off (`app/workouts.js`, sessionStorage). Exercises + daily plans in `data/exercises.js`; images from Wikimedia Commons (credited on the page).
+- **Training overview** ("training overview 5.png"): "About this trail" dropdown (key stats, about text, link to Hike Details), readiness card, Training Schedule card (today's next exercise, n/N completed, "View today's training"), Hiking Safety (lessons done / 4) and Bag Check (items packed). Nav bar kept; "Hike Completed!" kept below.
+- **Trip Type:** options that aren't realistic for the hike are greyed out with a reason (`tripLimits` in `data/hikes.js`; e.g. Mt. Everest → no Day hike / Overnight).
+- **Packing:** opens on To Pack (`/packing` → `/packing/to-pack`). Lists come from `data/packing.js` per training: hike, month (snow Nov–Apr or 3,000 m+ → Winter Gear, else Layers; Jun–Sep → sun hat/sunscreen/sunglasses), scramble → helmet + gloves, overnight/multi-day → Camping, BC → bear spray, knee injury → knee brace. Food & Water follows the first aid lessons (water ≈ 0.5 L/hour, electrolytes, salty snacks, filter/tablets, thermos in the cold). No calories anywhere. Ticks, added items, bag and weight limit are kept per training (`app/packing.js`); Packed / Weight stats are computed. "Bag" text field under the subtitle. Camping uses the mountain icon and Layers the winter-gear icon until new icons are provided.
+
+### Round 21 — no repeated profile content, unit dropdowns, packing remove, typo pass (from Olivia, 2026-11-22)
+
+- **Training overview:** "About this trail" stat boxes are white.
+- **Health Information vs Settings (nothing repeats):**
+  - Health Information owns Gender / Age / Weight / Height and Activity & Health (daily steps, weekly exercise, injuries, health conditions, emergency contact).
+  - Tapping an Activity & Health row opens the sign-up field for it underneath (`FieldOptions` hides labels/asterisks; `ActivityFields` / `HealthFields` take `parts`).
+  - Weight / Height: number (tap to type) + a unit dropdown (`UnitDropdown`, Home "Sort" look) that converts the value (`convertWeight` / `convertHeight` in `MeasureInput.jsx`). Sign-up step 1 uses the same dropdowns.
+  - Settings → Manage Profile keeps only Name + Hiking Experience, with no asterisks.
+- **Packing → Edit:** each item has a "−" (instead of the tick circle) that removes it from this training's list (`removed` in `app/packing.js`; re-adding the same name brings it back). The Camping (mountain) icon is shown at 18px.
+- **Home → Training "Today's training":** today's date and the same exercises/ticks as Daily Training.
+- **Typos fixed** (supersedes Open question 7 where they overlap): "protects", "real-life courses give", "it’s good to recuperate", "Hydration and rest", "5–15 minutes", "83 bpm", "affects a lot of people" / "You can avoid heat exposure", "There were no emergencies", "Kathmandu, Nepal", "St. John Ambulance", "Weekly exercise routine", "6:45 AM" / "6:30 AM", "Stair Climber · lv. 6". Checked with the macOS spell + grammar checker and a read-through of all UI copy.
+
+### Round 22 — one "−/+" style, grey inputs, years stepper (from Olivia, 2026-11-22)
+
+- **Health Information:** no pencil icons; tapping the value still edits it.
+- **Inputs:** every text input box is the grey field (#ededed, 12px radius, 16px text, #ababab placeholder, light-green focus ring). Changed: Home / Friend List / Completed hikes search bars (were white, 13px) and the First aid practice answer box (was yellow).
+- **"−" / "+" everywhere = `components/Stepper.jsx`:** `SignButton` (Figma green stepper circle, 36px tap target, light-grey hover/press, faded when disabled), `SignIcon`, and `Stepper` ("− n +" in a white box). Used by: weekly workout sessions (sign-up / Health), max packing weight, Years hiking, Packing Edit's remove button, and the friend profile's Add friend / Unfriend. (The orange "×" remove icon in sign-up lists and the Hiker Log is a different control and is unchanged.)
+- **Years hiking** (sign-up step 2 + Manage Profile): a stepper (0–70) instead of typing. It shows a grey 0 until answered; on a blank stepper "−" answers 0, "+" goes to 1. Continue unlocks once answered.
+
+### Round 23 — "×" → "−", white chosen rows (from Olivia, 2026-11-22)
+
+- Every remove "×" (orange `remove-item.svg`) is now the shared green `SignButton` "−", on the left of the row like Packing → Edit: sign-up / Health injuries and health conditions, the picked toughest hike, and Hiker Log emergencies.
+- Chosen-item rows (`.onb__chosen`: workouts, injuries, conditions, toughest hike) are white (were yellow #ffe9bd).
+- Manage Profile: Years hiking has no asterisk (`FieldOptions required: false`); the asterisk stays only on the sign-up step where the answer is required.
+
+### Round 24 — "−" look (from Olivia, 2026-11-22)
+
+- Every "−" (`SignButton` / `SignIcon` in `components/Stepper.jsx`) is a light-grey circle (#e7e7e7) with a dark bar, turning light red (#f6c6c1) on hover / press. "+" keeps the green Figma circle. On the grey Unfriend pill the "−" circle is white so it stays visible (light red when the pill is hovered).

@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
@@ -148,9 +149,25 @@ export function LessonIntro() {
         <div className="fa-heat__photo">
           <img src={lesson.photo} alt="" />
         </div>
+        {/* Round 20: first paragraph, then the Overview, then the detailed sections. */}
         <div className="fa-heat__text">
-          {lesson.intro.map((p) => (
-            <p key={p.slice(0, 20)}>{p}</p>
+          {lesson.intro.map(({ h, p }, i) => (
+            <Fragment key={p.slice(0, 24)}>
+              <section className="fa-intro__section">
+                {h && <h2 className="fa-intro__heading">{h}</h2>}
+                <p>{p}</p>
+              </section>
+              {i === 0 && (
+                <section className="fa-overview">
+                  <h2 className="fa-section-title">Overview</h2>
+                  <ul className="fa-takeaways fa-overview__list">
+                    {lesson.overview.map((t) => (
+                      <li key={t}>{t}</li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </Fragment>
           ))}
         </div>
         <Button className="fa-flow__cta" onClick={() => go(`/first-aid/${lesson.slug}/practice`)}>

@@ -17,6 +17,8 @@ import searchIcon from '../../assets/icons/search.svg'
 import chevDown from '../../assets/icons/chev-down.svg'
 import chevRightGreen from '../../assets/icons/chev-right-green.svg'
 import { HIKES } from '../../data/hikes.js'
+import { EXERCISES, workoutFor } from '../../data/exercises.js'
+import { doneOn, setDone, useWorkouts } from '../../app/workouts.js'
 import './Home.css'
 
 const TABS = [
@@ -97,7 +99,11 @@ function SortMenu({ sort, onChange }) {
   )
 }
 
+// Session lengths from Figma (Home → Training).
+const MINUTES = { stairs: '40 min', weightedWalk: '20 min', endurance: '20 min' }
+
 function Training({ go, account }) {
+  useWorkouts()
   const trainings = trainingsFor(account)
   // Each card opens the Training overview for its own hike.
   const open = (hike) => {
@@ -123,19 +129,35 @@ function Training({ go, account }) {
       )
     return cards
   }
+  // Round 21: today's date and the same ticks as Daily Training (Brunswick, the first demo training).
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const main = trainings.find((t) => t.hike === 'brunswick') ?? trainings[0]
+  const planned = workoutFor(main, today, true)
+  const done = doneOn(main.hike, today, planned, true)
   return (
     <>
       <section className="today">
         <div className="today__head">
           <div className="today__label">
             <p className="today__title">Today's training</p>
-            <p className="today__sub">Tue, Oct 28 · for Brunswick Mountain Trail</p>
+            <p className="today__sub">
+              {today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} · for {HIKES[main.hike].title}
+            </p>
           </div>
-          <span className="today__count">2 of 3 done</span>
+          <span className="today__count">
+            {done.length} of {planned.length} done
+          </span>
         </div>
-        <ListItem label="Stair Climber · lv.6" meta="40 min" defaultChecked />
-        <ListItem label="Weighted Walk · 15kg" meta="20 min" defaultChecked />
-        <ListItem label="Endurance" meta="20 min" />
+        {planned.map((id) => (
+          <ListItem
+            key={id}
+            label={EXERCISES[id].label}
+            meta={MINUTES[id]}
+            checked={done.includes(id)}
+            onChange={() => setDone(main.hike, today, done.includes(id) ? done.filter((d) => d !== id) : [...done, id])}
+          />
+        ))}
         <button type="button" className="today__link" onClick={() => go('/training/schedule', 'smart', '/home/training')}>
           <span>Full analytics</span>
           <img src={chevRightGreen} alt="" />

@@ -115,7 +115,7 @@ export default function HikeDetails() {
           </div>
         </section>
 
-        <FitForYou hike={hike} details={d} isNew={isNew} />
+        <FitForYou hike={hike} details={d} isNew={isNew} account={account} hikes={HIKES} />
 
         <Collapsible icon={shield20} title="Hazards & logistics">
           <Hazards details={d} />

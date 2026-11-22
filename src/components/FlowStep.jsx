@@ -88,11 +88,13 @@ export function Options({ options, selectable = true, value, onChange }) {
   const setSelected = onChange ?? setInner
   return (
     <div className="fs-options">
-      {options.map(({ label, icon }) => (
+      {options.map(({ label, icon, disabled }) => (
         <button
           type="button"
           key={label}
-          className={selected === label ? 'fs-option fs-option--selected' : 'fs-option'}
+          // `disabled` (Round 20): greyed out, can't be picked (e.g. a day hike up Mt. Everest).
+          className={`fs-option${selected === label ? ' fs-option--selected' : ''}${disabled ? ' fs-option--disabled' : ''}`}
+          disabled={disabled}
           aria-pressed={selectable ? selected === label : undefined}
           onClick={selectable ? () => setSelected(selected === label ? null : label) : undefined}
         >

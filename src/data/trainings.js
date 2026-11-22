@@ -9,6 +9,7 @@ export const DEMO_TRAININGS = [
   {
     hike: 'brunswick',
     date: 'Sat, Dec 12',
+    trip: 'Summit hike',
     pct: 82,
     toGo: '10 days to go',
     rows: [
@@ -20,6 +21,7 @@ export const DEMO_TRAININGS = [
   {
     hike: 'blackTusk',
     date: 'Jun 23–24',
+    trip: 'Overnight',
     pct: 34,
     toGo: '7 months to go',
     rows: [

@@ -5,6 +5,7 @@ import dropdownArrow from '../assets/icons/dropdown-arrow.png'
 import checkDefault from '../assets/icons/check-default.svg'
 import checkHover from '../assets/icons/check-hover.svg'
 import checkGreen from '../assets/icons/check-green.svg'
+import Dropdown from './Dropdown.jsx'
 import './controls.css'
 
 /** Round back button (Figma "Back button"). Hover / press: light grey (the dark-grey hover was removed). */
@@ -95,8 +96,11 @@ export function AddItem({ children, className = '', ...rest }) {
 }
 
 /** Figma "toggle switch". */
-export function ToggleSwitch({ label, defaultOn = false }) {
-  const [on, setOn] = useState(defaultOn)
+export function ToggleSwitch({ label, defaultOn = false, on: value, onChange }) {
+  const [inner, setInner] = useState(defaultOn)
+  // Uncontrolled by default; pass `on` + `onChange` to control it.
+  const on = value !== undefined ? value : inner
+  const setOn = onChange ?? setInner
   return (
     <button
       type="button"
@@ -158,7 +162,6 @@ export function WorkoutCard({ icon, children, selected: value, onChange }) {
  */
 /** `values` / `onChange(label, value)` are optional: they let a form keep what was typed or picked. */
 export function FieldCard({ rows, className = '', values, onChange }) {
-  const [open, setOpen] = useState(null)
   // Picked options show in the row (empty until picked); the caller can also keep them.
   const [own, setOwn] = useState({})
   const vals = values ?? own
@@ -168,71 +171,56 @@ export function FieldCard({ rows, className = '', values, onChange }) {
   }
   return (
     <div className={`field-card ${className}`}>
-      {rows.map((row) => {
-        const expandable = Boolean(row.options)
-        const isOpen = open === row.label
-        const head = (
-          <>
+      {rows.map((row) => (
+        <div className="field-card__item" key={row.label}>
+          <div className="field-card__row">
             <span className="field-card__label">{row.label}</span>
-            <span className={expandable ? 'field-card__value field-card__value--dropdown' : 'field-card__value'}>
-              {expandable ? (
-                vals[row.label] ? (
-                  <span className="field-card__picked">{vals[row.label]}</span>
-                ) : (
-                  <span className="field-card__placeholder" />
-                )
-              ) : (
-                <TypeField
-                  tone="light"
-                  className="field-card__input"
-                  aria-label={row.label}
-                  inputMode={row.inputMode}
-                  defaultValue={vals[row.label]}
-                  onChange={onChange ? (e) => onChange(row.label, e.target.value) : undefined}
-                />
-              )}
-              {expandable ? (
-                <img
-                  className={isOpen ? 'field-card__arrow field-card__arrow--open' : 'field-card__arrow'}
-                  src={dropdownArrow}
-                  alt=""
-                />
-              ) : (
-                <img className="field-card__edit" src={row.icon} alt="" />
-              )}
-            </span>
-          </>
-        )
-        return (
-          <div className="field-card__item" key={row.label}>
-            {expandable ? (
-              <button
-                type="button"
-                className="field-card__row"
-                aria-expanded={isOpen}
-                onClick={() => setOpen(isOpen ? null : row.label)}
+            {row.options ? (
+              // Round 18: option rows use the app's one dropdown (Home "Sort" menu).
+              <Dropdown
+                options={row.options.map((o) => ({ id: o, label: o }))}
+                value={vals[row.label] ?? null}
+                onChange={(v) => change(row.label, v)}
+                label={row.label}
+                triggerClassName="field-card__value field-card__value--dropdown"
               >
-                {head}
-              </button>
+                {(open) => (
+                  <>
+                    {vals[row.label] ? (
+                      <span className="field-card__picked">{vals[row.label]}</span>
+                    ) : (
+                      <span className="field-card__placeholder">Choose</span>
+                    )}
+                    <img className={open ? 'field-card__arrow dd-arrow dd-arrow--open' : 'field-card__arrow dd-arrow'} src={dropdownArrow} alt="" />
+                  </>
+                )}
+              </Dropdown>
             ) : (
-              <div className="field-card__row">{head}</div>
-            )}
-            {expandable && (
-              <div className={isOpen ? 'field-card__panel field-card__panel--open' : 'field-card__panel'}>
-                <div className="field-card__panel-inner">
-                  <TagGroup
-                    options={row.options}
-                    compact={row.compact}
-                    className="field-card__tags"
-                    value={vals[row.label] ?? null}
-                    onChange={(v) => change(row.label, v)}
+              <span className="field-card__value">
+                {row.render ? (
+                  row.render()
+                ) : (
+                  <TypeField
+                    tone="light"
+                    className="field-card__input"
+                    aria-label={row.label}
+                    inputMode={row.inputMode}
+                    placeholder={row.placeholder}
+                    defaultValue={vals[row.label]}
+                    onChange={(e) => change(row.label, e.target.value)}
                   />
-                </div>
-              </div>
+                )}
+                {row.unitControl ? (
+                  // Unit dropdown (Round 21), e.g. lbs / kg.
+                  row.unitControl
+                ) : (
+                  <img className="field-card__edit" src={row.icon} alt="" />
+                )}
+              </span>
             )}
           </div>
-        )
-      })}
+        </div>
+      ))}
     </div>
   )
 }

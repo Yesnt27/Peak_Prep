@@ -1,3 +1,5 @@
+import Exercise from './screens/hike/Exercise.jsx'
+import ManageProfile from './screens/profile/ManageProfile.jsx'
 import { Navigate, Route } from 'react-router-dom'
 import Device from './app/Device.jsx'
 import AnimatedRoutes from './app/AnimatedRoutes.jsx'
@@ -61,7 +63,9 @@ export default function App() {
         <Route path="/hike/:id" element={<HikeDetails />} />
         <Route path="/training" element={<TrainingOverview />} />
         <Route path="/training/schedule" element={<TrainingSchedule />} />
+        <Route path="/training/exercise/:id" element={<Exercise />} />
         <Route path="/packing/all" element={<PackingList key="all" tab="all" />} />
+        <Route path="/packing" element={<Navigate to="/packing/to-pack" replace />} />
         <Route path="/packing/to-pack" element={<PackingList key="to-pack" tab="to-pack" />} />
         <Route path="/packing/packed" element={<PackingList key="packed" tab="packed" />} />
         <Route path="/packing/edit" element={<PackingEdit />} />
@@ -96,6 +100,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/settings" element={<Settings />} />
         <Route path="/profile/settings/apps" element={<ConnectedApps />} />
+        <Route path="/profile/settings/profile" element={<ManageProfile />} />
         <Route path="/profile/health" element={<HealthInfo />} />
         <Route path="/profile/health/edit" element={<Navigate to="/profile/health" replace />} />
         <Route path="/profile/friends" element={<FriendList />} />

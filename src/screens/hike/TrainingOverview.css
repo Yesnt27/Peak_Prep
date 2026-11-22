@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   gap: 28px;
-  padding: 20px 20px 188px;
+  padding: 20px 23px 188px; /* Round 19: 23px app gutter */
   color: var(--body-copy-gray);
 }
 
@@ -24,7 +24,7 @@
 
 .to-btn.btn {
   width: 100%;
-  height: 53px;
+  height: 68px; /* Round 19: standard main button */
   border-radius: 49.9px;
 }
 
@@ -200,7 +200,7 @@
 .to-bag {
   display: flex;
   gap: 10px;
-  width: 353px;
+  width: 100%;
   height: 123px;
 }
 
@@ -463,5 +463,147 @@
 
 /* Readiness card is white on the overview ("training overview 3.png"); Training Schedule keeps green. */
 .to-content .to-prep {
+  background: #fff;
+}
+
+/* ---------- Round 20: "training overview 5.png" ---------- */
+.to-about {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+.to-about__text {
+  font: 400 16px/1.5 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.to-about__link {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 4px;
+  color: var(--main-green);
+  font: 600 16px/1.139 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.to-about__link img {
+  width: 18px;
+  height: 18px;
+}
+
+.to-tile__sub {
+  color: #6f6f6f;
+  font: 400 14px/1.3 var(--font-poppins);
+  letter-spacing: -0.28px;
+}
+
+/* Training Schedule: teal card with today's exercise in a white card on the right. */
+.to-sched {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--teal-1);
+}
+
+.to-sched__main {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--body-copy-gray);
+  text-align: left;
+}
+
+.to-sched__title {
+  font: 600 20px/1.1 var(--font-poppins);
+  letter-spacing: -0.4px;
+}
+
+.to-sched__today {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 196px;
+  padding: 14px 14px 14px 16px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--body-copy-gray);
+  text-align: left;
+  transition: background-color 300ms var(--ease-out);
+}
+
+.to-sched__name {
+  font: 600 16px/1.3 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.to-sched__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.to-sched__row img {
+  width: 18px;
+  height: 18px;
+}
+
+.to-sched__pill {
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--teal-1);
+  font: 500 12px/1.3 var(--font-poppins);
+  white-space: nowrap;
+}
+
+@media (hover: hover) {
+  .to-sched__today:hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .to-sched__today:active {
+    background: #e7e7e7;
+  }
+}
+
+/* Hiking Safety / Bag Check tiles: chevron top right, progress line under the title. */
+.to-tile--safety {
+  background: var(--yellow-1);
+}
+
+.to-tile__chev {
+  position: absolute;
+  top: 16px;
+  right: 14px;
+  width: 20px;
+  height: 20px;
+}
+
+.to-tiles .to-tile {
+  gap: 8px;
+  height: 150px;
+}
+
+@media (hover: hover) {
+  .to-tiles .to-tile:hover {
+    filter: brightness(0.97);
+  }
+}
+
+/* Round 21: About this trail stat boxes are white (as on Hike Details). */
+.to-about .hk-stat {
   background: #fff;
 }

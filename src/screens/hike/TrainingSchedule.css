@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
-  width: 355px;
+  width: 100%;
 }
 
 .ts-title {
@@ -28,4 +28,48 @@
 .ts-chevron {
   width: 24px;
   height: 24px;
+}
+
+/* Round 20: exercise row = tick (left) + name and arrow (open the exercise). */
+.ts-row.list-item {
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0 8px 0 20px;
+}
+
+.ts-row__check {
+  display: flex;
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.ts-row__check img {
+  width: 20px;
+  height: 20px;
+}
+
+.ts-row__open {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding-left: 12px;
+  color: inherit;
+}
+
+@media (hover: hover) {
+  .ts-row__open:hover .ts-chevron {
+    transform: translateX(3px);
+  }
+}
+
+.ts-chevron {
+  transition: transform 300ms var(--ease-out);
+}
+
+/* Planned (not yet done) days: a lighter dot. */
+.ts-dot--planned {
+  opacity: 0.35;
 }

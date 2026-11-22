@@ -18,6 +18,15 @@ const NEW_ACCOUNT = {
   sex: '',
   years: '',
   frequency: '',
+  // Sign-up answers (Round 18), shown again in Health Stats / Fit for you.
+  hikedIn: [], // conditions hiked in
+  toughest: null, // { hike, distance, elevation, time }
+  steps: '', // daily steps option
+  routine: [], // [[workout, times per week]]
+  noExercise: false, // "None" picked for the weekly routine
+  injuries: [],
+  healthConditions: [],
+  contact: null, // { name, phone, relationship }
   photo: null, // data URL of the picked image
   liked: [], // hike keys (data/hikes.js)
   friends: [], // person ids (data/friends.js)
@@ -26,12 +35,19 @@ const NEW_ACCOUNT = {
   activeTraining: null, // hike key of the training opened last (shown on /training)
 }
 
-const DEMO = { type: 'demo' }
+// Demo profile = the Figma values (Health info, Profile), editable in Settings → Manage Profile (Round 20).
+const DEMO = { type: 'demo', name: 'Hudson Kemp', age: '23', weight: '186 lbs', height: '6ft 3"', sex: 'Female', years: '7', injuries: ['Knee Injury'] }
+
+// Sign-up / Manage Profile fields: these also save on the demo account.
+const PROFILE_KEYS = new Set([
+  'name', 'age', 'weight', 'weightUnit', 'height', 'heightUnit', 'sex', 'years', 'frequency', 'hikedIn', 'toughest',
+  'steps', 'routine', 'noExercise', 'injuries', 'healthConditions', 'contact', 'shareTrip',
+])
 
 function read() {
   try {
     const saved = JSON.parse(sessionStorage.getItem(KEY))
-    if (saved && saved.type) return saved
+    if (saved && saved.type) return saved.type === 'demo' ? { ...DEMO, ...saved } : saved
   } catch {
     // storage blocked: demo account
   }
@@ -72,9 +88,9 @@ export function signUp() {
   set({ ...NEW_ACCOUNT })
 }
 
-/** Merge fields into a new account (ignored on the demo account). */
+/** Merge fields into a new account. On the demo account only profile fields save (PROFILE_KEYS). */
 export function updateAccount(patch) {
-  if (account.type !== 'new') return
+  if (account.type !== 'new' && !Object.keys(patch).every((k) => PROFILE_KEYS.has(k))) return
   set({ ...account, ...patch })
 }
 
@@ -96,10 +112,12 @@ export function planTraining(patch) {
 }
 
 /** New training → Done: add the planned hike at 0% and open it. */
-export function startTraining() {
+export function startTraining(schedule = {}) {
   const hike = account.plannedHike ?? 'blackTusk'
   const others = (account.trainings ?? []).filter((t) => t.hike !== hike)
-  set({ ...account, trainings: [{ hike, date: account.plannedDate }, ...others], activeTraining: hike })
+  // Round 20: trip type + available days + session time drive Training Schedule and Packing.
+  const training = { hike, date: account.plannedDate, trip: account.plannedTrip, days: schedule.days ?? [], time: schedule.time ?? null }
+  set({ ...account, trainings: [training, ...others], activeTraining: hike })
 }
 
 /** Remember which training /training (and its Packing / Safety / Hike log pages) shows. */

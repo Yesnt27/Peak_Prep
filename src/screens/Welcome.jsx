@@ -14,7 +14,7 @@ export default function Welcome() {
           <span className="welcome__title-brand">PeakPrep</span>
         </h1>
         <div className="welcome__actions">
-          {/* Log In = the demo account (Hudson Kemp); Sign Up = a new, empty account. */}
+          {/* Log In = the demo account (Hudson Kemp); Create Account = a new, empty account. */}
           <Button
             variant="yellow"
             onClick={() => {
@@ -31,7 +31,7 @@ export default function Welcome() {
               go('/onboarding/welcome')
             }}
           >
-            Sign Up
+            Create Account
           </Button>
         </div>
       </div>

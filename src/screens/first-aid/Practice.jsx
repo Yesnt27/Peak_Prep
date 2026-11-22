@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
-import Button from '../../components/Button.jsx'
 import { Tag } from '../../components/controls.jsx'
 import { lessonBySlug } from '../../data/firstAid.js'
 import Feedback from './Feedback.jsx'
@@ -47,20 +46,9 @@ export function Practice() {
   )
 }
 
-/** Figma group 2579:6470: Skip (green) + Check (yellow) in a grey pill, over a white fade so the page never cuts off. */
+/** Skip + Check in the same nav-bar pill as Retry / Next (Round 19). */
 function QuestionBar({ onSkip, onCheck }) {
-  return (
-    <div className="fa-qbar">
-      <div className="fa-qbar__pill">
-        <Button variant="green" className="fa-qbar__skip" onClick={onSkip}>
-          Skip
-        </Button>
-        <Button variant="yellow" className="fa-qbar__check" onClick={onCheck}>
-          Check
-        </Button>
-      </div>
-    </div>
-  )
+  return <ActionBar retryLabel="Skip" label="Check" nextVariant="yellow" onRetry={onSkip} onNext={onCheck} />
 }
 
 /** Keyed by scenario + attempt, so the answer and hint start fresh each time. */
@@ -96,7 +84,7 @@ function Scenario({ lesson, index, checked }) {
               <textarea
                 className="fa-q__input"
                 aria-label="Your answer"
-                placeholder="Type your answer___"
+                placeholder="Type your answer. . ."
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
               />

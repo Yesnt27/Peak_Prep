@@ -1,0 +1,70 @@
+/* Weight / height boxes: the unit stays beside the number while typing (Round 20). */
+.measure {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.measure__box {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.measure__input {
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--body-copy-gray);
+  font: 600 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  text-align: right;
+}
+
+.measure__input::placeholder {
+  color: #ababab;
+  font-weight: 400;
+}
+
+.measure__unit {
+  color: var(--body-copy-gray);
+  font: 500 15px/1.68 var(--font-poppins);
+}
+
+/* In sign-up / Manage Profile cards the number matches the Age row (regular weight). */
+.field-card .measure__input {
+  font-weight: 400;
+}
+
+/* Unit dropdown trigger: the Home "Sort" look (white pill, 13px, chevron). */
+.unit-dd {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--body-copy-gray);
+  font: 500 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+  white-space: nowrap;
+}
+
+.unit-dd img {
+  width: 14px;
+  height: 14px;
+}
+
+@media (hover: hover) {
+  .unit-dd:hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .unit-dd:active {
+    background: #e7e7e7;
+  }
+}

@@ -44,7 +44,7 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
-  width: 355px;
+  width: 356px;
 }
 
 /* ---------- Title ---------- */
@@ -170,7 +170,7 @@
 .pk-stats {
   display: flex;
   gap: 10px;
-  width: 353px;
+  width: 100%;
   height: 123px;
 }
 
@@ -214,21 +214,21 @@
 .pk-stat__bar {
   display: flex;
   height: 5px;
-  padding-right: 21px;
   overflow: hidden;
   border-radius: 10px;
   background: #fff;
 }
 
 .pk-stat__fill {
-  flex: 1 0 0;
+  flex: none;
+  transition: width 300ms var(--ease-out);
   border-radius: 10px;
   background: var(--main-green);
 }
 
 /* ---------- Tabs ---------- */
 .pk-tabs.seg-tabs {
-  width: 353px;
+  width: 100%;
 }
 
 /* ---------- Groups ---------- */
@@ -284,53 +284,6 @@
   gap: 8px;
 }
 
-.pk-stepper {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  height: 50px;
-  padding: 0 19.958px;
-  border-radius: 11.975px;
-  background: #fff;
-  font: 400 16px/1.68 var(--font-poppins);
-  letter-spacing: -0.32px;
-}
-
-.pk-stepper img {
-  width: 19.809px;
-  height: 19.809px;
-}
-
-.pk-stepper span {
-  min-width: 2ch;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
-
-.pk-stepper__btn {
-  display: flex;
-  margin: -8px;
-  padding: 8px; /* bigger tap target, same look */
-  border-radius: 50%;
-}
-
-.pk-stepper__btn:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
-@media (hover: hover) {
-  .pk-stepper__btn:not(:disabled):hover {
-    background: #e7e7e7;
-  }
-}
-
-@media (hover: none) {
-  .pk-stepper__btn:not(:disabled):active {
-    background: #e7e7e7;
-  }
-}
-
 /* New item being typed: same row as a packing list item, with a text field. */
 .pk-new {
   justify-content: flex-start;
@@ -374,6 +327,53 @@
 
 .pk-save.btn {
   position: absolute;
-  bottom: 26px;
+  bottom: 41px;
   left: 23px;
 }
+
+/* Round 20: "Bag" field under the subtitle (same box as the flow text fields). */
+.pk-bag {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pk-bag__label {
+  font: 600 13px/1.139 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.pk-bag__input.fs-input {
+  width: 100%;
+}
+
+.pk-empty {
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+/* Round 21: the borrowed Camping (mountain) icon reads large next to the 24px Figma icons. */
+.pk-group__name img.pk-group__icon--small {
+  width: 18px;
+  height: 18px;
+  margin: 0 3px;
+}
+
+/* Round 21: Edit rows: "−" (remove) in place of the tick circle. */
+.pk-edit-row.list-item {
+  justify-content: flex-start;
+  gap: 12px;
+  padding-left: 20px; /* "−" lines up with the tick circles on the list */
+}
+
+.pk-edit-row .list-item__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pk-edit-row__meta.list-item__meta {
+  flex: none;
+}
+

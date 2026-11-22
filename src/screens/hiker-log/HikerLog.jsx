@@ -2,7 +2,7 @@ import { useState } from 'react'
 import useGo from '../../app/useGo.js'
 import { setLog, useHikerLog } from '../../app/hikerLog.js'
 import TrailCard from '../../components/TrailCard.jsx'
-import removeItem from '../../assets/icons/remove-item.svg'
+import { SignButton } from '../../components/Stepper.jsx'
 import Screen from '../../components/Screen.jsx'
 import { Field, Options, SmallIcon, Step as FlowStep } from '../../components/FlowStep.jsx'
 import Button from '../../components/Button.jsx'
@@ -122,23 +122,17 @@ export function EmergencyPrep() {
             { label: 'I felt unprepared' },
             { label: 'I was somewhat prepared' },
             { label: 'I was prepared for everything' },
-            { label: 'There was no emergencies' },
+            { label: 'There were no emergencies' },
           ]}
         />
       </div>
       <Field label="Add a specific emergency you experienced:">
         <div className="hl-list">
           {log.emergencies.map((text, i) => (
-            <div className="hl-item" key={`${i}-${text}`}>
+            <div className="hl-item hl-item--removable" key={`${i}-${text}`}>
+              {/* Round 23: the app's "−" on the left (was an orange ×). */}
+              <SignButton sign="minus" label={`Remove ${text}`} onClick={() => setLog({ emergencies: log.emergencies.filter((_, j) => j !== i) })} />
               <span>{text}</span>
-              <button
-                type="button"
-                className="hl-item__remove"
-                aria-label={`Remove ${text}`}
-                onClick={() => setLog({ emergencies: log.emergencies.filter((_, j) => j !== i) })}
-              >
-                <img src={removeItem} alt="" />
-              </button>
             </div>
           ))}
           {draft !== null && (

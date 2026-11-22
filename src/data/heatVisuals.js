@@ -8,8 +8,6 @@ import exposedSlope from '../assets/first-aid/heat/exposed-slope.jpg'
 import drinkSun from '../assets/first-aid/heat/drink-sun.jpg'
 import steepSlope from '../assets/first-aid/heat/steep-slope.jpg'
 import descend from '../assets/first-aid/heat/descend.jpg'
-import sips from '../assets/first-aid/heat/sips.jpg'
-import unwell from '../assets/first-aid/heat/unwell.jpg'
 import cpr from '../assets/first-aid/heat/cpr.jpg'
 import sunSafety from '../assets/first-aid/heat/sun-safety.jpg'
 import recovery from '../assets/first-aid/heat/recovery.jpg'
@@ -98,21 +96,6 @@ const HEAT_VISUALS = [
       credit: { artist: 'Yellowstone NPS', license: 'Public domain', source: commons('Hikers_descend_Mt_Sheridan_Trail_(51353175113).jpg') },
     },
     key: { title: 'Heading down', items: ['Descend slowly', 'Keep them cool and hydrated', 'Stay together', 'Watch for symptoms'] },
-  },
-  {
-    photo: {
-      src: unwell,
-      alt: 'An exhausted hiker lying on an open mountainside beside their pack',
-      pos: '50% 70%',
-      credit: { artist: 'Alan Reid', license: 'CC BY-SA 2.0', source: commons('Exhausted_in_Glen_Tilt_-_geograph.org.uk_-_5062102.jpg') },
-    },
-    stepsPhoto: {
-      src: sips,
-      alt: 'Health workers helping a patient take small sips of rehydration solution',
-      pos: '45% 55%',
-      credit: { artist: 'CDC', license: 'Public domain', source: commons('Cholera_rehydration_nurses.jpg') },
-    },
-    key: { title: 'Small sips', items: ['Rest in the shade', 'Cool them down', 'Tiny sips, often', 'Still vomiting: call for help'] },
   },
   {
     photo: {

@@ -1,3 +1,4 @@
+import { SignIcon } from '../../components/Stepper.jsx'
 import { useState } from 'react'
 import { Navigate, useLocation, useParams } from 'react-router-dom'
 import { toggleFriend, useAccount } from '../../app/account.js'
@@ -132,9 +133,7 @@ export default function FriendProfile() {
           aria-pressed={added}
           onClick={toggle}
         >
-          <span className="fp-add__icon" aria-hidden="true">
-            {added ? '−' : '+'}
-          </span>
+          <SignIcon sign={added ? 'minus' : 'plus'} />
           {added ? 'Unfriend' : 'Add friend'}
         </button>
       }

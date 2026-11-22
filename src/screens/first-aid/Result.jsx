@@ -94,9 +94,9 @@ function HeatResult() {
           />
         </div>
         <div className="fa-white__copy">
-          <p>Good call, having heat exhaustion is no joke during a technical hike, its good to recuperate and rest.</p>
+          <p>Good call. Heat exhaustion is no joke during a technical hike, so it’s good to recuperate and rest.</p>
           <p>&#8203;</p>
-          <p>Hydration and Rest are key to recovery from these conditions.</p>
+          <p>Hydration and rest are key to recovery from these conditions.</p>
         </div>
       </div>
       <div className="fa-white fa-white--center">
@@ -104,7 +104,7 @@ function HeatResult() {
           <p>Next Steps</p>
         </div>
         <div className="fa-white__copy">
-          <p>Take a rest, preferably in a shaded area and treat for shock. Reassess every 5-15 mins.</p>
+          <p>Take a rest, preferably in a shaded area and treat for shock. Reassess every 5–15 minutes.</p>
           <p>&#8203;</p>
           <p>Make sure to hydrate sufficiently with water, remembering to keep resources in check</p>
         </div>
@@ -116,7 +116,7 @@ function HeatResult() {
             <img className="fa-eye__iris" src={eyeIris} alt="" />
             <img className="fa-eye__pupil" src={eyePupil} alt="" />
             <img className="fa-eye__glint" src={eyeGlint} alt="" />
-            <p className="fa-eye__label">5-15 mins</p>
+            <p className="fa-eye__label">5–15 mins</p>
           </div>
           <div className="fa-shock__text">
             <p className="fa-shock__title">Treating for Shock</p>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import useGo from '../../app/useGo.js'
 import { getAccount, updateAccount, useAccount } from '../../app/account.js'
 import Screen from '../../components/Screen.jsx'
@@ -15,9 +15,10 @@ import {
   WorkoutCard,
  TypeField } from '../../components/controls.jsx'
 import pencil from '../../assets/icons/pencil.png'
-import stepperMinus from '../../assets/icons/stepper-minus.svg'
-import stepperPlus from '../../assets/icons/stepper-plus.svg'
-import removeItem from '../../assets/icons/remove-item.svg'
+import searchIcon from '../../assets/icons/search.svg'
+import { HIKES } from '../../data/hikes.js'
+import Stepper, { SignButton } from '../../components/Stepper.jsx'
+import MeasureInput, { UnitDropdown, convertHeight, convertWeight, parseHeight, parseWeight } from '../../components/MeasureInput.jsx'
 import snow from '../../assets/conditions/snow.png'
 import rain from '../../assets/conditions/rain.png'
 import heat from '../../assets/conditions/heat.png'
@@ -52,6 +53,8 @@ export function Step({
   next,
   nextTransition,
   cta = 'Continue',
+  ready = true,
+  skip = false,
   tight = false,
   bodyGap,
   overlay,
@@ -63,8 +66,8 @@ export function Step({
       className="onb"
       fixed={
         <>
-          <Button className="onb__cta" onClick={next ? () => go(next, nextTransition) : undefined}>
-            {cta}
+          <Button className="onb__cta" disabled={!ready} onClick={next ? () => go(next, nextTransition) : undefined}>
+            {skip ? SKIP_LABEL : cta}
           </Button>
           {overlay}
         </>
@@ -87,29 +90,55 @@ export function Step({
   )
 }
 
-function Field({ label, children }) {
+// Round 18: optional steps say this while nothing is entered, so nobody feels they must fill everything in now.
+const SKIP_LABEL = 'Skip for now'
+
+/** `required` = an asterisk before the title; that step's button stays grey until it is filled. */
+/**
+ * Round 21: where the shared field groups are reused, `FieldOptions` can hide the labels
+ * (Health Information rows already name them) and the required asterisks (Manage Profile).
+ */
+const FieldOptionsContext = createContext({ labels: true, required: true })
+export const FieldOptions = FieldOptionsContext.Provider
+
+function Field({ label, required: isRequired = false, children }) {
+  const options = useContext(FieldOptionsContext)
+  const required = isRequired && options.required
+  if (!options.labels) return <div className="onb__field">{children}</div>
   return (
     <div className="onb__field">
-      <p className="onb__label">{label}</p>
+      <p className="onb__label">
+        {required && (
+          <span className="onb__req" aria-hidden="true">
+            *{' '}
+          </span>
+        )}
+        {label}
+        {required && <span className="sr-only"> (required)</span>}
+      </p>
       {children}
     </div>
   )
 }
 
+
+
 // FieldCard row label → account field.
 const PROFILE_FIELDS = { Age: 'age', Weight: 'weight', Height: 'height', Sex: 'sex' }
 
 export function OnboardingWelcome() {
-  const account = getAccount()
-  const [values, setValues] = useState(() =>
-    Object.fromEntries(Object.entries(PROFILE_FIELDS).map(([label, key]) => [label, account[key] || undefined])),
-  )
+  const account = useAccount()
+  const [values, setValues] = useState(() => ({ Age: account.age || undefined, Sex: account.sex || undefined }))
+  // Round 20: weight / height keep their units visible while typing; the switch changes the unit.
+  const weightUnit = parseWeight(account.weight, account.weightUnit ?? 'lbs').unit
+  const heightUnit = parseHeight(account.height, account.heightUnit ?? 'ft').unit
   return (
     <Step
       step={1}
       fill={52}
       back="/welcome"
       next="/onboarding/experience"
+      ready={Boolean(account.name?.trim())}
       title={
         <div className="onb__intro">
           <h1 className="onb__title">Welcome</h1>
@@ -122,7 +151,7 @@ export function OnboardingWelcome() {
       }
     >
       <div className="onb__fields">
-        <Field label="Name:">
+        <Field label="Name:" required>
           <div className="onb__input">
             <TypeField
               tone="light"
@@ -134,22 +163,41 @@ export function OnboardingWelcome() {
           </div>
         </Field>
         <Field label="Hiker profile:">
-          <FieldCard
-            values={values}
-            onChange={(label, value) => {
-              setValues({ ...values, [label]: value })
-              updateAccount({ [PROFILE_FIELDS[label]]: value ?? '' })
-            }}
-            rows={[
-              { label: 'Age', icon: pencil, inputMode: 'numeric' },
-              { label: 'Weight', icon: pencil },
-              { label: 'Height', icon: pencil },
-              { label: 'Sex', options: ['Male', 'Female', 'Unspecified'], compact: true },
-            ]}
-          />
+          <ProfileCard account={account} values={values} setValues={setValues} weightUnit={weightUnit} heightUnit={heightUnit} />
         </Field>
       </div>
     </Step>
+  )
+}
+
+/** Age / Weight / Height / Sex card (sign-up step 1 and Settings → Manage Profile). */
+export function ProfileCard({ account, values, setValues, weightUnit, heightUnit }) {
+  return (
+    <FieldCard
+      values={values}
+      onChange={(label, value) => {
+        setValues({ ...values, [label]: value })
+        updateAccount({ [PROFILE_FIELDS[label]]: value ?? '' })
+      }}
+      rows={[
+        { label: 'Age', icon: pencil, inputMode: 'numeric' },
+        {
+          label: 'Weight',
+          render: () => <MeasureInput kind="weight" unit={weightUnit} value={account.weight} onChange={(v) => updateAccount({ weight: v })} showUnit={false} />,
+          unitControl: (
+            <UnitDropdown kind="weight" unit={weightUnit} onChange={(u) => updateAccount({ weightUnit: u, weight: convertWeight(account.weight, u) })} />
+          ),
+        },
+        {
+          label: 'Height',
+          render: () => <MeasureInput kind="height" unit={heightUnit} value={account.height} onChange={(v) => updateAccount({ height: v })} showUnit={false} />,
+          unitControl: (
+            <UnitDropdown kind="height" unit={heightUnit} onChange={(u) => updateAccount({ heightUnit: u, height: convertHeight(account.height, u) })} />
+          ),
+        },
+        { label: 'Sex', options: ['Male', 'Female', 'Unspecified'] },
+      ]}
+    />
   )
 }
 
@@ -165,43 +213,53 @@ const CONDITIONS = [
   ['Bear Country', bear],
 ]
 
-export function OnboardingExperience() {
+export function ExperienceFields() {
   const account = useAccount()
-  const isNew = account.type === 'new'
   // Conditions are multi-select; "None of these" clears them, and picking a condition clears "None of these".
-  const [conditions, setConditions] = useState([])
+  const conditions = account.hikedIn ?? []
+  const setConditions = (list) => updateAccount({ hikedIn: list })
   const toggleCondition = (name) =>
     setConditions(conditions.includes(name) ? conditions.filter((c) => c !== name) : [...conditions.filter((c) => c !== NONE), name])
+  const toughest = account.toughest ?? {}
+  const [sheet, setSheet] = useState(false)
   return (
-    <Step
-      step={2}
-      fill={91}
-      fillColor="#80ac3c"
-      back="/onboarding/welcome"
-      next="/onboarding/activity"
-      title={<h1 className="onb__title">Hiking Experience</h1>}
-    >
+    <>
       {/* Not in Figma: added so a new account's profile can show years of experience + level. */}
-      <Field label="Years hiking:">
-        <div className="onb__input">
-          <TypeField
-            tone="light"
-            placeholder="e.g. 2"
-            inputMode="decimal"
-            defaultValue={account.years}
-            onChange={(e) => updateAccount({ years: e.target.value.trim() })}
-          />
-        </div>
+      <Field label="Years hiking:" required>
+        {/* Round 22: − / + like the app's other steppers (grey 0 until the first tap). */}
+        <Stepper value={account.years} min={0} max={70} label="years hiking" onChange={(v) => updateAccount({ years: String(v) })} />
       </Field>
-      <Field label="How often you hike:">
+      <Field label="How often do you hike?">
         <TagGroup
           className="onb__tags"
           options={['Never', 'A few times a year', 'Monthly', 'Weekly']}
-          {...(isNew ? { value: account.frequency || null, onChange: (v) => updateAccount({ frequency: v ?? '' }) } : {})}
+          value={account.frequency || null}
+          onChange={(v) => updateAccount({ frequency: v ?? '' })}
         />
       </Field>
       <Field label="Toughest hike:">
+        {/* Round 18: search for the hike (bottom sheet); or fill in the rows below. */}
+        {toughest.hike ? (
+          <div className="onb__chosen onb__chosen--hike onb__chosen--removable">
+            <SignButton
+              sign="minus"
+              label={`Remove ${HIKES[toughest.hike].title}`}
+              onClick={() => updateAccount({ toughest: { ...toughest, hike: null } })}
+            />
+            <button type="button" className="onb__chosen-name onb__hike-pick" onClick={() => setSheet(true)}>
+              <img className="onb__hike-thumb" src={HIKES[toughest.hike].image} alt="" />
+              <span>{HIKES[toughest.hike].title}</span>
+            </button>
+          </div>
+        ) : (
+          <button type="button" className="onb__search" onClick={() => setSheet(true)}>
+            <img src={searchIcon} alt="" />
+            <span>Search for your toughest hike</span>
+          </button>
+        )}
         <FieldCard
+          values={{ Distance: toughest.distance, 'Elevation gain': toughest.elevation, Time: toughest.time }}
+          onChange={(label, v) => updateAccount({ toughest: { ...toughest, [TOUGHEST_KEYS[label]]: v } })}
           rows={[
             { label: 'Distance', options: ['<5km', '5-10km', '10-20km', '>20km'] },
             { label: 'Elevation gain', options: ['<300m', '300-800m', '800-1500m', '>1,500m'] },
@@ -224,7 +282,81 @@ export function OnboardingExperience() {
           </ToggleTag>
         </div>
       </Field>
-    </Step>
+        <ToughestHikeSheet
+          open={sheet}
+          picked={toughest.hike}
+          onClose={() => setSheet(false)}
+          onDone={(key) => {
+            // Picking a hike fills in its distance, elevation and time.
+            updateAccount({ toughest: key ? { hike: key, ...bucketsFor(HIKES[key]) } : { ...toughest, hike: null } })
+            setSheet(false)
+          }}
+        />
+    </>
+  )
+}
+
+const TOUGHEST_KEYS = { Distance: 'distance', 'Elevation gain': 'elevation', Time: 'time' }
+
+/** A hike's stats → the Toughest hike rows' options. */
+function bucketsFor(hike) {
+  const km = parseFloat(hike.stats[0][0].replace(/,/g, ''))
+  const m = parseFloat(hike.stats[1][0].replace(/,/g, ''))
+  const [time, unit] = hike.stats[2]
+  const hours = Math.max(...time.split(/[–-]/).map(parseFloat))
+  return {
+    distance: km < 5 ? '<5km' : km <= 10 ? '5-10km' : km <= 20 ? '10-20km' : '>20km',
+    elevation: m < 300 ? '<300m' : m <= 800 ? '300-800m' : m <= 1500 ? '800-1500m' : '>1,500m',
+    time: unit.startsWith('DAY') ? 'Multi-day' : hours < 4 ? '<4hr' : hours <= 8 ? '4-8hr' : 'Full day',
+  }
+}
+
+/** "Toughest hike" search: the Explore hikes in a bottom sheet, like Invite Friends. One can be picked. */
+function ToughestHikeSheet({ open, picked, onClose, onDone }) {
+  const [query, setQuery] = useState('')
+  const [choice, setChoice] = useState(picked ?? null)
+  const [wasOpen, setWasOpen] = useState(open)
+  if (open !== wasOpen) {
+    // Each time it opens: start from what is saved, with an empty search.
+    setWasOpen(open)
+    if (open) {
+      setChoice(picked ?? null)
+      setQuery('')
+    }
+  }
+  const q = query.trim().toLowerCase()
+  const hikes = Object.entries(HIKES).filter(([, h]) => !q || `${h.title} ${h.location}`.toLowerCase().includes(q))
+  return (
+    <BottomSheet
+      open={open}
+      title="Toughest Hike"
+      searchPlaceholder="Search hikes"
+      onSearch={setQuery}
+      onClose={onClose}
+      onDone={() => onDone(choice)}
+    >
+      <div className="sheet__list">
+        {hikes.length === 0 && <p className="onb__sheet-empty">No hikes found.</p>}
+        {hikes.map(([key, h]) => (
+          <button
+            type="button"
+            key={key}
+            className={choice === key ? 'onb-hike onb-hike--selected' : 'onb-hike'}
+            aria-pressed={choice === key}
+            onClick={() => setChoice(choice === key ? null : key)}
+          >
+            <img className="onb-hike__img" src={h.image} alt="" />
+            <span className="onb-hike__text">
+              <span className="onb-hike__title">{h.title}</span>
+              <span className="onb-hike__sub">{h.location}</span>
+              <span className="onb-hike__sub">
+                {h.stats[0][0]} km · {h.stats[1][0]} m · {h.stats[2][0]} {h.stats[2][1].toLowerCase()}
+              </span>
+            </span>
+          </button>
+        ))}
+      </div>
+    </BottomSheet>
   )
 }
 
@@ -241,9 +373,14 @@ const WORKOUTS = [
   ['Tennis', tennis],
 ]
 
-export function OnboardingActivity() {
+/** `parts`: which questions to show (Health Information shows one per row). */
+export function ActivityFields({ parts = ['steps', 'routine'] }) {
+  const account = useAccount()
   const [sheet, setSheet] = useState(false)
-  const [routine, setRoutine] = useState([]) // [[name, times per week], ...]
+  const routine = account.routine ?? [] // [[name, times per week], ...]
+  // "None" (Round 19) answers the required question for people who don't work out; adding a workout clears it.
+  const none = Boolean(account.noExercise)
+  const setRoutine = (r) => updateAccount({ routine: r, ...(r.length ? { noExercise: false } : {}) })
   const [picked, setPicked] = useState([]) // names ticked in the open sheet
   const open = () => {
     setPicked(routine.map(([name]) => name))
@@ -256,15 +393,35 @@ export function OnboardingActivity() {
   }
   const setCount = (name, count) => setRoutine(routine.map((r) => (r[0] === name ? [name, count] : r)))
   return (
-    <Step
-      step={3}
-      fill={175}
-      fillColor="#80ac3c"
-      tight
-      back="/onboarding/experience"
-      next="/onboarding/health"
-      title={<h1 className="onb__title">Current Activity</h1>}
-      overlay={
+    <>
+      {parts.includes('steps') && (
+      <Field label="Your daily steps:" required>
+        <TagGroup
+          className="onb__tags"
+          options={['< 3,000 steps', '3,000 to 7,000 steps', '7-10,000 steps', '>10,000 steps']}
+          value={account.steps || null}
+          onChange={(v) => updateAccount({ steps: v ?? '' })}
+        />
+      </Field>
+      )}
+      {parts.includes('routine') && (
+      <Field label="Weekly exercise routine:" required>
+        {routine.map(([name, count]) => (
+          <div className="onb__chosen" key={name}>
+            <div className="onb__chosen-name">
+              <img className="onb__chosen-icon" src={WORKOUTS.find(([n]) => n === name)[1]} alt="" />
+              <span>{name}</span>
+            </div>
+            {/* Times per week: 1–7. */}
+            <Stepper value={count} min={1} max={7} label={`${name} sessions per week`} onChange={(c) => setCount(name, c)} />
+          </div>
+        ))}
+        <AddItem onClick={open}>Add Workout</AddItem>
+        <ToggleTag selected={none} onChange={() => updateAccount({ noExercise: !none, ...(!none ? { routine: [] } : {}) })}>
+          None
+        </ToggleTag>
+      </Field>
+      )}
         <BottomSheet open={sheet} title="Add Workouts" onClose={() => setSheet(false)} onDone={done}>
           <div className="sheet__grid">
             {WORKOUTS.map(([name, icon]) => (
@@ -279,48 +436,7 @@ export function OnboardingActivity() {
             ))}
           </div>
         </BottomSheet>
-      }
-    >
-      <Field label="Your daily steps:">
-        <TagGroup
-          className="onb__tags"
-          options={['< 3,000 steps', '3,000 to 7,000 steps', '7-10,000 steps', '>10,000 steps']}
-        />
-      </Field>
-      <Field label="Weekly Exercise routine:">
-        {routine.map(([name, count]) => (
-          <div className="onb__chosen" key={name}>
-            <div className="onb__chosen-name">
-              <img className="onb__chosen-icon" src={WORKOUTS.find(([n]) => n === name)[1]} alt="" />
-              <span>{name}</span>
-            </div>
-            {/* Times per week: 1–7. */}
-            <div className="onb__stepper">
-              <button
-                type="button"
-                className="onb__stepper-btn"
-                aria-label={`Fewer ${name} sessions`}
-                disabled={count <= 1}
-                onClick={() => setCount(name, count - 1)}
-              >
-                <img src={stepperMinus} alt="" />
-              </button>
-              <span aria-live="polite">{count}</span>
-              <button
-                type="button"
-                className="onb__stepper-btn"
-                aria-label={`More ${name} sessions`}
-                disabled={count >= 7}
-                onClick={() => setCount(name, count + 1)}
-              >
-                <img src={stepperPlus} alt="" />
-              </button>
-            </div>
-          </div>
-        ))}
-        <AddItem onClick={open}>Add Workout</AddItem>
-      </Field>
-    </Step>
+    </>
   )
 }
 
@@ -332,7 +448,7 @@ const INJURIES = [
   'Wrist Sprain',
   'Hip Pain',
   'Shoulder Injury',
-  'Lowe Back Pain',
+  'Lower Back Pain',
   'Stress Fracture',
 ]
 
@@ -367,8 +483,9 @@ export function ListSheet({ open, title, items, onClose, picked, onPick, onDone 
 }
 
 /** A list picked in a sheet: nothing chosen at first; ticks only count once Done is pressed. */
-function usePickList() {
-  const [chosen, setChosen] = useState([])
+function usePickList(field) {
+  const chosen = useAccount()[field] ?? []
+  const setChosen = (list) => updateAccount({ [field]: list })
   const [picked, setPicked] = useState([])
   return {
     chosen,
@@ -380,30 +497,49 @@ function usePickList() {
   }
 }
 
+/** Chosen items (Round 23): white rows with the app's "−" on the left, like Packing → Edit. */
 function Chosen({ items, onRemove }) {
   return items.map((item) => (
-    <div className="onb__chosen" key={item}>
-      <span>{item}</span>
-      <button type="button" className="onb__remove-btn" aria-label={`Remove ${item}`} onClick={() => onRemove(item)}>
-        <img className="onb__remove" src={removeItem} alt="" />
-      </button>
+    <div className="onb__chosen onb__chosen--removable" key={item}>
+      <SignButton sign="minus" label={`Remove ${item}`} onClick={() => onRemove(item)} />
+      <span className="onb__chosen-label">{item}</span>
     </div>
   ))
 }
 
-export function OnboardingHealth() {
+export function HealthFields({ parts = ['injuries', 'conditions'] }) {
   const [sheet, setSheet] = useState(null)
-  const injuries = usePickList()
-  const conditions = usePickList()
+  const injuries = usePickList('injuries')
+  const conditions = usePickList('healthConditions')
   const close = () => setSheet(null)
   return (
-    <Step
-      step={4}
-      fill={267}
-      back="/onboarding/activity"
-      next="/onboarding/safety"
-      title={<h1 className="onb__title">Body &amp; Health</h1>}
-      overlay={
+    <>
+      {parts.includes('injuries') && (
+      <Field label="Injuries to plan around:">
+        <Chosen items={injuries.chosen} onRemove={injuries.remove} />
+        <AddItem
+          onClick={() => {
+            injuries.start()
+            setSheet('injury')
+          }}
+        >
+          Add Injury
+        </AddItem>
+      </Field>
+      )}
+      {parts.includes('conditions') && (
+      <Field label="Health Conditions:">
+        <Chosen items={conditions.chosen} onRemove={conditions.remove} />
+        <AddItem
+          onClick={() => {
+            conditions.start()
+            setSheet('health')
+          }}
+        >
+          Add Health Conditions
+        </AddItem>
+      </Field>
+      )}
         <>
           <ListSheet
             open={sheet === 'injury'}
@@ -430,35 +566,104 @@ export function OnboardingHealth() {
             }}
           />
         </>
-      }
+    </>
+  )
+}
+
+// Round 18: example contact is grey placeholder text ("Jane Doe"), saved to the account once typed.
+const CONTACT = [
+  ['NAME', 'name', 'Jane Doe', undefined],
+  ['PHONE NUMBER', 'phone', '+1', 'tel'],
+  ['RELATIONSHIP', 'relationship', 'Friend', undefined],
+]
+
+export function SafetyFields() {
+  const account = useAccount()
+  const contact = account.contact ?? {}
+  return (
+    <>
+      <Field label="Emergency Contact:">
+        {CONTACT.map(([label, key, placeholder, inputMode]) => (
+          <div className="onb__contact" key={label}>
+            <p className="onb__contact-label">{label}</p>
+            <TypeField
+              tone="light"
+              className="onb__contact-value"
+              placeholder={placeholder}
+              defaultValue={contact[key]}
+              inputMode={inputMode}
+              aria-label={label}
+              onChange={(e) => updateAccount({ contact: { ...(getAccount().contact ?? {}), [key]: e.target.value } })}
+            />
+          </div>
+        ))}
+        <AddItem>Add Emergency Contact</AddItem>
+        <div className="onb__share">
+          <span>Share my trip plan with them</span>
+          <ToggleSwitch label="Share my trip plan with them" on={Boolean(account.shareTrip)} onChange={(on) => updateAccount({ shareTrip: on })} />
+        </div>
+      </Field>
+    </>
+  )
+}
+
+/* ---------- Sign-up steps (Round 20: fields live in *Fields components, shared with Settings → Manage Profile) ---------- */
+
+const has = (list) => (list ?? []).length > 0
+
+export function OnboardingExperience() {
+  const account = useAccount()
+  return (
+    <Step
+      step={2}
+      fill={91}
+      fillColor="#80ac3c"
+      back="/onboarding/welcome"
+      next="/onboarding/activity"
+      ready={Boolean(String(account.years ?? '').trim())}
+      title={<h1 className="onb__title">Hiking Experience</h1>}
     >
-      <Field label="Injuries to plan around:">
-        <Chosen items={injuries.chosen} onRemove={injuries.remove} />
-        <AddItem
-          onClick={() => {
-            injuries.start()
-            setSheet('injury')
-          }}
-        >
-          Add Injury
-        </AddItem>
-      </Field>
-      <Field label="Health Conditions:">
-        <Chosen items={conditions.chosen} onRemove={conditions.remove} />
-        <AddItem
-          onClick={() => {
-            conditions.start()
-            setSheet('health')
-          }}
-        >
-          Add Health Conditions
-        </AddItem>
-      </Field>
+      <ExperienceFields />
+    </Step>
+  )
+}
+
+export function OnboardingActivity() {
+  const account = useAccount()
+  return (
+    <Step
+      step={3}
+      fill={175}
+      fillColor="#80ac3c"
+      tight
+      back="/onboarding/experience"
+      next="/onboarding/health"
+      ready={Boolean(account.steps) && (has(account.routine) || Boolean(account.noExercise))}
+      title={<h1 className="onb__title">Current Activity</h1>}
+    >
+      <ActivityFields />
+    </Step>
+  )
+}
+
+export function OnboardingHealth() {
+  const account = useAccount()
+  return (
+    <Step
+      step={4}
+      fill={267}
+      back="/onboarding/activity"
+      next="/onboarding/safety"
+      skip={!has(account.injuries) && !has(account.healthConditions)}
+      title={<h1 className="onb__title">Body &amp; Health</h1>}
+    >
+      <HealthFields />
     </Step>
   )
 }
 
 export function OnboardingSafety() {
+  const contact = useAccount().contact ?? {}
   return (
     <Step
       step={5}
@@ -466,31 +671,10 @@ export function OnboardingSafety() {
       back="/onboarding/health"
       next="/home/saved"
       cta="Done"
+      skip={!CONTACT.some(([, key]) => contact[key]?.trim())}
       title={<h1 className="onb__title">Safety Setup</h1>}
     >
-      <Field label="Emergency Contact:">
-        {[
-          ['NAME', 'Sarah Lee'],
-          ['PHONE NUMBER', '+1'],
-          ['RELATIONSHIP', 'Friend'],
-        ].map(([label, value]) => (
-          <div className="onb__contact" key={label}>
-            <p className="onb__contact-label">{label}</p>
-            <TypeField
-              tone="light"
-              className="onb__contact-value"
-              defaultValue={value}
-              inputMode={label === 'PHONE NUMBER' ? 'tel' : undefined}
-              aria-label={label}
-            />
-          </div>
-        ))}
-        <AddItem>Add Emergency Contact</AddItem>
-        <div className="onb__share">
-          <span>Share my trip plan with them</span>
-          <ToggleSwitch label="Share my trip plan with them" />
-        </div>
-      </Field>
+      <SafetyFields />
     </Step>
   )
 }

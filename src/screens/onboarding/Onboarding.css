@@ -127,7 +127,7 @@
   width: 355px;
 }
 
-/* Yellow "already added" row (Weight Lifting, Knee Injury). */
+/* "Already added" row (workouts, injuries, toughest hike): white, Round 23 (was yellow). */
 .onb__chosen {
   display: flex;
   align-items: center;
@@ -135,7 +135,7 @@
   width: 356px;
   padding: 14.969px 19.958px;
   border-radius: 11.975px;
-  background: #ffe9bd;
+  background: #fff;
   color: #414141;
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;
@@ -151,24 +151,6 @@
 .onb__chosen-icon {
   width: 20px;
   height: 20px;
-}
-
-.onb__stepper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  height: 50px;
-  padding: 14.969px 19.958px;
-  border-radius: 11.975px;
-  background: #fff;
-  text-align: center;
-}
-
-.onb__stepper img,
-.onb__remove {
-  width: 19.809px;
-  height: 19.809px;
 }
 
 .onb__contact {
@@ -222,29 +204,136 @@
 }
 
 /* Working −/+ (times per week) and × (remove) buttons. */
-.onb__stepper-btn,
-.onb__remove-btn {
-  display: flex;
-  margin: -8px;
-  padding: 8px;
-  border-radius: 50%;
+/* ---------- Round 18 ---------- */
+
+/* Required fields: asterisk before the title. */
+.onb__req {
+  color: #c0392b;
 }
 
-.onb__stepper-btn:disabled {
-  opacity: 0.35;
-  cursor: default;
+/* Toughest hike: search bar that opens the hike sheet (same box as the text fields). */
+.onb__search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 356px;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  background: #ededed;
+  color: #ababab;
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+  text-align: left;
+}
+
+.onb__search img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 @media (hover: hover) {
-  .onb__stepper-btn:not(:disabled):hover,
-  .onb__remove-btn:hover {
+  .onb__search:hover {
     background: #e7e7e7;
   }
 }
 
 @media (hover: none) {
-  .onb__stepper-btn:not(:disabled):active,
-  .onb__remove-btn:active {
+  .onb__search:active {
     background: #e7e7e7;
   }
+}
+
+.onb__hike-pick {
+  min-width: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.onb__hike-pick span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.onb__hike-thumb {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Hike rows in the Toughest Hike sheet: white → hover #e7e7e7 → selected #d4e6b8 (CheckRow pattern). */
+.onb-hike {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  background: #fff;
+  color: #414141;
+  text-align: left;
+}
+
+.onb-hike--selected {
+  background: #d4e6b8;
+}
+
+@media (hover: hover) {
+  .onb-hike:not(.onb-hike--selected):hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .onb-hike:not(.onb-hike--selected):active {
+    background: #e7e7e7;
+  }
+}
+
+.onb-hike__img {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.onb-hike__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.onb-hike__title {
+  font: 600 16px/1.4 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.onb-hike--selected .onb-hike__title {
+  color: #000;
+}
+
+.onb-hike__sub {
+  font: 400 13px/1.4 var(--font-poppins);
+  letter-spacing: -0.26px;
+}
+
+.onb__sheet-empty {
+  color: var(--body-copy-gray);
+  font: 400 16px/1.68 var(--font-poppins);
+}
+
+/* Removable rows: "−" on the left, then the name (matches Packing → Edit). */
+.onb__chosen--removable {
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.onb__chosen-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -1,33 +1,48 @@
+import { useSyncExternalStore } from 'react'
+import { getAccount } from './account.js'
+import { DEMO_PACKED } from '../data/packing.js'
+
 /**
- * Prototype-only packing list items added on the Edit screen (no backend).
- * Kept in sessionStorage like lesson progress, so the list screens show them
- * after "Save Changes"; a new tab starts again from the Figma list.
+ * Packing state per training (Round 20), in sessionStorage like lesson progress (no backend):
+ * packed item names, items added on Edit ({ group: [[name, weight]] }), the bag, and the weight limit.
+ * Key: "<account>|<hike>". The demo account starts with DEMO_PACKED ticked.
  */
-const KEY = 'peakprep-packing-added'
+const KEY = 'peakprep-packing'
+const listeners = new Set()
 
-function read() {
+let store = (() => {
   try {
-    const saved = JSON.parse(sessionStorage.getItem(KEY))
-    if (saved && typeof saved === 'object') return saved
+    return JSON.parse(sessionStorage.getItem(KEY)) ?? {}
   } catch {
-    // storage blocked: start empty
+    return {}
   }
-  return {}
+})()
+
+const keyFor = (hike) => `${getAccount().type}|${hike}`
+
+export function packState(hike) {
+  const demoStart = getAccount().type === 'demo' && hike === 'brunswick'
+  return { packed: demoStart ? DEMO_PACKED : [], added: {}, bag: '', max: 12, unit: 'kg', ...store[keyFor(hike)] }
 }
 
-let added = read() // { [groupName]: [[name, weight, packed], ...] }
-
-export function addedItems(group) {
-  return added[group] ?? []
-}
-
-export function setAddedItems(group, items) {
-  added = { ...added, [group]: items }
+export function updatePack(hike, patch) {
+  store = { ...store, [keyFor(hike)]: { ...packState(hike), ...patch } }
   try {
-    sessionStorage.setItem(KEY, JSON.stringify(added))
+    sessionStorage.setItem(KEY, JSON.stringify(store))
   } catch {
     // ignore
   }
+  listeners.forEach((l) => l())
+}
+
+export function usePacking() {
+  return useSyncExternalStore(
+    (l) => {
+      listeners.add(l)
+      return () => listeners.delete(l)
+    },
+    () => store,
+  )
 }
 
 /* Typical weights (kg) of common hiking gear. First keyword that matches wins. */
@@ -71,6 +86,9 @@ const WEIGHTS = [
   [/whistle|lighter|matches/, 0.03],
   [/emergency blanket|bivy/, 0.1],
   [/sandwich|lunch|meal/, 0.3],
+  [/dinner|breakfast/, 0.6],
+  [/warm layer/, 0.35],
+  [/microspike/, 0.4],
   [/snack|bar|trail mix|nuts|jerky|fruit|apple|banana|chocolate/, 0.2],
   [/towel/, 0.1],
   [/toilet|trowel|tissue/, 0.1],
@@ -81,6 +99,7 @@ const WEIGHTS = [
 export function guessWeight(name) {
   const text = name.toLowerCase().trim()
   if (!text) return '0.0 kg'
+  if (/filter|tablet|purif|electrolyte|salts/.test(text)) return '0.05 kg'
   const litres = text.match(/(\d+(?:\.\d+)?)\s*(l|litre|liter)s?\b/)
   if (/water/.test(text)) return `${(litres ? Number(litres[1]) : 1).toFixed(1)} kg`
   const match = WEIGHTS.find(([re]) => re.test(text))

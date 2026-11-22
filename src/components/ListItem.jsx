@@ -8,8 +8,11 @@ import './ListItem.css'
  * Figma "packing-list-item": a checkable row with a small value on the right.
  * Default → hover (circle fills green) → click (checkmark) → click (back to default).
  */
-export default function ListItem({ label, meta, defaultChecked = false, tone = 'yellow' }) {
-  const [checked, setChecked] = useState(defaultChecked)
+export default function ListItem({ label, meta, defaultChecked = false, tone = 'yellow', checked: value, onChange }) {
+  const [inner, setInner] = useState(defaultChecked)
+  // Uncontrolled by default; pass `checked` + `onChange` to control it (Packing, Round 20).
+  const checked = value !== undefined ? value : inner
+  const setChecked = onChange ?? setInner
   return (
     <button
       type="button"

@@ -2,6 +2,7 @@ import { TypeField } from './controls.jsx'
 import { BackButton } from './controls.jsx'
 import Button from './Button.jsx'
 import searchIcon from '../assets/icons/search.png'
+import { ScreenPortal } from './Screen.jsx'
 import './BottomSheet.css'
 
 /**
@@ -9,9 +10,10 @@ import './BottomSheet.css'
  * 25% black backdrop, closes on outside click. Opens with the prototype's
  * "move in" (300ms ease-out); closing is instant, as prototyped.
  */
-export default function BottomSheet({ open, title, onClose, onDone = onClose, action, belowSearch, children }) {
+export default function BottomSheet({ open, title, onClose, onDone = onClose, action, belowSearch, onSearch, searchPlaceholder = 'Search', children }) {
   if (!open) return null
   return (
+    <ScreenPortal>
     <div className="sheet-layer">
       <div className="sheet-layer__backdrop" onClick={onClose} />
       <div className="sheet" role="dialog" aria-modal="true" aria-label={title}>
@@ -25,7 +27,11 @@ export default function BottomSheet({ open, title, onClose, onDone = onClose, ac
             <div className="sheet__search-group">
               <div className="sheet__search">
                 <img src={searchIcon} alt="" />
-                <TypeField placeholder="Search" enterKeyHint="search" />
+                <TypeField
+                  placeholder={searchPlaceholder}
+                  enterKeyHint="search"
+                  onChange={onSearch ? (e) => onSearch(e.target.value) : undefined}
+                />
               </div>
               {belowSearch}
             </div>
@@ -37,5 +43,6 @@ export default function BottomSheet({ open, title, onClose, onDone = onClose, ac
         </Button>
       </div>
     </div>
+    </ScreenPortal>
   )
 }

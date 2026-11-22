@@ -19,8 +19,8 @@ export const HIKE_DETAILS = {
     startBy: { value: '07:15 AM', sub: 'Daylight margin for the descent' },
     wildlife: { title: 'Wildlife corridor', chip: 'Bear spray', body: 'Active grizzly and black bear habitat in the sub-alpine meadows. Keep bear spray within reach.' },
     pass: { title: 'Pass required', body: 'BC Parks day-use pass needed in peak summer season.' },
-    access: { title: 'Access & parking', body: 'Lions Bay lot fills early. Arrive before 06:45 AM.' },
-    report: { title: 'BC Parks trail report', sub: 'Updated today at 06:30 AM', url: 'https://bcparks.ca/' },
+    access: { title: 'Access & parking', body: 'Lions Bay lot fills early. Arrive before 6:45 AM.' },
+    report: { title: 'BC Parks trail report', sub: 'Updated today at 6:30 AM', url: 'https://bcparks.ca/' },
     emergency: 'Search and rescue · call 911',
     challenges: [
       { icon: 'sun', title: 'Sun exposure', chip: 'High UV', body: 'Open alpine ridgelines with strong UV reflection and no shade.' },

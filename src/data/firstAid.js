@@ -10,6 +10,7 @@ import { withHeatVisuals } from './heatVisuals.js'
 
 /**
  * "Brunswick Mountain Trail Safety" lessons. Order = lesson list order in Figma.
+ * `intro`: sections ({ h?, p }) that teach everything the scenarios test; `overview`: bullet summary.
  * Each scenario: `text` (the situation), `hint`; after Check, `title` + `feedback` (what is happening)
  * and `steps` (Next Steps). Heat scenarios also have `photo`, `stepsPhoto` and `key` (see HEAT_PHOTOS).
  *
@@ -26,8 +27,32 @@ export const LESSONS = [
     icon: dropIcon,
     photo: waterPhoto,
     intro: [
-      'Dehydration happens when you lose more fluid than you drink. On a long, steep climb you lose water and salt through sweat and heavy breathing, often faster than you notice. Early signs are subtle: headache, tiredness, a slower pace and dark urine.',
-      'Drink small amounts often instead of waiting until you are thirsty, carry electrolytes or rehydration salts, eat salty snacks, and know how you will treat water on the trail. Too much plain water without salt can also make you sick.',
+      { p: 'Dehydration happens when you lose more fluid than you drink. On a long, steep climb you lose water and salt through sweat and heavy breathing, often faster than you notice.' },
+      {
+        h: 'Spot the signs',
+        p: 'Early signs are subtle: headache, tiredness, a slower pace and dark urine. Urine colour is your quickest check: pale yellow is good, dark yellow means drink more. Severe dehydration shows as severe muscle cramps, not needing to pee for hours, and confusion. That is an emergency: call 911.',
+      },
+      {
+        h: 'Treat it',
+        p: 'For early signs, stop and rest in the shade. Sip water with electrolytes and eat a salty snack, instead of drinking a whole bottle at once, then keep drinking small amounts every 15–20 minutes. If someone is vomiting and cannot keep fluids down, give a mouthful of rehydration solution every few minutes. If that does not work, they cannot rehydrate on the trail: call for help and take the shortest, easiest way down. Never force fluids on someone who is confused or drowsy.',
+      },
+      {
+        h: 'Plan your water',
+        p: 'Plan on 0.5–1 L per hour of hard hiking, more in heat. For a 7–9 hour day like Brunswick Mountain Trail, that is about 3–4 L per person, plus electrolytes. Creek water can carry bacteria and parasites even when it looks clean: collect from moving water, then filter it, use purification tablets (wait the full contact time) or boil it. If you have no way to treat it and someone is becoming dehydrated, untreated water is the lower risk.',
+      },
+      {
+        h: 'Too much water, and the cold',
+        p: 'Drinking lots of plain water without eating or replacing salt can cause hyponatremia (low blood sodium): nausea, headache, confusion and swollen hands. Do not give more water; give salty snacks or an electrolyte drink, and call 911 if they are confused or vomiting. Cold weather dulls thirst, but you still lose water through sweat and breathing. Drink on a schedule, carry warm drinks in an insulated bottle, and keep bottles inside your pack or upside down so they do not freeze shut.',
+      },
+    ],
+    overview: [
+      'Early signs: headache, tiredness, dark urine',
+      'Rest in shade, sip with electrolytes and a salty snack',
+      'Plan 0.5–1 L per hour of hard hiking (3–4 L for Brunswick)',
+      'Filter, use tablets or boil creek water',
+      'Swollen hands and confusion after lots of plain water: give salt, not water',
+      'Drink on a schedule in the cold',
+      'Confusion, no peeing for hours, or constant vomiting: call 911',
     ],
     scenarios: [
       {
@@ -50,13 +75,6 @@ export const LESSONS = [
         title: 'Hyponatremia',
         feedback: 'This could be hyponatremia (low blood sodium), not dehydration, so do not push more water.',
         steps: 'If they are fully alert, give salty snacks or an electrolyte drink and let them rest. Confusion, vomiting or worsening headache make this an emergency: call 911 and do not let them hike out alone.',
-      },
-      {
-        text: 'After a break, your friend stands up quickly, feels dizzy and has to sit back down. Their mouth is dry and their heart is racing. What do you do?',
-        hint: 'Rehydration salts work faster than plain water.',
-        title: 'Moderate dehydration',
-        feedback: 'Dizziness when standing, a dry mouth and a racing heart mean their body is short on fluid. Treat this as moderate dehydration.',
-        steps: 'Have them sit or lie down and sip an oral rehydration solution (or water with electrolytes and a snack). Rest until the dizziness passes, then stand up slowly. Slow the pace afterwards and consider turning back if symptoms return.',
       },
       {
         text: 'A hiker has vomited twice and has diarrhea. Every time they drink, it comes back up. What do you do?',
@@ -104,8 +122,36 @@ export const LESSONS = [
     icon: mtnIcon,
     photo: scramblePhoto,
     intro: [
-      'A scramble is steep terrain where you need your hands as well as your feet. The final section of Brunswick Mountain Trail is an exposed, rocky scramble where a slip or falling rock can cause serious injury.',
-      'Keep three points of contact, test every hold before you trust it, and never climb up something you cannot climb back down. Wear a helmet, spread out so you are not directly below others, and turn around if the rock is wet or the weather changes.',
+      { p: 'A scramble is steep terrain where you need your hands as well as your feet. The final section of Brunswick Mountain Trail is an exposed, rocky scramble where a slip or falling rock can cause serious injury.' },
+      {
+        h: 'Move safely',
+        p: 'Keep three points of contact on every move. Test each hold by pushing or tapping it before you trust it; if one shifts, keep your weight off it, stay on your other three points and move to solid rock, then warn the people behind you. Wear a helmet and spread out so nobody is directly below someone else. Never climb up something you cannot climb back down.',
+      },
+      {
+        h: 'Know when to turn around',
+        p: 'Turn back if the route is harder than you expected, the rock is wet, or cloud rolls in and hides the way. The summit will still be there another day.',
+      },
+      {
+        h: 'Falling rock',
+        p: 'If you knock a rock loose, shout “ROCK!” loudly, straight away. If you hear it, do not look up: cover your head and move in close to the rock face. Afterwards, check nobody was hit.',
+      },
+      {
+        h: 'Fear and losing the route',
+        p: 'If someone freezes on exposed rock, stay calm and speak slowly. Make sure they have three points of contact, then talk them through one hand or foot placement at a time. Never rush or pull them; if going up is not safe, help them climb back down. If you lose the route, stop. Retrace your steps to the last place you were sure of, and check an offline map or GPS with your phone in airplane mode to save battery. Still lost? Stay where you are, keep warm and call 911.',
+      },
+      {
+        h: 'Injuries on steep ground',
+        p: 'Get yourself and the injured person secure first, and only move them if they are in immediate danger. Never try to carry someone down a scramble. For a head wound, check ABCs (airway, breathing, circulation) and press a clean dressing firmly on it. Head wounds bleed a lot and can hide a concussion, so watch for confusion, vomiting, a worsening headache or unequal pupils. If they fell any distance or have neck pain, keep them still. For an ankle they cannot stand on, check for other injuries, pad and splint it, and keep them warm. In both cases call 911 for search and rescue (free in BC).',
+      },
+    ],
+    overview: [
+      'Three points of contact; test every hold first',
+      'Never climb up what you cannot climb down',
+      'Wet rock, cloud or a harder route: turn around',
+      'Shout “ROCK!”; below, cover your head and hug the face',
+      'Someone frozen: calm voice, one move at a time',
+      'Lost: stop, retrace, then stay put and call 911',
+      'Injured on a scramble: secure them, don’t carry them, call 911',
     ],
     scenarios: [
       {
@@ -151,13 +197,6 @@ export const LESSONS = [
         steps: 'Secure them where they are and only move them if they are in immediate danger. Check for other injuries, then pad and splint the ankle. Keep them warm and call 911 for search and rescue.',
       },
       {
-        text: 'Your group of four is about to climb a narrow gully full of loose rock. How do you move through it?',
-        hint: 'Where does falling rock go?',
-        title: 'Loose gully',
-        feedback: 'Rock falls down the line of the gully.',
-        steps: 'Either move as a tight group so a dislodged rock cannot gain speed, or go one at a time and wait out of the fall line. Wear helmets and call out before moving.',
-      },
-      {
         text: 'On the ridge you lose the route and cannot see any trail markers. Your phone is at 15% battery. What do you do?',
         hint: 'Stop and think before you go any further.',
         title: 'Lost the route',
@@ -181,10 +220,40 @@ export const LESSONS = [
     tag: 'Heat-related situations',
     icon: fireMask,
     photo: heatPhoto,
-    // Copy from Figma 1646:12254.
+    // First section = Figma 1646:12254 copy; the rest covers what the scenarios test.
     intro: [
-      'Heat exposure is caused by overexposure to the sun. On a long climb, hard effort and not enough water can add up and effects a lot of people.',
-      'Ways to avoid heat exposure by starting your hike early in the cooler part of the day, drinking water consistently, and wearing loose, light clothing. Slow your pace on sunny, exposed sections and rest in the shade whenever you can.',
+      {
+        p: 'Heat exposure is caused by overexposure to the sun. On a long climb, hard effort and not enough water can add up and affects a lot of people. You can avoid heat exposure by starting your hike early in the cooler part of the day, drinking water consistently, and wearing loose, light clothing. Slow your pace on sunny, exposed sections and rest in the shade whenever you can.',
+      },
+      {
+        h: 'Heat cramps',
+        p: 'Painful muscle cramps while sweating heavily. Sweat washes out salt as well as water. Rest in the shade, stretch the muscle gently and have an electrolyte drink or salty snack. No hard climbing until the cramps are gone.',
+      },
+      {
+        h: 'Heat exhaustion',
+        p: 'Dizziness, weakness, heavy sweating, pale or clammy skin and nausea. Move them into the shade, let them rest and loosen extra layers. Give sips of water with electrolytes and cool them with a wet cloth or by fanning. Treat for shock: rest and reassure them, check their ABCs (airway, breathing, circulation) and help them into a comfortable position. Reassess every 5–15 minutes, and call for help if they are not better within 30 minutes. Even after they recover, they are at higher risk for the rest of the day: head down slowly together, keep them cool and hydrated, and watch for symptoms coming back.',
+      },
+      {
+        h: 'Heat stroke',
+        p: 'Hot, red skin (they may stop sweating) with confusion or slurred speech. This is life-threatening: the brain is overheating. Call 911 and cool them as fast as you can: shade, remove extra clothing, soak them with water and fan them, with cold packs on the neck, armpits and groin. Give no drinks unless they are fully alert.',
+      },
+      {
+        h: 'If someone collapses',
+        p: 'Check the scene is safe, then check for a response and breathing, and call 911. If they are not breathing normally, start CPR. If they are breathing, place them in the recovery position in the shade and start cooling them.',
+      },
+      {
+        h: 'Plan for the heat',
+        p: 'On a hot forecast, start very early, carry extra water and electrolytes, and wear loose, light-coloured clothing, a sun hat and sunscreen. Set a turnaround time, take breaks in the shade, and agree as a group to turn back if anyone feels unwell. Once half your water is gone, the rest is for the descent: that is your turnaround point.',
+      },
+    ],
+    overview: [
+      'Start early; carry extra water and electrolytes',
+      'Cramps: shade, stretch, salty snack',
+      'Exhaustion: shade, rest, sip, cool, treat for shock',
+      'Not better in 30 minutes: call for help',
+      'Hot skin + confusion = heat stroke: call 911, cool fast',
+      'Collapsed: safe scene, breathing, 911, CPR or recovery position',
+      'Half your water gone: turn around',
     ],
     // Photos + key points per scenario: src/data/heatVisuals.js
     scenarios: withHeatVisuals([
@@ -225,13 +294,6 @@ export const LESSONS = [
         steps: 'Recommend heading down. Descend slowly, keep them hydrated and cool, stay together, and watch for symptoms coming back.',
       },
       {
-        text: 'A hiker is pale, clammy and nauseous. They try to drink water but vomit it back up. What do you do?',
-        hint: 'Can they actually keep fluids in?',
-        title: 'Can’t keep fluids down',
-        feedback: 'Pale, clammy skin and nausea are signs of heat exhaustion, and someone who keeps vomiting cannot rehydrate.',
-        steps: 'Keep them resting in the shade and cool them down. Offer tiny sips often instead of large drinks. If they still cannot keep fluids down, they cannot recover on the trail: call for help and plan the easiest way down.',
-      },
-      {
         text: 'On a hot afternoon, a hiker collapses and does not respond when you call their name. What do you do?',
         hint: 'Start with the ABCs.',
         title: 'Unresponsive hiker',
@@ -254,8 +316,26 @@ export const LESSONS = [
     icon: snowIcon,
     photo: snowPhoto,
     intro: [
-      'Snowy Peaks covers cold injuries: hypothermia and frostbite. Snow can stay high on the mountain late into the season, and on an exposed summit, wind, wet clothing and a long stop can cool your body quickly, even on a mild day.',
-      'Stay dry by removing layers before you sweat, carry a warm layer, hat and gloves, and keep eating and drinking. Watch for the "umbles": stumbles, mumbles, fumbles and grumbles. They are early signs that someone is getting too cold.',
+      { p: 'Snowy Peaks covers cold injuries: hypothermia and frostbite. Snow can stay high on the mountain late into the season, and on an exposed summit, wind, wet clothing and a long stop can cool your body quickly, even on a mild day.' },
+      {
+        h: 'Stay warm and dry',
+        p: 'Vent or remove layers before you start to sweat, carry a warm layer, hat and gloves, and keep eating and drinking. On breaks, sit on your pack, not the snow. Wet clothing, from sweat or a fall into a creek, pulls heat from your body far faster than cold air: change into dry clothes straight away, add warm layers, eat, and keep moving once dry.',
+      },
+      {
+        h: 'Hypothermia',
+        p: 'Early signs are hard shivering and the “umbles”: stumbles, mumbles, fumbles and grumbles. Get them out of the wind, swap wet layers for dry ones, and add a hat, gloves and jacket. Give a warm, sweet drink and high-energy food if they are alert, then start descending. If shivering stops and they become drowsy, confused or stumble, it is severe hypothermia and an emergency: call 911, handle them gently and keep them lying down. Insulate them from the ground, wrap them in a sleeping bag or emergency blanket and put heat packs on the chest and armpits (not directly on skin). Do not let them walk, and give no food or drink unless they are fully alert.',
+      },
+      {
+        h: 'Frostnip and frostbite',
+        p: 'White, waxy, numb skin, often on fingers, toes, ears or cheeks. Get out of the cold, remove wet gloves and rewarm the skin against warm skin, such as in an armpit. Never rub it, use snow, or hold it near a stove or fire. If the skin stays hard and pale it may be frostbite: protect it, do not let it refreeze, and get medical care.',
+      },
+    ],
+    overview: [
+      'Vent layers before you sweat; sit on your pack',
+      'Wet clothes: change into dry ones straight away',
+      'Shivering + the “umbles”: out of the wind, dry layers, warm sweet drink, descend',
+      'Shivering stops + confusion: call 911, keep them lying down',
+      'White, waxy skin: rewarm on warm skin, never rub',
     ],
     scenarios: [
       {
@@ -278,6 +358,13 @@ export const LESSONS = [
         title: 'Severe hypothermia',
         feedback: 'Shivering that stops, with drowsiness and confusion, means this is moderate to severe hypothermia, an emergency.',
         steps: 'Call 911. Handle them gently and keep them lying down. Insulate them from the ground and wrap them in a sleeping bag or emergency blanket, with heat packs on the chest and armpits (not directly on skin). Do not let them walk, and give no food or drink unless they are fully alert.',
+      },
+      {
+        text: 'Crossing a snowmelt creek, your friend slips and goes in up to the waist. It is 3°C and windy. What do you do?',
+        hint: 'What is wet clothing doing to their body heat?',
+        title: 'Soaked in cold water',
+        feedback: 'Wet clothing pulls heat from the body far faster than cold air does, and wind makes it worse. Hypothermia can follow quickly.',
+        steps: 'Get them out of the water and out of the wind. Change them into dry clothes straight away and add a hat, gloves and a warm layer. Give food and a warm drink, then keep moving once they are dry so their body makes heat. Watch for the “umbles”.',
       },
     ],
     result: {

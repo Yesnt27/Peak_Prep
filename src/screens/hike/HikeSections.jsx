@@ -55,17 +55,32 @@ function Bar({ label, value, pct }) {
 }
 
 /** Readiness gap (your logged bests vs this hike) + pace / start-by tiles. */
-export function FitForYou({ hike, details, isNew }) {
+// Toughest hike rows from sign-up → the top of each range (used when no hike was picked).
+const BUCKET_KM = { '<5km': 5, '5-10km': 10, '10-20km': 20, '>20km': 20 }
+const BUCKET_M = { '<300m': 300, '300-800m': 800, '800-1500m': 1500, '>1,500m': 1500 }
+
+/** A new account compares against the toughest hike entered at sign-up (Round 18). */
+function bestsFor(account, hikes) {
+  const t = account?.toughest
+  if (t?.hike && hikes[t.hike]) return { km: num(hikes[t.hike].stats[0][0]), m: num(hikes[t.hike].stats[1][0]) }
+  if (t?.distance) return { km: BUCKET_KM[t.distance], m: BUCKET_M[t.elevation] ?? 0 }
+  return { km: 0, m: 0 }
+}
+
+export function FitForYou({ hike, details, isNew, account, hikes }) {
   const km = num(hike.stats[0][0])
   const m = num(hike.stats[1][0])
-  const logged = isNew ? { km: 0, m: 0 } : LOGGED
+  const logged = isNew ? bestsFor(account, hikes) : LOGGED
+  const what = isNew ? 'your toughest hike' : 'your longest logged hike'
   const ratio = logged.km ? km / logged.km : null
   const chip = ratio == null ? 'No hikes logged' : ratio >= 1.5 ? 'Stretch goal' : ratio > 1 ? 'Step up' : 'Good fit'
   let gap
   if (ratio == null) gap = 'Log a hike to see how this one compares with what you’ve done.'
   else if (ratio > 1)
-    gap = `About ${ratio.toFixed(1)}× longer than your longest logged hike${m > logged.m ? `, with +${Math.round(m - logged.m).toLocaleString('en-US')} m more elevation than your biggest climb day` : ''}.`
-  else gap = 'Within the distance and climbing you’ve already logged. A good fit for your current fitness.'
+    gap = `About ${ratio.toFixed(1)}× longer than ${what}${m > logged.m ? `, with +${Math.round(m - logged.m).toLocaleString('en-US')} m more elevation` : ''}.`
+  else if (m > logged.m)
+    gap = `Within the distance of ${what}, but +${Math.round(m - logged.m).toLocaleString('en-US')} m more elevation.`
+  else gap = `Within the distance and climbing of ${what}. A good fit for your current fitness.`
   return (
     <section className="hd-section">
       <SectionHeader icon={gauge20} title="Fit for you">
@@ -81,8 +96,8 @@ export function FitForYou({ hike, details, isNew }) {
             <p className="hd-gap__body">{gap}</p>
           </div>
         </div>
-        <Bar label="DISTANCE" value={`${logged.km} km logged / ${hike.stats[0][0]} km`} pct={(logged.km / km) * 100} />
-        <Bar label="ELEVATION" value={`${logged.m} m logged / ${hike.stats[1][0]} m`} pct={(logged.m / m) * 100} />
+        <Bar label="DISTANCE" value={`${logged.km} km ${isNew ? 'toughest' : 'logged'} / ${hike.stats[0][0]} km`} pct={(logged.km / km) * 100} />
+        <Bar label="ELEVATION" value={`${logged.m.toLocaleString('en-US')} m ${isNew ? 'toughest' : 'logged'} / ${hike.stats[1][0]} m`} pct={(logged.m / m) * 100} />
       </div>
       <div className="hd-pair">
         <div className="hd-tile hd-tile--yellow">

@@ -139,12 +139,6 @@
   letter-spacing: -0.32px;
 }
 
-.fp-add__icon {
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1;
-}
-
 /* After "Add friend": grey "− Unfriend" (hover / press a shade darker). */
 .fp-add--added {
   background: #e7e7e7;
@@ -278,4 +272,21 @@
 /* Your own Profile tab has no back button: start at the same height as Home. */
 .fp-page--tab {
   padding-top: 68px;
+}
+
+/* Round 24: the "−" circle sits on the grey Unfriend pill, so it's white there; light red on hover / press. */
+.fp-add--added .sign-icon--minus {
+  background: #fff;
+}
+
+@media (hover: hover) {
+  .fp-add--added:hover .sign-icon--minus {
+    background: #f6c6c1;
+  }
+}
+
+@media (hover: none) {
+  .fp-add--added:active .sign-icon--minus {
+    background: #f6c6c1;
+  }
 }

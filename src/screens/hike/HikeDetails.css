@@ -62,7 +62,7 @@
   display: flex;
   flex-direction: column;
   gap: 40px; /* more room between sections (Hike Details hifi.png) */
-  padding: 24px 20px 220px;
+  padding: 24px 23px 220px; /* Round 19: 23px app gutter */
   color: var(--body-copy-gray);
 }
 
@@ -116,7 +116,7 @@
 
 .hd-elev__chart {
   position: relative;
-  width: 334px;
+  width: 100%;
   height: 110px;
   overflow: hidden;
 }

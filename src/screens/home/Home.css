@@ -182,3 +182,22 @@
     background: #e7e7e7;
   }
 }
+
+/* Round 22: every input box is the app's grey field (#ededed, 16px text, #ababab placeholder). */
+.home__search {
+  background: #ededed;
+  color: var(--body-copy-gray);
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.home__search span,
+.home__search .fr-search__placeholder {
+  color: #ababab;
+  opacity: 1;
+}
+
+.home__search .type-field::placeholder {
+  color: #ababab;
+  opacity: 1;
+}

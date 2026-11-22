@@ -334,7 +334,7 @@
 }
 
 .field-card__placeholder {
-  color: #cfcfcf;
+  color: #ababab;
 }
 
 /* The option picked in an expanding row, shown where "input" was. */
@@ -357,28 +357,37 @@
   transition: transform 300ms var(--ease-out);
 }
 
-.field-card__arrow--open {
-  transform: rotate(180deg);
+.field-card__units {
+  display: inline-flex;
+  flex: none;
+  padding: 2px;
+  border-radius: 8px;
+  background: #fff;
 }
 
-.field-card__panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 300ms var(--ease-out);
+.field-card__unit {
+  min-width: 34px;
+  padding: 0 6px;
+  border-radius: 6px;
+  color: #8a8a8a;
+  font: 500 12px/1.9 var(--font-poppins);
 }
 
-.field-card__panel--open {
-  grid-template-rows: 1fr;
+.field-card__unit--on {
+  background: #d4e6b8;
+  color: var(--body-copy-gray);
 }
 
-.field-card__panel-inner {
-  min-height: 0;
-  overflow: hidden;
+@media (hover: hover) {
+  .field-card__unit:not(.field-card__unit--on):hover {
+    background: #e7e7e7;
+  }
 }
 
-.field-card__tags {
-  width: 316px;
-  padding-top: 11.975px;
+@media (hover: none) {
+  .field-card__unit:not(.field-card__unit--on):active {
+    background: #e7e7e7;
+  }
 }
 
 /* ---------- Option cards ---------- */
@@ -476,7 +485,7 @@ textarea.type-field {
 }
 
 .type-field--light::placeholder {
-  color: #cfcfcf;
+  color: #ababab;
 }
 
 .field-card__input.type-field {

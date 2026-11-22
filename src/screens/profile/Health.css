@@ -26,7 +26,12 @@
 
 .hi-title {
   font: 700 30px/1.139 var(--font-poppins);
-  letter-spacing: -0.6px;
+  letter-spacing: -0.6px;  margin-bottom: 16px; /* Round 20 rhythm: title → first section 36px */
+}
+
+/* Round 19 rhythm: 32px between sections (20px gap + 12px). */
+.hi-body > :not(.hi-title, .hi-subtitle) + .hi-subtitle {
+  margin-top: 12px;
 }
 
 .hi-subtitle {
@@ -355,4 +360,83 @@
 .hi-row__add {
   color: #9a9a9a;
   font: 500 15px/1.3 var(--font-poppins);
+}
+
+/* Round 18: sign-up answers (read-only); long lists wrap instead of overflowing. */
+.hi-row--info {
+  gap: 16px;
+  height: auto;
+  min-height: 57px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.hi-row--info > span:first-child {
+  flex: none;
+}
+
+.hi-row__text {
+  min-width: 0;
+  text-align: right;
+  white-space: normal;
+}
+
+/* Round 21: weight / height = number (tap to type) + unit dropdown. */
+.hi-measure {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hi-measure .unit-dd {
+  background: var(--app-grey);
+}
+
+/* Activity & Health rows open the sign-up field underneath to edit it. */
+.hi-row--button {
+  width: 100%;
+  color: inherit;
+  text-align: left;
+}
+
+.hi-row__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+@media (hover: hover) {
+  .hi-row--button:hover {
+    background: #e7e7e7;
+  }
+}
+
+@media (hover: none) {
+  .hi-row--button:active {
+    background: #e7e7e7;
+  }
+}
+
+.hi-edit__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms var(--ease-out);
+}
+
+.hi-edit--open .hi-edit__body {
+  grid-template-rows: 1fr;
+}
+
+.hi-edit__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.hi-edit--open .hi-edit__inner {
+  padding-top: 12px;
 }

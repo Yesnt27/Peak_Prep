@@ -30,7 +30,7 @@ export default function Profile() {
     <ProfileView
       // Log In = Hudson Kemp (the designed profile); Sign Up = what the new account entered.
       photo={isNew ? account.photo : hudson}
-      name={isNew ? account.name.trim() || 'New hiker' : 'Hudson Kemp'}
+      name={account.name?.trim() || (isNew ? 'New hiker' : 'Hudson Kemp')}
       onPhoto={isNew ? async (file) => updateAccount({ photo: await readPhoto(file) }) : undefined}
       stats={[
         { value: isNew ? (account.friends ?? []).length : FRIENDS.length, label: 'Friends', onClick: () => go('/profile/friends', 'smart') },
@@ -87,12 +87,20 @@ export function Settings() {
             <div className="pv-section" key={section}>
               <h2 className="pv-heading">{section}</h2>
               <div className="pv-rows">
-                {rows.map((row) => (
-                  <div className="pv-row" key={row}>
-                    <span>{row}</span>
-                    <img src={chevron} alt="" />
-                  </div>
-                ))}
+                {rows.map((row) =>
+                  // Round 20: Manage Profile edits everything entered at sign-up.
+                  row === 'Manage Profile' ? (
+                    <button type="button" className="pv-row pv-row--link" key={row} onClick={() => go('/profile/settings/profile', 'smart')}>
+                      <span>{row}</span>
+                      <img src={chevron} alt="" />
+                    </button>
+                  ) : (
+                    <div className="pv-row" key={row}>
+                      <span>{row}</span>
+                      <img src={chevron} alt="" />
+                    </div>
+                  ),
+                )}
                 {section === 'Account' && (
                   <button type="button" className="pv-row pv-row--link" onClick={() => go('/profile/settings/apps', 'smart')}>
                     <span>Connected Apps</span>

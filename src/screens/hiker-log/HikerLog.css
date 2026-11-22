@@ -292,27 +292,8 @@
   outline: none;
 }
 
-.hl-item__remove {
-  display: flex;
-  flex: none;
-  margin: -8px;
-  padding: 8px;
-  border-radius: 50%;
-}
 
-.hl-item__remove img {
-  width: 19.809px;
-  height: 19.809px;
-}
-
-@media (hover: hover) {
-  .hl-item__remove:hover {
-    background: #e7e7e7;
-  }
-}
-
-@media (hover: none) {
-  .hl-item__remove:active {
-    background: #e7e7e7;
-  }
+/* Round 23: "−" on the left, like Packing → Edit and the sign-up lists. */
+.hl-item--removable {
+  justify-content: flex-start;
 }

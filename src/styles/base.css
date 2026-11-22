@@ -185,3 +185,13 @@ svg {
     animation-duration: 1ms !important;
   }
 }
+
+/* Text for screen readers only (e.g. "(required)" after an asterisk). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

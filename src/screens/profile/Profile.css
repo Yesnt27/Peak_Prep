@@ -74,10 +74,15 @@
 }
 
 .pv-title {
-  margin-bottom: -5.883px;
-  color: #474747;
+  margin-bottom: 16px; /* Round 20: title → first section 36px (Hike Details / Get certified spacing) */
+  color: var(--body-copy-gray);
   font: 700 30px/1.139 var(--font-poppins);
   letter-spacing: -0.6px;
+}
+
+/* Round 19 rhythm: 32px between sections. */
+.pv-section + .pv-section {
+  margin-top: 12px;
 }
 
 .pv-heading {
@@ -181,4 +186,24 @@
 .pv-row--app:hover,
 .pv-row--app:active {
   background: #fff;
+}
+
+/* Settings → Manage Profile (Round 20): sign-up fields grouped under section headings. */
+.mp-content {
+  gap: 0;
+  padding-bottom: 160px;
+}
+
+.mp-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mp-section + .mp-section {
+  margin-top: 40px;
+}
+
+.mp-content .pv-title {
+  margin-bottom: 36px;
 }

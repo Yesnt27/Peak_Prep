@@ -81,7 +81,7 @@ export const HIKES = {
     photos: [everest, everest2, everest3, everest4],
     tag: 'DIFFICULT • SLOPE',
     title: 'Mt. Everest',
-    location: 'Kathmandu, NPL',
+    location: 'Kathmandu, Nepal',
     rating: '5.0 (303)',
     stats: [['130', 'KM'], ['5,545', 'M ELEV'], ['12–18', 'DAYS']],
   },
@@ -94,4 +94,22 @@ export const HIKES = {
     rating: '4.3 (375)',
     stats: [['2.5', 'KM'], ['800', 'M ELEV'], ['1–2', 'HOURS']],
   },
+}
+
+/**
+ * Which trip types are realistic for a hike (Round 20), from its time stat: a hike measured in
+ * days can't be a day hike, and one needing more than 2 days can't be an overnight.
+ * Day hikes also top out at ~14 hours on the trail.
+ */
+export function tripLimits(hike) {
+  const [time, unit] = hike.stats[2]
+  const [lo, hi = lo] = time.split(/[–-]/).map(parseFloat)
+  const days = unit.toUpperCase().startsWith('DAY')
+  return {
+    'Day hike': !days && hi <= 14,
+    Overnight: !days || lo <= 2,
+    'Multi-day trek': true,
+    'Summit hike': true,
+    reason: days ? `${hike.title} takes ${time} days` : `${hike.title} takes ${time} hours`,
+  }
 }

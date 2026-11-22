@@ -9,14 +9,15 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-  padding: 60px 23px 180px;
+  padding: 48px 23px 180px; /* Round 19: back button at 48px like every screen */
 }
 
 .ch-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  width: 352px;
+  width: 100%;
+  margin-top: 12px; /* title at 125px */
 }
 
 .ch-header h1 {
@@ -33,7 +34,7 @@
 }
 
 .ch-tabs.seg-tabs {
-  width: 353px;
+  width: 100%;
   height: 44px;
 }
 
@@ -290,4 +291,23 @@
   flex: 1 0 0;
   font: 400 13px/1.3 var(--font-poppins);
   letter-spacing: -0.26px;
+}
+
+/* Round 22: every input box is the app's grey field (#ededed, 16px text, #ababab placeholder). */
+.ch-search {
+  background: #ededed;
+  color: var(--body-copy-gray);
+  font: 400 16px/1.68 var(--font-poppins);
+  letter-spacing: -0.32px;
+}
+
+.ch-search span,
+.ch-search .fr-search__placeholder {
+  color: #ababab;
+  opacity: 1;
+}
+
+.ch-search .type-field::placeholder {
+  color: #ababab;
+  opacity: 1;
 }
