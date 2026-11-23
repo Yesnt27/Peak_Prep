@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import useGo from '../app/useGo.js'
 import { HIKES } from '../data/hikes.js'
+import { toggleLike, useAccount } from '../app/account.js'
 import calendarIcon from '../assets/icons/calendar.svg'
 import heartOutline from '../assets/icons/heart-outline.svg'
 import heartFilled from '../assets/icons/heart-filled.svg'
@@ -15,15 +16,14 @@ const titleCase = (s) => s.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCa
  * - `id`: key in data/hikes.js. Tapping the card opens that hike's details (`/hike/:id`),
  *   unless `onClick` is given (e.g. a training card opens the training plan).
  * - Photos swipe sideways (touch, trackpad or mouse drag); the dots show / pick the photo.
- * - The heart toggles on its own, or is controlled with `saved` + `onLike`.
+ * - The heart is the account's like for this hike (Round 30), the same one Hike Details shows.
  * - `selected` adds the green ring used when picking a hike in a flow.
  * - `progress`: { pct: 0–100, text: '82% ready · 10 days to go' }.
  */
-export default function TrailCard({ id, date, saved = false, onLike, progress, selected = false, onClick }) {
+export default function TrailCard({ id, date, progress, selected = false, onClick }) {
   const go = useGo()
   const hike = HIKES[id]
-  const [ownLiked, setOwnLiked] = useState(saved)
-  const liked = onLike ? saved : ownLiked
+  const liked = (useAccount().liked ?? []).includes(id)
   const [index, setIndex] = useState(0)
   const photosRef = useRef(null)
   const dragged = useRef(false)
@@ -107,8 +107,7 @@ export default function TrailCard({ id, date, saved = false, onLike, progress, s
             aria-label={liked ? `Unlike ${hike.title}` : `Like ${hike.title}`}
             onClick={(e) => {
               e.stopPropagation()
-              if (onLike) onLike()
-              else setOwnLiked(!liked)
+              toggleLike(id)
             }}
           >
             <img src={liked ? heartFilled : heartOutline} alt="" />

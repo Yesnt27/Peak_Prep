@@ -10,7 +10,7 @@ import ListItem from '../../components/ListItem.jsx'
 import Avatar from '../../components/Avatar.jsx'
 import Button from '../../components/Button.jsx'
 import EmptyState from '../../components/EmptyState.jsx'
-import { openTraining, toggleLike, trainingsFor, useAccount } from '../../app/account.js'
+import { openTraining, trainingsFor, useAccount } from '../../app/account.js'
 import SegmentedTabs from '../../components/SegmentedTabs.jsx'
 import avatar from '../../assets/home/avatar.png'
 import searchIcon from '../../assets/icons/search.svg'
@@ -22,9 +22,10 @@ import { doneOn, setDone, useWorkouts } from '../../app/workouts.js'
 import './Home.css'
 
 const TABS = [
-  { id: 'saved', label: 'Saved', color: '#414141' },
-  { id: 'explore', label: 'Explore' },
+  // Round 32: Explore / Training / Saved; Home opens on Training.
+  { id: 'explore', label: 'Explore', color: '#414141' },
   { id: 'training', label: 'Training' },
+  { id: 'saved', label: 'Saved' },
 ]
 
 
@@ -51,27 +52,16 @@ function CardList({ cards, sort }) {
   return sortCards(cards, sort).map(({ hike, friends, ...props }) => <TrailCard key={hike} id={hike} {...props} />)
 }
 
-/** A new account: hearts save into the account; Saved lists only what they liked. */
-function likeProps(account, hike) {
-  return { saved: account.liked.includes(hike), onLike: () => toggleLike(hike) }
-}
-
+/** Saved = the hikes this account liked (Round 30: the demo account too; hearts are shared app-wide). */
 function Saved({ go, sort, account, onExplore }) {
-  if (account.type === 'new') {
-    if (!account.liked.length)
-      return (
-        <EmptyState title="No saved hikes yet" text="Tap the heart on a hike to save it here.">
-          <Button onClick={onExplore}>Explore hikes</Button>
-        </EmptyState>
-      )
-    return <CardList go={go} sort={sort} cards={account.liked.map((hike) => ({ hike, ...likeProps(account, hike) }))} />
-  }
-  const cards = [
-    { hike: 'panorama', saved: true, friends: true },
-    { hike: 'blackTusk', saved: true },
-    { hike: 'brunswick', saved: true, friends: true },
-  ]
-  return <CardList go={go} cards={cards} sort={sort} />
+  const liked = account.liked ?? []
+  if (!liked.length)
+    return (
+      <EmptyState title="No saved hikes yet" text="Tap the heart on a hike to save it here.">
+        <Button onClick={onExplore}>Explore hikes</Button>
+      </EmptyState>
+    )
+  return <CardList go={go} sort={sort} cards={liked.map((hike) => ({ hike }))} />
 }
 
 function Explore({ go, sort, account }) {
@@ -81,7 +71,7 @@ function Explore({ go, sort, account }) {
     { hike: 'brunswick', friends: !isNew },
     { hike: 'wedgemount' },
     { hike: 'panorama', friends: !isNew },
-  ].map((c) => (isNew ? { ...c, ...likeProps(account, c.hike) } : c))
+  ]
   return <CardList go={go} cards={cards} sort={sort} />
 }
 
@@ -115,7 +105,6 @@ function Training({ go, account }) {
       key={t.hike}
       id={t.hike}
       date={t.date}
-      {...(account.type === 'new' ? likeProps(account, t.hike) : { saved: true })}
       progress={{ pct: t.pct, text: t.fresh ? '0% ready · just started' : `${t.pct}% ready · ${t.toGo}` }}
       onClick={() => open(t.hike)}
     />
@@ -174,8 +163,8 @@ const CONTENT = { saved: Saved, explore: Explore, training: Training }
 /** Figma "Home - Saved2 / Explore2 / Training2". */
 export default function Home() {
   const go = useGo()
-  const { tab = 'saved' } = useParams()
-  const active = CONTENT[tab] ? tab : 'saved'
+  const { tab = 'training' } = useParams()
+  const active = CONTENT[tab] ? tab : 'training'
   // The tab highlight changes on click; the screen itself follows 300ms later,
   // matching the prototype's "after delay" navigation between the Home frames.
   const [selected, setSelected] = useState(active)

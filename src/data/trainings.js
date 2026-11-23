@@ -24,10 +24,19 @@ export const DEMO_TRAININGS = [
     trip: 'Overnight',
     pct: 34,
     toGo: '7 months to go',
+    // Round 30: same rows as Brunswick, set to fit 34% (elevation goal from elevationGoal()).
     rows: [
       ['Prep status', 'On track'],
-      ['Hike date', 'Jun 23–24'],
-      ['Time to go', '7 months'],
+      ['Training completed', '2 of 6 weeks'],
+      ['Elevation goal', '1,605 / 4,720 m'],
     ],
   },
 ]
+
+/**
+ * Training elevation goal for a hike (Round 30): Brunswick's Figma goal (4,120 m for a 1,539 m hike)
+ * scaled to the hike's elevation gain, rounded to 10 m. Used for Black Tusk and new trainings.
+ */
+export function elevationGoal(elev) {
+  return Math.round((Number(String(elev).replace(/,/g, '')) * 4120) / 1539 / 10) * 10
+}

@@ -224,3 +224,12 @@
   color: #ababab;
   opacity: 1;
 }
+
+/* Round 32: Friend List search with no match. */
+.fr-none {
+  width: 100%;
+  padding: 24px 0;
+  color: var(--body-copy-gray);
+  font: 400 16px/1.5 var(--font-poppins);
+  text-align: center;
+}

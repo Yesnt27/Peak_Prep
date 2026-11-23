@@ -20,7 +20,7 @@ export const EXERCISES = {
     credit: { artist: 'Benjamín Núñez González', license: 'CC BY-SA 4.0', source: commons('Life_Fitness,_Stair_Climbing,_Spain,_2016.JPG') },
   },
   weightedWalk: {
-    label: 'Weighted Walk · 15kg',
+    label: 'Weighted Walk · 33 lbs',
     image: weightedWalk,
     how: 'Load your hiking pack and walk uphill or up stairs. Keep the hip belt snug and take short, steady steps.',
     credit: { artist: 'Krishna k. sahh', license: 'CC0', source: commons('Two_hikers_ascending_a_stone-stepped_forest_path.jpg') },

@@ -624,7 +624,7 @@ export function OnboardingSafety() {
       step={5}
       fill={344}
       back="/onboarding/health"
-      next="/home/saved"
+      next="/home/training"
       cta="Done"
       skip={!CONTACT.some(([, key]) => contact[key]?.trim())}
       title={<h1 className="onb__title">Safety Setup</h1>}

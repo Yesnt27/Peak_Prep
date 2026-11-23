@@ -55,7 +55,7 @@ export function TargetHike() {
     <Step
       step={1}
       fill={52}
-      back="/home/saved"
+      back="/home/training"
       next="/new-training/date"
       ready={picked}
       onNext={() => planTraining({ plannedHike: key ?? 'blackTusk' })}
@@ -120,11 +120,13 @@ const MONTHS = [
 export function HikeDate() {
   const [year, setYear] = useState(2027)
   const [month, setMonth] = useState(null)
+  // Round 30: opened from Hike Details (?hike=id) → back returns to that hike.
+  const from = useSearchParams()[0].get('hike')
   return (
     <Step
       step={2}
       fill={85}
-      back="/new-training"
+      back={from ? `/hike/${from}` : '/new-training'}
       next="/new-training/trip"
       ready={month !== null}
       onNext={() => planTraining({ plannedDate: `${month.slice(0, 3)} ${year}` })}

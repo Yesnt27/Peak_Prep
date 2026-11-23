@@ -84,7 +84,11 @@ export function FriendList() {
   const go = useGo()
   const account = useAccount()
   const isNew = account.type === 'new'
-  const mine = isNew ? (account.friends ?? []).map(friendById).filter(Boolean) : FRIENDS
+  const all = isNew ? (account.friends ?? []).map(friendById).filter(Boolean) : FRIENDS
+  // Round 32: the search bar types in place (the phone keyboard opens) and filters this list.
+  const [query, setQuery] = useState('')
+  const q = query.trim().toLowerCase()
+  const mine = q ? all.filter((f) => f.name.toLowerCase().includes(q)) : all
   const view = (id) => go(`/profile/friends/${id}`, 'smart', '/profile/friends')
   return (
     <Screen className="fr" fixed={<NavBar />}>
@@ -93,21 +97,24 @@ export function FriendList() {
         <div className="fr-block">
           <h1 className="fr-title">Friend List</h1>
           <div className="fr-search-block">
-            <button
-              type="button"
-              className="fr-search"
-              onClick={() => go(isNew ? '/profile/friends/add' : '/profile/friends/search')}
-            >
+            <label className="fr-search fr-search--typed">
               <img src={searchIcon} alt="" />
-              <span className="fr-search__placeholder">Search </span>
-            </button>
+              <TypeField
+                placeholder="Search"
+                enterKeyHint="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                aria-label="Search friends"
+              />
+            </label>
             <button type="button" className="fr-add-link" onClick={() => go('/profile/friends/add')}>
               add friends
             </button>
           </div>
           <div className="fr-list">
             {/* A new account starts with no friends. */}
-            {mine.length === 0 && (
+            {q && mine.length === 0 && <p className="fr-none">No friends with that name found</p>}
+            {!q && mine.length === 0 && (
               <EmptyState title="No friends yet" text="Add friends to train and hike together.">
                 <Button onClick={() => go('/profile/friends/add')}>Add friends</Button>
               </EmptyState>
@@ -220,19 +227,6 @@ export function AddFriends() {
         { photo: joanna, name: 'Joanna Brown', sub: '>3 years of experience', action: <AddChip /> },
         { photo: joanne, name: 'Joanne Blue', sub: '>5 years experience', action: <AddChip /> },
         { photo: john, name: 'John Bo', sub: '<1 year experience', action: <AddChip /> },
-      ]}
-    />
-  )
-}
-
-export function FriendSearch() {
-  return (
-    <SearchResults
-      title="Friend List"
-      people={[
-        { photo: joanna, name: 'Christopher Nolan', sub: 'Friends since 2022', action: <ViewTag /> },
-        { photo: joanne, name: 'Miley Cyrus', sub: 'Friends since 2025', action: <ViewTag /> },
-        { photo: john, name: 'Bob Dylan', sub: 'Friends since 2025', action: <ViewTag /> },
       ]}
     />
   )

@@ -26,7 +26,7 @@ export default function NavBar() {
     <nav className="navbar" aria-label="Main">
       <ProgressiveBlur />
       <div className="navbar__pill" />
-      <button type="button" className={cls('home')} aria-current={current('home')} aria-label="Home" onClick={() => go('/home/saved')}>
+      <button type="button" className={cls('home')} aria-current={current('home')} aria-label="Home" onClick={() => go('/home/training')}>
         <span className="navbar__home-bg" />
         <img className="navbar__icon navbar__icon--home navbar__icon--default" src={homeIcon} alt="" />
         <img className="navbar__icon navbar__icon--home navbar__icon--hover" src={homeIconHover} alt="" />

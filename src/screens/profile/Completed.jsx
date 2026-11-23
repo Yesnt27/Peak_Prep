@@ -62,7 +62,7 @@ export default function CompletedHikes({ tab }) {
         </div>
         <p className="ch-section">Training journeys</p>
         {cards.map(([key, date]) => (
-          <TrailCard key={key} id={key} date={date} saved />
+          <TrailCard key={key} id={key} date={date} />
         ))}
       </div>
     </Screen>

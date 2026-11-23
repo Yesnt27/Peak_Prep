@@ -97,8 +97,8 @@ export function ProfileView({
         <div className="fp-section">{section}</div>
         <div className="fp-cards">
           {activities.length === 0 && empty}
-          {activities.map(([key, date, , liked]) => (
-            <TrailCard key={key + date} id={key} date={date} saved={liked} />
+          {activities.map(([key, date]) => (
+            <TrailCard key={key + date} id={key} date={date} />
           ))}
         </div>
       </div>

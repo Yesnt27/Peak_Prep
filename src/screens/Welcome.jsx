@@ -19,7 +19,7 @@ export default function Welcome() {
             variant="yellow"
             onClick={() => {
               logIn()
-              go('/home/saved')
+              go('/home/training')
             }}
           >
             Log In

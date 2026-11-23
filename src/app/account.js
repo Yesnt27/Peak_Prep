@@ -39,12 +39,14 @@ const NEW_ACCOUNT = {
 }
 
 // Demo profile = the Figma values (Health info, Profile), editable in Settings → Manage Profile (Round 20).
-const DEMO = { type: 'demo', name: 'Hudson Kemp', age: '23', weight: '186 lbs', height: '6ft 3"', sex: 'Female', years: '7', injuries: ['Knee Injury'] }
+const DEMO = { type: 'demo', name: 'Hudson Kemp', age: '23', weight: '186 lbs', height: '6ft 3"', sex: 'Female', years: '7', injuries: ['Knee Injury'],
+  // Round 30: Hudson's liked hikes = Home → Saved in Figma. Every heart reads and writes this list.
+  liked: ['panorama', 'blackTusk', 'brunswick'] }
 
 // Sign-up / Manage Profile fields: these also save on the demo account.
 const PROFILE_KEYS = new Set([
   'name', 'age', 'weight', 'weightUnit', 'height', 'heightUnit', 'sex', 'years', 'frequency', 'hikedIn', 'toughest',
-  'steps', 'routine', 'noExercise', 'injuries', 'healthConditions', 'contact', 'shareTrip',
+  'steps', 'routine', 'noExercise', 'injuries', 'healthConditions', 'contact', 'shareTrip', 'liked',
 ])
 
 function read() {
@@ -114,9 +116,16 @@ export function planTraining(patch) {
   set({ ...account, ...patch })
 }
 
-/** New training → Done: add the planned hike at 0% and open it. */
+/**
+ * New training → Done: add the planned hike at 0% and open it.
+ * Round 32: already training for that hike → keep its progress and just open it.
+ */
 export function startTraining(schedule = {}) {
   const hike = account.plannedHike ?? 'blackTusk'
+  if (trainingsFor(account).some((t) => t.hike === hike)) {
+    set({ ...account, activeTraining: hike })
+    return
+  }
   const others = (account.trainings ?? []).filter((t) => t.hike !== hike)
   // Round 20: trip type + available days + session time drive Training Schedule and Packing.
   const training = { hike, date: account.plannedDate, trip: account.plannedTrip, days: schedule.days ?? [], time: schedule.time ?? null }

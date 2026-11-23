@@ -22,7 +22,7 @@ const keyFor = (hike) => `${getAccount().type}|${hike}`
 
 export function packState(hike) {
   const demoStart = getAccount().type === 'demo' && hike === 'brunswick'
-  return { packed: demoStart ? DEMO_PACKED : [], added: {}, bag: '', max: 12, unit: 'kg', ...store[keyFor(hike)] }
+  return { packed: demoStart ? DEMO_PACKED : [], added: {}, bag: '', max: 26, unit: 'lb', ...store[keyFor(hike)] }
 }
 
 export function updatePack(hike, patch) {
@@ -95,7 +95,17 @@ const WEIGHTS = [
   [/pack|bag/, 0.3],
 ]
 
-/** Best guess at an item's weight from its name, e.g. "Water (2L)" → "2.0 kg". */
+/**
+ * Item weight as shown, in the list's unit (Round 30: lbs unless kg is picked on Edit).
+ * Weights are kept in kg ("0.3 kg") so earlier saved items still read.
+ */
+export function showWeight(weight, unit = 'lb') {
+  const kg = parseFloat(weight) || 0
+  if (unit === 'kg') return `${kg < 0.1 ? kg.toFixed(2) : kg.toFixed(1)} kg`
+  return `${(kg * 2.2046).toFixed(1)} lbs`
+}
+
+/** Best guess at an item's weight from its name, e.g. "Water (2L)" → "2.0 kg" (shown as "4.4 lbs"). */
 export function guessWeight(name) {
   const text = name.toLowerCase().trim()
   if (!text) return '0.0 kg'

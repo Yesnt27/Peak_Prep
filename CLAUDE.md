@@ -531,3 +531,24 @@ App-wide patterns (measured on every route at 402px; outliers fixed):
 
 - **The nav bar Create "+" is the one and only exception** to the Round 28 "+" style. It keeps its Figma icon (plain dark "+" → green "+", 300ms). Don't give it `plus-btn` / `SignIcon`.
 - **Emergency contact** (name, phone, relationship, share trip plan) is edited in Settings → Manage Profile, under its own "Emergency Contact" heading, and no longer appears on Health Information (replaces Round 21's split). Sign-up step 5 is unchanged and uses the same saved values.
+
+### Round 30 — one prep card, Explore first, shared likes, lbs, Create Training Plan (from Olivia, 2026-11-23)
+
+- **Prep card** (`PrepStatus` on Training overview) has the same three rows on every training: Prep status / Training completed / Elevation goal. Black Tusk's rows were Hike date / Time to go; now "On track", "2 of 6 weeks", "1,605 / 4,720 m" (set to fit 34%). Elevation goal = `elevationGoal()` in `data/trainings.js` (Brunswick's Figma 4,120 m goal scaled by the hike's elevation gain), also used for new trainings.
+- **Home tabs: Explore / Training / Saved** (Round 32). Home opens on **Training** (Log In, sign-up finish, nav Home tab, New training back, unknown tab). Hike Details' fallback back still goes to Explore.
+- **One like per hike:** `account.liked` on both accounts (demo starts with Panorama, Black Tusk, Brunswick). Every `TrailCard` heart and the Hike Details heart read and toggle it; Saved lists it. `TrailCard` no longer takes `saved` / `onLike`.
+- **Hike Details button:** **Create Training Plan** picks that hike and opens New training on Hike Date (`/new-training/date?hike=id`); back returns to the hike. (Replaces View Training Plan / Start Preparation.)
+- **lbs, not kg:** packing item weights, the bag weight stat and the max weight default to lbs (26 lbs); kg is still a choice on Packing → Edit and the profile weight dropdown. Weights are stored in kg internally (`showWeight` in `app/packing.js`). "Weighted Walk · 33 lbs".
+
+### Round 31 — pull-down sheets (from Olivia, 2026-11-23)
+
+- Every bottom sheet (`components/BottomSheet.jsx`: Toughest Hike, Add Workouts, Add Injuries / Health Conditions, Invite Friends) has no back arrow. A grey handle sits at the top; pulling the handle, the title or the top bar down closes it (past 120px, or a flick faster than 0.5 px/ms over the last 100ms), a shorter pull springs back. Tapping the dimmed area above and Done still close it. Invite Friends' share button sits beside the title.
+
+### Round 32 — tab order, training plan button, friend search in place (from Olivia, 2026-11-23)
+
+- Home tabs: Explore / Training / Saved; still opens on Training.
+- **Hike Details button:** "Go to Training Plan" (opens that plan) when the account already trains for the hike, otherwise "Create Training Plan" (Round 30).
+- **Existing progress is kept:** finishing New training for a hike already being trained for just opens that training (`startTraining`); it is never reset to 0%.
+- Hudson's Saved stays at 3 hikes (Panorama, Black Tusk, Brunswick). Hearts on other hikes (e.g. Completed Hikes) follow these likes.
+- **Friend List search** types in place (the phone keyboard opens) and filters the friend list by name; no match shows "No friends with that name found". The separate search page is gone (`/profile/friends/search` redirects to the Friend List). "add friends" still opens the Add friends page, which is a full page and keeps its back arrow.
+- **Pull-down is only for pop-ups** (bottom sheets), never for full pages.

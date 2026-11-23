@@ -39,7 +39,7 @@ export function Congrats() {
             </div>
           </Field>
           {/* Same card as Home; tap it to confirm this is the hike you completed (green ring). */}
-          <TrailCard id={hike} saved selected={log.picked} onClick={() => setLog({ picked: !log.picked })} />
+          <TrailCard id={hike} selected={log.picked} onClick={() => setLog({ picked: !log.picked })} />
         </div>
       </div>
     </Step>
@@ -225,7 +225,7 @@ export function ReviewDetails() {
             <h1 className="fs-title hl-review__title">{HIKES[hike].title}</h1>
             <p className="fs-sub">{sub}</p>
           </div>
-          <TrailCard id={hike} saved />
+          <TrailCard id={hike} />
           <Field label="How did it feel?">
             <Answer>
               {log.feel && (

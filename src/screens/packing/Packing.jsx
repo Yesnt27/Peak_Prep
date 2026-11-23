@@ -9,7 +9,7 @@ import Stepper, { SignButton } from '../../components/Stepper.jsx'
 import { AddItem, BackButton, IconButton, TypeField } from '../../components/controls.jsx'
 import help from '../../assets/packing/help.svg'
 import checkDefault from '../../assets/icons/check-default.svg'
-import { guessWeight, packState, updatePack, usePacking } from '../../app/packing.js'
+import { guessWeight, packState, showWeight, updatePack, usePacking } from '../../app/packing.js'
 import { useAccount, useTraining } from '../../app/account.js'
 import { packingFor } from '../../data/packing.js'
 import { HIKES } from '../../data/hikes.js'
@@ -135,6 +135,7 @@ function Title({ edit, list }) {
 function BagStats({ list }) {
   const { total, packedCount, weight, state } = list
   const limit = state.unit === 'lb' ? state.max * 0.4536 : state.max
+  const shown = state.unit === 'lb' ? weight / 0.4536 : weight
   const pctPacked = total ? (packedCount / total) * 100 : 0
   const pctWeight = Math.min(100, (weight / limit) * 100)
   return (
@@ -153,11 +154,11 @@ function BagStats({ list }) {
       <div className="pk-stat">
         <p className="pk-stat__title">Weight</p>
         <p className="pk-stat__value">
-          <span className="pk-stat__num">{weight.toFixed(1)}</span>
-          <span className="pk-stat__unit">kg</span>
+          <span className="pk-stat__num">{shown.toFixed(1)}</span>
+          <span className="pk-stat__unit">{state.unit === 'lb' ? 'lbs' : 'kg'}</span>
         </p>
         <p className="pk-stat__note">
-          {Math.round((weight / limit) * 100)}% of {state.max} {state.unit} limit
+          {Math.round((weight / limit) * 100)}% of {state.max} {state.unit === 'lb' ? 'lbs' : 'kg'} limit
         </p>
         <div className="pk-stat__bar">
           <div className="pk-stat__fill" style={{ width: `${pctWeight}%` }} />
@@ -200,7 +201,7 @@ export function PackingList({ tab }) {
             <div className="pk-group" key={g.name}>
               <GroupHead {...g} />
               {g.shown.map((item) => (
-                <ListItem key={item.name} label={item.name} meta={item.weight} checked={item.packed} onChange={() => list.toggle(item.name)} />
+                <ListItem key={item.name} label={item.name} meta={showWeight(item.weight, list.state.unit)} checked={item.packed} onChange={() => list.toggle(item.name)} />
               ))}
             </div>
           ))}
@@ -243,8 +244,8 @@ export function PackingEdit() {
               <SegmentedTabs
                 className="pk-unit"
                 tabs={[
-                  { id: 'kg', label: 'kg', color: '#414141' },
-                  { id: 'lb', label: 'lb' },
+                  { id: 'lb', label: 'lbs', color: '#414141' },
+                  { id: 'kg', label: 'kg' },
                 ]}
                 value={unit}
                 animated
@@ -293,7 +294,7 @@ function EditGroup({ group, list }) {
         <div className="list-item pk-edit-row" key={item.name}>
           <SignButton sign="minus" label={`Remove ${item.name}`} onClick={() => remove(item.name)} />
           <span className="list-item__label">{item.name}</span>
-          <span className="list-item__meta pk-edit-row__meta">{item.weight}</span>
+          <span className="list-item__meta pk-edit-row__meta">{showWeight(item.weight, list.state.unit)}</span>
         </div>
       ))}
       {draft !== null && (
@@ -313,7 +314,7 @@ function EditGroup({ group, list }) {
               if (e.key === 'Escape') setDraft(null)
             }}
           />
-          <span className="list-item__meta pk-new__meta">{guessWeight(draft)}</span>
+          <span className="list-item__meta pk-new__meta">{showWeight(guessWeight(draft), list.state.unit)}</span>
         </div>
       )}
       <AddItem onClick={() => (draft === null ? setDraft('') : commit())}>Add Item</AddItem>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import ProgressiveBlur from '../../components/ProgressiveBlur.jsx'
 import useGo from '../../app/useGo.js'
-import { openTraining, toggleLike, trainingsFor, useAccount } from '../../app/account.js'
+import { openTraining, planTraining, toggleLike, trainingsFor, useAccount } from '../../app/account.js'
 import Screen from '../../components/Screen.jsx'
 import Button from '../../components/Button.jsx'
 import { HIKES } from '../../data/hikes.js'
@@ -19,8 +19,6 @@ import heartOutline from '../../assets/icons/heart-outline.svg'
 import './HikeDetails.css'
 
 const titleCase = (s) => s.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase())
-// Hikes the demo account (Hudson) has saved, matching Home → Saved.
-const DEMO_LIKED = ['panorama', 'blackTusk', 'brunswick']
 
 /** Figma "Hike Details (hifi)" 1780:3160, for every hike: /hike/:id (/hike = Brunswick). */
 export default function HikeDetails() {
@@ -30,22 +28,26 @@ export default function HikeDetails() {
   const d = HIKE_DETAILS[id]
   const account = useAccount()
   const isNew = account.type === 'new'
-  const [ownLiked, setOwnLiked] = useState(DEMO_LIKED.includes(id))
   const [aboutOpen, setAboutOpen] = useState(false)
   if (!hike || !d) return <Navigate to="/home/explore" replace />
 
-  const liked = isNew ? account.liked.includes(id) : ownLiked
+  const liked = (account.liked ?? []).includes(id)
   const [difficulty, type] = hike.tag.split(' • ').map(titleCase)
   const [km, elev, time] = hike.stats
-  // Start Preparation: your existing plan if you're training for this hike, otherwise the Create flow with it picked.
-  // Training for this hike already → "View Training Plan" opens it; otherwise start the Create flow with it picked.
+  // Round 32: already training for this hike → "Go to Training Plan" opens it (progress kept);
+  // otherwise "Create Training Plan" starts the Create flow on Hike Date with this hike picked (Round 30).
   const training = trainingsFor(account).some((t) => t.hike === id)
   const start = () => {
-    if (training) openTraining(id)
-    go(training ? '/training' : `/new-training?hike=${id}`, 'smart')
+    if (training) {
+      openTraining(id)
+      go('/training', 'smart')
+      return
+    }
+    planTraining({ plannedHike: id })
+    go(`/new-training/date?hike=${id}`, 'smart')
   }
   // Back to wherever the hike was opened from.
-  const back = () => (window.history.state?.idx > 0 ? window.history.back() : go('/home/saved'))
+  const back = () => (window.history.state?.idx > 0 ? window.history.back() : go('/home/explore'))
   const credits = hike.photos.map((src) => Object.entries(PHOTO_CREDITS).find(([f]) => src.includes(f.replace('.jpg', '')))?.[1]).filter(Boolean)
 
   return (
@@ -58,14 +60,14 @@ export default function HikeDetails() {
           </div>
           <div className="hd-footer__pill" />
           <Button className="hd-footer__cta" onClick={start}>
-            {training ? 'View Training Plan' : 'Start Preparation'}
+            {training ? 'Go to Training Plan' : 'Create Training Plan'}
           </Button>
           <button
             type="button"
             className="hd-footer__fav"
             aria-pressed={liked}
             aria-label={liked ? 'Unlike' : 'Like'}
-            onClick={() => (isNew ? toggleLike(id) : setOwnLiked(!liked))}
+            onClick={() => toggleLike(id)}
           >
             <img src={liked ? heartFilled : heartOutline} alt="" />
           </button>

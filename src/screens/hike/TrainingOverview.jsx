@@ -4,6 +4,7 @@ import Button from '../../components/Button.jsx'
 import NavBar from '../../components/NavBar.jsx'
 import { useTraining } from '../../app/account.js'
 import { HIKES } from '../../data/hikes.js'
+import { elevationGoal } from '../../data/trainings.js'
 import { Chip, HikeHero, KeyStats } from './parts.jsx'
 import { Collapsible } from './HikeSections.jsx'
 import { useTodaysWorkout } from './TrainingSchedule.jsx'
@@ -30,7 +31,7 @@ export function PrepStatus() {
     ? [
         ['Prep status', 'Just started'],
         ['Training completed', '0 of 6 weeks'],
-        ['Elevation goal', `0 / ${HIKES[training.hike].stats[1][0]} m`],
+        ['Elevation goal', `0 / ${elevationGoal(HIKES[training.hike].stats[1][0]).toLocaleString('en-US')} m`],
       ]
     : training.rows
   return (

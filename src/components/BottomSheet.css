@@ -20,7 +20,7 @@
   overflow: hidden;
   border-radius: 30px;
   background: #f5f5f5;
-  animation: sheet-move-in 300ms var(--ease-out) both;
+  animation: sheet-move-in 300ms var(--ease-out) backwards;
 }
 
 @keyframes sheet-move-in {
@@ -55,11 +55,36 @@
   padding-bottom: 200px;
 }
 
-.sheet__top {
+/* Round 30: pull-down handle (replaces the back arrow). The strip, top bar and title can be dragged. */
+.sheet__grab {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.sheet__handle {
+  width: 40px;
+  height: 5px;
+  border-radius: 3px;
+  background: #c4c4c4;
+}
+
+.sheet__drag {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   align-self: stretch;
+  cursor: grab;
+  touch-action: none;
 }
 
 .sheet__title {
