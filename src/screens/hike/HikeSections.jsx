@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Chip, SectionHeader } from './parts.jsx'
 import chevDown from '../../assets/icons/chev-down.svg'
 import gauge20 from '../../assets/hike/gauge-20.svg'
@@ -193,19 +193,59 @@ export function Challenges({ items }) {
 }
 
 /**
- * Round 33: a hike's "about" paragraph, 16px, two lines ending in "…" until tapped, then the whole
- * paragraph (tap again to shorten). Hike Details "About this hike" and Training overview "About this trail".
+ * Round 35: a hike's "about" paragraph (Hike Details "About this hike"): two lines ending in
+ * ". . ." while there is more. Tapping shows the whole paragraph; tapping again shortens it.
+ * The cut is measured with a hidden copy (same width and font), so it fits exactly two lines.
  */
-export function AboutText({ text, className = '' }) {
+export function AboutText({ text, lines = 2, className = '' }) {
   const [open, setOpen] = useState(false)
+  const [cut, setCut] = useState(null) // words shown when shortened; null = the whole text fits
+  const measure = useRef(null)
+  const words = text.split(' ')
+  // Shortened text without a trailing . , ; or : so it never reads "Crest. . . ."
+  const shortened = (n) => words.slice(0, n).join(' ').replace(/[.,;:]+$/, '')
+
+  useLayoutEffect(() => {
+    const el = measure.current
+    if (!el) return undefined
+    const run = () => {
+      el.textContent = 'A'
+      const line = el.getBoundingClientRect().height
+      const fits = (n) => {
+        el.textContent = n < words.length ? `${shortened(n)} . . .` : text
+        return el.getBoundingClientRect().height <= line * lines + 1
+      }
+      if (fits(words.length)) return setCut(null)
+      let lo = 1
+      let hi = words.length - 1
+      while (lo < hi) {
+        const mid = Math.ceil((lo + hi) / 2)
+        if (fits(mid)) lo = mid
+        else hi = mid - 1
+      }
+      setCut(lo)
+    }
+    run()
+    // Re-measure once the web font has loaded (fallback fonts are a different width).
+    let live = true
+    document.fonts?.ready.then(() => live && run())
+    return () => {
+      live = false
+    }
+  }, [text, lines]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const cls = `hd-about ${className}`.trim()
   return (
-    <button
-      type="button"
-      className={`hd-about${open ? ' hd-about--open' : ''} ${className}`.trim()}
-      aria-expanded={open}
-      onClick={() => setOpen(!open)}
-    >
-      {text}
-    </button>
+    <div className="hd-about-wrap">
+      <span ref={measure} className={`${cls} hd-about--measure`} aria-hidden="true" />
+      {cut === null ? (
+        <p className={cls}>{text}</p>
+      ) : (
+        <button type="button" className={`${cls} hd-about--more`} aria-expanded={open} onClick={() => setOpen(!open)}>
+          {open ? text : shortened(cut)}
+          {!open && <span className="hd-about__dots"> . . .</span>}
+        </button>
+      )}
+    </div>
   )
 }

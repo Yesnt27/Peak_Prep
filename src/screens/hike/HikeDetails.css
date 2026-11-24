@@ -72,20 +72,33 @@
   gap: 18px;
 }
 
-/* About: two lines with "…" until tapped, then the full paragraph. */
+/* About (Round 35): two lines ending in ". . ." until tapped, then the full paragraph. */
+.hd-about-wrap {
+  position: relative;
+  margin-bottom: 14px; /* 18px section gap + 14px = 32px above the elevation card */
+}
+
 .hd-about {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  display: block;
+  width: 100%;
   color: inherit;
-  font: 400 16px/1.5 var(--font-poppins); /* Round 33: same size as Training overview's "About this trail" */
+  font: 400 16px/1.5 var(--font-poppins);
   letter-spacing: -0.32px;
   text-align: left;
 }
 
-.hd-about--open {
-  display: block;
+/* Hidden copy used to measure where two lines end. */
+.hd-about--measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.hd-about__dots {
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 /* Elevation profile */

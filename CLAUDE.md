@@ -555,7 +555,7 @@ App-wide patterns (measured on every route at 402px; outliers fixed):
 
 ### Round 33 — about text, no Bag field, category tiles, Add friends sheet (from Olivia, 2026-11-24)
 
-- **About text** (`AboutText` in `HikeSections.jsx`): Hike Details "About this hike" is 16px (was 13px), two lines ending in "…"; tapping shows the whole paragraph (tap again to shorten). Training overview "About this trail" shows the whole paragraph (Round 34).
+- **About text** (`AboutText` in `HikeSections.jsx`): Hike Details "About this hike" is 16px (was 13px), two lines ending in " . . ." (Round 35, measured to fit exactly two lines), with 32px below it; tapping shows the whole paragraph (tap again to shorten). Training overview "About this trail" shows the whole paragraph (Round 34).
 - **Packing:** the "Bag" text field is removed (Round 20's `bag` value is no longer shown).
 - **Get certified → Categories:** rounded-square tiles (12px radius, app tile padding) instead of pills.
 - **Add friends** is a pull-down bottom sheet over the Friend List (title "Add friends", search, person rows, no text under the search), opened by "add friends" and the empty-state button. `/profile/friends/add` now opens the Friend List with the sheet open. Search filters by name; no match shows "No one with that name found". The old Add friends page and its keyboard screenshot are gone.
