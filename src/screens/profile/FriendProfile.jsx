@@ -1,5 +1,4 @@
 import { SignIcon } from '../../components/Stepper.jsx'
-import { useState } from 'react'
 import { Navigate, useLocation, useParams } from 'react-router-dom'
 import { toggleFriend, useAccount } from '../../app/account.js'
 import useGo from '../../app/useGo.js'
@@ -112,11 +111,9 @@ export default function FriendProfile() {
   const friend = friendById(useParams().id)
   const location = useLocation()
   const account = useAccount()
-  const isNew = account.type === 'new'
-  const [ownAdded, setOwnAdded] = useState(false)
-  // New account: "Add friend" really adds them (Friend List + friend count); demo: a local toggle.
-  const added = isNew ? (account.friends ?? []).includes(friend?.id) : ownAdded
-  const toggle = () => (isNew ? toggleFriend(friend.id) : setOwnAdded(!ownAdded))
+  // Round 34: "Add friend" / "Unfriend" saves on both accounts (Friend List + friend count).
+  const added = (account.friends ?? []).includes(friend?.id)
+  const toggle = () => toggleFriend(friend.id)
   if (!friend) return <Navigate to="/profile/friends" replace />
   return (
     <ProfileView

@@ -1,18 +1,15 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import BottomSheet from '../../components/BottomSheet.jsx'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import NavBar from '../../components/NavBar.jsx'
 import { BackButton, TypeField } from '../../components/controls.jsx'
 import searchIcon from '../../assets/profile/search.svg'
-import divider from '../../assets/profile/search-divider.svg'
-import keyboard from '../../assets/profile/keyboard.jpg'
-import { FRIENDS, PEOPLE, friendById } from '../../data/friends.js'
+import { PEOPLE, friendById } from '../../data/friends.js'
 import { toggleFriend, useAccount } from '../../app/account.js'
 import EmptyState from '../../components/EmptyState.jsx'
 import Button from '../../components/Button.jsx'
-import joanna from '../../assets/friends/joanna.jpg'
-import joanne from '../../assets/friends/joanne.jpg'
-import john from '../../assets/friends/john.jpg'
 import './Friends.css'
 
 /** Figma "view tag gr": pale green, hover light grey (300ms). Opens the friend's profile when given `onClick`. */
@@ -84,9 +81,11 @@ export function FriendList() {
   const go = useGo()
   const account = useAccount()
   const isNew = account.type === 'new'
-  const all = isNew ? (account.friends ?? []).map(friendById).filter(Boolean) : FRIENDS
+  const all = (account.friends ?? []).map(friendById).filter(Boolean)
   // Round 32: the search bar types in place (the phone keyboard opens) and filters this list.
   const [query, setQuery] = useState('')
+  // /profile/friends?add=1 (old /profile/friends/add links) opens the Add friends sheet.
+  const [adding, setAdding] = useState(useSearchParams()[0].has('add'))
   const q = query.trim().toLowerCase()
   const mine = q ? all.filter((f) => f.name.toLowerCase().includes(q)) : all
   const view = (id) => go(`/profile/friends/${id}`, 'smart', '/profile/friends')
@@ -107,7 +106,7 @@ export function FriendList() {
                 aria-label="Search friends"
               />
             </label>
-            <button type="button" className="fr-add-link" onClick={() => go('/profile/friends/add')}>
+            <button type="button" className="fr-add-link" onClick={() => setAdding(true)}>
               add friends
             </button>
           </div>
@@ -116,7 +115,7 @@ export function FriendList() {
             {q && mine.length === 0 && <p className="fr-none">No friends with that name found</p>}
             {!q && mine.length === 0 && (
               <EmptyState title="No friends yet" text="Add friends to train and hike together.">
-                <Button onClick={() => go('/profile/friends/add')}>Add friends</Button>
+                <Button onClick={() => setAdding(true)}>Add friends</Button>
               </EmptyState>
             )}
             {mine.map((f) => (
@@ -124,7 +123,7 @@ export function FriendList() {
                 key={f.id}
                 photo={f.photo}
                 name={f.name}
-                sub={isNew ? `${f.years} ${f.years === 1 ? 'year' : 'years'} of experience` : f.since}
+                sub={!isNew && f.since ? f.since : `${f.years} ${f.years === 1 ? 'year' : 'years'} of experience`}
                 onOpen={() => view(f.id)}
                 action={
                   <ViewTag
@@ -139,95 +138,44 @@ export function FriendList() {
           </div>
         </div>
       </div>
+      {adding && <AddFriendsSheet open onClose={() => setAdding(false)} />}
     </Screen>
   )
 }
 
 /**
- * Figma "Add" 2136:3603 (add friends) and 2234:4055 (friend list search):
- * the same layout with the search typed in and an iOS keyboard screenshot.
+ * Round 33: Add friends is a pull-down sheet over the Friend List (was its own page), with the
+ * same person rows, a search that filters by name and no text under it. "Add" saves the friend
+ * on both accounts (Round 34): the Friend List and the Profile friend count update.
  */
-function SearchResults({ title, people }) {
-  const go = useGo()
-  return (
-    <Screen className="fr">
-      <div className="fr-panel" />
-      <img className="fr-divider" src={divider} alt="" />
-      <div className="fr-content">
-        <BackButton onClick={() => go('/profile/friends')} />
-        <div className="fr-block">
-          <h1 className="fr-title">{title}</h1>
-          <div className="fr-search fr-search--typed">
-            <img src={searchIcon} alt="" />
-            <TypeField defaultValue="Joanna B" enterKeyHint="search" />
-          </div>
-          <div className="fr-list">
-            {people.map((p) => (
-              <Person key={p.name} {...p} />
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="fr-keyboard">
-        <img src={keyboard} alt="" />
-      </div>
-    </Screen>
-  )
-}
-
-/** Add friends for a new account: real search over everyone, Add / Added, rows open profiles. */
-function FindFriends() {
+function AddFriendsSheet({ open, onClose }) {
   const go = useGo()
   const account = useAccount()
   const [query, setQuery] = useState('')
   const friends = account.friends ?? []
-  const people = PEOPLE.filter((p) => p.name.toLowerCase().includes(query.trim().toLowerCase()))
+  const q = query.trim().toLowerCase()
+  // Round 34: people you aren't friends with yet (both accounts); "Add" saves them right away.
+  const [shown] = useState(() => PEOPLE.filter((p) => !friends.includes(p.id)).map((p) => p.id))
+  const people = PEOPLE.filter((p) => shown.includes(p.id) && p.name.toLowerCase().includes(q))
+  const close = () => {
+    setQuery('')
+    onClose()
+  }
   return (
-    <Screen className="fr" fixed={<NavBar />}>
-      <div className="fr-content">
-        <BackButton onClick={() => go('/profile/friends', 'smart')} />
-        <div className="fr-block">
-          <h1 className="fr-title">Add friends</h1>
-          <div className="fr-search fr-search--typed">
-            <img src={searchIcon} alt="" />
-            <TypeField
-              placeholder="Search by name"
-              enterKeyHint="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              aria-label="Search people"
-            />
-          </div>
-          <div className="fr-list">
-            {people.length === 0 && <EmptyState title="No one found" text="Try another name." />}
-            {people.map((p) => (
-              <Person
-                key={p.id}
-                photo={p.photo}
-                name={p.name}
-                sub={`${p.years} ${p.years === 1 ? 'year' : 'years'} of experience`}
-                onOpen={() => go(`/profile/friends/${p.id}`, 'smart', '/profile/friends/add')}
-                action={<AddChip added={friends.includes(p.id)} onToggle={() => toggleFriend(p.id)} />}
-              />
-            ))}
-          </div>
-        </div>
+    <BottomSheet open={open} title="Add friends" onClose={close} onSearch={setQuery}>
+      <div className="fr-list">
+        {people.length === 0 && <p className="fr-none">No one with that name found</p>}
+        {people.map((p) => (
+          <Person
+            key={p.id}
+            photo={p.photo}
+            name={p.name}
+            sub={`${p.years} ${p.years === 1 ? 'year' : 'years'} of experience`}
+            onOpen={() => go(`/profile/friends/${p.id}`, 'smart', '/profile/friends')}
+            action={<AddChip added={friends.includes(p.id)} onToggle={() => toggleFriend(p.id)} />}
+          />
+        ))}
       </div>
-    </Screen>
-  )
-}
-
-export function AddFriends() {
-  const isNew = useAccount().type === 'new'
-  if (isNew) return <FindFriends />
-  return (
-    <SearchResults
-      title="Add friends"
-      people={[
-        { photo: joanna, name: 'Joanna Brown', sub: '>3 years of experience', action: <AddChip /> },
-        { photo: joanne, name: 'Joanne Blue', sub: '>5 years experience', action: <AddChip /> },
-        { photo: john, name: 'John Bo', sub: '<1 year experience', action: <AddChip /> },
-      ]}
-    />
+    </BottomSheet>
   )
 }

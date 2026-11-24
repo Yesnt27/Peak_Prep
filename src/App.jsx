@@ -33,7 +33,7 @@ import {
   LevelHikes,
 } from './screens/new-training/NewTraining.jsx'
 import Profile, { ConnectedApps, Settings } from './screens/profile/Profile.jsx'
-import { AddFriends, FriendList } from './screens/profile/Friends.jsx'
+import { FriendList } from './screens/profile/Friends.jsx'
 import FriendProfile from './screens/profile/FriendProfile.jsx'
 import CompletedHikes from './screens/profile/Completed.jsx'
 import { HealthInfo } from './screens/profile/Health.jsx'
@@ -104,7 +104,7 @@ export default function App() {
         <Route path="/profile/health" element={<HealthInfo />} />
         <Route path="/profile/health/edit" element={<Navigate to="/profile/health" replace />} />
         <Route path="/profile/friends" element={<FriendList />} />
-        <Route path="/profile/friends/add" element={<AddFriends />} />
+        <Route path="/profile/friends/add" element={<Navigate to="/profile/friends?add=1" replace />} />
         <Route path="/profile/friends/search" element={<Navigate to="/profile/friends" replace />} />
         <Route path="/profile/friends/:id" element={<FriendProfile />} />
         <Route path="/profile/completed" element={<CompletedHikes key="recent" tab="recent" />} />

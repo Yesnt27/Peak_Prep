@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import ProgressiveBlur from '../../components/ProgressiveBlur.jsx'
 import useGo from '../../app/useGo.js'
@@ -10,7 +9,7 @@ import { HIKE_DETAILS } from '../../data/hikeDetails.js'
 import { PHOTO_CREDITS } from '../../data/photoCredits.js'
 import { Chip, HikeHero, KeyStats, SectionHeader } from './parts.jsx'
 import ElevationChart from './ElevationChart.jsx'
-import { Challenges, Collapsible, FitForYou, Hazards } from './HikeSections.jsx'
+import { AboutText, Challenges, Collapsible, FitForYou, Hazards } from './HikeSections.jsx'
 import mtn20 from '../../assets/hike/mtn-20.svg'
 import shield20 from '../../assets/hike/shield-20.svg'
 import alertIcon from '../../assets/hike/alert.svg'
@@ -28,7 +27,6 @@ export default function HikeDetails() {
   const d = HIKE_DETAILS[id]
   const account = useAccount()
   const isNew = account.type === 'new'
-  const [aboutOpen, setAboutOpen] = useState(false)
   if (!hike || !d) return <Navigate to="/home/explore" replace />
 
   const liked = (account.liked ?? []).includes(id)
@@ -98,15 +96,7 @@ export default function HikeDetails() {
 
         <section className="hd-section">
           <SectionHeader icon={mtn20} title="About this hike" />
-          {/* Two lines until tapped, then the whole paragraph. */}
-          <button
-            type="button"
-            className={aboutOpen ? 'hd-about hd-about--open' : 'hd-about'}
-            aria-expanded={aboutOpen}
-            onClick={() => setAboutOpen(!aboutOpen)}
-          >
-            {d.about}
-          </button>
+          <AboutText text={d.about} />
           <div className="hd-elev">
             <div className="hd-elev__head">
               <p className="hd-elev__title">Elevation profile</p>

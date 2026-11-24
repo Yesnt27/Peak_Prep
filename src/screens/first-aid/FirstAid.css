@@ -994,6 +994,14 @@
   margin-top: 12px;
 }
 
+/* Round 33: rounded-square tiles (the app's tile shape), not pills. */
+.fa-categories .tag {
+  height: auto;
+  padding: 14.969px 19.958px;
+  border-radius: 11.975px;
+  line-height: 1.68;
+}
+
 .fa-courses__title {
   margin-top: 32px;
 }

@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react'
 import { DEMO_TRAININGS } from '../data/trainings.js'
+import { FRIENDS } from '../data/friends.js'
 
 /**
  * Who is using the prototype (no backend):
@@ -41,12 +42,14 @@ const NEW_ACCOUNT = {
 // Demo profile = the Figma values (Health info, Profile), editable in Settings → Manage Profile (Round 20).
 const DEMO = { type: 'demo', name: 'Hudson Kemp', age: '23', weight: '186 lbs', height: '6ft 3"', sex: 'Female', years: '7', injuries: ['Knee Injury'],
   // Round 30: Hudson's liked hikes = Home → Saved in Figma. Every heart reads and writes this list.
-  liked: ['panorama', 'blackTusk', 'brunswick'] }
+  liked: ['panorama', 'blackTusk', 'brunswick'],
+  // Round 34: Hudson's friends = the Figma Friend List; adding / unfriending saves like a new account.
+  friends: FRIENDS.map((f) => f.id) }
 
 // Sign-up / Manage Profile fields: these also save on the demo account.
 const PROFILE_KEYS = new Set([
   'name', 'age', 'weight', 'weightUnit', 'height', 'heightUnit', 'sex', 'years', 'frequency', 'hikedIn', 'toughest',
-  'steps', 'routine', 'noExercise', 'injuries', 'healthConditions', 'contact', 'shareTrip', 'liked',
+  'steps', 'routine', 'noExercise', 'injuries', 'healthConditions', 'contact', 'shareTrip', 'liked', 'friends',
 ])
 
 function read() {

@@ -331,22 +331,6 @@
   left: 23px;
 }
 
-/* Round 20: "Bag" field under the subtitle (same box as the flow text fields). */
-.pk-bag {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.pk-bag__label {
-  font: 600 13px/1.139 var(--font-poppins);
-  letter-spacing: -0.26px;
-}
-
-.pk-bag__input.fs-input {
-  width: 100%;
-}
-
 .pk-empty {
   font: 400 16px/1.68 var(--font-poppins);
   letter-spacing: -0.32px;

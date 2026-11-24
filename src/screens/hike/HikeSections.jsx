@@ -191,3 +191,21 @@ export function Challenges({ items }) {
     </div>
   ))
 }
+
+/**
+ * Round 33: a hike's "about" paragraph, 16px, two lines ending in "…" until tapped, then the whole
+ * paragraph (tap again to shorten). Hike Details "About this hike" and Training overview "About this trail".
+ */
+export function AboutText({ text, className = '' }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <button
+      type="button"
+      className={`hd-about${open ? ' hd-about--open' : ''} ${className}`.trim()}
+      aria-expanded={open}
+      onClick={() => setOpen(!open)}
+    >
+      {text}
+    </button>
+  )
+}

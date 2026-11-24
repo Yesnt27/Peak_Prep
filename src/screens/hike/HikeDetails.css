@@ -79,8 +79,8 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   color: inherit;
-  font: 400 13px/1.5 var(--font-poppins);
-  letter-spacing: -0.26px;
+  font: 400 16px/1.5 var(--font-poppins); /* Round 33: same size as Training overview's "About this trail" */
+  letter-spacing: -0.32px;
   text-align: left;
 }
 

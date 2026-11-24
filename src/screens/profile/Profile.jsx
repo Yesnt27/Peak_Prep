@@ -7,7 +7,6 @@ import iconPrivacy from '../../assets/profile/icon-privacy.png'
 import { BackButton, ToggleSwitch } from '../../components/controls.jsx'
 import chevron from '../../assets/profile/chevron.svg'
 import chevRightGreen from '../../assets/icons/chev-right-green.svg'
-import { FRIENDS } from '../../data/friends.js'
 import { ProfileView } from './FriendProfile.jsx'
 import EmptyState from '../../components/EmptyState.jsx'
 import { levelFor, readPhoto, signOut, updateAccount, useAccount } from '../../app/account.js'
@@ -33,7 +32,7 @@ export default function Profile() {
       name={account.name?.trim() || (isNew ? 'New hiker' : 'Hudson Kemp')}
       onPhoto={isNew ? async (file) => updateAccount({ photo: await readPhoto(file) }) : undefined}
       stats={[
-        { value: isNew ? (account.friends ?? []).length : FRIENDS.length, label: 'Friends', onClick: () => go('/profile/friends', 'smart') },
+        { value: (account.friends ?? []).length, label: 'Friends', onClick: () => go('/profile/friends', 'smart') },
         { value: years, label: years === '1' ? 'Year Exp.' : 'Years Exp.' },
       ]}
       level={isNew ? levelFor(account.years) : 'Advanced'}

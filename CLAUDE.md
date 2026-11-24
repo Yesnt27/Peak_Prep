@@ -552,3 +552,15 @@ App-wide patterns (measured on every route at 402px; outliers fixed):
 - Hudson's Saved stays at 3 hikes (Panorama, Black Tusk, Brunswick). Hearts on other hikes (e.g. Completed Hikes) follow these likes.
 - **Friend List search** types in place (the phone keyboard opens) and filters the friend list by name; no match shows "No friends with that name found". The separate search page is gone (`/profile/friends/search` redirects to the Friend List). "add friends" still opens the Add friends page, which is a full page and keeps its back arrow.
 - **Pull-down is only for pop-ups** (bottom sheets), never for full pages.
+
+### Round 33 — about text, no Bag field, category tiles, Add friends sheet (from Olivia, 2026-11-24)
+
+- **About text** (`AboutText` in `HikeSections.jsx`): Hike Details "About this hike" is 16px (was 13px), two lines ending in "…"; tapping shows the whole paragraph (tap again to shorten). Training overview "About this trail" shows the whole paragraph (Round 34).
+- **Packing:** the "Bag" text field is removed (Round 20's `bag` value is no longer shown).
+- **Get certified → Categories:** rounded-square tiles (12px radius, app tile padding) instead of pills.
+- **Add friends** is a pull-down bottom sheet over the Friend List (title "Add friends", search, person rows, no text under the search), opened by "add friends" and the empty-state button. `/profile/friends/add` now opens the Friend List with the sheet open. Search filters by name; no match shows "No one with that name found". The old Add friends page and its keyboard screenshot are gone.
+
+### Round 34 — friends save on both accounts (from Olivia, 2026-11-24)
+
+- `account.friends` is saved on the demo account too: Hudson starts with the five Figma friends (`FRIENDS`). Adding someone (Add friends sheet or "+ Add friend" on their profile) puts them on the Friend List and raises the Profile friend count; "− Unfriend" removes them. The Add friends sheet lists people you aren't friends with yet (an added row stays, reading "Added", until the sheet closes).
+- Training overview "About this trail" shows the whole paragraph (not clamped).

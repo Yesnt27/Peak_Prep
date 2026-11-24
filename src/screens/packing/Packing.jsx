@@ -6,7 +6,7 @@ import NavBar from '../../components/NavBar.jsx'
 import ListItem from '../../components/ListItem.jsx'
 import SegmentedTabs from '../../components/SegmentedTabs.jsx'
 import Stepper, { SignButton } from '../../components/Stepper.jsx'
-import { AddItem, BackButton, IconButton, TypeField } from '../../components/controls.jsx'
+import { AddItem, BackButton, IconButton } from '../../components/controls.jsx'
 import help from '../../assets/packing/help.svg'
 import checkDefault from '../../assets/icons/check-default.svg'
 import { guessWeight, packState, showWeight, updatePack, usePacking } from '../../app/packing.js'
@@ -117,17 +117,6 @@ function Title({ edit, list }) {
         {!edit && <HelpButton />}
       </div>
       <p className="pk-title__sub">{list.hike.title} Packing List</p>
-      {/* Round 20: which bag you're packing (kept per training). */}
-      <label className="pk-bag">
-        <span className="pk-bag__label">Bag</span>
-        <span className="fs-input pk-bag__input">
-          <TypeField
-            placeholder="e.g. 30L daypack"
-            defaultValue={list.state.bag}
-            onChange={(e) => updatePack(list.training.hike, { bag: e.target.value })}
-          />
-        </span>
-      </label>
     </div>
   )
 }
