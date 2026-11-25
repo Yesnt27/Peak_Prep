@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 const DESIGN_WIDTH = 402
 const DESIGN_HEIGHT = 874
@@ -20,6 +20,8 @@ function measure() {
   // Larger screens: show the 402 x 874 frame centered, scaled down if too tall.
   return { phone: false, scale: Math.min(1, vh / DESIGN_HEIGHT) }
 }
+
+const isTextField = (el) => Boolean(el?.matches?.('input:not([type=checkbox]):not([type=radio]):not([type=file]), textarea, [contenteditable="true"]'))
 
 /** After the keyboard opens or closes, keep the field being typed in on screen (its scroll-margin clears pinned bars). */
 function revealFocusedField() {
@@ -45,12 +47,25 @@ export default function Device({ children }) {
     }
   }, [])
 
+  // Round 36: while a text field is focused on a phone (keyboard up), the nav bar stays at the
+  // bottom of the screen, under the keyboard, instead of riding above it (`data-typing`, NavBar.css).
+  const [typing, setTyping] = useState(false)
+  useEffect(() => {
+    const check = () => setTimeout(() => setTyping(isTextField(document.activeElement)), 0)
+    document.addEventListener('focusin', check)
+    document.addEventListener('focusout', check)
+    return () => {
+      document.removeEventListener('focusin', check)
+      document.removeEventListener('focusout', check)
+    }
+  }, [])
+
   // Runs once the resized frame is in the DOM, so the scroll is measured against the new (shorter) frame.
   useLayoutEffect(revealFocusedField, [height])
 
   return (
     <div className={phone ? 'stage stage--phone' : 'stage'} style={phone && top ? { transform: `translateY(${top}px)` } : undefined}>
-      <div className="device" style={phone ? { '--scale': scale, width: DESIGN_WIDTH, height } : { '--scale': scale }}>
+      <div className="device" data-typing={(phone && typing) || undefined} style={phone ? { '--scale': scale, width: DESIGN_WIDTH, height } : { '--scale': scale }}>
         {children}
       </div>
     </div>

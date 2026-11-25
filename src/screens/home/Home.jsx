@@ -31,7 +31,7 @@ const TABS = [
 
 // Sort options. Each reads the first number from a hike's stats
 // (distance KM, M ELEV, HOURS), shortest / lowest first.
-const SORTS = [
+export const SORTS = [
   { id: 'distance', label: 'Distance', stat: 0 },
   { id: 'elevation', label: 'Elevation', stat: 1 },
   { id: 'time', label: 'Time', stat: 2 },
@@ -40,7 +40,7 @@ const SORTS = [
 const statValue = (hike, i) => parseFloat(hike.stats[i][0].replace(/,/g, ''))
 
 // Cards keep the Figma order until a sort is picked from the menu.
-function sortCards(cards, sort) {
+export function sortCards(cards, sort) {
   if (!sort) return cards
   const { stat } = SORTS.find((s) => s.id === sort)
   return [...cards].sort((a, b) => statValue(HIKES[a.hike], stat) - statValue(HIKES[b.hike], stat))
@@ -75,10 +75,11 @@ function Explore({ go, sort, account }) {
   return <CardList go={go} cards={cards} sort={sort} />
 }
 
-function SortMenu({ sort, onChange }) {
+/** "Sort: …" menu (Home; Completed hikes uses it too, Round 36). */
+export function SortMenu({ sort, onChange, triggerClassName = 'home__sort' }) {
   const current = SORTS.find((s) => s.id === sort) ?? SORTS[0]
   return (
-    <Dropdown options={SORTS} value={sort} onChange={onChange} triggerClassName="home__sort">
+    <Dropdown options={SORTS} value={sort} onChange={onChange} triggerClassName={triggerClassName}>
       {(open) => (
         <>
           <span>Sort: {current.label}</span>

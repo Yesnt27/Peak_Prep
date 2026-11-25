@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import useGo from '../../app/useGo.js'
 import Screen from '../../components/Screen.jsx'
 import NavBar from '../../components/NavBar.jsx'
-import SegmentedTabs from '../../components/SegmentedTabs.jsx'
 import { BackButton, TypeField } from '../../components/controls.jsx'
 import hudson from '../../assets/profile/hudson.jpg'
 import searchIcon from '../../assets/profile/search.svg'
-import chevDown from '../../assets/icons/chev-down.svg'
+import { SortMenu, sortCards } from '../home/Home.jsx'
 import TrailCard from '../../components/TrailCard.jsx'
+import { HIKES } from '../../data/hikes.js'
 import './Completed.css'
 
 // Completed hikes (Figma "Completed Hikes" cards): [hike key, date].
@@ -17,52 +17,44 @@ const DONE = {
   saintMark: ['saintMark', 'Dec 12, 2026'],
 }
 
-const TABS = [
-  { id: 'recent', label: 'Recent', color: '#414141' },
-  { id: 'favourited', label: 'Favourited', color: '#414141' },
-]
-
-/** Figma "Completed Hikes" 1767:8813 (Recent) and "fav completed hike" 1673:3790 (Favourited). */
-export default function CompletedHikes({ tab }) {
+/**
+ * Figma "Completed Hikes" 1767:8813. Round 36: one page with every completed hike (newest first);
+ * the Recent / Favourited bar and the favourited page are gone. Sort works like Home's.
+ */
+export default function CompletedHikes() {
   const go = useGo()
-  const [selected, setSelected] = useState(tab)
-
-  // Prototype: the pill swaps on press, then the other screen follows 100ms later.
-  useEffect(() => {
-    if (selected === tab) return undefined
-    const timer = setTimeout(
-      () => go(selected === 'recent' ? '/profile/completed' : '/profile/completed/favourited', 'smart'),
-      100,
-    )
-    return () => clearTimeout(timer)
-  }, [selected, tab, go])
-
-  const cards = tab === 'recent' ? [DONE.everest, DONE.grouse] : [DONE.saintMark, DONE.grouse]
+  const [sort, setSort] = useState(null)
+  const [query, setQuery] = useState('')
+  const q = query.trim().toLowerCase()
+  // Round 37: the search bar filters by hike name; sort reorders what's left.
+  const cards = sortCards(
+    [DONE.saintMark, DONE.grouse, DONE.everest]
+      .map(([hike, date]) => ({ hike, date }))
+      .filter(({ hike }) => HIKES[hike].title.toLowerCase().includes(q)),
+    sort,
+  )
 
   return (
     <Screen className="ch" fixed={<NavBar />}>
       <div className="ch-content">
-        <BackButton onClick={() => go('/profile', tab === 'favourited' ? 'smart' : undefined)} />
+        <BackButton onClick={() => go('/profile')} />
         <div className="ch-header">
           <h1>Completed hikes</h1>
           <button type="button" aria-label="Profile" onClick={() => go('/profile', 'smart')}>
             <img className="ch-avatar" src={hudson} alt="" />
           </button>
         </div>
-        <SegmentedTabs className="ch-tabs" tabs={TABS} value={selected} animated onChange={setSelected} />
         <div className="ch-search-row">
           <div className="ch-search">
             <img src={searchIcon} alt="" />
-            <TypeField tone="faint" placeholder="Search hikes" enterKeyHint="search" />
+            <TypeField tone="faint" placeholder="Search hikes" enterKeyHint="search" value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Search completed hikes" />
           </div>
-          <div className="ch-sort">
-            <span>Sort: Difficulty</span>
-            <img src={chevDown} alt="" />
-          </div>
+          <SortMenu sort={sort} onChange={setSort} triggerClassName="ch-sort" />
         </div>
         <p className="ch-section">Training journeys</p>
-        {cards.map(([key, date]) => (
-          <TrailCard key={key} id={key} date={date} />
+        {cards.length === 0 && <p className="ch-none">No completed hikes with that name found</p>}
+        {cards.map(({ hike, date }) => (
+          <TrailCard key={hike} id={hike} date={date} />
         ))}
       </div>
     </Screen>

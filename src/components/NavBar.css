@@ -109,3 +109,9 @@
 .navbar__btn--current .navbar__icon--default {
   opacity: 0;
 }
+
+/* Round 36: on a phone, while typing, the nav bar stays at the bottom of the screen (behind the
+   keyboard) instead of sitting on top of it and covering the page. Set by Device.jsx. */
+.device[data-typing] .navbar {
+  display: none;
+}

@@ -107,8 +107,8 @@ export default function App() {
         <Route path="/profile/friends/add" element={<Navigate to="/profile/friends?add=1" replace />} />
         <Route path="/profile/friends/search" element={<Navigate to="/profile/friends" replace />} />
         <Route path="/profile/friends/:id" element={<FriendProfile />} />
-        <Route path="/profile/completed" element={<CompletedHikes key="recent" tab="recent" />} />
-        <Route path="/profile/completed/favourited" element={<CompletedHikes key="fav" tab="favourited" />} />
+        <Route path="/profile/completed" element={<CompletedHikes />} />
+        <Route path="/profile/completed/favourited" element={<Navigate to="/profile/completed" replace />} />
         <Route path="/profile/privacy" element={<Navigate to="/profile/settings" replace />} />
       </AnimatedRoutes>
     </Device>

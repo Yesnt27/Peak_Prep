@@ -33,11 +33,6 @@
   object-fit: cover;
 }
 
-.ch-tabs.seg-tabs {
-  width: 100%;
-  height: 44px;
-}
-
 .ch-search-row {
   display: flex;
   gap: 10px;
@@ -310,4 +305,13 @@
 .ch-search .type-field::placeholder {
   color: #ababab;
   opacity: 1;
+}
+
+/* Round 37: search with no match. */
+.ch-none {
+  width: 100%;
+  padding: 24px 0;
+  color: var(--body-copy-gray);
+  font: 400 16px/1.5 var(--font-poppins);
+  text-align: center;
 }

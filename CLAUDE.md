@@ -564,3 +564,12 @@ App-wide patterns (measured on every route at 402px; outliers fixed):
 
 - `account.friends` is saved on the demo account too: Hudson starts with the five Figma friends (`FRIENDS`). Adding someone (Add friends sheet or "+ Add friend" on their profile) puts them on the Friend List and raises the Profile friend count; "− Unfriend" removes them. The Add friends sheet lists people you aren't friends with yet (an added row stays, reading "Added", until the sheet closes).
 - Training overview "About this trail" shows the whole paragraph (not clamped).
+
+### Round 36 — Completed hikes page, nav bar under the keyboard (from Olivia, 2026-11-24)
+
+- **Completed hikes** (`/profile/completed`): one page with every completed hike, newest first (Saint Mark, Grouse Grind, Mt. Everest). The Recent / Favourited bar and the favourited page are gone (`/profile/completed/favourited` redirects). "Sort" is Home's menu (`SortMenu` / `sortCards`, exported from `Home.jsx`): Distance / Elevation / Time, lowest first.
+- **Nav bar while typing:** on a phone, when a text field is focused the nav bar stays at the bottom of the screen, under the keyboard, so it no longer covers the page (`data-typing` on `.device`, set in `Device.jsx`; hidden in `NavBar.css`). Other pinned bars (e.g. Practice Skip / Check, sheet Done) still sit above the keyboard.
+
+### Round 37 — Completed hikes search (from Olivia, 2026-11-24)
+
+- The Completed hikes search bar filters the cards by hike name as you type (sort still applies to what's left); no match shows "No completed hikes with that name found".
